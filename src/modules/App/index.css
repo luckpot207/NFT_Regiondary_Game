@@ -1,0 +1,158 @@
+.fc1 {
+  color: var(--font-color-1);
+}
+
+.fc2 {
+  color: var(--font-color-2);
+}
+
+.fc3 {
+  color: var(--font-color-3);
+}
+
+.fc-gray {
+  color: gray;
+}
+
+.fc-gray:hover {
+  color: var(--font-color-1);
+  transition: 0.4s all;
+}
+
+.bg-c1 {
+  background-color: var(--bg-color-1) !important;
+}
+
+.bg-c2 {
+  background-color: var(--bg-color-2) !important;
+}
+
+.bg-c3 {
+  background: var(--bg-color-3) !important;
+}
+
+.bg-c4 {
+  background: var(--bg-color-4) !important;
+}
+
+.bg-c5 {
+  background: var(--bg-color-5) !important;
+}
+
+.td-none {
+  text-decoration: none;
+}
+
+.info-card {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.main-view {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.nav-bar-item {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-bar-item.active {
+  background: #1f2a37;
+  background-image: url("../../assets/images/fireMenu.png");
+}
+
+/* Card */
+.executeitem {
+  --borderWidth: 3px;
+  padding: 3px;
+  z-index: 0;
+}
+
+.executeitem:after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  background: linear-gradient(
+    60deg,
+    #e89f38,
+    #a44916,
+    #fe8c00,
+    #f66810,
+    #a44916,
+    #f66810,
+    #e89f38,
+    #f66810
+  );
+  border-radius: 6px;
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.executeCheckBox {
+  opacity: 0.1;
+  display: flex;
+  position: absolute !important;
+  bottom: calc(2% + 10px);
+  left: calc(2% + 20px);
+  cursor: pointer;
+}
+
+.warriorCard:hover .executeCheckBox {
+  opacity: 1;
+  transition: 0.7s all;
+}
+
+.beastCard:hover .executeCheckBox {
+  opacity: 1;
+  transition: 0.7s all;
+}
+
+.warriorCard:hover {
+  border: 3px solid #f66810;
+}
+
+.beastCard:hover {
+  border: 3px solid #f66810;
+}
+
+.legionCard:hover .executeCheckBox {
+  opacity: 1;
+  transition: 0.7s all;
+}
+
+.legionCard:hover {
+  border: 3px solid #f66810;
+}
+
+.executeitem:hover {
+  border: none;
+}

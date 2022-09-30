@@ -1,0 +1,81 @@
+name: Deploy
+
+env:
+  NODE_VERSION: 16.x
+
+on:
+  push:
+    branches:
+      - play
+      - staging
+      - staging2
+      - staging3
+      - dev
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set NODE_ENV
+        run: |
+          echo "NODE_ENV=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_ENV
+
+      - name: Set NODE_ENV
+        run: |
+          NODE_ENV=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
+          [ "$NODE_ENV" = "play" ] && echo "NODE_ENV=main" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging" ] && echo "NODE_ENV=staging" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging2" ] && echo "NODE_ENV=test2" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging3" ] && echo "NODE_ENV=test3" >> $GITHUB_ENV || echo "NODE_ENV=development" >> $GITHUB_ENV)))
+
+      - name: Set env variables for secrets
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${NODE_ENV}_AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${NODE_ENV}_AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+          echo "AWS_S3_BUCKET=${NODE_ENV}_AWS_S3_BUCKET" >> $GITHUB_ENV
+          echo "DISTRIBUTION_ID=${NODE_ENV}_DISTRIBUTION_ID" >> $GITHUB_ENV
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DEBUG: false
+          envkey_REACT_APP_TEST_CHAIN_ID: ${{ secrets.REACT_APP_TEST_CHAIN_ID }}
+          envkey_REACT_APP_TEST_CHAIN_ID_HEX: ${{ secrets.REACT_APP_TEST_CHAIN_ID_HEX }}
+
+          envkey_REACT_APP_TEST_MORALIS_SERVER_URL: ${{ secrets.REACT_APP_TEST_MORALIS_SERVER_URL }}
+          envkey_REACT_APP_TEST_MORALIS_APP_ID: ${{ secrets.REACT_APP_TEST_MORALIS_APP_ID }}
+          envkey_REACT_APP_TEST_MORALIS_MASTERKEY: ${{ secrets.REACT_APP_TEST_MORALIS_MASTERKEY }}
+
+          envkey_REACT_APP_MAIN_CHAIN_ID: ${{ secrets.REACT_APP_MAIN_CHAIN_ID }}
+          envkey_REACT_APP_MAIN_CHAIN_ID_HEX: ${{ secrets.REACT_APP_MAIN_CHAIN_ID_HEX }}
+
+          envkey_REACT_APP_MAIN_MORALIS_SERVER_URL: ${{ secrets.REACT_APP_MAIN_MORALIS_SERVER_URL }}
+          envkey_REACT_APP_MAIN_MORALIS_APP_ID: ${{ secrets.REACT_APP_MAIN_MORALIS_APP_ID }}
+          envkey_REACT_APP_MAIN_MORALIS_MASTERKEY: ${{ secrets.REACT_APP_MAIN_MORALIS_MASTERKEY }}
+
+          envkey_REACT_APP_HELP_API_KEY: ${{ secrets.REACT_APP_HELP_API_KEY }}
+
+      - name: Install Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - run: npm i -g yarn
+      - run: yarn install
+      - run: npm run build
+      #            - run: npm test
+
+      - name: Deploy
+        uses: Reggionick/s3-deploy@v3.1.1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.AWS_ACCESS_KEY_ID] }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.AWS_SECRET_ACCESS_KEY] }}
+        with:
+          folder: build
+          bucket: ${{ secrets[env.AWS_S3_BUCKET] }}
+          bucket-region: us-east-1
+          dist-id: ${{ secrets[env.DISTRIBUTION_ID] }}
+          private: true
+          invalidation: "/*"
+          delete-removed: true

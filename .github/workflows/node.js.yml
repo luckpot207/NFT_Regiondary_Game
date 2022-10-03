@@ -8,8 +8,8 @@ on:
     branches:
       - play
       - staging
-      - staging2
-      - staging3
+      - test2
+      - test3
       - dev
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
       - name: Set NODE_ENV
         run: |
           NODE_ENV=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
-          [ "$NODE_ENV" = "play" ] && echo "NODE_ENV=main" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging" ] && echo "NODE_ENV=staging" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging2" ] && echo "NODE_ENV=test2" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging3" ] && echo "NODE_ENV=test3" >> $GITHUB_ENV || echo "NODE_ENV=development" >> $GITHUB_ENV)))
+          [ "$NODE_ENV" = "play" ] && echo "NODE_ENV=main" >> $GITHUB_ENV || ([ "$NODE_ENV" = "staging" ] && echo "NODE_ENV=staging" >> $GITHUB_ENV || ([ "$NODE_ENV" = "test2" ] && echo "NODE_ENV=test2" >> $GITHUB_ENV || ([ "$NODE_ENV" = "test3" ] && echo "NODE_ENV=test3" >> $GITHUB_ENV || echo "NODE_ENV=development" >> $GITHUB_ENV)))
 
       - name: Set env variables for secrets
         run: |

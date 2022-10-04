@@ -52,7 +52,7 @@ const Referrals: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [freeWarriorsCnt, setFreeWarriorsCnt] = useState(0);
   const referralLink = getReferralLink(account?.toString());
-  const primaryColor = "#f66810";
+  const primaryColor = "#195db3";
 
   const onClickCopy = () => {
     navigator.clipboard.writeText(referralLink).then(() => {

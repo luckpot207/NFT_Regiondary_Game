@@ -30,7 +30,7 @@ import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles({
   leaderboard: {
-    border: "3px solid #f66810",
+    border: "3px solid #195db3",
     borderRadius: 5,
     padding: 16,
     display: "flex",

@@ -45,23 +45,23 @@ const Constants = {
     toSocial: [
       {
         type: "Discord",
-        link: "https://cryptolegions.app/d",
+        link: "https://www.cryptolegions.app/d",
       },
       {
         type: "Telegram",
-        link: "https://cryptolegions.app/t",
+        link: "https://www.cryptolegions.app/t",
       },
       {
         type: "Twitter",
-        link: "https://cryptolegions.app/tw",
+        link: "https://www.cryptolegions.app/tw",
       },
       {
         type: "Youtube",
-        link: "https://cryptolegions.app/y",
+        link: "https://www.cryptolegions.app/y",
       },
       {
         type: "Medium",
-        link: "https://cryptolegions.app/m",
+        link: "https://www.cryptolegions.app/m",
       },
       {
         type: "ShowAnimation",

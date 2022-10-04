@@ -38,14 +38,14 @@ const GameView: React.FC = () => {
   const { account } = useWeb3React();
 
   const getBalance = async () => {
-    dispatch(updateState({ initialDataLoading: true }));
+    // dispatch(updateState({ initialDataLoading: true }));
     try {
-      await dispatch(getAllLanguageTexts());
+      // await dispatch(getAllLanguageTexts());
+      // await dispatch(getAllItemnames());
       await dispatch(getContactInfo(account?.toLowerCase()));
-      await dispatch(getAllItemnames());
       await dispatch(getPresentItem());
     } catch (error) {}
-    dispatch(updateState({ initialDataLoading: false }));
+    // dispatch(updateState({ initialDataLoading: false }));
   };
 
   useEffect(() => {

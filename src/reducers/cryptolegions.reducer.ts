@@ -11,6 +11,8 @@ import {
 import { RootState } from "../store";
 import ApiService from "../services/api.service";
 import { toast } from "react-toastify";
+import languageTexts from "../constants/cryptolegions-languages.json";
+import allItemNames from "../constants/cryptolegions-itemnames.json";
 
 let initialState: I_ReduxState = {
   reloadContractStatus: new Date().getTime(),
@@ -270,11 +272,18 @@ let initialState: I_ReduxState = {
 
   /// Initial data from the backend
   initialDataLoading: false,
-  allLanguageTexts: [],
+  allLanguageTexts: languageTexts,
   contactInfo: null,
   addContactLoading: false,
   editContactLoading: false,
-  itemnames: [],
+  itemnames: allItemNames.map((item) => {
+    return {
+      _id: item._id.$oid,
+      number: item.number,
+      name: item.name,
+      type: item.type,
+    };
+  }),
   presentItem: {
     jpg: "",
     mp4: "",
@@ -565,6 +574,7 @@ export const cryptolegionsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getAllLanguageTexts.fulfilled, (state, { payload }) => {
+      console.log("get all language texts", payload);
       state.allLanguageTexts = payload;
     });
     builder.addCase(getContactInfo.fulfilled, (state, { payload }) => {
@@ -576,7 +586,7 @@ export const cryptolegionsSlice = createSlice({
       state.itemnames = payload.data;
     });
     builder.addCase(getPresentItem.fulfilled, (state, { payload }) => {
-      console.log(payload);
+      console.log("get present item: ", payload);
       state.presentItem = payload.data;
     });
 
@@ -587,7 +597,7 @@ export const cryptolegionsSlice = createSlice({
       state.addContactLoading = false;
       state.referralTGModalOpen = false;
       if (payload.success) {
-        toast.success("Telegram name added");
+        toast.success("Telegram name is added");
       } else {
         toast.error(payload.msg);
       }
@@ -603,7 +613,7 @@ export const cryptolegionsSlice = createSlice({
       state.editContactLoading = false;
       state.referralTGModalOpen = false;
       if (payload.success) {
-        toast.success("Telegram name edited");
+        toast.success("Telegram name is updated");
       } else {
         toast.error(payload.msg);
       }

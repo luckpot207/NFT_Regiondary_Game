@@ -63,9 +63,6 @@ const YourInventory: React.FC = () => {
   // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
-  const { Moralis } = useMoralis();
-  Moralis.masterKey = gameVersion.moralisMasterKey;
-  let huntHistoryQuery = new Moralis.Query("HuntHistory");
 
   // Contract
   const beastContract = useBeast();
@@ -102,29 +99,6 @@ const YourInventory: React.FC = () => {
         feehandlerContract
       );
       getAllLegionsAct(dispatch, account, legionContract);
-      const totalSumPipLine = [
-        {
-          match: {
-            addr: { $eq: account?.toLowerCase() },
-          },
-        },
-        {
-          group: {
-            objectId: "$success",
-            totalSum: {
-              $sum: "$reward_decimal",
-            },
-          },
-        },
-      ];
-      const totalSum = await huntHistoryQuery.aggregate(totalSumPipLine);
-      totalSum.forEach((item: any) => {
-        if (item.objectId) {
-          setTotalWon(web3.utils.fromWei(item.totalSum, "ether"));
-        } else {
-          setTotalLost(web3.utils.fromWei(item.totalSum, "ether"));
-        }
-      });
     } catch (error) {
       console.log(error);
     }

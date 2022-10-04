@@ -135,7 +135,7 @@ const EconomyStatus: React.FC = () => {
   };
 
   React.useEffect(() => {
-    realTimeUpdate();
+    // realTimeUpdate();
   }, []);
 
   const realTimeUpdate = () => {

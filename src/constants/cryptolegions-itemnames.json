@@ -1,0 +1,667 @@
+[{
+  "_id": {
+    "$oid": "631a432c9105c738e04cf890"
+  },
+  "number": 1,
+  "name": "Centaur",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665516539"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665516539"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43c02ca9de35e4b08550"
+  },
+  "number": 2,
+  "name": "Barghest",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665664058"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665664058"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43c92ca9de35e4b08553"
+  },
+  "number": 3,
+  "name": "Pegasus",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665673934"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665673934"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43d22ca9de35e4b08556"
+  },
+  "number": 4,
+  "name": "Griffin",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665682463"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665682463"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43eb2ca9de35e4b0855c"
+  },
+  "number": 20,
+  "name": "Phoenix",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665707666"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665707666"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43f42ca9de35e4b0855f"
+  },
+  "number": 1,
+  "name": "Hobbit",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665716618"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665716618"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a43fc2ca9de35e4b08562"
+  },
+  "number": 2,
+  "name": "Gnome",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665724781"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665724781"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a44052ca9de35e4b08565"
+  },
+  "number": 3,
+  "name": "Satyr",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665733737"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665733737"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a440f2ca9de35e4b08568"
+  },
+  "number": 4,
+  "name": "Dwarf",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665743118"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665743118"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a44172ca9de35e4b0856b"
+  },
+  "number": 5,
+  "name": "Minotaur",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665751686"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665751686"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a441f2ca9de35e4b0856e"
+  },
+  "number": 6,
+  "name": "Dragon",
+  "type": "warrior",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662665759512"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662665759512"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a46f42b2f201a9cf71170"
+  },
+  "number": 5,
+  "name": "Dragon",
+  "type": "beast",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666484259"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666484259"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a473e2b2f201a9cf71174"
+  },
+  "number": 1,
+  "name": "bat",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666558017"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666558017"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a47462b2f201a9cf71177"
+  },
+  "number": 2,
+  "name": "wereshark",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666566687"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666566687"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a474e2b2f201a9cf7117a"
+  },
+  "number": 3,
+  "name": "rhinark",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666574381"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666574381"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a47562b2f201a9cf7117d"
+  },
+  "number": 4,
+  "name": "lacodon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666582550"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666582550"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a475d2b2f201a9cf71180"
+  },
+  "number": 5,
+  "name": "oliphant",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666589949"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666589949"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a47652b2f201a9cf71183"
+  },
+  "number": 6,
+  "name": "ogre",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666597519"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662666597519"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a476d2b2f201a9cf71186"
+  },
+  "number": 7,
+  "name": "werewolf",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662666605364"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664818428083"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a48f92b2f201a9cf71197"
+  },
+  "number": 8,
+  "name": "orc",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667001071"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664818434179"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49062b2f201a9cf7119a"
+  },
+  "number": 9,
+  "name": "cyclops",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667014653"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667014653"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49102b2f201a9cf7119d"
+  },
+  "number": 10,
+  "name": "gargoyle",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667024659"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667024659"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49192b2f201a9cf711a0"
+  },
+  "number": 11,
+  "name": "golem",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667033648"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667033648"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49242b2f201a9cf711a3"
+  },
+  "number": 12,
+  "name": "land dragon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667044436"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667044436"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a492f2b2f201a9cf711a6"
+  },
+  "number": 13,
+  "name": "chimera",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667055217"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667055217"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49392b2f201a9cf711a9"
+  },
+  "number": 14,
+  "name": "earthworm",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667065265"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667065265"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49412b2f201a9cf711ac"
+  },
+  "number": 15,
+  "name": "hydra",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667073547"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667073547"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a494a2b2f201a9cf711af"
+  },
+  "number": 16,
+  "name": "rancor",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667082408"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667082408"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49522b2f201a9cf711b2"
+  },
+  "number": 17,
+  "name": "cerberus",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667090903"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667090903"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a495a2b2f201a9cf711b5"
+  },
+  "number": 18,
+  "name": "titan",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667098909"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667098909"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49652b2f201a9cf711b8"
+  },
+  "number": 19,
+  "name": "forest dragon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667109349"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667109349"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49702b2f201a9cf711bb"
+  },
+  "number": 20,
+  "name": "ice dragon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667120550"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667120550"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a497a2b2f201a9cf711be"
+  },
+  "number": 21,
+  "name": "undead dragon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667130499"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667130499"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49842b2f201a9cf711c1"
+  },
+  "number": 22,
+  "name": "volcano dragon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667140053"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667140053"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a498e2b2f201a9cf711c4"
+  },
+  "number": 23,
+  "name": "fire demon",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667150641"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667150641"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631a49962b2f201a9cf711c7"
+  },
+  "number": 24,
+  "name": "invisible",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662667158893"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662667158893"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321b352bc74a20012e722c3"
+  },
+  "number": 25,
+  "name": "Morpheus",
+  "type": "monster",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663152978824"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664620896338"
+    }
+  },
+  "__v": 0
+}]

@@ -77,6 +77,26 @@ const addReincarnationValue = async (address: string, value: number) => {
   });
 };
 
+const getEconomyStatus = async () => {
+  return Axios.get(`${serverLink}/economy/getEconomyStatus`);
+};
+
+const getLeaderboardInfo = async (address: string) => {
+  return Axios.get(`${serverLink}/leaderboard/getLeaderboardInfo/${address}`);
+};
+
+const addToLeaderboard = async (address: string) => {
+  return Axios.post(`${serverLink}/leaderboard/addToLeaderboard`, {
+    address: address,
+  });
+};
+
+const removeFromLeaderboard = async (address: string) => {
+  return Axios.post(`${serverLink}/leaderboard/removeFromLeaderboard`, {
+    address: address,
+  });
+};
+
 const ApiService = {
   getAllLanguageTexts,
   getContactInfo,
@@ -91,6 +111,10 @@ const ApiService = {
   addSamaritanStarHolder,
   getReincarnation,
   addReincarnationValue,
+  getEconomyStatus,
+  getLeaderboardInfo,
+  addToLeaderboard,
+  removeFromLeaderboard,
 };
 
 export default ApiService;

@@ -57,156 +57,156 @@ const useStyles = makeStyles(() => ({
 
 const HuntHistory: React.FC = () => {
   const { account } = useWeb3React();
-  const { Moralis } = useMoralis();
-  Moralis.masterKey = gameVersion.moralisMasterKey;
-  let huntHistoryQuery = new Moralis.Query("HuntHistory");
+  // const { Moralis } = useMoralis();
+  // Moralis.masterKey = gameVersion.moralisMasterKey;
+  // let huntHistoryQuery = new Moralis.Query("HuntHistory");
 
-  const { showAnimation, presentItem, itemnames, allMonsters } =
-    AppSelector(gameState);
-  const classes = useStyles();
-  const web3 = useWeb3();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(12);
+  // const { showAnimation, presentItem, itemnames, allMonsters } =
+  //   AppSelector(gameState);
+  // const classes = useStyles();
+  // const web3 = useWeb3();
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [pageSize, setPageSize] = useState(12);
 
-  const [totalCount, setTotalCount] = useState(0);
-  const [totalWon, setTotalWon] = useState("0");
-  const [totalLost, setTotalLost] = useState("0");
-  const [huntHistory, setHuntHistory] = useState<any>([]);
-  const [accuracy, setAccuracy] = useState<any>([]);
+  // const [totalCount, setTotalCount] = useState(0);
+  // const [totalWon, setTotalWon] = useState("0");
+  // const [totalLost, setTotalLost] = useState("0");
+  // const [huntHistory, setHuntHistory] = useState<any>([]);
+  // const [accuracy, setAccuracy] = useState<any>([]);
 
-  const getBalance = async () => {
-    try {
-      const totalCountPipeLine = [
-        {
-          match: {
-            addr: { $eq: account?.toLowerCase() },
-          },
-        },
-        {
-          count: "totalCount",
-        },
-      ];
-      const totalCount = await huntHistoryQuery.aggregate(totalCountPipeLine);
-      console.log("total Count: ", totalCount);
-      setTotalCount(totalCount[0].totalCount);
-      const totalSumPipLine = [
-        {
-          match: {
-            addr: { $eq: account?.toLowerCase() },
-          },
-        },
-        {
-          group: {
-            objectId: "$success",
-            totalSum: {
-              $sum: "$reward_decimal",
-            },
-          },
-        },
-      ];
-      const totalSum = await huntHistoryQuery.aggregate(totalSumPipLine);
-      totalSum.forEach((item: any) => {
-        if (item.objectId) {
-          setTotalWon(web3.utils.fromWei(item.totalSum, "ether"));
-        } else {
-          setTotalLost(web3.utils.fromWei(item.totalSum, "ether"));
-        }
-      });
-      console.log("total won: ", totalWon);
-      getPage(1);
-      getAccuracy();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getBalance = async () => {
+  //   try {
+  //     const totalCountPipeLine = [
+  //       {
+  //         match: {
+  //           addr: { $eq: account?.toLowerCase() },
+  //         },
+  //       },
+  //       {
+  //         count: "totalCount",
+  //       },
+  //     ];
+  //     const totalCount = await huntHistoryQuery.aggregate(totalCountPipeLine);
+  //     console.log("total Count: ", totalCount);
+  //     setTotalCount(totalCount[0].totalCount);
+  //     const totalSumPipLine = [
+  //       {
+  //         match: {
+  //           addr: { $eq: account?.toLowerCase() },
+  //         },
+  //       },
+  //       {
+  //         group: {
+  //           objectId: "$success",
+  //           totalSum: {
+  //             $sum: "$reward_decimal",
+  //           },
+  //         },
+  //       },
+  //     ];
+  //     const totalSum = await huntHistoryQuery.aggregate(totalSumPipLine);
+  //     totalSum.forEach((item: any) => {
+  //       if (item.objectId) {
+  //         setTotalWon(web3.utils.fromWei(item.totalSum, "ether"));
+  //       } else {
+  //         setTotalLost(web3.utils.fromWei(item.totalSum, "ether"));
+  //       }
+  //     });
+  //     console.log("total won: ", totalWon);
+  //     getPage(1);
+  //     getAccuracy();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const getAccuracy = async () => {
-    try {
-      const accuracyPipeLine = [
-        {
-          match: {
-            addr: { $eq: account?.toLowerCase() },
-          },
-        },
-        {
-          group: {
-            objectId: "$monsterId",
-            totalHunts: {
-              $sum: 1,
-            },
-            winHunts: {
-              $sum: "$success" ? 1 : 0,
-            },
-            lostHunts: {
-              $sum: "$success" ? 0 : 1,
-            },
-            result: {
-              $push: "$success",
-            },
-          },
-        },
-      ];
-      const accuracy = await huntHistoryQuery.aggregate(accuracyPipeLine);
-      let temp = [];
-      const getDesc = (totalHunts: number) => {
-        if (totalHunts < 30) {
-          return "No data";
-        } else if (totalHunts < 50) {
-          return "Very low";
-        } else if (totalHunts < 100) {
-          return "Medium";
-        } else {
-          return "High";
-        }
-      };
+  // const getAccuracy = async () => {
+  //   try {
+  //     const accuracyPipeLine = [
+  //       {
+  //         match: {
+  //           addr: { $eq: account?.toLowerCase() },
+  //         },
+  //       },
+  //       {
+  //         group: {
+  //           objectId: "$monsterId",
+  //           totalHunts: {
+  //             $sum: 1,
+  //           },
+  //           winHunts: {
+  //             $sum: "$success" ? 1 : 0,
+  //           },
+  //           lostHunts: {
+  //             $sum: "$success" ? 0 : 1,
+  //           },
+  //           result: {
+  //             $push: "$success",
+  //           },
+  //         },
+  //       },
+  //     ];
+  //     const accuracy = await huntHistoryQuery.aggregate(accuracyPipeLine);
+  //     let temp = [];
+  //     const getDesc = (totalHunts: number) => {
+  //       if (totalHunts < 30) {
+  //         return "No data";
+  //       } else if (totalHunts < 50) {
+  //         return "Very low";
+  //       } else if (totalHunts < 100) {
+  //         return "Medium";
+  //       } else {
+  //         return "High";
+  //       }
+  //     };
 
-      for (let i = 0; i < 24; i++) {
-        let eachAccuracyInfo = accuracy.find(
-          (item: any) => item.objectId == i + 1
-        );
-        let monsterAccuracy = {
-          id: i + 1,
-          winPercent: eachAccuracyInfo
-            ? Math.floor(
-                (eachAccuracyInfo.winHunts / eachAccuracyInfo.totalHunts) * 100
-              ) + "%"
-            : "-",
-          totalHunts: eachAccuracyInfo ? eachAccuracyInfo.totalHunts : 0,
-          desc: getDesc(eachAccuracyInfo ? eachAccuracyInfo.totalHunts : 0),
-        };
-        temp.push(monsterAccuracy);
-      }
-      setAccuracy(temp);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     for (let i = 0; i < 24; i++) {
+  //       let eachAccuracyInfo = accuracy.find(
+  //         (item: any) => item.objectId == i + 1
+  //       );
+  //       let monsterAccuracy = {
+  //         id: i + 1,
+  //         winPercent: eachAccuracyInfo
+  //           ? Math.floor(
+  //               (eachAccuracyInfo.winHunts / eachAccuracyInfo.totalHunts) * 100
+  //             ) + "%"
+  //           : "-",
+  //         totalHunts: eachAccuracyInfo ? eachAccuracyInfo.totalHunts : 0,
+  //         desc: getDesc(eachAccuracyInfo ? eachAccuracyInfo.totalHunts : 0),
+  //       };
+  //       temp.push(monsterAccuracy);
+  //     }
+  //     setAccuracy(temp);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const getPage = async (currentPage: number) => {
-    try {
-      let temp: any = [];
-      huntHistoryQuery.equalTo("addr", account?.toLowerCase());
-      huntHistoryQuery.descending("block_number");
-      huntHistoryQuery.skip((currentPage - 1) * pageSize);
-      huntHistoryQuery.limit(pageSize);
-      const huntHistory = await huntHistoryQuery.find();
-      huntHistory.forEach((item) => {
-        temp.push(item.attributes);
-      });
-      console.log("hunt history aggregate: ", temp);
-      setHuntHistory(temp);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getPage = async (currentPage: number) => {
+  //   try {
+  //     let temp: any = [];
+  //     huntHistoryQuery.equalTo("addr", account?.toLowerCase());
+  //     huntHistoryQuery.descending("block_number");
+  //     huntHistoryQuery.skip((currentPage - 1) * pageSize);
+  //     huntHistoryQuery.limit(pageSize);
+  //     const huntHistory = await huntHistoryQuery.find();
+  //     huntHistory.forEach((item) => {
+  //       temp.push(item.attributes);
+  //     });
+  //     console.log("hunt history aggregate: ", temp);
+  //     setHuntHistory(temp);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handlePage = (
-    event: React.ChangeEvent<unknown>,
-    currentPage: number
-  ) => {
-    setCurrentPage(currentPage);
-    getPage(currentPage);
-  };
+  // const handlePage = (
+  //   event: React.ChangeEvent<unknown>,
+  //   currentPage: number
+  // ) => {
+  //   setCurrentPage(currentPage);
+  //   getPage(currentPage);
+  // };
 
   useEffect(() => {
     // getBalance();

@@ -1,0 +1,5200 @@
+[{
+  "_id": {
+    "$oid": "63182ee82efdb5438c6e5fc6"
+  },
+  "key": "warriors",
+  "en": "Warriors",
+  "es": "Guerreros",
+  "cn": "勇士",
+  "pt": "Guerreiros",
+  "tr": "Savaşçılar",
+  "ru": "Воины",
+  "fr": "Guerriers",
+  "nl": "Krijgers",
+  "pl": "Wojownicy",
+  "ph": "Mga mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662529256943"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662532168152"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6318326c2efdb5438c6e5fdd"
+  },
+  "key": "beasts",
+  "en": "Beasts",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662530156047"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952672977"
+    }
+  },
+  "__v": 0,
+  "cn": "野兽",
+  "es": "Bestias",
+  "fr": "Bêtes",
+  "nl": "Beesten",
+  "ph": "mga hayop",
+  "pl": "Bestie",
+  "pt": "Bestas",
+  "ru": "Звери",
+  "tr": "Canavarlar"
+},{
+  "_id": {
+    "$oid": "631832a62efdb5438c6e5fe1"
+  },
+  "key": "legions",
+  "en": "Legions",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662530214672"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952719304"
+    }
+  },
+  "__v": 0,
+  "es": "Legiones",
+  "cn": "军团",
+  "fr": "Légions",
+  "nl": "Legioenen",
+  "ph": "Lehiyon",
+  "pl": "Legiony",
+  "pt": "Legiões",
+  "ru": "Легионы",
+  "tr": "Lejyonlar"
+},{
+  "_id": {
+    "$oid": "63183b267fbb2341744b0a1f"
+  },
+  "key": "blst",
+  "en": "BLST",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662532390161"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952743605"
+    }
+  },
+  "__v": 0,
+  "cn": "BLST",
+  "es": "BLST",
+  "fr": "BLST",
+  "nl": "BLST",
+  "ph": "BLST",
+  "pl": "BLST",
+  "pt": "BLST",
+  "ru": "BLST",
+  "tr": "BLST"
+},{
+  "_id": {
+    "$oid": "631888c6d52d033c30a6118d"
+  },
+  "key": "nobeastswithcapacity",
+  "en": "No beasts with this capacity. Summon some more!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662552262884"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664272251757"
+    }
+  },
+  "__v": 0,
+  "cn": "没有这种能力的野兽。 再召唤一些！",
+  "es": "No hay bestias con esta capacidad. ¡Convoca a algunos más!",
+  "fr": "Aucune bête avec cette capacité. Invoquez-en d'autres !",
+  "nl": "Geen beesten met deze capaciteit. Roep nog wat op!",
+  "ph": "Walang mga hayop na may ganitong kapasidad. Magpatawag pa!",
+  "pl": "Żadnych bestii z taką zdolnością. Przywołaj więcej!",
+  "pt": "Nenhuma besta com essa capacidade. Convoque mais alguns!",
+  "ru": "Нет зверей с такой способностью. Позовите еще!",
+  "tr": "Bu kapasitede canavar yok. Biraz daha çağır!"
+},{
+  "_id": {
+    "$oid": "63188956d52d033c30a61192"
+  },
+  "key": "nobeasts",
+  "en": "No beasts. Summon some beasts!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662552406272"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664275756801"
+    }
+  },
+  "__v": 0,
+  "cn": "没有野兽。 召唤一些野兽！",
+  "es": "Sin bestias. ¡Invoca algunas bestias!",
+  "fr": "Pas de bêtes. Invoquez des bêtes !",
+  "nl": "Geen beesten. Roep wat beesten op!",
+  "ph": "Walang halimaw. Magpatawag ng ilang halimaw!",
+  "pl": "Żadnych bestii. Przywołaj jakieś bestie!",
+  "pt": "Sem bestas. Convoque algumas feras!",
+  "ru": "Никаких зверей. Призовите несколько зверей!",
+  "tr": "Canavar yok. Birkaç canavar çağırın!"
+},{
+  "_id": {
+    "$oid": "63188a0bd52d033c30a61196"
+  },
+  "key": "nowarriorswithlevelandap",
+  "en": "No warriors with this level/AP. Summon some more!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662552587813"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664275864064"
+    }
+  },
+  "__v": 0,
+  "cn": "没有这个级别/AP的战士。 再召唤一些！",
+  "es": "No hay guerreros con este nivel/AP. ¡Convoca a algunos más!",
+  "fr": "Aucun guerrier avec ce niveau/AP. Invoquez-en d'autres !",
+  "nl": "Geen krijgers met dit niveau/AP. Roep nog wat op!",
+  "ph": "Walang mga mandirigma na may ganitong antas/AP. Magpatawag pa!",
+  "pl": "Żadnych wojowników z tym poziomem/AP. Przywołaj więcej!",
+  "pt": "Nenhum guerreiro com este nível/AP. Convoque mais alguns!",
+  "ru": "Нет воинов с этим уровнем/AP. Позовите еще!",
+  "tr": "Bu seviyeye/AP'ye sahip savaşçı yok. Biraz daha çağır!"
+},{
+  "_id": {
+    "$oid": "63188aadd52d033c30a6119a"
+  },
+  "key": "nowarriors",
+  "en": "No warriors. Summon some warriors!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662552749199"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664275913785"
+    }
+  },
+  "__v": 0,
+  "cn": "没有战士。 召唤一些战士！",
+  "es": "Sin guerreros. ¡Convoca a algunos guerreros!",
+  "fr": "Pas de guerriers. Invoquez des guerriers !",
+  "nl": "Geen krijgers. Roep wat krijgers op!",
+  "ph": "Walang mandirigma. Magpatawag ng ilang mandirigma!",
+  "pl": "Żadnych wojowników. Przywołaj kilku wojowników!",
+  "pt": "Sem guerreiros. Convoque alguns guerreiros!",
+  "ru": "Никаких воинов. Призовите несколько воинов!",
+  "tr": "Savaşçı yok. Birkaç savaşçı çağırın!"
+},{
+  "_id": {
+    "$oid": "63189dffd52d033c30a611a5"
+  },
+  "key": "filterbyap",
+  "en": "Filter By AP",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557695917"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664275961381"
+    }
+  },
+  "__v": 0,
+  "cn": "按 AP 过滤",
+  "es": "Filtrar por AP",
+  "fr": "Filtrer par point d'accès",
+  "nl": "Filteren op AP",
+  "ph": "I-filter Ayon sa AP",
+  "pl": "Filtruj według AP",
+  "pt": "Filtrar por AP",
+  "ru": "Фильтровать по точке доступа",
+  "tr": "AP'ye göre filtrele"
+},{
+  "_id": {
+    "$oid": "63189e1cd52d033c30a611a9"
+  },
+  "key": "filterbycapacity",
+  "en": "Filter By Capacity",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557724375"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664276012200"
+    }
+  },
+  "__v": 0,
+  "cn": "按容量过滤",
+  "es": "Filtrar por capacidad",
+  "fr": "Filtrer par capacité",
+  "nl": "Filteren op capaciteit",
+  "ph": "Salain Ayon sa Kapasidad",
+  "pl": "Filtruj według pojemności",
+  "pt": "Filtrar por capacidade",
+  "ru": "Фильтровать по емкости",
+  "tr": "Kapasiteye Göre Filtrele"
+},{
+  "_id": {
+    "$oid": "63189e33d52d033c30a611ad"
+  },
+  "key": "filterbylevel",
+  "en": "Filter By Level",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557747766"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278663356"
+    }
+  },
+  "__v": 0,
+  "cn": "按级别过滤",
+  "es": "Filtrar por nivel",
+  "fr": "Filtrer par niveau",
+  "nl": "Filteren op niveau",
+  "ph": "I-filter Ayon sa Antas",
+  "pl": "Filtruj według poziomu",
+  "pt": "Filtrar por nível",
+  "ru": "Фильтровать по уровню",
+  "tr": "Seviyeye Göre Filtrele"
+},{
+  "_id": {
+    "$oid": "63189e4dd52d033c30a611b1"
+  },
+  "key": "sortbyap",
+  "en": "Sort By AP",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557774056"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278708070"
+    }
+  },
+  "__v": 0,
+  "cn": "按 AP 排序",
+  "es": "Ordenar por AP",
+  "fr": "Trier par point d'accès",
+  "nl": "Sorteren op AP",
+  "ph": "Pagbukud-bukurin Ayon sa AP",
+  "pl": "Sortuj według AP",
+  "pt": "Classificar por AP",
+  "ru": "Сортировать по точке доступа",
+  "tr": "AP'ye göre sırala"
+},{
+  "_id": {
+    "$oid": "63189e6ad52d033c30a611b5"
+  },
+  "key": "huntstatus",
+  "en": "Hunt Status",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557802245"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278757309"
+    }
+  },
+  "__v": 0,
+  "cn": "狩猎状态",
+  "es": "Estado de caza",
+  "fr": "Statut de chasse",
+  "nl": "Huntstatus",
+  "ph": "Katayuan ng Hunt",
+  "pl": "Status polowania",
+  "pt": "Status de busca",
+  "ru": "Статус охоты",
+  "tr": "Av Durumu"
+},{
+  "_id": {
+    "$oid": "63189e8dd52d033c30a611b9"
+  },
+  "key": "hideweaklegions",
+  "en": "Hide Weak Legions",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662557837740"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278807795"
+    }
+  },
+  "__v": 0,
+  "cn": "隐藏弱小军团",
+  "es": "Ocultar legiones débiles",
+  "fr": "Cachez les légions faibles",
+  "nl": "Verberg zwakke legioenen",
+  "ph": "Itago ang Mahina Legion",
+  "pl": "Ukryj słabe legiony",
+  "pt": "Esconder Legiões Fracas",
+  "ru": "Скрыть слабые легионы",
+  "tr": "Zayıf Lejyonları Gizle"
+},{
+  "_id": {
+    "$oid": "631e8b6c1a554518205961a2"
+  },
+  "key": "lowest",
+  "en": "Lowest",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946156588"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278862471"
+    }
+  },
+  "__v": 0,
+  "cn": "最低",
+  "es": "más bajo",
+  "fr": "Le plus bas",
+  "nl": "Laagste",
+  "ph": "Pinakamababa",
+  "pl": "Najniższy",
+  "pt": "Mais baixo",
+  "ru": "Самый низкий",
+  "tr": "En düşük"
+},{
+  "_id": {
+    "$oid": "631e8b861a554518205961a6"
+  },
+  "key": "highest",
+  "en": "Highest",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946182942"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278931858"
+    }
+  },
+  "__v": 0,
+  "cn": "最高",
+  "es": "Mas alta",
+  "fr": "Le plus élevé",
+  "nl": "hoogste",
+  "ph": "Pinakamataas",
+  "pl": "Najwyższy",
+  "pt": "Altíssima",
+  "ru": "Наибольший",
+  "tr": "En yüksek"
+},{
+  "_id": {
+    "$oid": "631e8bc81a554518205961aa"
+  },
+  "key": "filterbyhuntsleft",
+  "en": "Filter By Hunts Left",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946248384"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664278992737"
+    }
+  },
+  "__v": 0,
+  "cn": "按左侧狩猎过滤",
+  "es": "Filtrar por búsquedas restantes",
+  "fr": "Filtrer par chasses restantes",
+  "nl": "Filteren op jachten links",
+  "ph": "I-filter Ayon sa Hunts Kaliwa",
+  "pl": "Filtruj według polowań w lewo",
+  "pt": "Filtrar por buscas restantes",
+  "ru": "Фильтровать по оставшимся охотам",
+  "tr": "Soldaki Avlara Göre Filtrele"
+},{
+  "_id": {
+    "$oid": "631e8bf31a554518205961ae"
+  },
+  "key": "sortby$",
+  "en": "Sort By $",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946291036"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279039233"
+    }
+  },
+  "__v": 0,
+  "cn": "按 $ 排序",
+  "es": "Ordenar por $",
+  "fr": "Trier par $",
+  "nl": "Sorteer op $",
+  "ph": "Pagbukud-bukurin Ayon sa $",
+  "pl": "Sortuj według $",
+  "pt": "Classificar por $",
+  "ru": "Сортировать по $",
+  "tr": "$ Sırala"
+},{
+  "_id": {
+    "$oid": "631e8c621a554518205961b2"
+  },
+  "key": "sortby",
+  "en": "Sort By",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946402154"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279086856"
+    }
+  },
+  "__v": 0,
+  "cn": "排序方式",
+  "es": "Ordenar por",
+  "fr": "Trier par",
+  "nl": "Sorteer op",
+  "ph": "Pagbukud-bukurin Ayon",
+  "pl": "Sortuj według",
+  "pt": "Ordenar por",
+  "ru": "Сортировать по",
+  "tr": "Göre sırala"
+},{
+  "_id": {
+    "$oid": "631e8c6a1a554518205961b6"
+  },
+  "key": "ap",
+  "en": "AP",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946410377"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279135146"
+    }
+  },
+  "__v": 0,
+  "cn": "AP",
+  "es": "AP",
+  "fr": "AP",
+  "nl": "AP",
+  "ph": "AP",
+  "pl": "AP",
+  "pt": "AP",
+  "ru": "AP",
+  "tr": "AP"
+},{
+  "_id": {
+    "$oid": "631e8c7a1a554518205961ba"
+  },
+  "key": "$",
+  "en": "$",
+  "es": "$",
+  "cn": "$",
+  "pt": "$",
+  "tr": "$",
+  "ru": "$",
+  "fr": "$",
+  "nl": "$",
+  "pl": "$",
+  "ph": "$",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946426196"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662946426196"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e8cef1a554518205961be"
+  },
+  "key": "showonlymine",
+  "en": "Show Only Mine",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946543862"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279178317"
+    }
+  },
+  "__v": 0,
+  "cn": "只显示我的",
+  "es": "Mostrar solo el mío",
+  "fr": "Afficher uniquement le mien",
+  "nl": "Toon alleen de mijne",
+  "ph": "Ipakita ang Akin Lamang",
+  "pl": "Pokaż tylko moje",
+  "pt": "Mostrar apenas o meu",
+  "ru": "Показать только мое",
+  "tr": "Sadece Benimkini Göster"
+},{
+  "_id": {
+    "$oid": "631e8d151a554518205961c2"
+  },
+  "key": "showonlynew",
+  "en": "Show Only New",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946581678"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279227131"
+    }
+  },
+  "__v": 0,
+  "cn": "只显示新的",
+  "es": "Mostrar solo nueva",
+  "fr": "Afficher uniquement les nouveautés",
+  "nl": "Toon alleen nieuw",
+  "ph": "Ipakita Lamang ang Bago",
+  "pl": "Pokaż tylko nowe",
+  "pt": "Mostrar apenas novo",
+  "ru": "Показать только новые",
+  "tr": "Yalnızca Yenileri Göster"
+},{
+  "_id": {
+    "$oid": "631e8db61a554518205961c6"
+  },
+  "key": "all",
+  "en": "All",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946742452"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279276227"
+    }
+  },
+  "__v": 0,
+  "cn": "全部",
+  "es": "Todos",
+  "fr": "Toute",
+  "nl": "Allemaal",
+  "ph": "Lahat",
+  "pl": "Wszystko",
+  "pt": "Tudo",
+  "ru": "Все",
+  "tr": "Herşey"
+},{
+  "_id": {
+    "$oid": "631e8e811a554518205961ca"
+  },
+  "key": "buySupply",
+  "en": "Buy Supplies",
+  "es": "Comprar Más Suministros",
+  "cn": "购买更多用品",
+  "pt": "Comprar Suprimentos",
+  "tr": "Daha Fazla Malzeme Satın Alın",
+  "ru": "Купите больше расходных материалов",
+  "fr": "Acheter fournitures",
+  "nl": "Koop meer benodigdheden",
+  "pl": "Kup więcej materiałów",
+  "ph": "Bumili ng kagamitan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662946945307"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662946945307"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e8f311a554518205961ce"
+  },
+  "key": "useMyWallet",
+  "en": "Use my wallet",
+  "es": "Usar mi billetera",
+  "cn": "钱包",
+  "pt": "Usar minha carteira",
+  "tr": "Cüzdanımı Kullan",
+  "ru": "Бумажник",
+  "fr": "Utiliser mon portefeuille",
+  "nl": "Gebruik portemonnee",
+  "pl": "Użyj portfel",
+  "ph": "Gamitin ang aking wallet",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947121700"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947121700"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e8f911a554518205961d2"
+  },
+  "key": "useUnclaimed",
+  "en": "Use unclaimed",
+  "es": "Usar no reclamado",
+  "cn": "没领取的",
+  "pt": "Usar não reclamado",
+  "tr": "Talep edilmemiş olanı kullan",
+  "ru": "Невостребованный",
+  "fr": "Utiliser non revendiquée",
+  "nl": "Gebruik niet-geclaimed",
+  "pl": "Użyj nieodebrane",
+  "ph": "Gamitin ang mga hindi nakuha",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947217983"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947217983"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e90031a554518205961d6"
+  },
+  "key": "supplyCostLoading",
+  "en": "Loading Supplies Fee",
+  "es": "Costo de suministro de carga",
+  "cn": "加载供应成本",
+  "pt": "Carregando Custo de Taxas",
+  "tr": "Yükleme Tedarik Maliyeti",
+  "ru": "Стоимость поставки груза",
+  "fr": "Chargement du coût d'approvisionnement",
+  "nl": "Kosten van benodigdheden aan het laden",
+  "pl": "Ładowanie kosztów dostaw",
+  "ph": "Naglo-load ang Gastos ng Supply",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947331370"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947331370"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e90561a554518205961da"
+  },
+  "key": "hunts",
+  "en": "Hunts",
+  "es": "Cacerías",
+  "cn": "狩猎",
+  "pt": "Caças",
+  "tr": "Avlar",
+  "ru": "Охоты",
+  "fr": "Chasses",
+  "nl": "Jachtpartijen",
+  "pl": "Polowania",
+  "ph": "Hunts",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947414598"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947414598"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e915d1a554518205961de"
+  },
+  "key": "addBUSD",
+  "en": "Add more BUSD to your wallet to hunt.",
+  "es": "Agregue más BUSD a su billetera para cazar.",
+  "cn": "将更多 BUSD 添加到您的钱包中以进行狩猎。",
+  "pt": "Adicione mais BUSD à sua carteira para caçar.",
+  "tr": "Avlanmak için cüzdanınıza daha fazla BUSD ekleyin.",
+  "ru": "Добавьте больше BUSD в свой кошелек, чтобы охотиться.",
+  "fr": "Ajoutez plus de BUSD à votre portefeuille pour chasser.",
+  "nl": "Voeg meer BUSD toe aan uw portemonnee om te jagen.",
+  "pl": "Dodaj więcej BUSD do swojego portfela, aby polować.",
+  "ph": "Magdagdag ng higit pang BUSD sa iyong wallet upang manghuli.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947677791"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947677791"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e92711a554518205961e6"
+  },
+  "key": "huntTimeSubtitle",
+  "en": "Your legion is now attacking the monster:",
+  "es": "Tu legión ahora está atacando al monstruo:",
+  "cn": "你的军团现在正在攻击怪物：",
+  "pt": "Sua legião está agora atacando o monstro:",
+  "tr": "Lejyonunuz şimdi canavara saldırıyor:",
+  "ru": "Теперь ваш легион атакует монстра:",
+  "fr": "Votre légion maintenant attaque le monstre :",
+  "nl": "Je legioen valt nu het monster aan:",
+  "pl": "Twój legion atakuje teraz potwora:",
+  "ph": "Inaatake na ngayon ng iyong lehiyon ang halimaw:",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662947953116"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662947953116"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e92d01a554518205961ea"
+  },
+  "key": "congratulation",
+  "en": "Congratulations!",
+  "es": "Felicidades!",
+  "cn": "恭喜！",
+  "pt": "Parabéns!",
+  "tr": "Tebrikler!",
+  "ru": "Поздравляем!",
+  "fr": "Félicitations!",
+  "nl": "Gefeliciteerd!",
+  "pl": "Gratulacje!",
+  "ph": "Binabati kita!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948048341"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948048341"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e93181a554518205961ee"
+  },
+  "key": "congSubtitle1",
+  "en": "You defeated this monster!",
+  "es": "Has derrotado a este monstruo!",
+  "cn": "你打败了这个怪物！",
+  "pt": "Você derrotou este monstro!",
+  "tr": "Bu canavarı yendin!",
+  "ru": "Вы победили этого монстра!",
+  "fr": "Vous avez vaincu ce monstre !",
+  "nl": "Je hebt dit monster verslagen!",
+  "pl": "Pokonałeś tego potwora!",
+  "ph": "Natalo mo ang halimaw na ito!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948120128"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948120128"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e939a1a554518205961f2"
+  },
+  "key": "congSubtitle2",
+  "en": "You have been rewarded",
+  "es": "Has sido recompensado",
+  "cn": "你得到了回报",
+  "pt": "Você foi recompensado",
+  "tr": "Ödüllendirildin",
+  "ru": "Вы были вознаграждены",
+  "fr": "Vous avez été récompensé",
+  "nl": "Je bent beloond",
+  "pl": "Zostałeś nagrodzony",
+  "ph": "Ikaw ay ginantimpalaan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948250988"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948250988"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e93d41a554518205961f6"
+  },
+  "key": "congSubtitle3",
+  "en": "To win you need to roll equal or less than:",
+  "es": "Para ganar necesitas tirar igual o menos que:",
+  "cn": "要获胜，您需要滚动等于或小于：",
+  "pt": "Para ganhar você precisa rolar igual ou menor que:",
+  "tr": "Kazanmak için aşağıdakilere eşit veya daha az atış yapmanız gerekir:",
+  "ru": "Чтобы выиграть, вам нужно выбросить меньше или равно:",
+  "fr": "Pour gagner, vous devez obtenir un résultat égal ou inférieur à :",
+  "nl": "Om te winnen moet je gelijk of minder gooien dan:",
+  "pl": "Aby wygrać, musisz wyrzucić równą lub mniejszą niż:",
+  "ph": "Upang manalo kailangan mong gumulong katumbas o mas mababa sa:",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948308069"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948308069"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e943f1a554518205961fa"
+  },
+  "key": "shareYourSuccess",
+  "en": "Share Your Success!",
+  "es": "¡Comparta su éxito!",
+  "cn": "分享您的成功！",
+  "pt": "Compartilhe seu sucesso!",
+  "tr": "Başarını Paylaş!",
+  "ru": "Поделитесь своим успехом!",
+  "fr": "Partagez votre succès !",
+  "nl": "Deel uw succes!",
+  "pl": "Podziel się swoim sukcesem!",
+  "ph": "Ibahagi ang Iyong Tagumpay!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948415258"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948415258"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e94c21a554518205961fe"
+  },
+  "key": "yourRollTitle",
+  "en": "Your roll is",
+  "es": "Tu tirada es de",
+  "cn": "你的卷是",
+  "pt": "Seu roll é",
+  "tr": "Atış Miktarın",
+  "ru": "Ваш рулон",
+  "fr": "Votre rouleau est",
+  "nl": "Je hebt gegooid",
+  "pl": "Twoja rzut to",
+  "ph": "Ang iyong rolyo ay",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948546404"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948546404"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e95061a55451820596202"
+  },
+  "key": "continue",
+  "en": "Continue",
+  "es": "Continuar",
+  "cn": "继续",
+  "pt": "Continuar",
+  "tr": "Devam et",
+  "ru": "Продолжать",
+  "fr": "Continuez",
+  "nl": "Doorgaan",
+  "pl": "Kontyntynuj",
+  "ph": "Magpatuloy",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948614493"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948614493"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e956e1a55451820596206"
+  },
+  "key": "defeatTitle",
+  "en": "Better luck next time...",
+  "es": "Mejor suerte la próxima vez...",
+  "cn": "下次好运...",
+  "pt": "Mais sorte da próxima vez...",
+  "tr": "Bir Dahaki Sefere İyi Şanslar...",
+  "ru": "Повезет в следующий раз...",
+  "fr": "Plus de chance la prochaine fois...",
+  "nl": "Volgende keer beter...",
+  "pl": "Następnym razem będziesz miał więcej szczęścia...",
+  "ph": "Baka palarin sa susunod...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948718845"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948718845"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e95b71a5545182059620a"
+  },
+  "key": "defeatSubtitle1",
+  "en": "Your legion did not succeed in getting Bloodstone from this monster.",
+  "es": "Tu legión no logró obtener Bloodstone de este monstruo hoy.",
+  "cn": "你的军团今天没能从这个怪物那里得到bloodstone.",
+  "pt": "Sua legião não conseguiu pegar Bloodstone deste monstro.",
+  "tr": "Lejyonunuz bugün bu canavardan Kantaşı almayı başaramadı.",
+  "ru": "Сегодня вашему легиону не удалось получить Кровавый камень от этого монстра.",
+  "fr": "Votre légion n'a pas réussi à obtenir Bloodstone de ce monstre aujourd'hui.",
+  "nl": "Je legioen is er niet in geslaagd om Bloodstone van dit monster te winning.",
+  "pl": "Twojemu legionowi nie udało się zdobyć Bloodstone tego potwora.",
+  "ph": "Ang iyong lehiyon ay hindi nagtagumpay sa pagkuha ng Bloodstone mula sa halimaw na ito ngayon.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662948791592"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662948791592"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e97011a55451820596210"
+  },
+  "key": "defeatSubtitle2",
+  "en": "To win you need to roll equal or less than:",
+  "es": "Para ganar necesitas tirar igual o menos que:",
+  "cn": "要获胜，您需要滚动等于或小于：",
+  "pt": "Para ganhar você precisa rolar igual ou menor que:",
+  "tr": "Kazanmak için aşağıdakilere eşit veya daha az atış yapmanız gerekir:",
+  "ru": "Чтобы выиграть, вам нужно выбросить меньше или равно:",
+  "fr": "Pour gagner, vous devez obtenir un résultat égal ou inférieur à :",
+  "nl": "Om te winnen moet je gelijk of minder gooien dan:",
+  "pl": "Aby wygrać, musisz wyrzucić równą lub mniejszą niż:",
+  "ph": "Upang manalo kailangan mong gumulong katumbas o mas mababa sa:",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949121535"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949121535"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e97721a55451820596214"
+  },
+  "key": "huntTime",
+  "en": "Hunting Time!",
+  "es": "Tiempo de caza!",
+  "cn": "狩猎时间！",
+  "pt": "Hora da Caça!",
+  "tr": "Av Zamanı!",
+  "ru": "Время охоты!",
+  "fr": "Temps de chasse !",
+  "nl": "Tijd om te jagen!",
+  "pl": "Czas polowania!",
+  "ph": "Oras ng Panghuhuli!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949234862"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949234862"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e97ce1a55451820596218"
+  },
+  "key": "revealResult",
+  "en": "Reveal Result",
+  "es": "Revelar resultado",
+  "cn": "显示结果",
+  "pt": "Revelar resultado",
+  "tr": "Sonucu Göster",
+  "ru": "Показать результат",
+  "fr": "Révéler le résultat",
+  "nl": "Resultaat onthullen",
+  "pl": "Ujawnij wynik",
+  "ph": "Ibunyag ang Resulta",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949326131"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949326131"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e983d1a5545182059621c"
+  },
+  "key": "listOnMarketplace",
+  "en": "List On Marketplace",
+  "es": "Listar en el Mercado",
+  "cn": "列表到市场",
+  "pt": "Listar no mercado",
+  "tr": "Markette Listele",
+  "ru": "Список на рынок",
+  "fr": "Liste sur le marché",
+  "nl": "Verkoop op de markt",
+  "pl": "Dodaj na rynek",
+  "ph": "Listahan Sa Pamilihan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949437390"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949437390"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e98df1a55451820596220"
+  },
+  "key": "priceIn",
+  "en": "Price In",
+  "es": "Precio en",
+  "cn": "价格在",
+  "pt": "Preço em",
+  "tr": "Fiyat",
+  "ru": "Цена в",
+  "fr": "Prix en",
+  "nl": "Prijs in",
+  "pl": "Cena w",
+  "ph": "Presyo Sa",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949599503"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949599503"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e99681a55451820596224"
+  },
+  "key": "payMarketplaceTax",
+  "en": "If you sold, you will pay marketplace tax.",
+  "es": "Si vendió, pagará el impuesto de mercado.",
+  "cn": "如果您出售，您将支付市场税。",
+  "pt": "Se você vendeu, pagará imposto de mercado.",
+  "tr": "Sattıysanız, pazar vergisi ödersiniz.",
+  "ru": "Если вы продали, вы будете платить рыночный налог.",
+  "fr": "Si vous avez vendu, vous paierez la taxe de marché.",
+  "nl": "Als je verkocht, betaal je marktplaatsbelasting.",
+  "pl": "Jeśli sprzedałeś, zapłacisz podatek od rynku.",
+  "ph": "Kung nagbebenta ka, magbabayad ka ng buwis sa pamilihan.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662949736756"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662949736756"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9b0a1a55451820596228"
+  },
+  "key": "sell",
+  "en": "Sell",
+  "es": "Vender",
+  "cn": "卖",
+  "pt": "Vender",
+  "tr": "Sat",
+  "ru": "Продавать",
+  "fr": "Vendre",
+  "nl": "Verkoop",
+  "pl": "Sprzedaj",
+  "ph": "Ibenta",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662950154327"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662950154327"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9b641a5545182059622c"
+  },
+  "key": "maxSellPrice",
+  "en": "The price must be lower than 5,000,000.",
+  "es": "El precio debe ser inferior a 5,000,000.",
+  "cn": "价格必须小于 5,000,000。",
+  "pt": "O preço deve ser inferior a 5,000,000.",
+  "tr": "Fiyat 5,000,000'dan az olmalıdır.",
+  "ru": "Цена должна быть меньше 5,000,000.",
+  "fr": "Le prix doit être inférieur à 5,000,000.",
+  "nl": "De prijs moet lager zijn dan 5.000.000.",
+  "pl": "Cena musi być mniejsza niż 5,000,000.",
+  "ph": "Ang presyo ay dapat na mas mababa sa 5,000,000.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662950244940"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662950244940"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9ece1a55451820596230"
+  },
+  "key": "massHunt",
+  "en": "Mass Hunt",
+  "es": "Caza masiva",
+  "cn": "大规模狩猎",
+  "pt": "Caça em Massa",
+  "tr": "Toplu Av",
+  "ru": "Массовая охота",
+  "fr": "Chasse en masse",
+  "nl": "Massaal Jagen",
+  "pl": "Masowe polowanie",
+  "ph": "Mass Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951118358"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951118358"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9f331a55451820596234"
+  },
+  "key": "massHuntResult",
+  "en": "Mass Hunt Result",
+  "es": "Resultado de la cacería masiva",
+  "cn": "大规模狩猎结果",
+  "pt": "Resultado da caçada em massa",
+  "tr": "Toplu Av Sonucu",
+  "ru": "Результат массовой охоты",
+  "fr": "Résultat de la chasse de masse",
+  "nl": "Resultaat massajacht",
+  "pl": "Wynik masowego polowania",
+  "ph": "Resulta ng Mass Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951219318"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951219318"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9f8b1a55451820596238"
+  },
+  "key": "maxRoll",
+  "en": "Max roll to win",
+  "es": "Rollo máximo para ganar",
+  "cn": "最大滚动获胜",
+  "pt": "Rolagem máxima para ganhar",
+  "tr": "Kazanmak için maksimum rulo",
+  "ru": "Максимальный бросок, чтобы выиграть",
+  "fr": "Lancer max pour gagner",
+  "nl": "Max rol om te winnen",
+  "pl": "Maksymalna liczba rzutów, aby wygrać",
+  "ph": "Max roll para manalo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951307912"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951307912"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9fd01a5545182059623c"
+  },
+  "key": "yourRoll",
+  "en": "Your roll",
+  "es": "tu rollo",
+  "cn": "你的卷",
+  "pt": "Seu rolo",
+  "tr": "senin rulon",
+  "ru": "Ваш рулон",
+  "fr": "Votre rouleau",
+  "nl": "Jouw rol",
+  "pl": "Twoja rolka",
+  "ph": "Iyong rolyo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951376683"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951376683"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631e9ff91a55451820596240"
+  },
+  "key": "won",
+  "en": "WON",
+  "es": "GANADO",
+  "cn": "韩元",
+  "pt": "VENCEU",
+  "tr": "KAZANDI",
+  "ru": "ПОБЕДИЛ",
+  "fr": "GAGNÉ",
+  "nl": "WON",
+  "pl": "WYGRAŁA",
+  "ph": "NANALO",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951417738"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951417738"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea06d1a55451820596244"
+  },
+  "key": "lost",
+  "en": "LOST",
+  "es": "PERDIÓ",
+  "cn": "丢失",
+  "pt": "PERDIDO",
+  "tr": "KAYIP",
+  "ru": "ПОТЕРЯННЫЙ",
+  "fr": "PERDU",
+  "nl": "VERLOREN",
+  "pl": "STRACONY",
+  "ph": "NAWALA",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951533293"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951533293"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea1371a55451820596248"
+  },
+  "key": "revealBeasts",
+  "en": "Reveal Beasts",
+  "es": "Revelar bestias",
+  "cn": "揭示野兽",
+  "pt": "Revelar Bestas",
+  "tr": "Canavarları Göster",
+  "ru": "Раскрыть зверей",
+  "fr": "Révéler les bêtes",
+  "nl": "Beesten onthullen",
+  "pl": "Ujawnij bestie",
+  "ph": "Magbunyag ng mga Hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951735505"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951735505"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea1771a5545182059624c"
+  },
+  "key": "revealWarriors",
+  "en": "Reveal Warriors",
+  "es": "Revelar guerreros",
+  "cn": "揭示勇士",
+  "pt": "Revelar Guerreiros",
+  "tr": "Savaşçıları Göster",
+  "ru": "Выявить воинов",
+  "fr": "Révéler les guerriers",
+  "nl": "Onthul krijgers",
+  "pl": "Ujawnij wojowników",
+  "ph": "Ipakita ang mga Mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951799792"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951799792"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea1ce1a55451820596250"
+  },
+  "key": "updatePrice",
+  "en": "Update Price",
+  "es": "Actualizar Precio",
+  "cn": "更新价格",
+  "pt": "Atualizar preço",
+  "tr": "Fiyatı Güncelle",
+  "ru": "цена обновления",
+  "fr": "Mettre à jour le prix",
+  "nl": "Prijs bijwerken",
+  "pl": "Zaktualizuj cenę",
+  "ph": "I-update ang Presyo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951886548"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951886548"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea22e1a55451820596254"
+  },
+  "key": "confirm",
+  "en": "Confirm",
+  "es": "Confirmar",
+  "cn": "确认",
+  "pt": "Confirmar",
+  "tr": "Onayla",
+  "ru": "Подтверждать",
+  "fr": "Confirmer",
+  "nl": "Bevestigen",
+  "pl": "Potwierdzać",
+  "ph": "Kumpirmahin",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662951982458"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662951982458"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea2731a55451820596258"
+  },
+  "key": "plzSelectWallet",
+  "en": "Which wallet do you want to pay with?",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952051843"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279346829"
+    }
+  },
+  "__v": 0,
+  "cn": "你想用哪个钱包付款？",
+  "es": "¿Con qué monedero quieres pagar?",
+  "fr": "Avec quel portefeuille souhaitez-vous payer ?",
+  "nl": "Met welke portemonnee wil je betalen?",
+  "ph": "Aling wallet ang gusto mong bayaran?",
+  "pl": "Którym portfelem chcesz zapłacić?",
+  "pt": "Com qual carteira você quer pagar?",
+  "ru": "Каким кошельком вы хотите расплачиваться?",
+  "tr": "Hangi cüzdan ile ödeme yapmak istiyorsunuz?"
+},{
+  "_id": {
+    "$oid": "631ea2a91a5545182059625c"
+  },
+  "key": "metamask",
+  "en": "Metamask",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952105426"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279397434"
+    }
+  },
+  "__v": 0,
+  "cn": "元掩码",
+  "es": "Metamáscara",
+  "fr": "Métamasque",
+  "nl": "Metamask",
+  "ph": "Metamask",
+  "pl": "Metamaska",
+  "pt": "Metamáscara",
+  "ru": "Метамаска",
+  "tr": "metamaske"
+},{
+  "_id": {
+    "$oid": "631ea2c01a55451820596260"
+  },
+  "key": "reinvestedWallet",
+  "en": "Reinvested Wallet",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952128007"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279441610"
+    }
+  },
+  "__v": 0,
+  "cn": "再投资钱包",
+  "es": "Billetera reinvertida",
+  "fr": "Portefeuille réinvesti",
+  "nl": "Herbelegde portemonnee",
+  "ph": "Na-reinvest na Wallet",
+  "pl": "Reinwestowany portfel",
+  "pt": "Carteira reinvestida",
+  "ru": "Реинвестированный кошелек",
+  "tr": "Yeniden Yatırım Yapılan Cüzdan"
+},{
+  "_id": {
+    "$oid": "631ea2d51a55451820596264"
+  },
+  "key": "voucher",
+  "en": "Voucher",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952149356"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279488187"
+    }
+  },
+  "__v": 0,
+  "cn": "代金券",
+  "es": "Vale",
+  "fr": "Bon",
+  "nl": "Waardebon",
+  "ph": "Voucher",
+  "pl": "Talon",
+  "pt": "Comprovante",
+  "ru": "Ваучер",
+  "tr": "kupon"
+},{
+  "_id": {
+    "$oid": "631ea31f1a55451820596268"
+  },
+  "key": "plzRevealBeast",
+  "en": "You have summoned Beasts! Go to the Beasts page to reveal them.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952223799"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279541215"
+    }
+  },
+  "__v": 0,
+  "cn": "你召唤了野兽！ 转到野兽页面以显示它们。",
+  "es": "¡Has convocado Bestias! Ve a la página de Bestias para revelarlas.",
+  "fr": "Vous avez invoqué des Bêtes ! Rendez-vous sur la page des bêtes pour les révéler.",
+  "nl": "Je hebt Beasts opgeroepen! Ga naar de Beasts-pagina om ze te onthullen.",
+  "ph": "Ipinatawag mo ang mga Hayop! Pumunta sa pahina ng Beasts upang ipakita ang mga ito.",
+  "pl": "Wezwałeś Bestie! Przejdź do strony Bestie, aby je ujawnić.",
+  "pt": "Você convocou Bestas! Vá para a página Beasts para revelá-los.",
+  "ru": "Вы призвали Зверей! Перейдите на страницу зверей, чтобы открыть их.",
+  "tr": "Canavarları çağırdın! Onları ortaya çıkarmak için Canavarlar sayfasına gidin."
+},{
+  "_id": {
+    "$oid": "631ea32a1a5545182059626c"
+  },
+  "key": "plzRevealWarrior",
+  "en": "You have summoned Warriors! Go to the Warriors page to reveal them.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952234326"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279590489"
+    }
+  },
+  "__v": 0,
+  "cn": "你召唤了勇士！ 前往勇士页面展示它们。",
+  "es": "¡Has invocado guerreros! Ve a la página de Guerreros para revelarlos.",
+  "fr": "Vous avez invoqué des Guerriers ! Rendez-vous sur la page des Guerriers pour les révéler.",
+  "nl": "Je hebt Warriors opgeroepen! Ga naar de Warriors-pagina om ze te onthullen.",
+  "ph": "Ipinatawag mo ang mga Mandirigma! Pumunta sa pahina ng Warriors para ipakita ang mga ito.",
+  "pl": "Wezwałeś Wojowników! Przejdź na stronę Wojowników, aby je ujawnić.",
+  "pt": "Você convocou guerreiros! Vá para a página Warriors para revelá-los.",
+  "ru": "Вы призвали воинов! Перейдите на страницу воинов, чтобы показать их.",
+  "tr": "Savaşçıları çağırdınız! Onları ortaya çıkarmak için Warriors sayfasına gidin."
+},{
+  "_id": {
+    "$oid": "631ea3851a55451820596270"
+  },
+  "key": "summonBeastQuantity",
+  "en": "SUMMON BEASTS QUANTITY",
+  "es": "Invocar cantidad de bestias",
+  "cn": "召唤兽数量",
+  "pt": "QUANTIDADE DE BESTAS INVOCADAS",
+  "tr": "Çağrılan Canavar Miktarı",
+  "ru": "Призыв зверя Количество",
+  "fr": "Quantité d'invocation de bête",
+  "nl": "Hoeveelheid aan te kopen beesten",
+  "pl": "Ilość Przyzwania Bestii",
+  "ph": "Ipatawag ang Dami ng Hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952325863"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952325863"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea4371a55451820596274"
+  },
+  "key": "summonWarriorQuantity",
+  "en": "SUMMON WARRIORS QUANTITY",
+  "es": "Invocar cantidad de guerreros",
+  "cn": "召唤勇士数量",
+  "pt": "QUANTIDADE DE GUERREIROS INVOCADOS",
+  "tr": "Çağrılan Savaşçı Miktarı",
+  "ru": "Призыв Воина Количество",
+  "fr": "Quantité d'invocation de guerrier",
+  "nl": "Hoeveelheid aan te kopen krijgers",
+  "pl": "Ilość przywołania wojownika",
+  "ph": "Ipatawag ang Dami ng Mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952503204"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952503204"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea56a1a55451820596282"
+  },
+  "key": "summonBeasts",
+  "en": "Summon Beasts",
+  "es": "Invocar Bestias",
+  "cn": "召唤兽",
+  "pt": "Invocar Besta",
+  "tr": "Canavarları Çağır",
+  "ru": "Призвать зверя",
+  "fr": "Invoquer bête",
+  "nl": "Roep Beesten op",
+  "pl": "Przyzwanie bestii",
+  "ph": "Magtawag ng Hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952810700"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952810700"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea5fc1a55451820596286"
+  },
+  "key": "currentBeasts",
+  "en": "Current Beasts",
+  "es": "Bestias actuales",
+  "cn": "当前的野兽",
+  "pt": "Bestas Atuais",
+  "tr": "Mevcut Canavarlar",
+  "ru": "Текущие звери",
+  "fr": "Bêtes actuelles",
+  "nl": "Huidige Beesten",
+  "pl": "Obecne bestie",
+  "ph": "Kasalukuyang mga Hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662952956617"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662952956617"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea6391a5545182059628a"
+  },
+  "key": "createLegion",
+  "en": "Create Legion",
+  "es": "Crear Legión",
+  "cn": "创造军团",
+  "pt": "Criar Legião",
+  "tr": "Lejyon Oluştur",
+  "ru": "Создать Легион",
+  "fr": "Créer une légion",
+  "nl": "Creëer een Legioen",
+  "pl": "Stwórz legion",
+  "ph": "Lumikha ng Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662953017905"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662953017905"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea6731a5545182059628e"
+  },
+  "key": "warriorCapacity",
+  "en": "Total Capacity of All Beasts",
+  "es": "Capacidad máxima de guerreros",
+  "cn": "最大勇士总数量",
+  "pt": "Capacidade Máxima Total de Guerreiros",
+  "tr": "Toplam Maksimum Savaşçı Kapasitesi",
+  "ru": "Общая максимальная вместимость воинов",
+  "fr": "Capacité totale maximale des guerriers",
+  "nl": "Maximum capaciteit van Gerreros",
+  "pl": "Maksymalna pojemność wszystkich wojowników",
+  "ph": "Kabuuang Kapasidad ng mga Mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662953075168"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662953075168"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea6ab1a55451820596292"
+  },
+  "key": "selectAll",
+  "en": "Select All",
+  "es": "Seleccionar todo",
+  "cn": "全选",
+  "pt": "Selecionar tudo",
+  "tr": "Hepsini seç",
+  "ru": "Выбрать все",
+  "fr": "Tout sélectionner",
+  "nl": "Selecteer alles",
+  "pl": "Zaznacz wszystko",
+  "ph": "Piliin lahat",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662953131544"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662953131544"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea6f21a55451820596296"
+  },
+  "key": "deSelectAll",
+  "en": "Deselect All",
+  "es": "Deseleccionar todo",
+  "cn": "取消全選",
+  "pt": "Desmarcar todos",
+  "tr": "Tüm seçimleri kaldır",
+  "ru": "Убрать выделение со всего",
+  "fr": "Tout déselectionner",
+  "nl": "Deselecteer alles",
+  "pl": "Odznacz wszystkie",
+  "ph": "Alisin sa pagkakapili ang Lahat",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662953202191"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662953202191"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ea7391a5545182059629a"
+  },
+  "key": "massExecute",
+  "en": "Mass Execute",
+  "es": "ejecución masiva",
+  "cn": "批量执行",
+  "pt": "Execução em massa",
+  "tr": "Toplu Yürütme",
+  "ru": "Массовая казнь",
+  "fr": "Exécuter en masse",
+  "nl": "massa-executie",
+  "pl": "Masowe wykonanie",
+  "ph": "Isagawa ang Misa",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662953273376"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662953273376"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f00701a5545182059629e"
+  },
+  "key": "summonLegionSuccessful",
+  "en": "Your Legion is created.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976112592"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279654173"
+    }
+  },
+  "__v": 0,
+  "cn": "您的军团已创建。",
+  "es": "Se crea tu Legión.",
+  "fr": "Votre Légion est créée.",
+  "nl": "Je Legioen is gemaakt.",
+  "ph": "Ang iyong Legion ay nilikha.",
+  "pl": "Twój Legion został stworzony.",
+  "pt": "Sua Legião está criada.",
+  "ru": "Ваш Легион создан.",
+  "tr": "Lejyonunuz oluşturuldu."
+},{
+  "_id": {
+    "$oid": "631f00c21a554518205962a2"
+  },
+  "key": "notEnoughUSDInReinvestWalletToCreateLegion",
+  "en": "You do not have enough $USD in your Reinvest Wallet to create a Legion.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976194869"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279702523"
+    }
+  },
+  "__v": 0,
+  "cn": "您的再投资钱包中没有足够的美元来创建军团。",
+  "es": "No tienes suficientes $USD en tu Reinvest Wallet para crear una Legión.",
+  "fr": "Vous n'avez pas assez de $USD dans votre portefeuille de réinvestissement pour créer une légion.",
+  "nl": "Je hebt niet genoeg $USD in je Reinvest Wallet om een Legion te creëren.",
+  "ph": "Wala kang sapat na $USD sa iyong Reinvest Wallet para gumawa ng Legion.",
+  "pl": "Nie masz wystarczającej ilości $USD w swoim portfelu reinwestowania, aby utworzyć legion.",
+  "pt": "Você não tem $USD suficiente em sua Carteira de Reinvestimento para criar uma Legião.",
+  "ru": "В вашем кошельке реинвестирования недостаточно долларов США для создания легиона.",
+  "tr": "Yeniden Yatırım Cüzdanınızda bir Lejyon oluşturmak için yeterli ABD Doları yok."
+},{
+  "_id": {
+    "$oid": "631f00eb1a554518205962a6"
+  },
+  "key": "notEnoughUSDInVoucherWalletToCreateLegion",
+  "en": "You do not have enough $USD in your Voucher Wallet to create a Legion.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976235722"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279753425"
+    }
+  },
+  "__v": 0,
+  "cn": "您的凭证钱包中没有足够的美元来创建军团。",
+  "es": "No tiene suficientes $USD en su billetera de vales para crear una Legión.",
+  "fr": "Vous n'avez pas assez de $USD dans votre porte-monnaie pour créer une Légion.",
+  "nl": "Je hebt niet genoeg $USD in je Voucher Wallet om een Legion te creëren.",
+  "ph": "Wala kang sapat na $USD sa iyong Voucher Wallet para gumawa ng Legion.",
+  "pl": "Nie masz wystarczająco dużo $USD w swoim portfelu kuponów, aby utworzyć legion.",
+  "pt": "Você não tem $USD suficiente em sua carteira de vouchers para criar uma Legião.",
+  "ru": "У вас недостаточно долларов США в вашем ваучерном кошельке для создания легиона.",
+  "tr": "Bir Lejyon oluşturmak için Kupon Cüzdanınızda yeterli $USD yok."
+},{
+  "_id": {
+    "$oid": "631f01431a554518205962aa"
+  },
+  "key": "create",
+  "en": "Create",
+  "es": "Crear",
+  "cn": "创造",
+  "pt": "Criar",
+  "tr": "Yaratmak",
+  "ru": "Создавать",
+  "fr": "Créer",
+  "nl": "Creëren",
+  "pl": "Tworzyć",
+  "ph": "Lumikha",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976323369"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976323369"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f01a11a554518205962ae"
+  },
+  "key": "notEnoughBeasts",
+  "en": "Not enough beasts",
+  "es": "No hay suficientes bestias",
+  "cn": "野兽不够",
+  "pt": "Não há bestas suficientes",
+  "tr": "Yeterli canavar yok",
+  "ru": "Недостаточно зверей",
+  "fr": "Pas assez de bêtes",
+  "nl": "Er zijn niet genoeg beesten",
+  "pl": "Za mało bestii",
+  "ph": "Hindi sapat ang mga hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976417784"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976417784"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f01d11a554518205962b2"
+  },
+  "key": "min",
+  "en": "min",
+  "es": "min",
+  "cn": "最少需要",
+  "pt": "min",
+  "tr": "dk",
+  "ru": "мин",
+  "fr": "Min",
+  "nl": "min",
+  "pl": "min",
+  "ph": "min",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976465985"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976465985"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f02291a554518205962b6"
+  },
+  "key": "needed",
+  "en": "needed",
+  "es": "necesario",
+  "pt": "necessário",
+  "tr": "gerekli",
+  "ru": "требуется",
+  "fr": "nécessaire",
+  "nl": "nodig",
+  "pl": "potrzebne",
+  "ph": "kailangan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976553088"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976553088"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f02591a554518205962ba"
+  },
+  "key": "ShortFeeToolTip",
+  "en": "Fee",
+  "es": "Tarifa",
+  "cn": "费用",
+  "pt": "Taxa",
+  "tr": "Ücret",
+  "ru": "тариф",
+  "fr": "Frais",
+  "nl": "Tarief",
+  "pl": "Opłata",
+  "ph": "Bayad",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976601667"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976601667"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f02a21a554518205962be"
+  },
+  "key": "LongFeeToolTip",
+  "en": "Fee to create your legion is ",
+  "es": "La tarifa para crear tu legión es",
+  "cn": "创造军团的费用是",
+  "pt": "A taxa para criar sua legião é",
+  "tr": "Lejyonunuzu oluşturma ücreti",
+  "ru": "Плата за создание своего легиона составляет",
+  "fr": "Les frais pour créer votre légion sont",
+  "nl": "De kosten om je legioen te creëren is",
+  "pl": "Opłata za utworzenie legionu wynosi",
+  "ph": "Ang bayad sa paggawa ng iyong lehiyon ay",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976674858"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976674858"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f037c1a554518205962c2"
+  },
+  "key": "back",
+  "en": "back",
+  "es": "Atrás",
+  "cn": "后退",
+  "pt": "Voltar",
+  "tr": "Geri",
+  "ru": "Назад",
+  "fr": "Dos",
+  "nl": "Terug",
+  "pl": "Wstecz",
+  "ph": "Bumalik",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976892471"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976892471"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f03b01a554518205962c6"
+  },
+  "key": "btnBackToLegions",
+  "en": "Back to your Legions",
+  "es": "Volver a sus Legiones",
+  "cn": "回到你的军团",
+  "pt": "De volta às suas Legiões",
+  "tr": "Lejyonlarınıza geri dönün",
+  "ru": "Назад к своим легионам",
+  "fr": "Retournez à vos légions",
+  "nl": "Terug naar je legioenen",
+  "pl": "Powrót do twoich legionów",
+  "ph": "Bumalik sa iyong mga Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662976944738"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662976944738"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f040d1a554518205962ca"
+  },
+  "key": "noMintedLegion",
+  "en": "You need to create a legion to start hunting!",
+  "es": "¡Necesitas crear una legión primero para comenzar a cazar!",
+  "cn": "您需要先创建一个军团才能开始狩猎！",
+  "pt": "Você precisa criar uma legião primeiro para começar a caçar!",
+  "tr": "Avlanmaya başlamak için önce bir lejyon oluşturmanız gerekiyor!",
+  "ru": "Вам нужно сначала создать легион, чтобы начать охоту!",
+  "fr": "Vous devez d'abord créer une légion pour commencer à chasser !",
+  "nl": "Je moet eerst een legioen creëren om te kunnen jagen!",
+  "pl": "Aby rozpocząć polowanie, musisz najpierw stworzyć legion!",
+  "ph": "Kailangan mo munang lumikha ng isang lehiyon upang simulan ang panghuhuli!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977037277"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977037277"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f04661a554518205962ce"
+  },
+  "key": "hSymbol",
+  "en": "H",
+  "es": "C",
+  "cn": "S",
+  "pt": "C",
+  "tr": "A",
+  "ru": "O",
+  "fr": "C",
+  "nl": "J",
+  "pl": "P",
+  "ph": "H",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977126698"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977126698"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f04b61a554518205962d2"
+  },
+  "key": "suppliesNeeded",
+  "en": "Supplies needed",
+  "es": "Se necesitan suministros",
+  "cn": "需要用品",
+  "pt": "Suprimentos são necessários",
+  "tr": "Malzemeler gerekli",
+  "ru": "Необходимы расходные материалы",
+  "fr": "Des fournitures sont nécessaires",
+  "nl": "Benodigdheden zijn nodig",
+  "pl": "Potrzebne są materiały eksploatacyjne",
+  "ph": "Mga kailangan na kagamitan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977206256"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977206256"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f053f1a554518205962d6"
+  },
+  "key": "huntHistory",
+  "en": "Hunt History",
+  "es": "Historial de caza",
+  "cn": "狩猎历史",
+  "pt": "Histórico de caça",
+  "tr": "Av Tarihi",
+  "ru": "История охоты",
+  "fr": "Historique de la chasse",
+  "nl": "Jachtgeschiedenis",
+  "pl": "Historia polowań",
+  "ph": "Kasaysayan ng Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977343873"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977359117"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f05fa1a554518205962e0"
+  },
+  "key": "loadingLegions",
+  "en": "Loading Legions...",
+  "es": "Cargando Legiones...",
+  "cn": "装载军团...",
+  "pt": "Carregando Legiões...",
+  "tr": "Lejyonları Yükleme... ",
+  "ru": "Загрузка легионов...",
+  "fr": "Chargement des légions...",
+  "nl": "Legioenen aan het laden...",
+  "pl": "Ładowanie legionów...",
+  "ph": "Naglo-load ng Lehiyon...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977530511"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977530511"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f064b1a554518205962e4"
+  },
+  "key": "buyingSupplies",
+  "en": "Buying Supplies...",
+  "es": "Compra de Suministros...",
+  "cn": "购买用品...",
+  "pt": "Compra de Suprimentos...",
+  "tr": "Malzeme Satın Alma...",
+  "ru": "Покупка расходных материалов...",
+  "fr": "Acheter des fournitures...",
+  "nl": "Benodigdheden kopen...",
+  "pl": "Kupowanie materiałów eksploatacyjnych...",
+  "ph": "Pagbili ng kagamitan...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662977611373"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662977611373"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4afa1a554518205962e8"
+  },
+  "key": "availableWarrior",
+  "en": "Available Warriors",
+  "es": "Guerreros disponibles",
+  "cn": "可用的勇士",
+  "pt": "Guerreiros Disponíveis",
+  "tr": "Mevcut Savaşçılar",
+  "ru": "Доступные воины",
+  "fr": "Guerriers disponibles",
+  "nl": "Beschikbare Krijgers",
+  "pl": "Dostępni Wojownicy",
+  "ph": "Magagamit na mga Mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995194674"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995194674"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4b8d1a554518205962ec"
+  },
+  "key": "availableBeast",
+  "en": "Available Beasts",
+  "es": "Bestias disponibles",
+  "cn": "可用的野兽",
+  "pt": "Bestas Disponíveis ",
+  "tr": "Mevcut Canavarlar",
+  "ru": "Доступные звери",
+  "fr": "Bêtes disponibles",
+  "nl": "Beschikbare Beesten",
+  "pl": "Dostępne bestie",
+  "ph": "Magagamit na mga Hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995341445"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995341445"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4bc41a554518205962f0"
+  },
+  "key": "currentLegion",
+  "en": "Current Legions",
+  "es": "Legiones actuales",
+  "cn": "当前军团",
+  "pt": "Legiões Atuais",
+  "tr": "Mevcut Lejyonlar",
+  "ru": "Текущие легионы",
+  "fr": "Légions actuelles",
+  "nl": "Huidige Legioenen",
+  "pl": "Obecne Legiony",
+  "ph": "Kasalukuyang Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995396132"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995396132"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4c801a554518205962f4"
+  },
+  "key": "totalAp",
+  "en": "Total AP",
+  "es": "AP Total",
+  "cn": "总 AP",
+  "pt": "PA total",
+  "tr": "Toplam AP",
+  "ru": "Всего AP",
+  "fr": "AP total",
+  "nl": "Totale AP",
+  "pl": "Razem AP",
+  "ph": "Kabuuang AP",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995584321"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995584321"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4cd31a554518205962f8"
+  },
+  "key": "hunt",
+  "en": "Hunt",
+  "es": "Cazar",
+  "cn": "打猎",
+  "pt": "Caçar",
+  "tr": "Avlanmak",
+  "ru": "Охота",
+  "fr": "Chasser",
+  "nl": "Jagen",
+  "pl": "Polój",
+  "ph": "Manghuli",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995667115"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995667115"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f4d131a554518205962fc"
+  },
+  "key": "top3Legions",
+  "en": "Top 3 Legions",
+  "es": "Las 3 mejores legiones",
+  "cn": "前三名军团",
+  "pt": "Top 3 Legiões",
+  "tr": "En İyi 3 Lejyon",
+  "ru": "3 лучших легиона",
+  "fr": "Top 3 des légions",
+  "nl": "Top 3 legioenen",
+  "pl": "3 Najlepsze legiony",
+  "ph": "Nangungunang 3 Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662995731412"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662995731412"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f50021a55451820596300"
+  },
+  "key": "marketplace",
+  "en": "Marketplace",
+  "es": "Mercado",
+  "cn": "市场",
+  "pt": "Mercado",
+  "tr": "Marketplace",
+  "ru": "Торговая площадка",
+  "fr": "Marché",
+  "nl": "Markt",
+  "pl": "Rynek",
+  "ph": "Pamilihan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1662996482466"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1662996482466"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f64ce1a55451820596304"
+  },
+  "key": "updateLegion",
+  "en": "Update Legion",
+  "es": "Actualizar Legión",
+  "cn": "更新军团",
+  "pt": "Atualizar Legião",
+  "tr": "Lejyonu Güncelle",
+  "ru": "Обновить Легион",
+  "fr": "Mettre à jour Légion",
+  "nl": "Legioen bijwerken ",
+  "pl": "Aktualizuj Legion",
+  "ph": "I-update ang Legion",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663001806812"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663001806812"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f66d91a55451820596308"
+  },
+  "key": "updateLegionSuccessful",
+  "en": "Your Legion is updated.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663002329470"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279805028"
+    }
+  },
+  "__v": 0,
+  "cn": "您的军团已更新。",
+  "es": "Tu Legión está actualizada.",
+  "fr": "Votre Légion est mise à jour.",
+  "nl": "Je Legioen is bijgewerkt.",
+  "ph": "Ang iyong Legion ay na-update.",
+  "pl": "Twój legion został zaktualizowany.",
+  "pt": "Sua Legião está atualizada.",
+  "ru": "Lejyonunuz güncellendi.",
+  "tr": "Lejyonunuz güncellendi."
+},{
+  "_id": {
+    "$oid": "631f67521a5545182059630c"
+  },
+  "key": "existingAPIs",
+  "en": "Existing AP is",
+  "es": "El AP existente es",
+  "cn": "现有 AP 是",
+  "pt": "O AP existente é",
+  "tr": "Mevcut AP",
+  "ru": "Существующая ПА является",
+  "fr": "Le AP existant est",
+  "nl": "Bestaande AP is",
+  "pl": "Istniejący AP to",
+  "ph": "Ang kasalukuyang AP",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663002450109"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663002472538"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f67d61a55451820596312"
+  },
+  "key": "yourOldLegionAP",
+  "en": "Your existing legion has ",
+  "es": "Su legión existente tiene ",
+  "cn": "你现在的军团有 ",
+  "pt": "Sua legião existente tem ",
+  "tr": "Mevcut lejyonunuzda ",
+  "ru": "Ваш существующий легион имеет ",
+  "fr": "Votre légion actuelle a ",
+  "nl": "Uw bestaande legioen heeft ",
+  "pl": "Twój istniejący legion ma ",
+  "ph": "Ang iyong kasalukuyang lehiyon ay mayroon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663002582371"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663002582371"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f68231a55451820596316"
+  },
+  "key": "feeToUpdate",
+  "en": "Fee to update ",
+  "es": "Tarifa para actualizar ",
+  "cn": "更新费用 ",
+  "pt": "Taxa para atualizar ",
+  "tr": "Güncelleme ücreti ",
+  "ru": "Плата за обновление ",
+  "fr": "Frais de mise à jour ",
+  "nl": "Kosten om te updaten ",
+  "pl": "Opłata za aktualizację ",
+  "ph": "Bayad sa pag-update ",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663002659935"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663002659935"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f7fe91a5545182059637a"
+  },
+  "key": "to",
+  "en": "to",
+  "es": "para",
+  "cn": "到",
+  "pt": "para",
+  "tr": "ile",
+  "ru": "для",
+  "fr": "Pour",
+  "nl": "voor",
+  "pl": "do",
+  "ph": "sa",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663008745693"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663008745693"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f80d71a5545182059637e"
+  },
+  "key": "summonWarriors",
+  "en": "Summon Warriors",
+  "es": "Invocar Guerreros",
+  "cn": "召唤战士",
+  "pt": "Invocar Guerreiro",
+  "tr": "Savaşçıları Çağır",
+  "ru": "Призвать воина",
+  "fr": "Invoquer un guerrier",
+  "nl": "Koop krijgers",
+  "pl": "Przywołaj wojowników",
+  "ph": "Tawagin ang mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663008983176"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663008983176"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f81391a55451820596382"
+  },
+  "key": "currentWarriors",
+  "en": "Current Warriors",
+  "es": "Guerreros Actuales",
+  "cn": "现在的勇士",
+  "pt": "Guerreiros Atuais",
+  "tr": "Mevcut Savaşçılar",
+  "ru": "Текущие воины",
+  "fr": "Guerriers actuels",
+  "nl": "Huidige Krijgers",
+  "pl": "Obecni Wojownicy",
+  "ph": "Mga Kasalukuyang Mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663009081275"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663009081275"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f83421a55451820596386"
+  },
+  "key": "totalAttackPower",
+  "en": "Total Attack Power",
+  "es": "Poder de Ataque Total",
+  "cn": "总攻击力",
+  "pt": "Poder Total de Ataque",
+  "tr": "Toplam Saldırı Gücü",
+  "ru": "Общая сила атаки",
+  "fr": "Puissance d'attaque totale",
+  "nl": "Totale aanvalskracht",
+  "pl": "Całkowita siła ataku",
+  "ph": "Kabuuang Lakas ng Pag-atake",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663009602216"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663009602216"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f84111a5545182059638a"
+  },
+  "key": "readInstructionsInWhitePaper",
+  "en": "READ INSTRUCTIONS IN WHITEPAPER",
+  "es": "Lea las instrucciones en el documento técnico",
+  "cn": "阅读白皮书中的说明",
+  "pt": "LEIA AS INSTRUÇÕES NO WHITEPAPER",
+  "tr": "Whitepaper Talimatlarını Okuyunuz",
+  "ru": "Прочтите инструкции в Техническом документе",
+  "fr": "Lire les instructions dans le livre blanc",
+  "nl": "Lees de instructies in de whitepaper",
+  "pl": "Przeczytaj instrukcje w whitepaper",
+  "ph": "Basahin ang Mga Tagubilin sa Whitepaper",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663009809696"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663009809696"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f846d1a5545182059638e"
+  },
+  "key": "nadodoWatching",
+  "en": "NADODO IS WATCHING",
+  "es": "Nadodo está mirando",
+  "cn": "纳多多在看",
+  "pt": "Nadodo ESTÁ ASSISTINDO",
+  "tr": "Nadodo izliyor",
+  "ru": "Nadodo наблюдает",
+  "fr": "Nadodo est regarde",
+  "nl": "Nadodo kijkt",
+  "pl": "Nadodo patrzy",
+  "ph": "Nanunuod si Nadodo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663009901592"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663009901592"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f84aa1a55451820596392"
+  },
+  "key": "marketplaceTax",
+  "en": "Marketplace Tax",
+  "es": "Impuesto del Mercado",
+  "cn": "市场税",
+  "pt": "Taxa de mercado",
+  "tr": "Pazar Vergisi",
+  "ru": "Торговый налог",
+  "fr": "Taxe de marché",
+  "nl": "Marktbelasting",
+  "pl": "Podatek od rynku",
+  "ph": "Buwis sa pamilihan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663009962167"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663009962167"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f85461a554518205963a2"
+  },
+  "key": "huntTax",
+  "en": "Hunt Tax",
+  "es": "Impuesto de caza",
+  "cn": "狩猎税",
+  "pt": "Taxa de caça",
+  "tr": "Av vergisi",
+  "ru": "Охотничий налог",
+  "fr": "Taxe de chasse",
+  "nl": "Jachtbelasting",
+  "pl": "Podatek od polowania",
+  "ph": "Buwis sa panghuhuli",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010118288"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010118288"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f85801a554518205963a6"
+  },
+  "key": "buyTax",
+  "en": "Buy Tax",
+  "es": "Impuesto de Compra",
+  "cn": "购买税",
+  "pt": "Taxa de Compra",
+  "tr": "Satın Alma Vergisi",
+  "ru": "Купить налог",
+  "fr": "Taxe d'achat",
+  "nl": "Aankoopbelasting",
+  "pl": "Podatek od kupna",
+  "ph": "Bumili ng Buwis",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010176715"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010176715"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f85c01a554518205963aa"
+  },
+  "key": "sellTax",
+  "en": "Sell Tax",
+  "es": "Impuesto de Venta",
+  "cn": "出销售税",
+  "pt": "Taxa de Venda",
+  "tr": "Satış Vergisi",
+  "ru": "Налог на продажу",
+  "fr": "Taxe de vente",
+  "nl": "Verkoopbelasting",
+  "pl": "Podatek od Sprzedaży",
+  "ph": "Magbenta ng Buwis",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010240734"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010240734"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f860d1a554518205963ae"
+  },
+  "key": "legionDamagePerHunt",
+  "en": "Legion Damage Per Hunt",
+  "es": "Daño de la legión por caza",
+  "cn": "每次狩猎的军团伤害",
+  "pt": "Dano da Legião por Caçada",
+  "tr": "Av Başına Lejyon Hasarı",
+  "ru": "Урон Легиона за охоту",
+  "fr": "Dégâts de légion par chasse",
+  "nl": "Legioenschade per jacht",
+  "pl": "Obrażenia legionu na polowanie",
+  "ph": "Legion Damage Bawat Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010317129"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010317129"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f864d1a554518205963b2"
+  },
+  "key": "summoningFee",
+  "en": "Summoning Fee",
+  "es": "Cuota de Invocación",
+  "cn": "召唤费",
+  "pt": "Taxa de Invocação",
+  "tr": "Çağırma ücreti",
+  "ru": "плата за вызов",
+  "fr": "Coût d'invocation",
+  "nl": "Belasting op aankoop",
+  "pl": "Opłata za przywołanie",
+  "ph": "Summoning Fee",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010381842"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010381842"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f86a41a554518205963b6"
+  },
+  "key": "SuppliesFee14Hunts",
+  "en": "Supplies Fee for 14 Hunts",
+  "es": "Tarifa de suministros para 14 cacerías",
+  "cn": "14 次狩猎的用品费",
+  "pt": "Taxa de suprimentos para 14 Caçadas",
+  "tr": "14 Av için Malzeme Ücreti",
+  "ru": "\"Плата за припасы за 14 охот",
+  "fr": "Frais de fournitures pour 14 chasses",
+  "nl": "Tarief voor 14 jachtpartijen",
+  "pl": "Opłata za zapasy za 14 polowań",
+  "ph": "Bayad sa kagamitan para sa 14 na Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010468017"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010468017"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f880d1a554518205963ba"
+  },
+  "key": "SuppliesFee28Hunts",
+  "en": "Supplies Fee for 28 Hunts",
+  "es": "Tarifa de suministros para 28 cacerías",
+  "cn": "28 次狩猎的用品费",
+  "pt": "Taxa de Suprimentos para 28 Caçadas",
+  "tr": "28 Av için Malzeme Ücreti",
+  "ru": "Плата за припасы за 28 охот",
+  "fr": "Frais de fournitures pour 28 chasses",
+  "nl": "Tarief voor 28 jachtpartijen",
+  "pl": "Opłata za zapasy za 28 polowań",
+  "ph": "Bayad sa kagamitan para sa 28 na Hunt",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010829831"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010829831"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f883a1a554518205963be"
+  },
+  "key": "RewardPool",
+  "en": "Reward Pool",
+  "es": "Fondo de Recompensas",
+  "cn": "奖励池",
+  "pt": "Fundo de Recompensas",
+  "tr": "Ödül Havuzu",
+  "ru": "Пул вознаграждений",
+  "fr": "Pool de récompenses",
+  "nl": "Beloningspool",
+  "pl": "Pula nagród",
+  "ph": "Pool ng Gantimpala",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010874651"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010874651"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f887c1a554518205963c2"
+  },
+  "key": "ReservePool",
+  "en": "Reserve Pool",
+  "es": "Fondo de Reserva",
+  "cn": "储备池",
+  "pt": "Fundo Reserva",
+  "tr": "Rezerv Havuzu",
+  "ru": "Резервный бассейн",
+  "fr": "Piscine de réserve",
+  "nl": "Reserve fonds",
+  "pl": "Rezerwuj pulę",
+  "ph": "Reserve Pool",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010940511"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010940511"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631f88b31a554518205963c6"
+  },
+  "key": "LiquidityPool",
+  "en": "Liquidity Pool",
+  "es": "Fondo de Liquidez",
+  "cn": "流动资金池",
+  "pt": "Fundo de Liquidez",
+  "tr": "Likidite Havuzu",
+  "ru": "Пул ликвидности",
+  "fr": "Pool de liquidités",
+  "nl": "Liquiditeitsfonds",
+  "pl": "Pula płynności",
+  "ph": "Liquidity Pool",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663010995457"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663010995457"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fad361a554518205963ce"
+  },
+  "key": "takeAction",
+  "en": "TAKE ACTION",
+  "es": "Tomar Acción",
+  "cn": "行动",
+  "pt": "Tome uma Ação",
+  "tr": "Harekete Geç",
+  "ru": "Действовать",
+  "fr": "Passer à l'action",
+  "nl": "Actie ondernemen",
+  "pl": "Podejmij działanie",
+  "ph": "Gumawa ng aksyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020342072"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020342072"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fae0a1a554518205963d2"
+  },
+  "key": "warriorsMarket",
+  "en": "Warriors Market",
+  "es": "Mercado de guerreros",
+  "cn": "勇士市场",
+  "pt": "Mercado de guerreiros",
+  "tr": "Savaşçı Marketi",
+  "ru": "Рынок воинов",
+  "fr": "Marché des guerriers",
+  "nl": "Krijgersmarkt",
+  "pl": "Rynek wojowników",
+  "ph": "Pamilihan ng mga mandirigma",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020554439"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020554439"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fae401a554518205963d6"
+  },
+  "key": "beastsMarket",
+  "en": "Beasts Market",
+  "es": "Mercado de bestias",
+  "cn": "野兽市场",
+  "pt": "Mercado de Feras",
+  "tr": "Canavar Marketi",
+  "ru": "Рынок зверей",
+  "fr": "Marché aux bêtes",
+  "nl": "Beestenmarkt",
+  "pl": "Rynek Bestii",
+  "ph": "Pamilihan ng mga hayop",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020608044"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020608044"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fae701a554518205963da"
+  },
+  "key": "legionsMarket",
+  "en": "Legions Market",
+  "es": "Mercado de Legiones",
+  "cn": "军团市场",
+  "pt": "Mercado de Legiões",
+  "tr": "Lejyon Marketi",
+  "ru": "Рынок легионов",
+  "fr": "Marché des' légions",
+  "nl": "Legioenenmarkt",
+  "pl": "Rynek Legionów",
+  "ph": "Pamilihan ng mga Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020656453"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020656453"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631faec71a554518205963de"
+  },
+  "key": "dextoolsChart",
+  "en": "Dextools Chart",
+  "es": "Gráfico de Dextools",
+  "cn": "Dextools 图表",
+  "pt": "Gráfico de Dextools",
+  "tr": "Dextools Tablosu",
+  "ru": "графика Dextools",
+  "fr": "Graphique Dextool",
+  "nl": "Dextools grafiek",
+  "pl": "Wykres Dextools",
+  "ph": "Chart ng Dextools",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020743404"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020743404"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631faf071a554518205963e2"
+  },
+  "key": "buyBLST",
+  "en": "BUY $BLST",
+  "es": "COMPRAR $BLST",
+  "cn": "购买$BLST",
+  "pt": "COMPRE $BLST",
+  "tr": "$BLST SATIN AL",
+  "ru": "КУПИТЬ $BLST",
+  "fr": "Acheter $BLST",
+  "nl": "KOOP $BLST",
+  "pl": "KUP $BLST",
+  "ph": "BUMILI ng $BLST",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663020807881"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663020807881"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb2061a554518205963ea"
+  },
+  "key": "yourInventory",
+  "en": "YOUR INVENTORY",
+  "es": "SU INVENTARIO",
+  "cn": "您的库存",
+  "pt": "SEU INVENTÁRIO",
+  "tr": "ENVANTERİNİZ",
+  "ru": "ВАШ ИНВЕНТАРЬ",
+  "fr": "Votre inventaire",
+  "nl": "UW INVENTARIS",
+  "pl": "TWÓJ EKWIPUNEK",
+  "ph": "IYONG IMBENTARYO",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663021574898"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663021574898"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb2681a554518205963ee"
+  },
+  "key": "samaritanStars",
+  "en": "Samaritan Stars",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663021672182"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279923380"
+    }
+  },
+  "__v": 0,
+  "cn": "撒玛利亚之星",
+  "es": "estrellas samaritanas",
+  "fr": "Étoiles samaritaines",
+  "nl": "Samaritaanse sterren",
+  "ph": "Mga Bituin ng Samaritano",
+  "pl": "Gwiazdy Samarytanina",
+  "pt": "Estrelas Samaritanas",
+  "ru": "Самаритянские звезды",
+  "tr": "Samaritan Yıldızları"
+},{
+  "_id": {
+    "$oid": "631fb2aa1a554518205963f2"
+  },
+  "key": "referrals",
+  "en": "Referrals",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663021738719"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664279982339"
+    }
+  },
+  "__v": 0,
+  "cn": "推荐人",
+  "es": "Referencias",
+  "fr": "Parrainages",
+  "nl": "Verwijzingen",
+  "ph": "Mga referral",
+  "pl": "Polecenia",
+  "pt": "Referências",
+  "ru": "Рефералы",
+  "tr": "tavsiyeler"
+},{
+  "_id": {
+    "$oid": "631fb3111a554518205963f6"
+  },
+  "key": "economyStatus",
+  "en": "Economy Status",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663021841971"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280047924"
+    }
+  },
+  "__v": 0,
+  "cn": "经济状况",
+  "es": "Estado económico",
+  "fr": "Statut économique",
+  "nl": "Economy-status",
+  "ph": "Katayuan ng Ekonomiya",
+  "pl": "Stan ekonomiczny",
+  "pt": "Situação econômica",
+  "ru": "Эконом статус",
+  "tr": "Ekonomi Durumu"
+},{
+  "_id": {
+    "$oid": "631fb64a1a5545182059640f"
+  },
+  "key": "base",
+  "en": "Base",
+  "es": "Base",
+  "cn": "根据",
+  "pt": "Base",
+  "tr": "Üs",
+  "ru": "база",
+  "fr": "Base",
+  "nl": "Basis",
+  "pl": "Baza",
+  "ph": "Base",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663022666466"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663022666466"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb6a01a55451820596413"
+  },
+  "key": "unlockStatus",
+  "en": "Unlock Status",
+  "es": "Estado de desbloqueo",
+  "cn": "解锁状态",
+  "pt": "Status de desbloqueio",
+  "tr": "Kilit Açma Durumu",
+  "ru": "Разблокировать статус",
+  "fr": "Déverrouiller l'état",
+  "nl": "Ontgrendelstatus",
+  "pl": "Status odblokowania",
+  "ph": "I-unlock ang Katayuan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663022752467"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663022752467"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb70c1a55451820596417"
+  },
+  "key": "bonus",
+  "en": "Bonus",
+  "es": "Bono",
+  "cn": "奖金",
+  "pt": "Bônus",
+  "tr": "Bonus",
+  "ru": "Бонус",
+  "fr": "Prime",
+  "nl": "Bonus",
+  "pl": "Bonus",
+  "ph": "Bonus",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663022860314"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663022860314"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb76f1a5545182059641b"
+  },
+  "key": "warriorsUsed",
+  "en": "Warriors Used",
+  "es": "guerreros usados",
+  "cn": "使用的勇士",
+  "pt": "Guerreiros usados",
+  "tr": "Kullanılan Savaşçılar",
+  "ru": "Используемые воины",
+  "fr": "Guerriers utilisés",
+  "nl": "Gebruikte krijgers",
+  "pl": "Używani wojownicy",
+  "ph": "Mga Mandirigma na Ginamit",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663022959934"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663022959934"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fb7a51a5545182059641f"
+  },
+  "key": "toWin",
+  "en": "to Win",
+  "es": "para ganar",
+  "cn": "赢",
+  "pt": "para Ganhar",
+  "tr": "kazanmak",
+  "ru": "побеждать",
+  "fr": "pour gagner",
+  "nl": "om te winnen",
+  "pl": "aby wygrać",
+  "ph": "para manalo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663023013152"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663023013152"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fde115ca719452ca21152"
+  },
+  "key": "loadingBeasts",
+  "en": "Loading Beasts...",
+  "es": "Cargando Bestias...",
+  "cn": "正在加载野兽...",
+  "pt": "Carregando Bestas ...",
+  "tr": "Canavarlar Yükleniyor ...",
+  "ru": "Загрузка зверей ...",
+  "fr": "Chargement des bêtes ...",
+  "nl": "Beesten zijn aan het laden...",
+  "pl": "Ładowanie bestii ...",
+  "ph": "Naglo-load ng mga Hayop ...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663032849885"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663032849885"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fdeed5ca719452ca2115a"
+  },
+  "key": "summoningBeasts",
+  "en": "Summoning Beasts...",
+  "es": "Invocando Bestias...",
+  "cn": "召唤兽中...",
+  "pt": "Invocando Bestas...",
+  "tr": "Çağrılan Canavarlar...",
+  "ru": "Призыв зверей...",
+  "fr": "Invoquer des bêtes...",
+  "nl": "Beesten aan het kopen...",
+  "pl": "Przyzywanie Bestii...",
+  "ph": "Pagtawag ng mga Hayop...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033069374"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033069374"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fdf625ca719452ca2115e"
+  },
+  "key": "revealTextBeasts",
+  "en": "You need to reveal beasts to see them.",
+  "es": "Necesitas revelar bestias para verlas.",
+  "cn": "你需要揭示野兽才能看到它们。",
+  "pt": "Você precisa revelar bestas para vê-los.",
+  "tr": "Onları görmek için canavarları ortaya çıkarmanız gerekiyor.",
+  "ru": "Вам нужно раскрыть зверей, чтобы увидеть их.",
+  "fr": "Vous devez révéler les bêtes pour les voir.",
+  "nl": "Je moet beesten onthullen om ze te zien.",
+  "pl": "Aby je zobaczyć, musisz odsłonić bestie.",
+  "ph": "Kailangan mong magbunyag ng mga hayop upang makita sila.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033186281"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033186281"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe0015ca719452ca21162"
+  },
+  "key": "revealingBeasts",
+  "en": "Revealing Beasts...",
+  "es": "Bestias reveladoras...",
+  "cn": "揭露野兽...",
+  "pt": "Revelando Bestas...",
+  "tr": "Canavarları Ortaya Çıkarmak...",
+  "ru": "Раскрытие зверей...",
+  "fr": "Révéler les bêtes...",
+  "nl": "Beesten onthullen...",
+  "pl": "Ujawnianie bestii...",
+  "ph": "Pagbubunyag ng mga Hayop...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033345773"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033345773"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe07d5ca719452ca21166"
+  },
+  "key": "loadingWarriors",
+  "en": "Loading Warriors ...",
+  "es": "Cargando Guerreros ...",
+  "cn": "加载勇士 ...",
+  "pt": "Carregando Guerreiros ...",
+  "tr": "Savaşçılar Yükleniyor ...",
+  "ru": "Загрузка воинов ...",
+  "fr": "Chargement guerriers ...",
+  "nl": "Krijgers aan het laden…",
+  "pl": "Ładowanie wojowników ...",
+  "ph": "Naglo-load ng mga Mandirigma ...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033469553"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033469553"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe0f45ca719452ca2116a"
+  },
+  "key": "summoningWarriors",
+  "en": "Summoning Warriors...",
+  "es": "Invocando Guerreros...",
+  "cn": "召唤战士...",
+  "pt": "Invocando Guerreiros...",
+  "tr": "Savaşçıları Çağırmak...",
+  "ru": "Призыв воинов...",
+  "fr": "Invoquer des guerriers...",
+  "nl": "Krijgers aan het kopen...",
+  "pl": "Przyzywanie wojowników...",
+  "ph": "Pagtawag ng mga Mandirigma...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033588557"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033588557"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe1325ca719452ca2116e"
+  },
+  "key": "revealTextWarriors",
+  "en": "You need to reveal warriors to see them.",
+  "es": "Necesitas revelar guerreras para verlas.",
+  "cn": "你需要揭示战士才能看到他们。",
+  "pt": "Você precisa revelar guerreiros para vê-los.",
+  "tr": "Onları görmek için savaşçıları ortaya çıkarmanız gerekiyor.",
+  "ru": "Вам нужно раскрыть воинов, чтобы увидеть их.",
+  "fr": "Vous devez révéler des guerriers pour les voir.",
+  "nl": "Je moet krijgers onthullen om ze te zien.",
+  "pl": "Aby ich zobaczyć, musisz odsłonić wojowników.",
+  "ph": "Kailangan mong ipakita ang mga mandirigma para makita sila.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033650936"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033650936"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe1715ca719452ca21172"
+  },
+  "key": "revealingWarriors",
+  "en": "Revealing Warriors...",
+  "es": "Revelando guerreros...",
+  "cn": "揭示勇士...",
+  "pt": "Revelando guerreiros...",
+  "tr": "Savaşçıları Ortaya Çıkarmak...",
+  "ru": "Раскрытие воинов...",
+  "fr": "Révéler les Guerriers...",
+  "nl": "Onthullende krijgers...",
+  "pl": "Ujawnianie wojowników...",
+  "ph": "Pagbubunyag ng mga Mandirigma...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033713062"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033713062"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe1c35ca719452ca21176"
+  },
+  "key": "loadingTitle",
+  "en": "Loading Warriors & Beasts...",
+  "es": "Cargando Guerreros y Bestias...",
+  "cn": "加载野兽和战士...",
+  "pt": "Carregando Guerreiros e Bestas ...",
+  "tr": "Canavarlar ve Savaşçılar Yükleniyor...",
+  "ru": "Загрузка зверей и воинов...",
+  "fr": "Charger des guerriers et des bêtes...",
+  "nl": "Krijgers & beesten aan het laden...",
+  "pl": "Ładowanie wojowników i bestii...",
+  "ph": "load ng mga Mandirigma at Hayop...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033795173"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033795173"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe1f55ca719452ca2117a"
+  },
+  "key": "approvalAllBeasts",
+  "en": "Please approve access to your Beasts...",
+  "es": "Aprueba el acceso a tus Bestias...",
+  "cn": "请批准访问您的野兽...",
+  "pt": "Por favor, aprove o acesso às suas Bestas...",
+  "tr": "Lütfen Canavarlarınıza erişimi onaylayın...",
+  "ru": "Пожалуйста, разрешите доступ к вашим Зверям...",
+  "fr": "Veuillez approuver l'accès à vos bêtes...",
+  "nl": "Keur de toegang tot je Beasts goed...",
+  "pl": "Zatwierdź dostęp do swoich Bestii...",
+  "ph": "Mangyaring aprubahan ang pag-access sa iyong mga Hayop ...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033845815"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033845815"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe2255ca719452ca2117e"
+  },
+  "key": "approvalAllWarriors",
+  "en": "Please approve access to your Warriors...",
+  "es": "Aprueba el acceso a tus Warriors...",
+  "cn": "请批准访问您的勇士...",
+  "pt": "Por favor, aprove o acesso aos seus guerreiros...",
+  "tr": "Lütfen Savaşçılarınıza erişimi onaylayın...",
+  "ru": "Пожалуйста, подтвердите доступ к своим Воинам...",
+  "fr": "Veuillez approuver l'accès à vos Warriors...",
+  "nl": "Keur de toegang tot je Warriors goed...",
+  "pl": "Zatwierdź dostęp do swoich wojowników...",
+  "ph": "Mangyaring aprubahan ang pag-access sa iyong mga Mandirigma...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033893654"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033893654"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe25d5ca719452ca21182"
+  },
+  "key": "approvalAllBeastsAndWarriors",
+  "en": "Please approve access to your Warriors and Beasts...",
+  "es": "Aprueba el acceso a tus Warriors and Beasts...",
+  "cn": "请批准访问您的勇士和野兽...",
+  "pt": "Por favor, aprove o acesso aos seus guerreiros e feras...",
+  "tr": "Lütfen Savaşçılarınıza ve Canavarlarınıza erişimi onaylayın...",
+  "ru": "Пожалуйста, подтвердите доступ к вашим воинам и зверям...",
+  "fr": "Veuillez approuver l'accès à vos Guerriers et Bêtes...",
+  "nl": "Keur de toegang tot je Warriors and Beasts goed...",
+  "pl": "Zatwierdź dostęp do swoich Wojowników i Bestii...",
+  "ph": "Mangyaring aprubahan ang pag-access sa iyong mga Mandirigma at Hayop...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663033949347"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663033949347"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe2935ca719452ca21186"
+  },
+  "key": "pleaseWait",
+  "en": "Please wait...",
+  "es": "Espere por favor...",
+  "cn": "请稍等...",
+  "pt": "Por favor, aguarde...",
+  "tr": "Lütfen bekleyiniz...",
+  "ru": "Пожалуйста, подождите...",
+  "fr": "S'il vous plaît, attendez...",
+  "nl": "Wacht alsjeblieft...",
+  "pl": "Proszę czekać...",
+  "ph": "Mangyaring Maghintay...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663034003030"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663034003030"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe2f95ca719452ca2118a"
+  },
+  "key": "loadingMonsters",
+  "en": "Loading Monsters...",
+  "es": "Cargando Monstruos...",
+  "cn": "加载怪物...",
+  "pt": "Carregando Monstros...",
+  "tr": "Canavarlar Yükleniyor...",
+  "ru": "Загрузка монстров...",
+  "fr": "Chargement des monstres...",
+  "nl": "Monsters aan het laden...",
+  "pl": "Ładowanie potworów...",
+  "ph": "Naglo-load ng mga Halimaw...",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663034105935"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663034105935"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe3345ca719452ca2118e"
+  },
+  "key": "name",
+  "en": "Name",
+  "es": "nombre",
+  "cn": "姓名",
+  "pt": "nome",
+  "tr": "isim",
+  "ru": "название",
+  "fr": "Nom",
+  "nl": "naam",
+  "pl": "nazwać",
+  "ph": "pangalan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663034164552"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663034164552"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe35f5ca719452ca21192"
+  },
+  "key": "nameLegion",
+  "en": "Name Your Legion",
+  "es": "Nombra tu legión",
+  "cn": "军团的名字",
+  "pt": "Nomeie sua Legião",
+  "tr": "Lejyonunuzu Adlandırın",
+  "ru": "Назовите свой легион",
+  "fr": "Nommez votre légion",
+  "nl": "Naam voor je legioen",
+  "pl": "Nazwij swój legion",
+  "ph": "Pangalanan ang Iyong Lehiyon",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663034207660"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663034207660"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fe97e5ca719452ca211a6"
+  },
+  "key": "play",
+  "en": "Play",
+  "es": "Jugar",
+  "cn": "玩",
+  "pt": "Jogar",
+  "tr": "Oyna",
+  "ru": "играть",
+  "fr": "Jouer",
+  "nl": "Speel",
+  "pl": "Graj",
+  "ph": "Maglaro",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663035774126"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663035774126"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631feb615ca719452ca211aa"
+  },
+  "key": "market",
+  "en": "Market",
+  "es": "Mercado",
+  "cn": "市场",
+  "pt": "Mercado",
+  "tr": "Market",
+  "ru": "Рынок",
+  "fr": "Marché",
+  "nl": "Markt",
+  "pl": "Rynek",
+  "ph": "Pamilihan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663036257095"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663036257095"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fec555ca719452ca211ae"
+  },
+  "key": "buyBlst",
+  "en": "Buy $BLST",
+  "es": "Comprar $BLST",
+  "cn": "购买 $BLST ",
+  "pt": "Compre $BLST",
+  "tr": "$BLST satın al",
+  "ru": "Купить $BLST",
+  "fr": "Acheter $BLST",
+  "nl": "Koop $BLST",
+  "pl": "Kup $BLST",
+  "ph": "Bumili ng $BLST",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663036501867"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663036501867"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fed9d5ca719452ca211b2"
+  },
+  "key": "help",
+  "en": "Help",
+  "es": "Ayuda",
+  "cn": "帮助",
+  "pt": "Ajuda",
+  "tr": "Yardım",
+  "ru": "Помощь",
+  "fr": "Aide",
+  "nl": "Hulp",
+  "pl": "Pomoc",
+  "ph": "Tulong",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663036829951"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663036829951"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fedd05ca719452ca211b6"
+  },
+  "key": "howToPlay",
+  "en": "How To Play",
+  "es": "Cómo Jugar",
+  "cn": "怎么玩",
+  "pt": "Como jogar",
+  "tr": "Nasıl oynanır",
+  "ru": "Как играть",
+  "fr": "Comment jouer",
+  "nl": "Hoe te spelen",
+  "pl": "Jak grać",
+  "ph": "Paano laruin",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663036880839"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663036880839"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fee795ca719452ca211ba"
+  },
+  "key": "whitepaper",
+  "en": "Whitepaper",
+  "es": "Libro blanco",
+  "cn": "白皮书",
+  "pt": "Whitepaper",
+  "tr": "Whitepaper",
+  "ru": "Белая бумага",
+  "fr": "Papier blanc",
+  "nl": "Whitepaper",
+  "pl": "Biały papier",
+  "ph": "Puting papel",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663037049597"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663037049597"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631feebb5ca719452ca211be"
+  },
+  "key": "tips",
+  "en": "Tips & Tricks",
+  "es": "consejos y trucos",
+  "cn": "提示与技巧",
+  "pt": "dicas e truques",
+  "tr": "İpuçları & Hileler",
+  "ru": "Советы и хитрости",
+  "fr": "Conseils & Astuces",
+  "nl": "tips & trucs",
+  "pl": "Porady & Triki",
+  "ph": "Mga Tip at Trick",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663037115850"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663037115850"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fef105ca719452ca211c2"
+  },
+  "key": "policy",
+  "en": "Policy",
+  "es": "Política",
+  "cn": "政策",
+  "pt": "Políticas",
+  "tr": "Politika",
+  "ru": "Политика",
+  "fr": "Politique",
+  "nl": "Beleid",
+  "pl": "Polityka",
+  "ph": "Patakaran",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663037200163"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663037200163"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fef415ca719452ca211c6"
+  },
+  "key": "madeWith",
+  "en": "Made with",
+  "es": "Hecho con",
+  "cn": "用.....制作的",
+  "pt": "Feito com",
+  "tr": "tarafından yapılmıştır",
+  "ru": "Сделано с",
+  "fr": "Fait en",
+  "nl": "Gemaakt met",
+  "pl": "Wykonane z",
+  "ph": "Ginawa gamit ang",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663037249166"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663037249166"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631fef6e5ca719452ca211ca"
+  },
+  "key": "cryptoAgency",
+  "en": "by Crypto Games Agency",
+  "es": "por Crypto Games Agency",
+  "cn": "由Crypto Games Agency",
+  "pt": "pela Crypto Games Agency",
+  "tr": "ile Crypto Games Agency",
+  "ru": "по Crypto Games Agency",
+  "fr": "par Crypto Games Agency",
+  "nl": "door Crypto Games Agency",
+  "pl": "przez Crypto Games Agency",
+  "ph": "ng Crypto Games Agency",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663037294058"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663037294058"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ff2bb5ca719452ca211d6"
+  },
+  "key": "claim",
+  "en": "Claim",
+  "es": "Reclamar",
+  "cn": "领取",
+  "pt": "Resgatar",
+  "tr": "Iddia",
+  "ru": "претензия",
+  "fr": "Prétendre",
+  "nl": "Claim",
+  "pl": "Odbierz",
+  "ph": "Kunin",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663038139368"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663038139368"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631ff46f5ca719452ca21203"
+  },
+  "key": "usefulLinks",
+  "en": "Useful Links",
+  "es": "Enlaces útiles",
+  "cn": "有用的链接",
+  "pt": "Links Úteis",
+  "tr": "İşe yarar bağlantılar",
+  "ru": "Полезные ссылки",
+  "fr": "Liens utiles",
+  "nl": "Nuttige Links",
+  "pl": "Przydatne linki",
+  "ph": "Mga Kapaki-pakinabang na Link",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663038575229"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663038575229"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f1f2bc74a20012e723c6"
+  },
+  "key": "helpText",
+  "en": "Need help from our team? Send us a messages with the form below, and we’ll get back to you within 24 hours if your request relates to a bug/issue in the game.",
+  "es": "¿Necesita ayuda de nuestro equipo? Envíenos un mensaje con el siguiente formulario y nos pondremos en contacto con usted dentro de las 24 horas si su solicitud se relaciona con un error/problema en el juego.",
+  "cn": "需要我们的帮助吗？使用以下表格向我们发送消息，如果您的请求涉及游戏中的错误/问题，我们将在 24 小时内回复您.",
+  "pt": "Precisa de ajuda da nossa equipe? Envie-nos uma mensagem com o formulário abaixo e entraremos em contato com você dentro de 24 horas se sua solicitação estiver relacionada a um bug/problema no jogo.",
+  "tr": "Desteğe mi ihtiyacınız var? Aşağıdaki formu kullanarak bize bir mesaj gönderin, eğer sorununuz oyundaki bir hata/sorunla ilgiliyse 24 saat içerisinde size geri dönüş sağlayacağız.",
+  "ru": "Нужна помощь от нашей команды? Отправьте нам сообщение с формой ниже, и мы свяжемся с вами в течение 24 часов, если ваш запрос связан с ошибкой/проблемой в игре.",
+  "fr": "Besoin d'aide de notre équipe? Envoyez-nous un message avec le formulaire ci-dessous, et nous vous répondrons dans les 24 heures si votre demande concerne un bug/problème dans le jeu.",
+  "nl": "Hulp nodig van ons team? Stuur ons een bericht met het onderstaande formulier en we nemen binnen 24 uur contact met je op als je verzoek betrekking heeft op een bug/probleem in het spel.",
+  "pl": "Potrzebujesz pomocy naszego zespołu? Wyślij nam wiadomość za pomocą poniższego formularza, a skontaktujemy się z Tobą w ciągu 24 godzin, jeśli Twoja prośba dotyczy błędu/problemu w grze.",
+  "ph": "Kailangan mo ng tulong mula sa aming team? Magpadala sa amin ng mga mensahe kasama ang form sa ibaba, at babalikan ka namin sa loob ng 24 na oras kung ang iyong kahilingan ay nauugnay sa isang bug/isyu sa laro.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663169010308"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663169010308"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f232bc74a20012e723ca"
+  },
+  "key": "email",
+  "en": "Email",
+  "es": "Correo electrónico",
+  "cn": "电子邮件",
+  "pt": "E-mail",
+  "tr": "E-posta",
+  "ru": "Эл. адрес",
+  "fr": "E-mail",
+  "nl": "E-mail",
+  "pl": "E-mail",
+  "ph": "Email",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663169074152"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663169074152"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f265bc74a20012e723ce"
+  },
+  "key": "yourEmail",
+  "en": "Your Email",
+  "es": "Tu correo electrónico",
+  "cn": "你的邮件",
+  "pt": "Seu email",
+  "tr": "E-posta adresiniz",
+  "ru": "Ваш адрес электронной почты",
+  "fr": "Votre e-mail",
+  "nl": "Jouw email",
+  "pl": "Twój email",
+  "ph": "Ang email mo",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663169125414"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663169125414"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f73cbc74a20012e723ff"
+  },
+  "key": "discordId",
+  "en": "Discord name",
+  "es": "ID de Discord",
+  "cn": "DiscordID",
+  "pt": "ID do Discord",
+  "tr": "Discord Kullanıcı Adı",
+  "ru": "DiscordID",
+  "fr": "DiscordID",
+  "nl": "DiscordID",
+  "pl": "DiscordID",
+  "ph": "DiscordID",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170364622"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170364622"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f767bc74a20012e72403"
+  },
+  "key": "yourDiscord",
+  "en": "Your Discord name (optional)",
+  "es": "Tu Nombre de Discord (opcional)",
+  "cn": "你的discord（可选）",
+  "pt": "Seu Discord (opcional)",
+  "tr": "Discord Kullanı Adınız (isteğe bağlı)",
+  "ru": "Ваш дискорд (необязательно)",
+  "fr": "Votre Discord (optionnel)",
+  "nl": "Uw Discord (optioneel)",
+  "pl": "Twój Discord (opcjonalnie)",
+  "ph": "Iyong Discord (opsyonal)",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170407881"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170407881"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f7cabc74a20012e72407"
+  },
+  "key": "title",
+  "en": "Title",
+  "es": "Título",
+  "cn": "标题",
+  "pt": "Título",
+  "tr": "Başlık",
+  "ru": "Заголовок",
+  "fr": "Titre",
+  "nl": "Titel",
+  "pl": "Tytuł",
+  "ph": "Pamagat",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170506526"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170506526"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f7f4bc74a20012e7240b"
+  },
+  "key": "titleIssue",
+  "en": "Title of your issue",
+  "es": "Título de su problema",
+  "cn": "您问题的标题",
+  "pt": "Título do seu problema",
+  "tr": "Sorununuzun başlığı",
+  "ru": "Название вашего вопроса",
+  "fr": "Titre de votre problème",
+  "nl": "Titel van je probleem",
+  "pl": "Tytuł twojego problemu",
+  "ph": "Pamagat ng iyong isyu",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170548697"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170548697"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f85bbc74a20012e72413"
+  },
+  "key": "description",
+  "en": "Description",
+  "es": "Descripción",
+  "cn": "描述",
+  "pt": "Descrição",
+  "tr": "Tanım",
+  "ru": "Описание",
+  "fr": "Description",
+  "nl": "Omschrijving",
+  "pl": "Opis",
+  "ph": "Paglalarawan",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170651623"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170651623"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f884bc74a20012e7241b"
+  },
+  "key": "descriptionText",
+  "en": "Please describe your issue with as many details as possible.",
+  "es": "Describa su problema con tantos detalles como sea posible.",
+  "cn": "请尽可能详细地描述您的问题.",
+  "pt": "Descreva seu problema com o máximo de detalhes possível.",
+  "tr": "Lütfen sorununuzu mümkün olduğunca fazla ayrıntıyla açıklayın.",
+  "ru": "Пожалуйста, опишите вашу проблему как можно подробнее.",
+  "fr": "Veuillez décrire votre problème avec autant de détails que possible.",
+  "nl": "Beschrijf uw probleem met zoveel mogelijk details.",
+  "pl": "Opisz swój problem, podając jak najwięcej szczegółów.",
+  "ph": "Pakilarawan hangga’t maari ang iyong isyu sa pinakamaraming detalye.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170692960"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170692960"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f8d1bc74a20012e72427"
+  },
+  "key": "attachmentFile",
+  "en": "Attachment File (optional) ",
+  "es": "Archivo adjunto (opcional)",
+  "cn": "附件文件（可选)",
+  "pt": "Arquivo de anexo (opcional)",
+  "tr": "Ek Dosyası (isteğe bağlı)",
+  "ru": "Вложенный файл (необязательно)",
+  "fr": "Fichier joint (optionnel)",
+  "nl": "Bijlage bestand (optioneel)",
+  "pl": "Plik załącznika (opcjonalnie)",
+  "ph": "Attachment File (opsyonal)",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170769127"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170769127"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f919bc74a20012e7242b"
+  },
+  "key": "low",
+  "en": "Low",
+  "es": "Bajo",
+  "cn": "低的",
+  "pt": "Baixo",
+  "tr": "Düşük",
+  "ru": "Низкий",
+  "fr": "Sous",
+  "nl": "Laag",
+  "pl": "Niski",
+  "ph": "Mababa",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170841952"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170841952"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f93cbc74a20012e7242f"
+  },
+  "key": "medium",
+  "en": "Medium",
+  "es": "Medio",
+  "cn": "中等的",
+  "pt": "Médio",
+  "tr": "Orta",
+  "ru": "Середина",
+  "fr": "Médium",
+  "nl": "Medium",
+  "pl": "Średni",
+  "ph": "Katamtaman",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170876962"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170876962"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f964bc74a20012e72433"
+  },
+  "key": "high",
+  "en": "High",
+  "es": "Elevado",
+  "cn": "高的",
+  "pt": "Alto",
+  "tr": "Yüksek",
+  "ru": "Высоко",
+  "fr": "Haut",
+  "nl": "Hoog",
+  "pl": "Wysoka",
+  "ph": "Mataas",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663170916600"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663170916600"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321f9e5bc74a20012e72438"
+  },
+  "key": "urgent",
+  "en": "Urgent",
+  "es": "Urgente",
+  "cn": "紧急",
+  "pt": "Urgente",
+  "tr": "Acil",
+  "ru": "Срочный",
+  "fr": "Urgent",
+  "nl": "Dringend",
+  "pl": "Pilne",
+  "ph": "Madalian",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663171045505"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663171045505"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321fa10bc74a20012e7243f"
+  },
+  "key": "createTicket",
+  "en": "Create Ticket",
+  "es": "Crear un ticket",
+  "cn": "创建工单",
+  "pt": "Criar ticket",
+  "tr": "Bilet Oluştur",
+  "ru": "Создать тикет",
+  "fr": "Créer un billet",
+  "nl": "Ticket aanmaken",
+  "pl": "Utwórz bilet",
+  "ph": "Lumikha ng Ticket",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663171088343"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663171088343"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6321fd79bc74a20012e7246c"
+  },
+  "key": "selectPriority",
+  "en": "Please select priority",
+  "es": "Por favor seleccione prioridad",
+  "cn": "请选择优先级",
+  "pt": "Selecione a prioridade",
+  "tr": "Lütfen önceliği seçin",
+  "ru": "Выберите приоритет",
+  "fr": "Veuillez sélectionner la priorité",
+  "nl": "Selecteer de prioriteit",
+  "pl": "Wybierz priorytet",
+  "ph": "Mangyaring pumili ng priyoridad",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663171961115"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663171961115"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632205ddbc74a20012e72478"
+  },
+  "key": "reinvest",
+  "en": "Reinvest",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663174109176"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280930424"
+    }
+  },
+  "__v": 0,
+  "cn": "再投资",
+  "es": "Reinvertir",
+  "fr": "Réinvestir",
+  "nl": "Herinvesteren",
+  "ph": "Muling mamuhunan",
+  "pl": "Zainwestować ponownie",
+  "pt": "Reinvestir",
+  "ru": "Реинвестировать",
+  "tr": "yeniden yatırım"
+},{
+  "_id": {
+    "$oid": "63224894bc74a20012e72e61"
+  },
+  "key": "baseRoll",
+  "en": "Base roll to win",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663191188882"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280994163"
+    }
+  },
+  "__v": 0,
+  "cn": "基础掷骰获胜",
+  "es": "Rollo base para ganar",
+  "fr": "Lancer de base pour gagner",
+  "nl": "Basisworp om te winnen",
+  "ph": "Base roll para manalo",
+  "pl": "Rzut bazowy do wygrania",
+  "pt": "Rolagem básica para vencer",
+  "ru": "Базовый бросок для победы",
+  "tr": "Kazanmak için temel rulo"
+},{
+  "_id": {
+    "$oid": "632250f1bc74a20012e730b2"
+  },
+  "key": "referAndEarn",
+  "en": "Refer And Earn",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663193329724"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280887570"
+    }
+  },
+  "__v": 0,
+  "cn": "推荐并赚取",
+  "es": "Referir y ganar",
+  "fr": "Parrainez et gagnez",
+  "nl": "Verwijs en verdien",
+  "ph": "Sumangguni At Kumita",
+  "pl": "Polecaj i zarabiaj",
+  "pt": "Indique e ganhe",
+  "ru": "Обратитесь и заработайте",
+  "tr": "Tavsiye Edin ve Kazanın"
+},{
+  "_id": {
+    "$oid": "632846dd28c2c0001b5acbaa"
+  },
+  "key": "notEnoughUSDInReinvestWalletToMintBeasts",
+  "en": "You do not have enough $USD in your Reinvest Wallet to summon Beasts.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663583965663"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280762933"
+    }
+  },
+  "__v": 0,
+  "cn": "您的再投资钱包中没有足够的美元来召唤野兽。",
+  "es": "No tienes suficientes $USD en tu Reinvest Wallet para convocar a las Bestias.",
+  "fr": "Vous n'avez pas assez de $USD dans votre portefeuille de réinvestissement pour invoquer des bêtes.",
+  "nl": "Je hebt niet genoeg $USD in je Reinvest Wallet om Beasts op te roepen.",
+  "ph": "Wala kang sapat na $USD sa iyong Reinvest Wallet para ipatawag ang Beasts.",
+  "pl": "Nie masz wystarczająco dużo $USD w portfelu Reinvest, aby przywołać Bestie.",
+  "pt": "Você não tem $USD suficiente em sua Carteira de Reinvestimento para invocar Bestas.",
+  "ru": "У вас недостаточно долларов США в вашем кошельке реинвестирования для призыва Зверей.",
+  "tr": "Canavarları çağırmak için Yeniden Yatırım Cüzdanınızda yeterli $USD yok."
+},{
+  "_id": {
+    "$oid": "632846f0f8b4e8001a6b8070"
+  },
+  "key": "notEnoughUSDInReinvestWalletToMintWarriors",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663583984521"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280705352"
+    }
+  },
+  "__v": 0,
+  "en": "You do not have enough $USD in your Reinvest Wallet to summon Warriors.",
+  "cn": "您的再投资钱包中没有足够的美元来召唤勇士。",
+  "es": "No tienes suficientes $USD en tu Reinvest Wallet para invocar Warriors.",
+  "fr": "Vous n'avez pas assez de $USD dans votre portefeuille de réinvestissement pour invoquer des guerriers.",
+  "nl": "Je hebt niet genoeg $USD in je Reinvest Wallet om Warriors op te roepen.",
+  "ph": "Wala kang sapat na $USD sa iyong Reinvest Wallet para ipatawag ang mga Warriors.",
+  "pl": "Nie masz wystarczająco dużo $USD w swoim portfelu Reinvest, aby przywołać wojowników.",
+  "pt": "Você não tem $USD suficiente em sua Carteira de Reinvestimento para convocar Guerreiros.",
+  "ru": "В вашем кошельке реинвестирования недостаточно долларов США для призыва воинов.",
+  "tr": "Yeniden Yatırım Cüzdanınızda Warriors çağırmak için yeterli $USD yok."
+},{
+  "_id": {
+    "$oid": "63284712f448cf001afd1e76"
+  },
+  "key": "notEnoughUSDInVoucherWalletToMintWarriors",
+  "en": "You do not have enough $USD in your Voucher Wallet to summon Warriors.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663584018998"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280534271"
+    }
+  },
+  "__v": 0,
+  "cn": "您的代金券钱包中没有足够的美元来召唤勇士。",
+  "es": "No tienes suficientes $USD en tu billetera de vales para convocar a los guerreros.",
+  "fr": "Vous n'avez pas assez de $USD dans votre porte-monnaie pour invoquer des guerriers.",
+  "nl": "Je hebt niet genoeg $USD in je Voucher Wallet om Warriors op te roepen.",
+  "ph": "Wala kang sapat na $USD sa iyong Voucher Wallet para ipatawag ang Warriors.",
+  "pl": "Nie masz wystarczająco dużo $USD w swoim portfelu kuponów, aby przywołać wojowników.",
+  "pt": "Você não tem $USD suficiente em sua Carteira de Vouchers para invocar Guerreiros.",
+  "ru": "У вас недостаточно долларов США в кошельке ваучера для призыва воинов.",
+  "tr": "Kupon Cüzdanınızda Warriors çağırmak için yeterli $USD yok."
+},{
+  "_id": {
+    "$oid": "6328472c52f7e9001301c380"
+  },
+  "key": "notEnoughUSDInVoucherWalletToMintBeasts",
+  "en": "You do not have enough $USD in your Voucher Wallet to summon Beasts.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663584044654"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280465457"
+    }
+  },
+  "__v": 0,
+  "cn": "您的代金券钱包中没有足够的美元来召唤野兽。",
+  "es": "No tienes suficientes $USD en tu billetera de vales para convocar a las bestias.",
+  "fr": "Vous n'avez pas assez de $USD dans votre porte-monnaie pour invoquer des bêtes.",
+  "nl": "Je hebt niet genoeg $USD in je Voucher Wallet om Beasts op te roepen.",
+  "ph": "Wala kang sapat na $USD sa iyong Voucher Wallet para ipatawag ang Beasts.",
+  "pl": "Nie masz wystarczająco dużo $USD w swoim portfelu kuponów, aby przywołać Bestie.",
+  "pt": "Você não tem $USD suficiente em sua carteira de vouchers para invocar Bestas.",
+  "ru": "У вас недостаточно долларов США в вашем ваучерном кошельке для вызова Зверей.",
+  "tr": "Fiş Cüzdanınızda Canavarları çağırmak için yeterli $USD yok."
+},{
+  "_id": {
+    "$oid": "632a7f4a0dbbf90013e19966"
+  },
+  "key": "availableLegions",
+  "en": "Available legions to hunt",
+  "es": "Legiones disponibles para cazar",
+  "cn": "可用军团狩猎",
+  "pt": "Legiões disponíveis para caçar",
+  "tr": "Avlanmak için mevcut lejyonlar",
+  "ru": "Доступные легионы для охоты",
+  "fr": "Légions disponibles pour chasser",
+  "nl": "Beschikbare legioenen om te jagen",
+  "pl": "Dostępne legiony do polowania",
+  "ph": "Magagamit na mga legion upang manghuli",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729482097"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729482097"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632a7f878d92a900136613b7"
+  },
+  "key": "waitingTimeToHunt",
+  "en": "Waiting time until next hunt",
+  "es": "Tiempo de espera hasta la próxima cacería",
+  "cn": "等待下一次狩猎的时间",
+  "pt": "Tempo de espera até a próxima caçada",
+  "tr": "Bir sonraki av için bekleme süresi",
+  "ru": "Время ожидания до следующей охоты",
+  "fr": "Temps d'attente jusqu'à la prochaine chasse",
+  "nl": "Wachttijd tot de volgende jacht",
+  "pl": "Czas oczekiwania do następnego polowania",
+  "ph": "Oras ng paghihintay hanggang sa susunod na panghuhuli",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729543533"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729543533"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632a7fc68d92a900136613cf"
+  },
+  "key": "yourMaxAp",
+  "en": "AP of top legion",
+  "es": "AP de la legión superior",
+  "cn": "顶级军团AP",
+  "pt": "AP da sua melhor legião",
+  "tr": "Baş lejyonun AP'si",
+  "ru": "AP высшего легиона",
+  "fr": "AP de la légion supérieure",
+  "nl": "AP van top legioen",
+  "pl": "AP najwyższego legionu",
+  "ph": "AP ng nangungunang legion",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729606791"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729606791"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632a800964653b00136d6256"
+  },
+  "key": "unClaimed",
+  "en": "Unclaimed $BLST",
+  "es": "$BLST No Reclamado",
+  "cn": "没领取的 $BLST",
+  "pt": "$BLST Não Reivindicado",
+  "tr": "Talep edilmemiş $BLST",
+  "ru": "Невостребованные $BLST",
+  "fr": "$BLST non réclamé",
+  "nl": "Niet-geclaimde $BLST",
+  "pl": "Nieodebrane $BLST",
+  "ph": "Hindi nakuha na $BLST",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729673411"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729673411"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632a809f8d92a90013661427"
+  },
+  "key": "claimTax",
+  "en": "If you'd claim now, you'd pay",
+  "es": "Si reclamaras ahora, pagarías",
+  "cn": "如果您现在领取，您将支付",
+  "pt": "Se você reivindicar agora, você pagaria",
+  "tr": "Şimdi almayı talep ederseniz vergi ödeyeceksiniz.",
+  "ru": "Если бы вы требовали сейчас, вы бы заплатили",
+  "fr": "Si vous réclamiez maintenant, vous paieriez",
+  "nl": "Als je nu zou claimen, zou je betalen",
+  "pl": "Jeśli odbierzesz teraz, zapłacisz",
+  "ph": "Kung mag-claim ka ngayon, magbabayad ka",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729823792"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729823792"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632a80cbd418690013b42909"
+  },
+  "key": "claimTaxVal",
+  "en": "$BLST tax",
+  "es": "impuesto $BLST",
+  "cn": "$BLST 税",
+  "pt": "Taxa de $BLST",
+  "tr": "$BLST vergisi",
+  "ru": "$BLST налог",
+  "fr": "Taxe $BLST",
+  "nl": "$BLST belasting",
+  "pl": "$BLST podatek",
+  "ph": "buwis sa $BLST",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663729867650"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663729867650"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632ab21984cddd001589def0"
+  },
+  "key": "taxDaysLeft",
+  "en": "Tax Days Left",
+  "es": "Días de Impuestos Restantes",
+  "cn": "剩余纳税天数",
+  "pt": "Dias de Taxas Restantes",
+  "tr": "Kalan Vergi Günü",
+  "ru": "Осталось налоговых дней",
+  "fr": "Jours d'impôt restants",
+  "nl": "Resterende belastingdagen",
+  "pl": "Pozostałe dni podatkowe",
+  "ph": "Araw ng tax na natitira",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663742489662"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663742489662"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632ab29a84cddd001589df21"
+  },
+  "key": "BLSTInYourWallet",
+  "en": "$BLST in Your Wallet",
+  "es": "$BLST en su Billetera",
+  "cn": "钱包中的 $BLST",
+  "pt": "$BLST em sua Carteira",
+  "tr": "Cüzdanınızda $BLST",
+  "ru": "$BLST в вашем кошельке",
+  "fr": "$BLST dans votre portefeuille",
+  "nl": "$BLST in uw portemonnee",
+  "pl": "$BLST w Twoim portfelu",
+  "ph": "$BLST sa Iyong Wallet",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663742618740"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663742618740"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632c9daebe6fdd001351a9a2"
+  },
+  "key": "legionNameLimit",
+  "en": "Legion's name should have a maximum of 40 characters.",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663868334130"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280310579"
+    }
+  },
+  "__v": 0,
+  "cn": "军团的名称最多应包含 40 个字符。",
+  "es": "El nombre de Legion debe tener un máximo de 40 caracteres.",
+  "fr": "Le nom de la Légion doit avoir un maximum de 40 caractères.",
+  "nl": "De naam van Legion mag maximaal 40 tekens bevatten.",
+  "ph": "Dapat ay may maximum na 40 character ang pangalan ng Legion.",
+  "pl": "Nazwa legionu powinna mieć maksymalnie 40 znaków.",
+  "pt": "O nome da Legião deve ter no máximo 40 caracteres.",
+  "ru": "Название легиона должно содержать не более 40 символов.",
+  "tr": "Lejyon adı en fazla 40 karakterden oluşmalıdır."
+},{
+  "_id": {
+    "$oid": "632cc4b7119d4600156aa5fa"
+  },
+  "key": "warning",
+  "en": "Warning!",
+  "es": "Advertencia!",
+  "cn": "警告！",
+  "pt": "Aviso!",
+  "tr": "Uyarı!",
+  "ru": "Предупреждение!",
+  "fr": "Avertissement!",
+  "nl": "Avertissement!",
+  "pl": "Waarschuwing!",
+  "ph": "Babala!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663878327314"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1663878327314"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "632cc976be6fdd001351abee"
+  },
+  "key": "execute",
+  "en": "Execute",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663879542923"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280230003"
+    }
+  },
+  "__v": 0,
+  "cn": "执行",
+  "es": "Ejecutar",
+  "fr": "Exécuter",
+  "nl": "uitvoeren",
+  "ph": "Ipatupad",
+  "pl": "Wykonać",
+  "pt": "Executar",
+  "ru": "Выполнять",
+  "tr": "Uygulamak"
+},{
+  "_id": {
+    "$oid": "632cd098c83229001362038d"
+  },
+  "key": "executeWarning",
+  "en": "You are about to execute items over level 2. Are you sure you want to go ahead?",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1663881368920"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664280186453"
+    }
+  },
+  "__v": 0,
+  "cn": "您即将执行 2 级以上的项目。您确定要继续吗？",
+  "es": "Está a punto de ejecutar elementos por encima del nivel 2. ¿Está seguro de que desea continuar?",
+  "fr": "Vous êtes sur le point d'exécuter des éléments au-dessus du niveau 2. Êtes-vous sûr de vouloir continuer ?",
+  "nl": "Je staat op het punt om items boven level 2 uit te voeren. Weet je zeker dat je door wilt gaan?",
+  "ph": "Ipapatupad mo na ang mga item sa antas 2. Sigurado ka bang gusto mong magpatuloy?",
+  "pl": "Masz zamiar wykonać przedmioty na poziomie 2. Czy na pewno chcesz kontynuować?",
+  "pt": "Você está prestes a executar itens acima do nível 2. Tem certeza de que deseja prosseguir?",
+  "ru": "Вы собираетесь выполнять предметы выше уровня 2. Вы уверены, что хотите продолжить?",
+  "tr": "2. seviye üzerindeki öğeleri yürütmek üzeresiniz. Devam etmek istediğinizden emin misiniz?"
+},{
+  "_id": {
+    "$oid": "6331533dc83229001362221c"
+  },
+  "key": "huntTransactionFailed",
+  "en": "Transaction failed, please try again!",
+  "es": "La transacción ha fallado, ¡inténtalo de nuevo!",
+  "cn": "交易失败，请重试！",
+  "pt": "A transação falhou, tente novamente!",
+  "tr": "İşlem başarısız, lütfen tekrar deneyin!",
+  "ru": "Транзакция не удалась, попробуйте еще раз!",
+  "fr": "La transaction a échoué, veuillez réessayer !",
+  "nl": "Transactie is mislukt, probeer het opnieuw!",
+  "pl": "Transakcja nie powiodła się, spróbuj ponownie!",
+  "ph": "Nabigo ang transaksyon, pakisubukang muli!",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664176957064"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664176957064"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "633300e86c68360014ce73a2"
+  },
+  "key": "playerSentiment",
+  "en": "Player's Sentiment",
+  "es": "Sentimiento del jugador",
+  "cn": "玩家情绪",
+  "pt": "Sentimento do jogador",
+  "tr": "Oyuncunun Duygusu",
+  "ru": "Настроение игрока",
+  "fr": "Sentiment du joueur",
+  "nl": "Spelerssentiment",
+  "pl": "Sentyment gracza",
+  "ph": "Sentimento ng Manlalaro",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664286952180"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664286952180"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "633568202f65d4001264113d"
+  },
+  "key": "executeLegionWarning",
+  "en": "You are about to execute (= kill!) legions above 2,000 AP. These legions might be still useful to earn rewards for you. This action cannot be reverted. Are you sure you want to execute all selected legions?",
+  "es": "Estás a punto de ejecutar (¡matar!) legiones por encima de 2000 PA. Estas legiones pueden seguir siendo útiles para ganar recompensas para ti. Esta acción no se puede revertir. ¿Estás seguro de que quieres ejecutar todas las legiones seleccionadas?",
+  "cn": "你即将处决（=杀死！）超过 2,000 AP 的军团。 这些军团可能仍然有助于为您赚取奖励。 此操作无法还原。 您确定要处决所有选定的军团吗？",
+  "pt": "Você está prestes a executar (= matar!) legiões acima de 2.000 AP. Essas legiões ainda podem ser úteis para ganhar recompensas para você. Esta ação não pode ser revertida. Tem certeza de que deseja executar todas as legiões selecionadas?",
+  "tr": "2.000 AP'nin üzerindeki lejyonları infaz etmek (= öldürmek!) üzeresiniz. Bu lejyonlar sizin için ödüller kazanmak için hala faydalı olabilir. Bu işlem geri alınamaz. Seçilen tüm lejyonları infaz etmek istediğinizden emin misiniz?",
+  "ru": "Вы собираетесь казнить (= убить!) легионы выше 2000 AP. Эти легионы все еще могут быть полезны, чтобы заработать для вас награды. Это действие нельзя отменить. Вы уверены, что хотите казнить все выбранные легионы?",
+  "fr": "Vous êtes sur le point d'exécuter (= tuer !) des légions supérieures à 2 000 AP. Ces légions pourraient encore être utiles pour gagner des récompenses pour vous. Cette action ne peut pas être annulée. Voulez-vous vraiment exécuter toutes les légions sélectionnées ?",
+  "nl": "Je staat op het punt om legioenen boven 2.000 AP uit te voeren (= doden!) Deze legioenen kunnen nog steeds nuttig zijn om beloningen voor je te verdienen. Deze actie kan niet ongedaan worden gemaakt. Weet je zeker dat je alle geselecteerde legioenen wilt executeren?",
+  "pl": "Masz zamiar wykonać (= zabić!) legiony powyżej 2000 AP. Te legiony mogą nadal przydać się do zdobywania nagród. Tej akcji nie można cofnąć. Czy na pewno chcesz rozstrzelać wszystkie wybrane legiony?",
+  "ph": "Malapit ka nang magsagawa ng (= pumatay!) mga legion na higit sa 2,000 AP. Maaaring maging kapaki-pakinabang pa rin ang mga legion na ito para makakuha ng mga reward para sa iyo. Hindi na maibabalik ang pagkilos na ito. Sigurado ka bang gusto mong isagawa ang lahat ng napiling legion?",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1664444448307"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1664444448307"
+    }
+  },
+  "__v": 0
+}]

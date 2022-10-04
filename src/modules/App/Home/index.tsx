@@ -44,7 +44,7 @@ const Home: React.FC = () => {
           <EconomyStatus />
         </Grid>
       </Grid>
-      {/* <Leaderboard /> */}
+      <Leaderboard />
       <ToSocial />
       <QuotesPart />
       <VideoPlayer link={Constants.tutorialVideoLink} />

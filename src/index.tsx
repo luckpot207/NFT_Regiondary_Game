@@ -18,21 +18,16 @@ const { moralisServerUrl, moralisAppId } = gameVersion;
 
 ReactDOM.render(
   <React.StrictMode>
-    <MoralisProvider
-      serverUrl={moralisServerUrl + ""}
-      appId={moralisAppId + ""}
-    >
-      <Provider store={store}>
-        <BrowserRouter>
-          <ThemeProvider theme={themeConfig}>
-            <CssBaseline />
-            <Web3ReactProvider getLibrary={getLibrary}>
-              <App />
-            </Web3ReactProvider>
-          </ThemeProvider>
-        </BrowserRouter>
-      </Provider>
-    </MoralisProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={themeConfig}>
+          <CssBaseline />
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <App />
+          </Web3ReactProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root") as HTMLElement
 );

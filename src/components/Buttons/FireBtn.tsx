@@ -9,11 +9,11 @@ const FireBtn = styled(LoadingButton)<LoadingButtonProps>(({}) => ({
   textShadow:
     "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
   background:
-    "linear-gradient(360deg, #024699, #ffffff29),radial-gradient(#5bfdff, #358dcd)",
+    "linear-gradient(360deg, #195db3, #ffffff29),radial-gradient(#275381, #97d3ff)",
   transition: ".4s all",
   "&:hover": {
     background:
-      "linear-gradient(360deg, #052c5c, #ffffff29),radial-gradient(#40b9bb, #286d9f)",
+      "linear-gradient(360deg, #174f95, #ffffff29),radial-gradient(#12273c, #75a3c5)",
     transition: ".4s all",
   },
   "&[disabled]": {

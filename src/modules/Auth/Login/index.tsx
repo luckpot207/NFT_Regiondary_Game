@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     transition: ".4s all",
     "&:hover": {
       transition: ".4s all",
-      color: "#f89c35",
+      color: "#24feff",
     },
   },
   logo: {
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
           <Grid item md={3} xs={12}></Grid>
         </Grid>
         <Box
-          sx={{ marginTop: 2, textAlign: "center" }}
+          sx={{ marginTop: 10, textAlign: "center" }}
           className={classes.fadeAnimation}
         >
           <a

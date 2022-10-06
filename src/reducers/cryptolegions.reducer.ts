@@ -46,8 +46,8 @@ let allDulesTest: I_Duel[] = [
     },
     joinerEstmatePrice: 3.13,
     type: false,
-    status: 0,
-    endDateTime: "2022-10-06 14:00:35",
+    status: 1,
+    endDateTime: "2022-10-06 16:00:35",
     betPrice: 40,
     result: 3.4
   },

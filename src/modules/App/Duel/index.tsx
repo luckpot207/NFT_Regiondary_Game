@@ -76,7 +76,6 @@ const Duel: React.FC = () => {
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
-            console.log("=========================");
             return duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 &&
             (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP
                 ? true

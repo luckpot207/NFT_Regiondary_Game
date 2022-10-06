@@ -20,6 +20,7 @@ import { AppSelector } from "../../store";
 import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import FireBtn from "../Buttons/FireBtn";
 import GreyBtn from "../Buttons/GreyBtn";
+import { formatNumber, getTranslation } from "../../utils/utils";
 
 type Props = {
     duel: I_Duel;
@@ -28,10 +29,10 @@ type Props = {
 const DuelCard: React.FC<Props> = ({ duel }) => {
     // Hook info
     const dispatch = useDispatch();
-    const { 
-        language, 
+    const {
+        language,
         showAnimation,
-        duelStatus, 
+        duelStatus,
     } = AppSelector(gameState);
     const [loaded, setLoaded] = useState(false);
     // Functions
@@ -40,30 +41,106 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     };
     return <Box>
         {
-            duelStatus.valueOf() == 0 
-            ?
-            <>
-            <Card sx={{ position: "relative" }}>
-            <CardMedia
-                component={"img"}
-                image={duel.creatorLegion.jpg.valueOf()}
-                alt="Legion Image"
-                loading="lazy"
-                onLoad={handleImageLoaded}
-            />
-        </Card>
-        <Box sx={{ textAlign: "center", mt: 1 }}>
-        <FireBtn
-            sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
-            // onClick={() => handleBuyToken()}
-          >
-            Duel
-          </FireBtn>
-        </Box>
-            </>    
-            : <></>
+            duelStatus.valueOf() == 0
+                ?
+                <>
+                    <Card sx={{ position: "relative" }}>
+                        <CardMedia
+                            component={"img"}
+                            image={duel.creatorLegion.jpg.valueOf()}
+                            alt="Legion Image"
+                            loading="lazy"
+                            onLoad={handleImageLoaded}
+                        />
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                position: "absolute",
+                                top: "15px",
+                                left: "20px",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            {duel.creatorLegion.name}
+                        </Typography>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                position: "absolute",
+                                alignItems: "center",
+                                top: "15px",
+                                right: "10px",
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                                // color: huntStatusColor,
+                            }}
+                        >
+                            <div>
+                                {duel.endDateTime}
+                            </div>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                position: "absolute",
+                                alignItems: "center",
+                                bottom: "10px",
+                                left: "calc(50% - 50px)",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    fontWeight: "bold",
+                                    fontSize: "1.4rem",
+                                    textShadow:
+                                        "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                                }}
+                            >
+                                {formatNumber(duel.creatorLegion.attackPower)} AP
+                            </Typography>
+
+                        </Box>
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                position: "absolute",
+                                bottom: "8px",
+                                left: "20px",
+                                color: "darkgrey",
+                            }}
+                        >
+                            #{duel.creatorLegion.id}
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                position: "absolute",
+                                bottom: "8px",
+                                right: "20px",
+                                fontWeight: "bold",
+                                fontSize: "1.4rem",
+                                textShadow:
+                                    "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                            }}
+                        >
+                            ${duel.betPrice}
+                        </Typography>
+                    </Card>
+
+                    <Box sx={{ textAlign: "center", mt: 1 }}>
+                        <FireBtn
+                            sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
+                        // onClick={() => handleBuyToken()}
+                        >
+                            Duel
+                        </FireBtn>
+                    </Box>
+                </>
+                : <></>
         }
-        
+
     </Box>;
 }
 

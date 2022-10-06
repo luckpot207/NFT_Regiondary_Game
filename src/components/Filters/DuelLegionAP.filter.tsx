@@ -1,5 +1,5 @@
 import { Box, Slider, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
@@ -13,7 +13,7 @@ const DuelLegionAPFilter: React.FC = () => {
     duelLegionFilterMinAP,
     duelLegionFilterMaxAP,
   } = AppSelector(gameState);
-  
+
   const handleChange = (event: Event, newValue: number | number[] | any) => {
     dispatch(
       updateState({
@@ -24,31 +24,41 @@ const DuelLegionAPFilter: React.FC = () => {
     );
   };
 
-  return (
-    <Box>
-      <Typography>
-        <LanguageTranslate translateKey="filterbyap" />:
-      </Typography>
-      <Slider
-        getAriaLabel={() => "Attack Power Range"}
-        value={[Number(duelLegionFilterMinAP), Number(duelLegionFilterMaxAP)]}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        min={duelLegionFilterMinConstAP.valueOf()}
-        max={duelLegionFilterMaxConstAP.valueOf()}
-        marks={[
-          {
-            value: duelLegionFilterMinConstAP.valueOf(),
-            label: "10K",
-          },
-          {
-            value: duelLegionFilterMaxConstAP.valueOf(),
-            label: "70K",
-          },
-        ]}
-      />
-    </Box>
-  );
+  // useEffect(() => {
+  //   dispatch(
+  //     updateState({
+  //       duelLegionFilterMinAP: duelLegionFilterMinConstAP,
+  //       duelLegionFilterMaxAP: duelLegionFilterMaxConstAP.valueOf()-1,
+  //       currentPage: 1,
+  //     })
+  //   );
+  // }, []);
+
+return (
+  <Box>
+    <Typography>
+      <LanguageTranslate translateKey="filterbyap" />:
+    </Typography>
+    <Slider
+      getAriaLabel={() => "Attack Power Range"}
+      value={[Number(duelLegionFilterMinAP), Number(duelLegionFilterMaxAP)]}
+      onChange={handleChange}
+      valueLabelDisplay="auto"
+      min={duelLegionFilterMinConstAP.valueOf()}
+      max={duelLegionFilterMaxConstAP.valueOf()}
+      marks={[
+        {
+          value: duelLegionFilterMinConstAP.valueOf(),
+          label: "10K",
+        },
+        {
+          value: duelLegionFilterMaxConstAP.valueOf(),
+          label: "70K",
+        },
+      ]}
+    />
+  </Box>
+);
 };
 
 export default DuelLegionAPFilter;

@@ -17,7 +17,7 @@ import allItemNames from "../constants/cryptolegions-itemnames.json";
 
 let allDulesTest: I_Duel[] = [
   {
-    creatorAddress: "0x9090989340930940",
+    creatorAddress: "0x0e747571964Eca016a145790c761e8e92364f479",
     creatorLegion: {
       id : "41",
       name : "九筒1号",
@@ -47,7 +47,42 @@ let allDulesTest: I_Duel[] = [
     joinerEstmatePrice: 3.13,
     type: false,
     status: 0,
-    endDateTime: "2022-10-07 21:00:35",
+    endDateTime: "2022-10-06 14:00:35",
+    betPrice: 40,
+    result: 3.4
+  },
+  {
+    creatorAddress: "0x547774sdfse89340930940",
+    creatorLegion: {
+      id : "44",
+      name : "Dawang",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 70879,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    creatorEstmatePrice: 3.78,
+    joinerAddress: "0x31234232d232423242",
+    joinerLegion: {
+      id : "48",
+      name : "Cool",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13889,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    joinerEstmatePrice: 3.13,
+    type: false,
+    status: 0,
+    endDateTime: "2022-10-06 21:00:35",
     betPrice: 40,
     result: 3.4
   }
@@ -308,11 +343,18 @@ let initialState: I_ReduxState = {
   duelLegionFilterMaxAP: 70,
   duelJoinLeftMaxTime: 360,
   duelJoinLeftMinTime: 1,
+  duelJoinLeftMaxConstTime: 360,
+  duelJoinLeftMinConstTime: 1,
   duelLeftMaxTime: 1080,
   duelLeftMinTime: 1,
+  duelLeftMaxConstTime: 1080,
+  duelLeftMinConstTime: 1,
   duelResultFilterStart: 1,
   duelResultFilterEnd: 30,
-  
+  duelResultFilterStartConst: 1,
+  duelResultFilterEndConst: 30,
+  duelShowOnlyMine: false,
+  duelType: false,
   // modal
   tutorialModalOpen: localStorage.getItem("tutorial") === "true" ? false : true,
   listOnMarketplaceModal: false,

@@ -6,17 +6,15 @@ import { AppSelector } from "../../store";
 import LanguageTranslate from "../UI/LanguageTranslate";
 
 const DuelTypeSort: React.FC = () => {
-    //   const dispatch = useDispatch();
-    //   const { sortPrice } = AppSelector(gameState);
-    const [duelTypeState, setDuelTypeState] = useState(0);
-    const handleSort = (val: Number) => {
-        setDuelTypeState(val.valueOf());
-        // dispatch(updateState({ sortPrice: val, currentPage: 1 }));
+      const dispatch = useDispatch();
+      const { duelType } = AppSelector(gameState);
+    const handleSort = (val: Boolean) => {
+        dispatch(updateState({ duelType: val, currentPage: 1 }));
     };
 
-    //   useEffect(() => {
-    //     dispatch(updateState({ sortPrice: 0 }));
-    //   }, []);
+      useEffect(() => {
+        dispatch(updateState({ duelType: false }));
+      }, []);
 
     return (
         <Box>
@@ -25,14 +23,14 @@ const DuelTypeSort: React.FC = () => {
             </Typography>
             <ButtonGroup>
                 <Button
-                    variant={duelTypeState === 0 ? "contained" : "outlined"}
-                    onClick={() => handleSort(0)}
+                    variant={duelType === false ? "contained" : "outlined"}
+                    onClick={() => handleSort(false)}
                 >
                     Standard
                 </Button>
                 <Button
-                    variant={duelTypeState === 1 ? "contained" : "outlined"}
-                    onClick={() => handleSort(1)}
+                    variant={duelType === true ? "contained" : "outlined"}
+                    onClick={() => handleSort(true)}
                 >
                     All-In
                 </Button>

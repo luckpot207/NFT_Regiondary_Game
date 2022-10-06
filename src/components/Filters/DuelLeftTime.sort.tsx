@@ -14,7 +14,13 @@ const DuelLeftTimeSort: React.FC = () => {
     duelLeftMaxTime,
     duelLeftMinTime,
     duelResultFilterStart,
-    duelResultFilterEnd
+    duelResultFilterEnd,
+    duelJoinLeftMaxConstTime,
+    duelJoinLeftMinConstTime,
+    duelLeftMaxConstTime,
+    duelLeftMinConstTime,
+    duelResultFilterStartConst,
+    duelResultFilterEndConst
   } = AppSelector(gameState);
   const handleChange = (event: Event, newValue: number | number[] | any) => {
     if (duelStatus == 2) {
@@ -28,16 +34,16 @@ const DuelLeftTimeSort: React.FC = () => {
     } else if (duelStatus == 1) {
       dispatch(
         updateState({
-          duelLeftMaxTime: Number(newValue[0]),
-          duelLeftMinTime: Number(newValue[1]),
+          duelLeftMaxTime: Number(newValue[1]),
+          duelLeftMinTime: Number(newValue[0]),
           currentPage: 1,
         })
       );
     } else {
       dispatch(
         updateState({
-          duelJoinLeftMaxTime: Number(newValue[0]),
-          duelJoinLeftMinTime: Number(newValue[1]),
+          duelJoinLeftMaxTime: Number(newValue[1]),
+          duelJoinLeftMinTime: Number(newValue[0]),
           currentPage: 1,
         })
       );
@@ -58,15 +64,15 @@ const DuelLeftTimeSort: React.FC = () => {
             value={[Number(duelJoinLeftMinTime), Number(duelJoinLeftMaxTime)]}
             onChange={handleChange}
             valueLabelDisplay="auto"
-            min={1}
-            max={360}
+            min={duelJoinLeftMinConstTime.valueOf()}
+            max={duelJoinLeftMaxConstTime.valueOf()}
             marks={[
               {
-                value: 1,
+                value: duelJoinLeftMinConstTime.valueOf(),
                 label: "1 min",
               },
               {
-                value: 360,
+                value: duelJoinLeftMaxConstTime.valueOf(),
                 label: "6 hours",
               },
             ]}
@@ -77,15 +83,15 @@ const DuelLeftTimeSort: React.FC = () => {
                 value={[Number(duelLeftMinTime), Number(duelLeftMaxTime)]}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
-                min={1}
-                max={360}
+                min={duelLeftMinConstTime.valueOf()}
+                max={duelLeftMaxConstTime.valueOf()}
                 marks={[
                   {
-                    value: 1,
+                    value: duelLeftMinConstTime.valueOf(),
                     label: "1 min",
                   },
                   {
-                    value: 1080,
+                    value: duelLeftMaxConstTime.valueOf(),
                     label: "18 hours",
                   },
                 ]}
@@ -96,15 +102,15 @@ const DuelLeftTimeSort: React.FC = () => {
                 value={[Number(duelResultFilterStart), Number(duelResultFilterEnd)]}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
-                min={1}
-                max={30}
+                min={duelResultFilterStartConst.valueOf()}
+                max={duelResultFilterEndConst.valueOf()}
                 marks={[
                   {
-                    value: 1,
+                    value: duelResultFilterStartConst.valueOf(),
                     label: "1 day",
                   },
                   {
-                    value: 30,
+                    value: duelResultFilterEnd.valueOf(),
                     label: "30 days",
                   },
                 ]}

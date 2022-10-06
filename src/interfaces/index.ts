@@ -350,17 +350,25 @@ export interface I_ReduxState {
   legionFilterMaxAP: Number;
   legionFilterMinConstAP: Number;
   legionFilterMaxConstAP: Number;
-  duelLegionFilterMinAP: Number;
+  duelLegionFilterMinAP: Number; 
   duelLegionFilterMaxAP: Number;
   duelLegionFilterMinConstAP: Number;
   duelLegionFilterMaxConstAP: Number;
   duelJoinLeftMaxTime: Number;
   duelJoinLeftMinTime: Number;
+  duelJoinLeftMaxConstTime: Number;
+  duelJoinLeftMinConstTime: Number;
   duelLeftMaxTime: Number;
   duelLeftMinTime: Number;
+  duelLeftMaxConstTime: Number;
+  duelLeftMinConstTime: Number;
   duelResultFilterStart: Number;
   duelResultFilterEnd: Number;
-  
+  duelResultFilterStartConst: Number;
+  duelResultFilterEndConst: Number;
+  duelShowOnlyMine: Boolean;
+  duelType: Boolean;
+  // 
   sortAP: Number;
   sortPrice: Number;
   sortAPandPrice: Number;
@@ -388,7 +396,7 @@ export interface I_ReduxState {
   allowReincarnation: Boolean;
   endDate: string;
 
-  // Deul
+  // Duel
   duelStatus: Number;
   allDuels: I_Duel[];
 

@@ -43,6 +43,20 @@ const Duel: React.FC = () => {
         duelLegionFilterMaxAP,
         duelLegionFilterMinConstAP,
         duelLegionFilterMaxConstAP,
+        duelJoinLeftMaxTime,
+        duelJoinLeftMinTime,
+        duelLeftMaxTime,
+        duelLeftMinTime,
+        duelResultFilterStart,
+        duelResultFilterEnd,
+        duelJoinLeftMaxConstTime,
+        duelJoinLeftMinConstTime,
+        duelLeftMaxConstTime,
+        duelLeftMinConstTime,
+        duelResultFilterStartConst,
+        duelResultFilterEndConst,
+        duelShowOnlyMine,
+        duelType,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
@@ -61,14 +75,51 @@ const Duel: React.FC = () => {
     };
 
     const APFilterVal = allDuels.filter(
-        (duel: I_Duel) =>
-            duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 &&
+        (duel: I_Duel) => {
+            console.log("=========================");
+            return duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 &&
             (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP
                 ? true
-                : duel.creatorLegion.attackPower <= duelLegionFilterMaxAP.valueOf() * 1000)
+                : duel.creatorLegion.attackPower <= duelLegionFilterMaxAP.valueOf() * 1000);
+        }
+    );
+
+    const StatusFilterVal = APFilterVal.filter(
+        (duel: I_Duel) => duel.status == duelStatus
+    );
+
+    const TimeFilterVal = StatusFilterVal.filter(
+        (duel: I_Duel) => {
+            if (duelStatus == 0) {
+                const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
+                return timeLeft >= duelJoinLeftMinTime.valueOf() && 
+                       (duelJoinLeftMaxTime === duelJoinLeftMaxConstTime 
+                        ? true 
+                        : timeLeft <= duelJoinLeftMaxTime.valueOf()) 
+             } else if (duelStatus == 1) {
+                const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
+                return timeLeft >= duelLeftMinTime.valueOf() && 
+                       (duelLeftMaxTime === duelLeftMaxConstTime 
+                        ? true 
+                        : timeLeft <= duelLeftMaxTime.valueOf()) 
+            } else {
+                const daysAgo: Number = (new Date().getTime() - new Date(duel.endDateTime.valueOf()).getTime()) / (24 * 60 * 60 * 1000);
+                return daysAgo >= duelResultFilterStart.valueOf() && 
+                       (duelResultFilterEnd === duelResultFilterEndConst
+                        ? true 
+                        : daysAgo <= duelResultFilterEnd.valueOf()) 
+            }
+        }
     );
 
 
+    const OnlyMineFilterVal = TimeFilterVal.filter(
+        (duel: I_Duel) => duelShowOnlyMine ? duel.creatorAddress == account : true
+    )
+
+    const DuelTypeFilterVal = OnlyMineFilterVal.filter(
+        (duel: I_Duel) => duel.type == duelType
+    )
     return (
         <Box>
             <Grid container spacing={2} sx={{ my: 4 }}>
@@ -125,7 +176,7 @@ const Duel: React.FC = () => {
                     {duelStatus != 0 ? <ButtonGroup><Button onClick={() => handleDuelSort(0)}>Back to Duels</Button></ButtonGroup> : <></>}
                 </Grid>
             </Grid>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} mb={3}>
                 <Grid item xs={12} md={6} lg={3}>
                     <DuelLegionAPFilter />
                 </Grid>
@@ -143,7 +194,7 @@ const Duel: React.FC = () => {
                 </Grid>
             </Grid>
             <Grid container spacing={2} sx={{ mb: 4 }}>
-                {APFilterVal
+                {DuelTypeFilterVal
                     .map((duel, index) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                             <DuelCard duel={duel} />

@@ -6,16 +6,16 @@ import { Box, Checkbox, Typography } from "@mui/material";
 import LanguageTranslate from "../UI/LanguageTranslate";
 
 const DuelShowOnlyMineFilter: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const { showOnlyMine } = AppSelector(gameState);
-  const [duelShowOnlyMine, setDuelShowOnlyMine] = useState(false);
+  const dispatch = useDispatch();
+  const { duelShowOnlyMine } = AppSelector(gameState);
+  // const [duelShowOnlyMine, setDuelShowOnlyMine] = useState(false);
   const handleFilter = () => {
-    // dispatch(updateState({ showOnlyMine: !showOnlyMine }));
+    dispatch(updateState({ duelShowOnlyMine: !duelShowOnlyMine }));
   };
 
-//   useEffect(() => {
-//     dispatch(updateState({ showOnlyMine: false }));
-//   }, []);
+  useEffect(() => {
+    dispatch(updateState({ duelShowOnlyMine: false }));
+  }, []);
 
   return (
     <Box>

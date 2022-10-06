@@ -31,7 +31,8 @@ const mainVersion = {
   moralisMasterKey: process.env.REACT_APP_MAIN_MORALIS_MASTERKEY,
 };
 
-// const gameVersion = testVersion;
-const gameVersion = mainVersion;
+const gameVersion = testVersion;
+// const gameVersion = mainVersion;
 
 export default gameVersion;
+          

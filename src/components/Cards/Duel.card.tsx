@@ -35,9 +35,23 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         duelStatus,
     } = AppSelector(gameState);
     const [loaded, setLoaded] = useState(false);
+    const [leftTime, setLeftTime] = useState("");
+
     // Functions
     const handleImageLoaded = () => {
         setLoaded(true);
+    };
+
+    React.useEffect(() => {
+        realTimeUpdate();
+    }, []);
+
+    const realTimeUpdate = () => {
+        setTimeout(() => {
+            const left_time = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime());
+            setLeftTime(""+Math.floor(left_time/(60*60*1000))+"h "+Math.floor(left_time%(60*60*1000)/(60*1000))+"m "+Math.floor(left_time%(60*1000)/(1000))+"s")
+            realTimeUpdate();
+        }, 1000);
     };
     return <Box>
         {
@@ -76,7 +90,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             }}
                         >
                             <div>
-                                {duel.endDateTime}
+                                {leftTime}
                             </div>
                         </Box>
                         <Box

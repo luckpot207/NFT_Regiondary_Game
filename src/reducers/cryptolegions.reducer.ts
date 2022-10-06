@@ -7,12 +7,86 @@ import {
   I_ReduxState,
   I_Warrior,
   IVoteInput,
+  I_Duel,
 } from "../interfaces";
 import { RootState } from "../store";
 import ApiService from "../services/api.service";
 import { toast } from "react-toastify";
 import languageTexts from "../constants/cryptolegions-languages.json";
 import allItemNames from "../constants/cryptolegions-itemnames.json";
+
+let allDulesTest: I_Duel[] = [
+  {
+    creatorAddress: "0x0e747571964Eca016a145790c761e8e92364f479",
+    creatorLegion: {
+      id : "41",
+      name : "九筒1号",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13879,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    creatorEstmatePrice: 3.78,
+    joinerAddress: "0x31234232d232423242",
+    joinerLegion: {
+      id : "45",
+      name : "hunter",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13889,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    joinerEstmatePrice: 3.13,
+    type: false,
+    status: 1,
+    endDateTime: "2022-10-06 16:00:35",
+    betPrice: 40,
+    result: 3.4
+  },
+  {
+    creatorAddress: "0x547774sdfse89340930940",
+    creatorLegion: {
+      id : "44",
+      name : "Dawang",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 70879,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    creatorEstmatePrice: 3.78,
+    joinerAddress: "0x31234232d232423242",
+    joinerLegion: {
+      id : "48",
+      name : "Cool",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13889,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    joinerEstmatePrice: 3.13,
+    type: false,
+    status: 0,
+    endDateTime: "2022-10-06 21:00:35",
+    betPrice: 40,
+    result: 3.4
+  }
+]
 
 let initialState: I_ReduxState = {
   reloadContractStatus: new Date().getTime(),
@@ -260,6 +334,27 @@ let initialState: I_ReduxState = {
   allowReincarnation: false,
   endDate: "2022-09-13 16:24:34",
 
+  // Duel
+  duelStatus: 0,
+  allDuels: allDulesTest,
+  duelLegionFilterMinConstAP: 10,
+  duelLegionFilterMaxConstAP: 70,
+  duelLegionFilterMinAP: 10,
+  duelLegionFilterMaxAP: 70,
+  duelJoinLeftMaxTime: 360,
+  duelJoinLeftMinTime: 1,
+  duelJoinLeftMaxConstTime: 360,
+  duelJoinLeftMinConstTime: 1,
+  duelLeftMaxTime: 1080,
+  duelLeftMinTime: 1,
+  duelLeftMaxConstTime: 1080,
+  duelLeftMinConstTime: 1,
+  duelResultFilterStart: 1,
+  duelResultFilterEnd: 30,
+  duelResultFilterStartConst: 1,
+  duelResultFilterEndConst: 30,
+  duelShowOnlyMine: false,
+  duelType: false,
   // modal
   tutorialModalOpen: localStorage.getItem("tutorial") === "true" ? false : true,
   listOnMarketplaceModal: false,

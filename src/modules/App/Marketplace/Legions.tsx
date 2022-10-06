@@ -50,7 +50,6 @@ const LegionsMarketplace: React.FC = () => {
     showOnlyNew,
     sortAPandPrice,
   } = AppSelector(gameState);
-
   // Account and Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();

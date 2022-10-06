@@ -111,6 +111,19 @@
       {
         "indexed": false,
         "internalType": "address",
+        "name": "minter",
+        "type": "address"
+      }
+    ],
+    "name": "FreeMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
         "name": "from",
         "type": "address"
       },

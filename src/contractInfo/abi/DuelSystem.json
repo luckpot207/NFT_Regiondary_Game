@@ -3,17 +3,17 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_router",
+        "name": "_rewardpool",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_blst",
+        "name": "_legion",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_busd",
+        "name": "_feehandler",
         "type": "address"
       }
     ],
@@ -43,11 +43,11 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_usd",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "getBLSTAmount",
+    "name": "attackPowers",
     "outputs": [
       {
         "internalType": "uint256",
@@ -62,26 +62,53 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_warriorCount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_remainingSupplies",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "getCostForAddingWarrior",
+    "name": "betAmounts",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "legionId",
+        "type": "uint256"
       },
+      {
+        "internalType": "uint256",
+        "name": "tokenPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "createDuel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "name": "doingDuels",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -89,13 +116,8 @@
   },
   {
     "inputs": [],
-    "name": "getExecuteAmount",
+    "name": "duelCounter",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
       {
         "internalType": "uint256",
         "name": "",
@@ -108,12 +130,87 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "duels",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "legion1",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "legion2",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price1",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price2",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "betAmount",
+        "type": "uint256"
+      },
+      {
         "internalType": "uint8",
-        "name": "_index",
+        "name": "status",
         "type": "uint8"
       }
     ],
-    "name": "getFee",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feehandler",
+    "outputs": [
+      {
+        "internalType": "contract IFeeHandler",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "duelId",
+        "type": "uint256"
+      }
+    ],
+    "name": "finishDuel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "ap",
+        "type": "uint256"
+      }
+    ],
+    "name": "getBetAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -128,93 +225,33 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "getSummoningPrice",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "usdAmount",
+        "name": "duelId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "blstAmount",
+        "name": "legionId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenPrice",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "joinDuel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_warriorCount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_supply",
-        "type": "uint256"
-      }
-    ],
-    "name": "getSupplyCost",
+    "inputs": [],
+    "name": "legion",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract ILegionNFT",
         "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_count",
-        "type": "uint256"
-      }
-    ],
-    "name": "getTrainingCost",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_blst",
-        "type": "uint256"
-      }
-    ],
-    "name": "getUSDAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -235,6 +272,19 @@
   },
   {
     "inputs": [],
+    "name": "percentToWinner",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -242,33 +292,15 @@
   },
   {
     "inputs": [],
-    "name": "router",
+    "name": "rewardpool",
     "outputs": [
       {
-        "internalType": "contract IDEXRouter",
+        "internalType": "contract IRewardPool",
         "name": "",
         "type": "address"
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_fee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_index",
-        "type": "uint8"
-      }
-    ],
-    "name": "setFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -280,6 +312,73 @@
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "index",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ap",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateAttackPower",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "index",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateBetAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "winnerPercent",
+        "type": "uint256"
+      }
+    ],
+    "name": "updatePercent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "duelId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "name": "updatePrediction",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

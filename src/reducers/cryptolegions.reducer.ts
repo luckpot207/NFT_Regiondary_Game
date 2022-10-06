@@ -7,12 +7,51 @@ import {
   I_ReduxState,
   I_Warrior,
   IVoteInput,
+  I_Duel,
 } from "../interfaces";
 import { RootState } from "../store";
 import ApiService from "../services/api.service";
 import { toast } from "react-toastify";
 import languageTexts from "../constants/cryptolegions-languages.json";
 import allItemNames from "../constants/cryptolegions-itemnames.json";
+
+let allDulesTest: I_Duel[] = [
+  {
+    creatorAddress: "0x9090989340930940",
+    creatorLegion: {
+      id : "41",
+      name : "九筒1号",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13879,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    creatorEstmatePrice: 3.78,
+    joinerAddress: "0x31234232d232423242",
+    joinerLegion: {
+      id : "45",
+      name : "hunter",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13889,
+      supplies : 0,
+      huntStatus : false, 
+      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
+      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+    },
+    joinerEstmatePrice: 3.13,
+    type: false,
+    status: 0,
+    endDateTime: "2022-10-07 21:00:35",
+    betPrice: 40,
+    result: 3.4
+  }
+]
 
 let initialState: I_ReduxState = {
   reloadContractStatus: new Date().getTime(),
@@ -260,6 +299,20 @@ let initialState: I_ReduxState = {
   allowReincarnation: false,
   endDate: "2022-09-13 16:24:34",
 
+  // Duel
+  duelStatus: 0,
+  allDuels: allDulesTest,
+  duelLegionFilterMinConstAP: 10,
+  duelLegionFilterMaxConstAP: 70,
+  duelLegionFilterMinAP: 10,
+  duelLegionFilterMaxAP: 70,
+  duelJoinLeftMaxTime: 360,
+  duelJoinLeftMinTime: 1,
+  duelLeftMaxTime: 1080,
+  duelLeftMinTime: 1,
+  duelResultFilterStart: 1,
+  duelResultFilterEnd: 30,
+  
   // modal
   tutorialModalOpen: localStorage.getItem("tutorial") === "true" ? false : true,
   listOnMarketplaceModal: false,

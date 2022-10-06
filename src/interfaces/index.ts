@@ -145,6 +145,22 @@ export interface ISamaritanStarHolder {
   address: String;
 }
 
+// Duel
+
+export interface I_Duel {
+  creatorAddress: String;
+  creatorLegion: I_Legion;
+  creatorEstmatePrice: Number;
+  joinerAddress?: String;
+  joinerLegion?: I_Legion;
+  joinerEstmatePrice?: Number;
+  type: Boolean;
+  status: Number;
+  endDateTime: String;
+  betPrice: Number;
+  result?: Number;
+}
+
 export interface I_ReduxState {
   reloadContractStatus: Number;
   massHuntResult: any[];
@@ -334,7 +350,17 @@ export interface I_ReduxState {
   legionFilterMaxAP: Number;
   legionFilterMinConstAP: Number;
   legionFilterMaxConstAP: Number;
-
+  duelLegionFilterMinAP: Number;
+  duelLegionFilterMaxAP: Number;
+  duelLegionFilterMinConstAP: Number;
+  duelLegionFilterMaxConstAP: Number;
+  duelJoinLeftMaxTime: Number;
+  duelJoinLeftMinTime: Number;
+  duelLeftMaxTime: Number;
+  duelLeftMinTime: Number;
+  duelResultFilterStart: Number;
+  duelResultFilterEnd: Number;
+  
   sortAP: Number;
   sortPrice: Number;
   sortAPandPrice: Number;
@@ -361,6 +387,10 @@ export interface I_ReduxState {
   reincarnationProcess: Boolean;
   allowReincarnation: Boolean;
   endDate: string;
+
+  // Deul
+  duelStatus: Number;
+  allDuels: I_Duel[];
 
   // modal
   tutorialModalOpen: Boolean;

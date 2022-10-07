@@ -110,6 +110,7 @@ const Duel: React.FC = () => {
             }
         }
     );
+    
 
 
     const OnlyMineFilterVal = TimeFilterVal.filter(

@@ -154,25 +154,156 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 </>
                 : duelStatus.valueOf() == 1
                     ? <>
-                        <Card sx={{ position: "relative" }}>
-                            <CardMedia
-                                component={"img"}
-                                image={duel.creatorLegion.jpg.valueOf()}
-                                alt="Legion Image"
-                                loading="lazy"
-                                onLoad={handleImageLoaded}
-                            />
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    position: "absolute",
-                                    top: "15px",
-                                    left: "20px",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                {duel.creatorLegion.name}
-                            </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                            <Card sx={{ position: 'relative' }}>
+                                <CardMedia
+                                    component={"img"}
+                                    image={duel.creatorLegion.jpg.valueOf()}
+                                    alt="Legion Image"
+                                    loading="lazy"
+                                    onLoad={handleImageLoaded}
+                                />
+                                <Typography
+                                    sx={{
+                                        position: "absolute",
+                                        top: "15px",
+                                        left: "20px",
+                                        fontWeight: "bold",
+                                        fontSize: "1em"
+                                    }}
+                                >
+                                    {duel.creatorLegion.name}
+                                </Typography>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        position: "absolute",
+                                        alignItems: "center",
+                                        bottom: "10px",
+                                        left: "calc(50% - 50px)",
+                                        fontWeight: "bold",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontWeight: "bold",
+                                            fontSize: "1rem",
+                                            textShadow:
+                                                "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                                        }}
+                                    >
+                                        {formatNumber(duel.creatorLegion.attackPower)} AP
+                                    </Typography>
+
+                                </Box>
+                                <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: "8px",
+                                        left: "20px",
+                                        color: "darkgrey",
+                                    }}
+                                >
+                                    #{duel.creatorLegion.id}
+                                </Typography>
+                            </Card>
+                            <Card sx={{ position: 'relative', marginLeft: '10px' }}>
+                                <CardMedia
+                                    component={"img"}
+                                    image={duel.joinerLegion.jpg.valueOf()}
+                                    alt="Legion Image"
+                                    loading="lazy"
+                                    onLoad={handleImageLoaded}
+                                />
+                                <Typography
+                                    sx={{
+                                        position: "absolute",
+                                        top: "15px",
+                                        left: "20px",
+                                        fontWeight: "bold",
+                                        fontSize: "1em",
+                                    }}
+                                >
+                                    {duel.joinerLegion.name}
+                                </Typography>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        position: "absolute",
+                                        alignItems: "center",
+                                        bottom: "10px",
+                                        left: "calc(50% - 50px)",
+                                        fontWeight: "bold",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontWeight: "bold",
+                                            fontSize: "1rem",
+                                            textShadow:
+                                                "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                                        }}
+                                    >
+                                        {formatNumber(duel.creatorLegion.attackPower)} AP
+                                    </Typography>
+
+                                </Box>
+                                <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: "8px",
+                                        left: "20px",
+                                        color: "darkgrey",
+                                    }}
+                                >
+                                    #{duel.joinerLegion.id}
+                                </Typography>
+                            </Card>
+                            <Box sx={{
+                                width: "100%", 
+                                height: "100%", 
+                                paddingLeft: "20%",
+                                paddingRight: "20%",
+                                position: "absolute", 
+                                top: "0px", 
+                                left: "0px", 
+                                display: 'flex', 
+                                alignItems: "center", 
+                                justifyContent: "space-between", 
+                                flexDirection: "row"
+                            }}>
+                                <Typography
+                                    sx={{
+                                        fontSize: "1.2em",
+                                        fontWeight: "bold",
+                                        color: "yellow",
+                                        WebkitTextStroke: "1px black",
+                                    }}
+                                >
+                                    ${duel.creatorEstmatePrice}
+                                </Typography>
+                                <img
+                                    src="/assets/images/vs.png"
+                                    style={{
+                                        height: "50px",
+                                    }}
+                                    alt="VS"
+                                />
+                                <Typography
+                                    sx={{
+                                        fontSize: "1.2em",
+                                        fontWeight: "bold",
+                                        color: "yellow",
+                                        WebkitTextStroke: "1px black",
+                                    }}
+                                >
+                                    ${duel.joinerEstmatePrice}
+                                </Typography>
+                            </Box>
                             <Box
                                 sx={{
                                     display: "flex",
@@ -189,40 +320,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                     {leftTime}
                                 </div>
                             </Box>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    position: "absolute",
-                                    alignItems: "center",
-                                    bottom: "10px",
-                                    left: "calc(50% - 50px)",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontWeight: "bold",
-                                        fontSize: "1.4rem",
-                                        textShadow:
-                                            "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
-                                    }}
-                                >
-                                    {formatNumber(duel.creatorLegion.attackPower)} AP
-                                </Typography>
-
-                            </Box>
-                            <Typography
-                                variant="subtitle2"
-                                sx={{
-                                    position: "absolute",
-                                    bottom: "8px",
-                                    left: "20px",
-                                    color: "darkgrey",
-                                }}
-                            >
-                                #{duel.creatorLegion.id}
-                            </Typography>
                             <Typography
                                 variant="subtitle2"
                                 sx={{
@@ -237,15 +334,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             >
                                 ${duel.betPrice}
                             </Typography>
-                        </Card>
-
-                        <Box sx={{ textAlign: "center", mt: 1 }}>
-                            <FireBtn
-                                sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
-                            // onClick={() => handleBuyToken()}
-                            >
-                                Duel
-                            </FireBtn>
                         </Box>
                     </>
                     : <></>

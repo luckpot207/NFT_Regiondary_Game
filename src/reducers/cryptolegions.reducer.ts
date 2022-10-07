@@ -30,7 +30,7 @@ let allDulesTest: I_Duel[] = [
       mp4 : "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
-    creatorEstmatePrice: 3.78,
+    creatorEstmatePrice: 3.6,
     joinerAddress: "0x31234232d232423242",
     joinerLegion: {
       id : "45",
@@ -44,10 +44,10 @@ let allDulesTest: I_Duel[] = [
       mp4 : "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
-    joinerEstmatePrice: 3.13,
+    joinerEstmatePrice: 3.2,
     type: false,
-    status: 1,
-    endDateTime: "2022-10-07 05:00:35",
+    status: 2,
+    endDateTime: "2022-10-01 05:00:35",
     betPrice: 40,
     result: 3.4
   },
@@ -65,7 +65,7 @@ let allDulesTest: I_Duel[] = [
       mp4 : "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
-    creatorEstmatePrice: 3.78,
+    creatorEstmatePrice: 3.3,
     joinerAddress: "0x31234232d232423242",
     joinerLegion: {
       id : "48",
@@ -79,10 +79,10 @@ let allDulesTest: I_Duel[] = [
       mp4 : "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
-    joinerEstmatePrice: 3.13,
+    joinerEstmatePrice: 3.78,
     type: false,
-    status: 0,
-    endDateTime: "2022-10-07 06:00:35",
+    status: 2,
+    endDateTime: "2022-10-05 06:00:35",
     betPrice: 40,
     result: 3.4
   }

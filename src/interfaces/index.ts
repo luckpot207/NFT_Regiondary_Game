@@ -158,7 +158,7 @@ export interface I_Duel {
   status: Number;
   endDateTime: String;
   betPrice: Number;
-  result?: Number;
+  result: Number;
 }
 
 export interface I_ReduxState {

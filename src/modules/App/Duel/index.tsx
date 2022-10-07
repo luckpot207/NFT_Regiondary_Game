@@ -195,9 +195,13 @@ const Duel: React.FC = () => {
             <Grid container spacing={2} sx={{ mb: 4 }}>
                 {DuelTypeFilterVal
                     .map((duel, index) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        duelStatus == 0 
+                        ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                             <DuelCard duel={duel} />
-                        </Grid>
+                        </Grid>)
+                        : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                            <DuelCard duel={duel} />
+                        </Grid>)
                     ))}
             </Grid>
         </Box>

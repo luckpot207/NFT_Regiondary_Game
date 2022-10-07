@@ -151,9 +151,9 @@ export interface I_Duel {
   creatorAddress: String;
   creatorLegion: I_Legion;
   creatorEstmatePrice: Number;
-  joinerAddress?: String;
-  joinerLegion?: I_Legion;
-  joinerEstmatePrice?: Number;
+  joinerAddress: String;
+  joinerLegion: I_Legion;
+  joinerEstmatePrice: Number;
   type: Boolean;
   status: Number;
   endDateTime: String;

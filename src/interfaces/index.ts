@@ -34,6 +34,7 @@ export interface I_Legion {
   attackPower: Number;
   supplies: Number;
   huntStatus: Boolean;
+  duelStatus: Boolean;
   jpg: String;
   mp4: String;
   executeStatus: boolean;
@@ -159,6 +160,12 @@ export interface I_Duel {
   endDateTime: String;
   betPrice: Number;
   result: Number;
+}
+
+export interface I_Division {
+  minAP: Number,
+  maxAP: Number,
+  betPrice: Number,
 }
 
 export interface I_ReduxState {
@@ -399,6 +406,7 @@ export interface I_ReduxState {
   // Duel
   duelStatus: Number;
   allDuels: I_Duel[];
+  getAllDulesLoading: Boolean;
 
   // modal
   tutorialModalOpen: Boolean;
@@ -409,6 +417,7 @@ export interface I_ReduxState {
   walletSelectModalOpen: Boolean;
   referralTGModalOpen: Boolean;
   allowVote: Boolean;
+  createDuelModalOpen: Boolean;
 
   /// Initial data from the backend
   initialDataLoading: Boolean;

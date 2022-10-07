@@ -33,6 +33,7 @@ export const getAllLegionsAct = async (
     const legionInfos = allLegionsRes[0];
     const ids = allLegionsRes[1];
     const huntStatus = allLegionsRes[2];
+    const duelStatus = allLegionsRes[3];
     let allLegions: I_Legion[] = [];
     ids.forEach((id: string, index: number) => {
       var temp: I_Legion = {
@@ -45,6 +46,7 @@ export const getAllLegionsAct = async (
         mp4: getLegionMp4ImageUrl(parseFloat(legionInfos[index].attack_power)),
         supplies: parseFloat(legionInfos[index].supplies),
         huntStatus: huntStatus[index],
+        duelStatus: duelStatus[index],
         executeStatus: false,
       };
       allLegions.push(temp);

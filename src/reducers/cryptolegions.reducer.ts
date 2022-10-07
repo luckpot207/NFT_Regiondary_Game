@@ -14,34 +14,37 @@ import ApiService from "../services/api.service";
 import { toast } from "react-toastify";
 import languageTexts from "../constants/cryptolegions-languages.json";
 import allItemNames from "../constants/cryptolegions-itemnames.json";
+import { FaSearch } from "react-icons/fa";
 
 let allDulesTest: I_Duel[] = [
   {
     creatorAddress: "0x0e747571964Eca016a145790c761e8e92364f479",
     creatorLegion: {
-      id : "41",
-      name : "九筒1号",
+      id: "41",
+      name: "九筒1号",
       beastIds: [176, 175, 4286, 5581],
       warriorIds: [472, 474, 473, 5452, 16596, 16598],
       attackPower: 13879,
-      supplies : 0,
-      huntStatus : false, 
-      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
-      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: false,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
     creatorEstmatePrice: 3.6,
     joinerAddress: "0x31234232d232423242",
     joinerLegion: {
-      id : "45",
-      name : "hunter",
+      id: "45",
+      name: "hunter",
       beastIds: [176, 175, 4286, 5581],
       warriorIds: [472, 474, 473, 5452, 16596, 16598],
       attackPower: 13889,
-      supplies : 0,
-      huntStatus : false, 
-      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
-      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: false,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
     joinerEstmatePrice: 3.2,
@@ -49,34 +52,36 @@ let allDulesTest: I_Duel[] = [
     status: 2,
     endDateTime: "2022-10-01 05:00:35",
     betPrice: 40,
-    result: 3.4
+    result: 3.4,
   },
   {
     creatorAddress: "0x547774sdfse89340930940",
     creatorLegion: {
-      id : "44",
-      name : "Dawang",
+      id: "44",
+      name: "Dawang",
       beastIds: [176, 175, 4286, 5581],
       warriorIds: [472, 474, 473, 5452, 16596, 16598],
       attackPower: 70879,
-      supplies : 0,
-      huntStatus : false, 
-      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
-      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: false,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
     creatorEstmatePrice: 3.3,
     joinerAddress: "0x31234232d232423242",
     joinerLegion: {
-      id : "48",
-      name : "Cool",
+      id: "48",
+      name: "Cool",
       beastIds: [176, 175, 4286, 5581],
       warriorIds: [472, 474, 473, 5452, 16596, 16598],
       attackPower: 13889,
-      supplies : 0,
-      huntStatus : false, 
-      jpg :  "/assets/images/characters/jpg/legions/0.jpg",
-      mp4 : "/assets/images/characters/mp4/legions/0.mp4",
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: false,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
       executeStatus: false,
     },
     joinerEstmatePrice: 3.78,
@@ -84,9 +89,9 @@ let allDulesTest: I_Duel[] = [
     status: 2,
     endDateTime: "2022-10-05 06:00:35",
     betPrice: 40,
-    result: 3.4
-  }
-]
+    result: 3.4,
+  },
+];
 
 let initialState: I_ReduxState = {
   reloadContractStatus: new Date().getTime(),
@@ -135,6 +140,7 @@ let initialState: I_ReduxState = {
     attackPower: 0,
     supplies: 0,
     huntStatus: false,
+    duelStatus: false,
     jpg: "",
     mp4: "",
     executeStatus: false,
@@ -150,6 +156,7 @@ let initialState: I_ReduxState = {
     attackPower: 0,
     supplies: 0,
     huntStatus: false,
+    duelStatus: false,
     jpg: "",
     mp4: "",
     executeStatus: false,
@@ -337,6 +344,7 @@ let initialState: I_ReduxState = {
   // Duel
   duelStatus: 0,
   allDuels: allDulesTest,
+  getAllDulesLoading: false,
   duelLegionFilterMinConstAP: 10,
   duelLegionFilterMaxConstAP: 70,
   duelLegionFilterMinAP: 10,
@@ -364,6 +372,7 @@ let initialState: I_ReduxState = {
   walletSelectModalOpen: false,
   referralTGModalOpen: false,
   allowVote: false,
+  createDuelModalOpen: false,
 
   /// Initial data from the backend
   initialDataLoading: false,

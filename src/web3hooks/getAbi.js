@@ -11,6 +11,7 @@ import vrfv2consumer from "../config/abis/VRFv2Consumer.json";
 import warrior from "../config/abis/WarriorNFT.json";
 import rewardpool from "../config/abis/RewardPool.json";
 import referralsystem from "../config/abis/ReferralSystem.json";
+import duelsystem from "../config/abis/DuelSystem.json";
 
 export const getBloodstoneAbi = () => {
   return bloodstone;
@@ -55,3 +56,7 @@ export const getVRFAbi = () => {
 export const getReferralSystemAbi = () => {
   return referralsystem;
 };
+
+export const getDuelSystemAbi = () => {
+  return duelsystem;
+}

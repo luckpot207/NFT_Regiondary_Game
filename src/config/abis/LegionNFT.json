@@ -1531,6 +1531,11 @@
         "internalType": "uint256",
         "name": "loser",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "standard",
+        "type": "bool"
       }
     ],
     "name": "updateApAfterDuel",

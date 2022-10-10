@@ -44,3 +44,7 @@ export const getVRFAddress = () => {
 export const getReferralSystemAddress = () => {
   return gameAddress[gameVersion.version].referralsystem;
 };
+
+export const getDuelSystemAddress = () => {
+  return gameAddress[gameVersion.version].duelsystem;
+}

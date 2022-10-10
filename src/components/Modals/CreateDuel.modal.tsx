@@ -10,7 +10,6 @@ import {
     InputLabel,
     Select,
     SelectChangeEvent,
-    
     Button,
     ButtonGroup,
     InputBase,
@@ -26,7 +25,10 @@ import {
 import { AppSelector } from "../../store";
 import { SelectorFactory, useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { useWeb3 } from "../../web3hooks/useContract";
+import { 
+    useWeb3,
+    useDuelSystem,
+ } from "../../web3hooks/useContract";
 import { I_Legion, I_Division } from "../../interfaces";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
 import OrgMenuItem from "../../components/UI/OrgMenuItem";
@@ -36,6 +38,9 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FireBtn from "../Buttons/FireBtn";
+import { createDuel } from "../../web3hooks/contractFunctions";
+import { getDuelSystemAddress } from "../../web3hooks/getAddress";
+import { toast } from "react-toastify";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -83,6 +88,10 @@ const CreateDuelModal: React.FC = () => {
     // Account & Web3
     const { account } = useWeb3React();
     const web3 = useWeb3();
+
+    // Contract
+    const duelContract = useDuelSystem();
+
     const [isOpen, setIsOpen] = useState(false);
     const [allIn, setAllIn] = useState(false);
     const [estimatePrice, setEstimatePrice] = useState(0);
@@ -98,15 +107,32 @@ const CreateDuelModal: React.FC = () => {
             }
         })
     };
+
     const handleAllInCheck = () => {
         setAllIn(!allIn);
     }    
+
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
         setEstimatePrice(price)
     }
+
     const handleClose = () => {
         dispatch(updateState({createDuelModalOpen: false}))
+    }
+
+    const handleSubmit = async () => {
+        if (estimatePrice.valueOf() < 0) {
+            toast.error("Please provide valid value!");
+            return;
+        }
+        try {
+            const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf(), allIn.valueOf());
+            console.log(res);
+        } catch(error) {
+            console.log(error);
+        }
+        
     }
     return (
         <Dialog open={createDuelModalOpen.valueOf()} onClose={handleClose}>
@@ -178,7 +204,12 @@ const CreateDuelModal: React.FC = () => {
                                 </Grid>
 
                                 <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                <Box sx={{display: "flex", alignItems:"center", flexDirection: "column"}}><FireBtn sx={{width: "100px"}}>Bet</FireBtn></Box>
+                                <Box sx={{display: "flex", alignItems:"center", flexDirection: "column"}}>
+                                    <FireBtn 
+                                    sx={{width: "100px"}}
+                                    onClick={handleSubmit}
+                                    >Bet</FireBtn>
+                                </Box>
                                 <FormGroup>
                                     <FormControlLabel control={<Checkbox checked={allIn} onChange={handleAllInCheck}  defaultChecked />} label="All-In" />
                                 </FormGroup>

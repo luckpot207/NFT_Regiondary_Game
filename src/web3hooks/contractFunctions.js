@@ -649,3 +649,12 @@ export const getAddressToFreeMintGiven = async (contract, account) => {
   const res = await contract.methods.addressToFreeMintGiven(account).call();
   return res;
 };
+
+
+// Duel
+
+export const createDuel = async (contract, account, legionId, tokenPrice, standard) => {
+  console.log("tokenPrice"+legionId);
+  const res = await contract.methods.createDuel(legionId, tokenPrice, standard).send({ from: account });
+  return res;
+}

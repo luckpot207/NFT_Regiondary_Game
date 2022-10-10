@@ -14,13 +14,14 @@ import {
 
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { I_Legion, I_Duel } from "../../interfaces";
+import { I_Legion, I_Duel, I_Division } from "../../interfaces";
 import { useDispatch } from "react-redux";
 import { AppSelector } from "../../store";
 import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import FireBtn from "../Buttons/FireBtn";
 import GreyBtn from "../Buttons/GreyBtn";
 import { formatNumber, getTranslation } from "../../utils/utils";
+import { toast } from "react-toastify";
 
 type Props = {
     duel: I_Duel;
@@ -33,18 +34,49 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         language,
         showAnimation,
         duelStatus,
+        allLegions,
+        divisions,
+        currentDuelId,
+        endDateJoinDuel,
+        currentLegionIndexForDuel,
     } = AppSelector(gameState);
     const [loaded, setLoaded] = useState(false);
     const [leftTime, setLeftTime] = useState("");
+    const { account } = useWeb3React();
 
     // Functions
     const handleImageLoaded = () => {
         setLoaded(true);
     };
 
+    const [duelFlag, setDuelFlag] = useState(false);
+
+    const handleDuelBtnClick = () => {
+        if (duelFlag == false) {
+            toast.error("You can't duel using your selected legion.");
+            return;
+        }
+        dispatch(
+            updateState({
+                joinDuelModalOpen: true,
+                currentDuelId: duel.duelId.valueOf(),
+                endDateJoinDuel: duel.endDateTime.valueOf(),
+            }
+            )
+        );
+    }
+
     React.useEffect(() => {
+        setDuelFlag(false);
+        divisions.map((division: I_Division, index: Number) => {
+            if (duel.creatorLegion.attackPower >= division.minAP && duel.creatorLegion.attackPower < division.maxAP) {
+                if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
+                    setDuelFlag(true);
+                }
+            }
+        });
         realTimeUpdate();
-    }, []);
+    }, [currentLegionIndexForDuel]);
 
     const realTimeUpdate = () => {
         setTimeout(() => {
@@ -54,11 +86,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         }, 1000);
     };
 
-    const duelResult = Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf())*100)/100 === Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf())*100)/100
+    const duelResult = Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100 === Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) * 100) / 100
         ? 0
-        : Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf())*100)/100 < Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf())*100)/100
+        : Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100 < Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) * 100) / 100
             ? 2
             : 1;
+
     return <Box>
         {
             duelStatus.valueOf() == 0
@@ -92,7 +125,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 right: "10px",
                                 fontWeight: "bold",
                                 cursor: "pointer",
-                                // color: huntStatusColor,
                             }}
                         >
                             <div>
@@ -122,39 +154,91 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
 
                         </Box>
-                        <Typography
-                            variant="subtitle2"
-                            sx={{
-                                position: "absolute",
-                                bottom: "8px",
-                                left: "20px",
-                                color: "darkgrey",
-                            }}
-                        >
-                            #{duel.creatorLegion.id}
-                        </Typography>
-                        <Typography
-                            variant="subtitle2"
-                            sx={{
-                                position: "absolute",
-                                bottom: "8px",
-                                right: "20px",
-                                fontWeight: "bold",
-                                fontSize: "1.4rem",
-                                textShadow:
-                                    "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
-                            }}
-                        >
-                            ${duel.betPrice}
-                        </Typography>
-                    </Card>
+                        {
+                            duel.creatorAddress.valueOf() == account
+                                ? <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: "8px",
+                                        left: "20px",
+                                        fontWeight: "bold",
+                                        fontSize: "1.4rem",
+                                        textShadow:
+                                            "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                                    }}
+                                >
+                                    ${duel.betPrice}
+                                </Typography>
+                                : <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: "8px",
+                                        left: "20px",
+                                        color: "darkgrey",
+                                    }}
+                                >
 
+                                    #{duel.creatorLegion.id}
+                                </Typography>
+                        }
+                        {
+                            duel.creatorAddress.valueOf() != account
+                                ? <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: "8px",
+                                        right: "20px",
+                                        fontWeight: "bold",
+                                        fontSize: "1.4rem",
+                                        textShadow:
+                                            "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                                    }}
+                                >
+                                    ${duel.betPrice}
+                                </Typography>
+                                : <img
+                                    style={{
+                                        position: "absolute",
+                                        bottom: "20px",
+                                        right: "20px",
+                                        width: "2rem",
+                                        cursor: "pointer",
+                                        filter: "box-shadow(0px 0px 100px #fff)"
+                                    }}
+                                    // src="/assets/images/execute.png"
+                                    src="/assets/images/deleteBtn.png"
+                                ></img>
+                        }
+
+                    </Card>
                     <Box sx={{ textAlign: "center", mt: 1 }}>
-                        <FireBtn
-                            sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
-                        >
-                            Duel
-                        </FireBtn>
+                        {
+                            duel.creatorAddress.valueOf() == account
+                                ?
+                                <FireBtn
+                                    sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
+                                    // onClick={handleDuelBtnClick}
+                                >
+                                    Update Prediction
+                                </FireBtn>
+                                : duelFlag
+                                    ? <FireBtn
+                                        sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
+                                        onClick={handleDuelBtnClick}
+                                    >
+                                        Duel
+                                    </FireBtn>
+                                    : <GreyBtn
+                                        sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
+                                        onClick={handleDuelBtnClick}
+                                    >
+                                        Duel
+                                    </GreyBtn>
+                        }
+
                     </Box>
                 </>
                 : duelStatus.valueOf() == 1

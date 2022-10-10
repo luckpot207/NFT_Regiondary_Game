@@ -37,101 +37,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FireBtn from "../Buttons/FireBtn";
 
-const divisions: I_Division[] = [
-    {
-        minAP: 10000,
-        maxAP: 13000,
-        betPrice: 40,
-    },
-    {
-        minAP: 13000,
-        maxAP: 16000,
-        betPrice: 60,
-    },
-    {
-        minAP: 16000,
-        maxAP: 20000,
-        betPrice: 70,
-    },
-    {
-        minAP: 20000,
-        maxAP: 25000,
-        betPrice: 100,
-    },
-    {
-        minAP: 25000,
-        maxAP: 30000,
-        betPrice: 140,
-    },
-    {
-        minAP: 30000,
-        maxAP: 37000,
-        betPrice: 190,
-    },
-    {
-        minAP: 37000,
-        maxAP: 45000,
-        betPrice: 250,
-    },
-    {
-        minAP: 45000,
-        maxAP: 55000,
-        betPrice: 400,
-    },
-    {
-        minAP: 55000,
-        maxAP: 70000,
-        betPrice: 500,
-    },
-];
-
-const allLegions1: I_Legion[] = [
-    {
-        id: "1",
-        name: "hunter1",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 1879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: true,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-    {
-        id: "2",
-        name: "hunter2",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 60879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: true,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-    {
-        id: "3",
-        name: "hunter3",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 70879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: false,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-];
-
 const PriceTextField = styled(TextField)({
+    "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+        display: "none",
+    },
+
     '& input.MuiInput-input': {
         paddingTop: '0px',
         paddingBottom: '0px',
         textAlign: "center",
+        MozAppearance: "TextField",
     },
 
 });
@@ -163,6 +78,7 @@ const CreateDuelModal: React.FC = () => {
     const {
         allLegions,
         createDuelModalOpen,
+        divisions,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
@@ -177,7 +93,7 @@ const CreateDuelModal: React.FC = () => {
         const legionIndex = parseInt(e.target.value);
         setCurrentLegionIndex(legionIndex);
         divisions.map((division: I_Division, index: Number) => {
-            if (allLegions1[legionIndex].attackPower >= division.minAP && allLegions1[legionIndex].attackPower < division.maxAP) {
+            if (allLegions[legionIndex].attackPower >= division.minAP && allLegions[legionIndex].attackPower < division.maxAP) {
                 setDivisionIndex(index.valueOf());
             }
         })
@@ -217,7 +133,7 @@ const CreateDuelModal: React.FC = () => {
                                 onChange={handleSelectLegion}
                                 input={<LegionSelectInput />}
                             >
-                                {allLegions1.map((legion: I_Legion, index: number) =>
+                                {allLegions.map((legion: I_Legion, index: number) =>
                                     !legion.duelStatus ? (
                                         <OrgMenuItem value={index} key={index}>
                                             {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
@@ -235,9 +151,9 @@ const CreateDuelModal: React.FC = () => {
                     </Grid>
                 </Grid>
                 {
-                    !allLegions1[currentLegionIndex].duelStatus
+                    !allLegions[currentLegionIndex].duelStatus
                         ? <Box><Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography></Box>
-                        : allLegions1[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions1[currentLegionIndex].attackPower.valueOf() <= 70000
+                        : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                             ? <Box>
                                 <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
                                 <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>

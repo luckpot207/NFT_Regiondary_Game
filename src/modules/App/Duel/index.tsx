@@ -34,49 +34,11 @@ import DuelCard from "../../../components/Cards/Duel.card";
 import LoadingBloodstone from "../../../components/UI/LoadingBloodstone";
 import FireBtn from "../../../components/Buttons/FireBtn";
 import CreateDuelModal from "../../../components/Modals/CreateDuel.modal";
+import JoinDuelModal from "../../../components/Modals/JoinDuel.modal";
+import ItemPagination from "../../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
 
-const allLegions1: I_Legion[] = [
-    {
-        id: "1",
-        name: "hunter1",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 70879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: false,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-    {
-        id: "2",
-        name: "hunter2",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 70879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: true,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-    {
-        id: "3",
-        name: "hunter3",
-        beastIds: [176, 175, 4286, 5581],
-        warriorIds: [472, 474, 473, 5452, 16596, 16598],
-        attackPower: 70879,
-        supplies: 0,
-        huntStatus: false,
-        duelStatus: false,
-        jpg: "/assets/images/characters/jpg/legions/0.jpg",
-        mp4: "/assets/images/characters/mp4/legions/0.mp4",
-        executeStatus: false,
-    },
-]
+
 
 const Duel: React.FC = () => {
     const dispatch = useDispatch();
@@ -105,6 +67,9 @@ const Duel: React.FC = () => {
         duelResultFilterEndConst,
         duelShowOnlyMine,
         duelType,
+        currentLegionIndexForDuel,
+        currentPage,
+        pageSize,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
@@ -120,10 +85,11 @@ const Duel: React.FC = () => {
     const handleSelectLegion = (e: SelectChangeEvent) => {
         const legionIndex = parseInt(e.target.value);
         setCurrentLegionIndex(legionIndex);
+        dispatch(updateState({ currentLegionIndexForDuel: legionIndex }));
     };
 
     const showCreateDuelModal = () => {
-        dispatch(updateState({createDuelModalOpen: true}));
+        dispatch(updateState({ createDuelModalOpen: true }));
 
     }
 
@@ -178,7 +144,7 @@ const Duel: React.FC = () => {
             <Grid container spacing={2} sx={{ my: 4 }}>
                 <Grid item xs={12}>
                     <Card sx={{ p: 4 }} className="bg-c5">
-                        {allLegions1.length == 0
+                        {allLegions.length == 0
                             ? <Box
                                 sx={{
                                     display: "flex",
@@ -215,6 +181,34 @@ const Duel: React.FC = () => {
                                                 : "Duel Results"}
                                     </Typography>
                                 </Grid>
+                                {
+                                    duelStatus == 0 ?
+                                        <Grid item xs={12} sm={6} md={6} lg={6} >
+                                            <FormControl>
+                                                <Select
+                                                    id="hunt-legion-select"
+                                                    value={currentLegionIndex.toString()}
+                                                    onChange={handleSelectLegion}
+                                                >
+                                                    {allLegions
+                                                        .map((legion: I_Legion, index: number) =>
+                                                            !legion.duelStatus ? (
+                                                                <OrgMenuItem value={index} key={index}>
+                                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                                </OrgMenuItem>
+                                                            ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
+                                                                <GreenMenuItem value={index} key={index}>
+                                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                                </GreenMenuItem>
+                                                            ) : <RedMenuItem value={index} key={index}>
+                                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                            </RedMenuItem>
+                                                        )}
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        : <></>
+                                }
                             </Grid>
                         }
                     </Card>
@@ -223,7 +217,7 @@ const Duel: React.FC = () => {
             <Grid container spacing={3} sx={{ mb: 2 }}>
                 <Grid item xs={12} md={6} lg={3}>
                     <ButtonGroup>
-                        {duelStatus != 0 ? <Button onClick={() => handleDuelSort(0)}>Back to Duels</Button> : allLegions1.length != 0 ?
+                        {duelStatus != 0 ? <Button onClick={() => handleDuelSort(0)}>Back to Duels</Button> : allLegions.length != 0 ?
                             <Button onClick={() => showCreateDuelModal()}>Create Duel</Button> : <></>}
                     </ButtonGroup>
                 </Grid>
@@ -246,22 +240,38 @@ const Duel: React.FC = () => {
                 </Grid>
             </Grid>
             {
-                getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
+                // getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
+                getAllDulesLoading.valueOf()
                     ? <LoadingBloodstone loadingPage="legionsMarketplace" />
-                    : <Grid container spacing={2} sx={{ mb: 4 }}>
-                        {DuelTypeFilterVal
-                            .map((duel, index) => (
-                                duelStatus == 0
-                                    ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                                        <DuelCard duel={duel} />
-                                    </Grid>)
-                                    : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                                        <DuelCard duel={duel} />
-                                    </Grid>)
-                            ))}
-                    </Grid>
+                    : <Box>
+                        <Grid container spacing={2} sx={{ mb: 4 }}>
+                            {DuelTypeFilterVal
+                                .slice(
+                                    pageSize.valueOf() * (currentPage.valueOf() - 1),
+                                    pageSize.valueOf() * currentPage.valueOf()
+                                )
+                                .map((duel, index) => (
+                                    duelStatus == 0
+                                        ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                                            <DuelCard duel={duel} />
+                                        </Grid>)
+                                        : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                                            <DuelCard duel={duel} />
+                                        </Grid>)
+                                ))}
+                        </Grid>
+                        {
+                            DuelTypeFilterVal.length > 0 && (
+                                <Box>
+                                  <ItemPagination totalCount={DuelTypeFilterVal.length} />
+                                </Box>
+                              )
+                        }
+                    </Box>
+
             }
             <CreateDuelModal />
+            <JoinDuelModal />
         </Box>
     );
 };

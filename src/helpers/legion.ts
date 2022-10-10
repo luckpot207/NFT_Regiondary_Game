@@ -46,12 +46,12 @@ export const getAllLegionsAct = async (
         mp4: getLegionMp4ImageUrl(parseFloat(legionInfos[index].attack_power)),
         supplies: parseFloat(legionInfos[index].supplies),
         huntStatus: huntStatus[index],
-        duelStatus: duelStatus[index],
+        duelStatus: true,
         executeStatus: false,
       };
       allLegions.push(temp);
     });
-    // dispatch(updateState({ allLegions, legionBalance }));
+    dispatch(updateState({ allLegions, legionBalance }));
   } catch (error) {}
   dispatch(updateState({ getAllLegionsLoading: false }));
 };

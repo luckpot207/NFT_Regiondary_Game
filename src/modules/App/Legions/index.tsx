@@ -60,12 +60,10 @@ const Legions: React.FC = () => {
     pageSize,
   } = AppSelector(gameState);
 
-  console.log(allLegions);
-
   // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
-
+  console.log(allLegions);
   // Contracts
   const beastContract = useBeast();
   const warriorContract = useWarrior();

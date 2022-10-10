@@ -8,6 +8,7 @@ import {
   I_Warrior,
   IVoteInput,
   I_Duel,
+  I_Division,
 } from "../interfaces";
 import { RootState } from "../store";
 import ApiService from "../services/api.service";
@@ -18,6 +19,7 @@ import { FaSearch } from "react-icons/fa";
 
 let allDulesTest: I_Duel[] = [
   {
+    duelId: "0x0293482049302",
     creatorAddress: "0x0e747571964Eca016a145790c761e8e92364f479",
     creatorLegion: {
       id: "41",
@@ -49,19 +51,20 @@ let allDulesTest: I_Duel[] = [
     },
     joinerEstmatePrice: 3.2,
     type: false,
-    status: 2,
-    endDateTime: "2022-10-01 05:00:35",
+    status: 0,
+    endDateTime: "2022-10-10 14:00:35",
     betPrice: 40,
     result: 3.4,
   },
   {
+    duelId: "0x0293482049303",
     creatorAddress: "0x547774sdfse89340930940",
     creatorLegion: {
       id: "44",
       name: "Dawang",
       beastIds: [176, 175, 4286, 5581],
       warriorIds: [472, 474, 473, 5452, 16596, 16598],
-      attackPower: 70879,
+      attackPower: 14879,
       supplies: 0,
       huntStatus: false,
       duelStatus: false,
@@ -86,10 +89,100 @@ let allDulesTest: I_Duel[] = [
     },
     joinerEstmatePrice: 3.78,
     type: false,
-    status: 2,
-    endDateTime: "2022-10-05 06:00:35",
+    status: 0,
+    endDateTime: "2022-10-10 15:00:35",
     betPrice: 40,
     result: 3.4,
+  },
+];
+
+const allLegions1: I_Legion[] = [
+  {
+      id: "1",
+      name: "hunter1",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 1879,
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: true,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+  },
+  {
+      id: "2",
+      name: "hunter2",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 13998,
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: true,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+  },
+  {
+      id: "3",
+      name: "hunter3",
+      beastIds: [176, 175, 4286, 5581],
+      warriorIds: [472, 474, 473, 5452, 16596, 16598],
+      attackPower: 70879,
+      supplies: 0,
+      huntStatus: false,
+      duelStatus: false,
+      jpg: "/assets/images/characters/jpg/legions/0.jpg",
+      mp4: "/assets/images/characters/mp4/legions/0.mp4",
+      executeStatus: false,
+  },
+];
+
+let divisionsTest: I_Division[] = [
+  {
+      minAP: 10000,
+      maxAP: 13000,
+      betPrice: 40,
+  },
+  {
+      minAP: 13000,
+      maxAP: 16000,
+      betPrice: 60,
+  },
+  {
+      minAP: 16000,
+      maxAP: 20000,
+      betPrice: 70,
+  },
+  {
+      minAP: 20000,
+      maxAP: 25000,
+      betPrice: 100,
+  },
+  {
+      minAP: 25000,
+      maxAP: 30000,
+      betPrice: 140,
+  },
+  {
+      minAP: 30000,
+      maxAP: 37000,
+      betPrice: 190,
+  },
+  {
+      minAP: 37000,
+      maxAP: 45000,
+      betPrice: 250,
+  },
+  {
+      minAP: 45000,
+      maxAP: 55000,
+      betPrice: 400,
+  },
+  {
+      minAP: 55000,
+      maxAP: 70000,
+      betPrice: 500,
   },
 ];
 
@@ -124,7 +217,7 @@ let initialState: I_ReduxState = {
   executeWarriorsLoading: false,
 
   // Legion
-  allLegions: [],
+  allLegions: allLegions1,
   getAllLegionsLoading: false,
   executeLegionsLoading: false,
   isApprovedBeastForLegion: false,
@@ -363,6 +456,11 @@ let initialState: I_ReduxState = {
   duelResultFilterEndConst: 30,
   duelShowOnlyMine: false,
   duelType: false,
+  currentLegionIndexForDuel: 0,
+  divisions: divisionsTest,
+  currentDuelId: "",
+  endDateJoinDuel: "",
+
   // modal
   tutorialModalOpen: localStorage.getItem("tutorial") === "true" ? false : true,
   listOnMarketplaceModal: false,
@@ -373,6 +471,7 @@ let initialState: I_ReduxState = {
   referralTGModalOpen: false,
   allowVote: false,
   createDuelModalOpen: false,
+  joinDuelModalOpen: false,
 
   /// Initial data from the backend
   initialDataLoading: false,

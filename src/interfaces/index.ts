@@ -149,6 +149,7 @@ export interface ISamaritanStarHolder {
 // Duel
 
 export interface I_Duel {
+  duelId: String;
   creatorAddress: String;
   creatorLegion: I_Legion;
   creatorEstmatePrice: Number;
@@ -407,6 +408,10 @@ export interface I_ReduxState {
   duelStatus: Number;
   allDuels: I_Duel[];
   getAllDulesLoading: Boolean;
+  currentLegionIndexForDuel: Number;
+  currentDuelId: String;
+  endDateJoinDuel: String;
+  divisions: I_Division[];
 
   // modal
   tutorialModalOpen: Boolean;
@@ -418,6 +423,7 @@ export interface I_ReduxState {
   referralTGModalOpen: Boolean;
   allowVote: Boolean;
   createDuelModalOpen: Boolean;
+  joinDuelModalOpen: Boolean;
 
   /// Initial data from the backend
   initialDataLoading: Boolean;

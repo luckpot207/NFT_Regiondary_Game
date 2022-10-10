@@ -51,7 +51,7 @@ export const getAllLegionsAct = async (
       };
       allLegions.push(temp);
     });
-    dispatch(updateState({ allLegions, legionBalance }));
+    // dispatch(updateState({ allLegions, legionBalance }));
   } catch (error) {}
   dispatch(updateState({ getAllLegionsLoading: false }));
 };

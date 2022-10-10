@@ -206,15 +206,15 @@ export const getWalletHuntPendingMonsterId = async (contract, account) => {
 
 // Reward Pool
 export const getUnclaimedUSD = async (web3, contract, account) => {
-  const {busd, blst} = await contract.methods.getUnclaimedWallet(account).call();
-  return busd? busd : 0;
+  const { busd, blst } = await contract.methods.getUnclaimedWallet(account).call();
+  return busd ? busd : 0;
   // return web3.utils.fromWei(res, "ether");
 };
 
 export const getUnclaimedBLST = async (web3, contract, account) => {
-  const {busd, blst} = await contract.methods.getUnclaimedWallet(account).call();
+  const { busd, blst } = await contract.methods.getUnclaimedWallet(account).call();
   // return web3.utils.fromWei(blst, "ether");
-  return blst? web3.utils.fromWei(blst, "ether") : 0;
+  return blst ? web3.utils.fromWei(blst, "ether") : 0;
 };
 
 export const getTaxLeftDays = async (contract, account) => {
@@ -654,7 +654,21 @@ export const getAddressToFreeMintGiven = async (contract, account) => {
 // Duel
 
 export const createDuel = async (contract, account, legionId, tokenPrice, standard) => {
-  console.log("tokenPrice"+legionId);
+  console.log("===="+legionId);
   const res = await contract.methods.createDuel(legionId, tokenPrice, standard).send({ from: account });
   return res;
+}
+
+export const cancelDuel = async (contract, account, duelId) => {
+  const res = await contract.methods.cancelDuel(duelId).send({ from: account });
+  return res;
+}
+
+export const joinDuel = async (contract, account, duelId, legionId, tokenPrice) => {
+  const res = await contract.methods.joinDuel(duelId, legionId, tokenPrice).send({ from: account });
+  return res;
+}
+
+export const updatePrediction = async (contract, account, duelId, price) => {
+  const res = await contract.methods.updatePrediction(duelId, price).send({ from: account });
 }

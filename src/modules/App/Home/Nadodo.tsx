@@ -5,6 +5,7 @@ import { gameState } from "../../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../../store";
 import HomeTypo from "../../../components/UI/HomeTypo";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
+
 const NadodoWatch: React.FC = () => {
   // Hook Info
   const {

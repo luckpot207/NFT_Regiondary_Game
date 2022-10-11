@@ -25,10 +25,10 @@ import {
 import { AppSelector } from "../../store";
 import { SelectorFactory, useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { 
+import {
     useWeb3,
     useDuelSystem,
- } from "../../web3hooks/useContract";
+} from "../../web3hooks/useContract";
 import { I_Legion, I_Division } from "../../interfaces";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
 import OrgMenuItem from "../../components/UI/OrgMenuItem";
@@ -110,7 +110,7 @@ const CreateDuelModal: React.FC = () => {
 
     const handleAllInCheck = () => {
         setAllIn(!allIn);
-    }    
+    }
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
@@ -118,7 +118,7 @@ const CreateDuelModal: React.FC = () => {
     }
 
     const handleClose = () => {
-        dispatch(updateState({createDuelModalOpen: false}))
+        dispatch(updateState({ createDuelModalOpen: false }))
     }
 
     const handleSubmit = async () => {
@@ -129,11 +129,13 @@ const CreateDuelModal: React.FC = () => {
         try {
             const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf(), allIn.valueOf());
             console.log(res);
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
-        
     }
+
+    console.log("allLegions", allLegions);
+
     return (
         <Dialog open={createDuelModalOpen.valueOf()} onClose={handleClose}>
             <DialogTitle>Create Duel</DialogTitle>
@@ -159,62 +161,68 @@ const CreateDuelModal: React.FC = () => {
                                 onChange={handleSelectLegion}
                                 input={<LegionSelectInput />}
                             >
-                                {allLegions.map((legion: I_Legion, index: number) =>
-                                    !legion.duelStatus ? (
-                                        <OrgMenuItem value={index} key={index}>
-                                            {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                        </OrgMenuItem>
-                                    ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
-                                        <GreenMenuItem value={index} key={index}>
-                                            {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                        </GreenMenuItem>
-                                    ) : <RedMenuItem value={index} key={index}>
-                                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                    </RedMenuItem>
-                                )}
+                                {
+                                    allLegions.length != 0
+                                        ? allLegions.map((legion: I_Legion, index: number) =>
+                                            !legion.duelStatus ? (
+                                                <OrgMenuItem value={index} key={index}>
+                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                </OrgMenuItem>
+                                            ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
+                                                <GreenMenuItem value={index} key={index}>
+                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                </GreenMenuItem>
+                                            ) : <RedMenuItem value={index} key={index}>
+                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                            </RedMenuItem>
+
+                                        ) : <></>}
                             </Select>
                         </FormControl>
                     </Grid>
                 </Grid>
-                {
-                    !allLegions[currentLegionIndex].duelStatus
-                        ? <Box><Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography></Box>
-                        : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
-                            ? <Box>
-                                <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>
-                                <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
-                                <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8}</Typography>
-                                <Grid container mb={1} spacing={1}>
-                                    <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
-                                    <Grid item xs={6} sm={4} md={4} lg={2}>
-                                        <PriceTextField
-                                            id="outlined-number"
-                                            variant="standard"
-                                            // InputLabelProps={{
-                                            //     shrink: true,
-                                            // }}
-                                            type="number"
-                                            value={estimatePrice}
-                                            onChange={handleChangeEstimatePrice}
-                                            sx={{ padding: "0 !important" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
-                                </Grid>
 
-                                <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                <Box sx={{display: "flex", alignItems:"center", flexDirection: "column"}}>
-                                    <FireBtn 
-                                    sx={{width: "100px"}}
-                                    onClick={handleSubmit}
-                                    >Bet</FireBtn>
+                {
+                    allLegions.length != 0
+                        ? !allLegions[currentLegionIndex].duelStatus
+                            ? <Box><Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography></Box>
+                            : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                                ? <Box>
+                                    <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
+                                    <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>
+                                    <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
+                                    <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8}</Typography>
+                                    <Grid container mb={1} spacing={1}>
+                                        <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
+                                        <Grid item xs={6} sm={4} md={4} lg={2}>
+                                            <PriceTextField
+                                                id="outlined-number"
+                                                variant="standard"
+                                                // InputLabelProps={{
+                                                //     shrink: true,
+                                                // }}
+                                                type="number"
+                                                value={estimatePrice}
+                                                onChange={handleChangeEstimatePrice}
+                                                sx={{ padding: "0 !important" }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
+                                    </Grid>
+
+                                    <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                    <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+                                        <FireBtn
+                                            sx={{ width: "100px" }}
+                                            onClick={handleSubmit}
+                                        >Bet</FireBtn>
+                                    </Box>
+                                    <FormGroup>
+                                        <FormControlLabel control={<Checkbox checked={allIn} onChange={handleAllInCheck} defaultChecked />} label="All-In" />
+                                    </FormGroup>
                                 </Box>
-                                <FormGroup>
-                                    <FormControlLabel control={<Checkbox checked={allIn} onChange={handleAllInCheck}  defaultChecked />} label="All-In" />
-                                </FormGroup>
-                            </Box>
-                            : <Box><Typography mt={1} mb={1}>Your legion's Attack Power is too high or low.</Typography></Box>
+                                : <Box><Typography mt={1} mb={1}>Your legion's Attack Power is too high or low.</Typography></Box>
+                        : <></>
                 }
 
             </DialogContent>

@@ -100,7 +100,7 @@ const JoinDuelModal: React.FC = () => {
         const leftTimer = setInterval(() => {
             const join_left_time = (new Date(endDateJoinDuel.valueOf()).getTime() - new Date().getTime());
             const joinLeftTimeStr = "" + Math.floor(join_left_time / (60 * 60 * 1000)) + "h " + Math.floor(join_left_time % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(join_left_time % (60 * 1000) / (1000)) + "s";
-            const leftTimeStr = "" + (Math.floor(join_left_time / (60 * 60 * 1000))+18) + "h " + Math.floor(join_left_time % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(join_left_time % (60 * 1000) / (1000)) + "s";
+            const leftTimeStr = "" + (Math.floor(join_left_time / (60 * 60 * 1000)) + 18) + "h " + Math.floor(join_left_time % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(join_left_time % (60 * 1000) / (1000)) + "s";
             setJoinLeftTime(joinLeftTimeStr);
             setLeftTime(leftTimeStr)
 
@@ -122,12 +122,13 @@ const JoinDuelModal: React.FC = () => {
     }
 
     useEffect(() => {
-        divisions.map((division, index) => {
-            if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
-                setDivisionIndex(index);
-            }
-        });
-        
+        if (allLegions.length != 0) {
+            divisions.map((division, index) => {
+                if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
+                    setDivisionIndex(index);
+                }
+            });
+        }
     }, [currentLegionIndexForDuel])
 
     return (

@@ -99,13 +99,6 @@ const HuntModal: React.FC = () => {
     try {
       dispatch(updateState({ revealHuntLoading: true }));
       const BUSD = await getBUSDBalance(web3, busdContract, account);
-      console.log(BUSD);
-      console.log(huntTax);
-      console.log(
-        (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
-          Number(huntTax)) /
-          100
-      );
       if (
         BUSD >=
         (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
@@ -129,7 +122,6 @@ const HuntModal: React.FC = () => {
         }
         let huntResult = await revealHunt(legionContract, account);
         const result = huntResult.events["Hunted"].returnValues;
-        console.log("hunting Result", result);
         checkHuntPending(dispatch, account, legionContract);
         getAllLegionsAct(dispatch, account, legionContract);
         getUserInfo(

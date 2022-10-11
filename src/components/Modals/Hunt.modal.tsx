@@ -57,6 +57,7 @@ const HuntModal: React.FC = () => {
     itemnames,
     allLegions,
   } = AppSelector(gameState);
+
   // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
@@ -174,13 +175,10 @@ const HuntModal: React.FC = () => {
   };
 
   const getMaxRoll = (legionId: string, monsterId: string) => {
-    console.log(legionId, monsterId);
-    console.log(allLegions, allMonsters);
     if (legionId !== "0" && monsterId !== "0") {
       let bonus = 0;
       const legion = allLegions.filter((legion) => legion.id === legionId)[0];
       const monster = allMonsters[parseInt(monsterId) - 1];
-      console.log(legion, monster);
       const { attackPower: legionAttackPower } = legion;
       const { attackPower: monsterAttackPower, percent } = monster;
 

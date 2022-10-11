@@ -34,7 +34,6 @@ export interface I_Legion {
   attackPower: Number;
   supplies: Number;
   huntStatus: Boolean;
-  duelStatus: Boolean;
   jpg: String;
   mp4: String;
   executeStatus: boolean;
@@ -150,10 +149,9 @@ export interface ISamaritanStarHolder {
 
 export interface I_Duel {
   duelId: String;
-  creatorAddress: String;
+  isMine: Boolean;
   creatorLegion: I_Legion;
   creatorEstmatePrice: Number;
-  joinerAddress: String;
   joinerLegion: I_Legion;
   joinerEstmatePrice: Number;
   type: Boolean;

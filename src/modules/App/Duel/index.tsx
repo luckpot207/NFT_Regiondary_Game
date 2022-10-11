@@ -18,7 +18,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { NavLink } from "react-router-dom";
-import { useWeb3 } from "../../../web3hooks/useContract";
+import { useLegion, useWeb3 } from "../../../web3hooks/useContract";
 import { AppSelector } from "../../../store";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
 import { I_Duel, I_Legion } from "../../../interfaces";
@@ -38,21 +38,20 @@ import JoinDuelModal from "../../../components/Modals/JoinDuel.modal";
 import ItemPagination from "../../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
 import UpdatePredictionModal from "../../../components/Modals/UpdatePrediction.modal";
-
-
+import { useDuelSystem } from "../../../web3hooks/useContract";
+import { doingDuels } from "../../../web3hooks/contractFunctions";
+import { getAllDuelsAct } from "../../../helpers/duel";
 
 const Duel: React.FC = () => {
     const dispatch = useDispatch();
     const {
         language,
         getAllDulesLoading,
-        getAllLegionsLoading,
         allLegions,
         allDuels,
         duelStatus,
         duelLegionFilterMinAP,
         duelLegionFilterMaxAP,
-        duelLegionFilterMinConstAP,
         duelLegionFilterMaxConstAP,
         duelJoinLeftMaxTime,
         duelJoinLeftMinTime,
@@ -61,10 +60,7 @@ const Duel: React.FC = () => {
         duelResultFilterStart,
         duelResultFilterEnd,
         duelJoinLeftMaxConstTime,
-        duelJoinLeftMinConstTime,
         duelLeftMaxConstTime,
-        duelLeftMinConstTime,
-        duelResultFilterStartConst,
         duelResultFilterEndConst,
         duelShowOnlyMine,
         duelType,
@@ -76,8 +72,11 @@ const Duel: React.FC = () => {
     const { account } = useWeb3React();
     const web3 = useWeb3();
 
+    const duelContract = useDuelSystem();
+    const legionContract = useLegion();
 
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
+    const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
 
     const handleDuelSort = (val: Number) => {
         dispatch(updateState({ duelStatus: val }));
@@ -91,8 +90,26 @@ const Duel: React.FC = () => {
 
     const showCreateDuelModal = () => {
         dispatch(updateState({ createDuelModalOpen: true }));
-
     }
+
+    const getBalance = async () => {
+        var legionsDueStatusTemp: boolean[] = [];
+        for (let i = 0; i < allLegions.length; i++) {
+            const legion = allLegions[i];
+            const res = await doingDuels(duelContract, legion.id)
+            legionsDueStatusTemp.push(res);
+        }
+        setLegionsDuelStatus(legionsDueStatusTemp)
+    }
+
+
+    useEffect(() => {
+        getAllDuelsAct(dispatch, account, duelContract, legionContract);
+    }, []);
+
+    useEffect(() => {
+        getBalance()
+    }, [allLegions]);
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
@@ -131,15 +148,14 @@ const Duel: React.FC = () => {
         }
     );
 
-
-
     const OnlyMineFilterVal = TimeFilterVal.filter(
-        (duel: I_Duel) => duelShowOnlyMine ? duel.creatorAddress == account : true
+        (duel: I_Duel) => duel.isMine
     )
 
     const DuelTypeFilterVal = OnlyMineFilterVal.filter(
         (duel: I_Duel) => duel.type == duelType
     )
+    
     return (
         <Box>
             <Grid container spacing={2} sx={{ my: 4 }}>
@@ -163,7 +179,7 @@ const Duel: React.FC = () => {
                                         mr: 1,
                                     }}
                                 >
-                                    <LanguageTranslate translateKey="noMintedLegion" />
+                                    You need to create Legion to start Duel!
                                 </Box>
                                 <NavLink to="/createlegions" className="td-none">
                                     <FireBtn>
@@ -176,9 +192,9 @@ const Duel: React.FC = () => {
                                     <Typography
                                         variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
                                     >
-                                        {duelStatus == 0
+                                        {duelStatus == 1
                                             ? "Duel"
-                                            : duelStatus == 1 ? "Ongoing Dules"
+                                            : duelStatus == 2 ? "Ongoing Dules"
                                                 : "Duel Results"}
                                     </Typography>
                                 </Grid>
@@ -193,7 +209,7 @@ const Duel: React.FC = () => {
                                                 >
                                                     {allLegions
                                                         .map((legion: I_Legion, index: number) =>
-                                                            !legion.duelStatus ? (
+                                                            legionsDuelStatus[index] ? (
                                                                 <OrgMenuItem value={index} key={index}>
                                                                     {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
                                                                 </OrgMenuItem>
@@ -218,7 +234,7 @@ const Duel: React.FC = () => {
             <Grid container spacing={3} sx={{ mb: 2 }}>
                 <Grid item xs={12} md={6} lg={3}>
                     <ButtonGroup>
-                        {duelStatus != 0 ? <Button onClick={() => handleDuelSort(0)}>Back to Duels</Button> : allLegions.length != 0 ?
+                        {duelStatus != 1 ? <Button onClick={() => handleDuelSort(1)}>Back to Duels</Button> : allLegions.length != 0 ?
                             <Button onClick={() => showCreateDuelModal()}>Create Duel</Button> : <></>}
                     </ButtonGroup>
                 </Grid>
@@ -252,13 +268,16 @@ const Duel: React.FC = () => {
                                     pageSize.valueOf() * currentPage.valueOf()
                                 )
                                 .map((duel, index) => (
-                                    duelStatus == 0
+                                    duel.status != 0 
+                                    ? duelStatus == 1
                                         ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                                             <DuelCard duel={duel} />
                                         </Grid>)
                                         : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
                                             <DuelCard duel={duel} />
-                                        </Grid>)
+                                        </Grid>
+                                        )
+                                    : (<></>)
                                 ))}
                         </Grid>
                         {
@@ -269,7 +288,6 @@ const Duel: React.FC = () => {
                               )
                         }
                     </Box>
-
             }
             <CreateDuelModal />
             <JoinDuelModal />

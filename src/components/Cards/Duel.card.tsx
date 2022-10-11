@@ -107,7 +107,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
     return <Box>
         {
-            duelStatus.valueOf() == 0
+            duelStatus.valueOf() == 1
                 ?
                 <>
                     <Card sx={{ position: "relative" }}>
@@ -168,7 +168,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
                         </Box>
                         {
-                            duel.creatorAddress.valueOf() == account
+                            duel.isMine
                                 ? <Typography
                                     variant="subtitle2"
                                     sx={{
@@ -197,7 +197,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 </Typography>
                         }
                         {
-                            duel.creatorAddress.valueOf() != account
+                            !duel.isMine
                                 ? <Typography
                                     variant="subtitle2"
                                     sx={{
@@ -229,7 +229,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     </Card>
                     <Box sx={{ textAlign: "center", mt: 1 }}>
                         {
-                            duel.creatorAddress.valueOf() == account
+                            duel.isMine
                                 ?
                                 <FireBtn
                                     sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
@@ -254,7 +254,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
                     </Box>
                 </>
-                : duelStatus.valueOf() == 1
+                : duelStatus.valueOf() == 2
                     ? <>
                         <Box sx={{
                             border: "2px #00d0ff solid",
@@ -444,7 +444,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
                         </Box>
                     </>
-                    : <>
+                    : duelStatus == 3 ?
+                     <>
                         <Box sx={{
                             border: "2px #00d0ff solid",
                             padding: "4px",
@@ -665,6 +666,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
                         </Box>
                     </>
+                    : <></>
         }
 
     </Box>;

@@ -17,7 +17,6 @@ import { getAllLegionsMarketItemsAct } from "../../../helpers/marketplace";
 import { I_Legion_Market } from "../../../interfaces";
 import { gameState } from "../../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../../store";
-import { getTranslation } from "../../../utils/utils";
 import {
   useBeast,
   useLegion,
@@ -29,7 +28,6 @@ const LegionsMarketplace: React.FC = () => {
   // Hook info
   const dispatch = useDispatch();
   const {
-    language,
     getAllLegionsMarketItemsLoading,
     allLegionsMarketItems,
     buyItemLoading,
@@ -37,13 +35,10 @@ const LegionsMarketplace: React.FC = () => {
     cancelItemLoading,
     currentPage,
     pageSize,
-
     legionFilterMinAP,
-    legionFilterMinConstAP,
     legionFilterMaxAP,
     legionFilterMaxConstAP,
     legionFilterMinSupplies,
-    legionFilterMinConstSupplies,
     legionFilterMaxSupplies,
     legionFilterMaxConstSupplies,
     showOnlyMine,

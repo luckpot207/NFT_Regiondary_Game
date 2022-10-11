@@ -245,6 +245,61 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getAllDuels",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "legion1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "legion2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "price2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "betAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "status",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bool",
+            "name": "standard",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct DuelSystem.Duel[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",

@@ -424,6 +424,7 @@ export interface I_ReduxState {
   allowVote: Boolean;
   createDuelModalOpen: Boolean;
   joinDuelModalOpen: Boolean;
+  updatePredictionModalOpen: Boolean;
 
   /// Initial data from the backend
   initialDataLoading: Boolean;

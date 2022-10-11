@@ -57,6 +57,7 @@ const HuntModal: React.FC = () => {
     itemnames,
     allLegions,
   } = AppSelector(gameState);
+
   // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
@@ -98,13 +99,6 @@ const HuntModal: React.FC = () => {
     try {
       dispatch(updateState({ revealHuntLoading: true }));
       const BUSD = await getBUSDBalance(web3, busdContract, account);
-      console.log(BUSD);
-      console.log(huntTax);
-      console.log(
-        (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
-          Number(huntTax)) /
-          100
-      );
       if (
         BUSD >=
         (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
@@ -117,8 +111,9 @@ const HuntModal: React.FC = () => {
           getLegionAddress(),
           account
         );
+        
         if (
-          allowance <
+          Number(allowance) <
           (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
             Number(huntTax)) /
             100
@@ -127,7 +122,6 @@ const HuntModal: React.FC = () => {
         }
         let huntResult = await revealHunt(legionContract, account);
         const result = huntResult.events["Hunted"].returnValues;
-        console.log("hunting Result", result);
         checkHuntPending(dispatch, account, legionContract);
         getAllLegionsAct(dispatch, account, legionContract);
         getUserInfo(
@@ -181,13 +175,10 @@ const HuntModal: React.FC = () => {
   };
 
   const getMaxRoll = (legionId: string, monsterId: string) => {
-    console.log(legionId, monsterId);
-    console.log(allLegions, allMonsters);
     if (legionId !== "0" && monsterId !== "0") {
       let bonus = 0;
       const legion = allLegions.filter((legion) => legion.id === legionId)[0];
       const monster = allMonsters[parseInt(monsterId) - 1];
-      console.log(legion, monster);
       const { attackPower: legionAttackPower } = legion;
       const { attackPower: monsterAttackPower, percent } = monster;
 

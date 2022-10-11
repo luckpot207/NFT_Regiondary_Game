@@ -38,6 +38,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         divisions,
         currentDuelId,
         endDateJoinDuel,
+        updatePredictionModalOpen,
         currentLegionIndexForDuel,
     } = AppSelector(gameState);
     const [loaded, setLoaded] = useState(false);
@@ -62,6 +63,18 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 currentDuelId: duel.duelId.valueOf(),
                 endDateJoinDuel: duel.endDateTime.valueOf(),
             }
+            )
+        );
+    }
+
+    const handleUpdatePrediction = () => {
+        dispatch(
+            updateState(
+                {
+                    updatePredictionModalOpen: true,
+                    currentDuelId: duel.duelId.valueOf(),
+                    endDateJoinDuel: duel.endDateTime.valueOf(),
+                }
             )
         );
     }
@@ -220,7 +233,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 ?
                                 <FireBtn
                                     sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
-                                    // onClick={handleDuelBtnClick}
+                                    onClick={handleUpdatePrediction}
                                 >
                                     Update Prediction
                                 </FireBtn>

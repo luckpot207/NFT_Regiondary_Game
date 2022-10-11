@@ -1,23 +1,14 @@
 import { Box, Card, Typography } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CircleIcon from "@mui/icons-material/Circle";
-import { useDispatch } from "react-redux";
 import { gameState } from "../../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../../store";
-import { getTranslation } from "../../../utils/utils";
-import {
-  useBloodstone,
-  useFeeHandler,
-  useWeb3,
-} from "../../../web3hooks/useContract";
 import HomeTypo from "../../../components/UI/HomeTypo";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
 
 const NadodoWatch: React.FC = () => {
   // Hook Info
   const {
-    language,
     marketplaceTax,
     huntTax,
     damageReduction,
@@ -33,26 +24,7 @@ const NadodoWatch: React.FC = () => {
     liquidityStatus,
     liquidityDesc,
   } = AppSelector(gameState);
-  const dispatch = useDispatch();
-
-  // Account & Web3
-
-  // Contracts
-  const feehandlerContract = useFeeHandler();
-  const bloodstoneContract = useBloodstone();
-
-  // State
-
-  // Functions
-  const getBalance = async () => {
-    // getNadodoWatch(dispatch, feehandlerContract, bloodstoneContract);
-  };
-
-  // UseEffect
-  useEffect(() => {
-    getBalance();
-  }, []);
-
+  console.log("get and set nadodo")
   return (
     <Card
       className="bg-c4"

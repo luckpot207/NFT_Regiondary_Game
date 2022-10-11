@@ -203,18 +203,10 @@ export const getWalletHuntPendingMonsterId = async (contract, account) => {
   return res;
 };
 
-
 // Reward Pool
-export const getUnclaimedUSD = async (web3, contract, account) => {
-  const { busd, blst } = await contract.methods.getUnclaimedWallet(account).call();
-  return busd ? busd : 0;
-  // return web3.utils.fromWei(res, "ether");
-};
-
-export const getUnclaimedBLST = async (web3, contract, account) => {
-  const { busd, blst } = await contract.methods.getUnclaimedWallet(account).call();
-  // return web3.utils.fromWei(blst, "ether");
-  return blst ? web3.utils.fromWei(blst, "ether") : 0;
+export const getUnclaimedWallet = async (web3, contract, account) => {
+  const res = await contract.methods.getUnclaimedWallet(account).call();
+  return {busd: res[0] / 10**18, blst: res[1] / 10**18 };
 };
 
 export const getTaxLeftDays = async (contract, account) => {

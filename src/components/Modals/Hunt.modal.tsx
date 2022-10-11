@@ -57,7 +57,6 @@ const HuntModal: React.FC = () => {
     itemnames,
     allLegions,
   } = AppSelector(gameState);
-
   // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();

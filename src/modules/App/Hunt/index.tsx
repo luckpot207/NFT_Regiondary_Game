@@ -5,7 +5,6 @@ import {
   Grid,
   InputLabel,
   LinearProgress,
-  MenuItem,
   Select,
   SelectChangeEvent,
   Typography,
@@ -87,10 +86,9 @@ const Hunt: React.FC = () => {
     getAllMonsterLoading,
     buySuppliesLoading,
   } = AppSelector(gameState);
-
+  console.log(AppSelector(gameState), "geame")
   // Account & Web3
   const { account } = useWeb3React();
-  const web3 = useWeb3();
 
   // Contracts
   const legionContract = useLegion();

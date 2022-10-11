@@ -10,12 +10,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import classNames from "classnames";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Constants from "../../constants";
 import { getAllBeastMarketItemsAct } from "../../helpers/marketplace";
-import { I_Beast, I_Beast_Market } from "../../interfaces";
+import { I_Beast_Market } from "../../interfaces";
 import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
 import { formatNumber } from "../../utils/utils";

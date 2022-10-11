@@ -13,7 +13,6 @@ import {
 } from "../../../web3hooks/useContract";
 import HomeTypo from "../../../components/UI/HomeTypo";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
-import { getNadodoWatch } from "../../../helpers/basicInfo";
 
 const NadodoWatch: React.FC = () => {
   // Hook Info

@@ -23,7 +23,7 @@ import {
   getReinvestTaxPercent,
   getReinvestTimesInTaxCycle,
   getSamaritanStars,
-  getUnclaimedUSD,
+  getUnclaimedWallet,
   getUSDAmount,
 } from "../../web3hooks/contractFunctions";
 import {
@@ -92,13 +92,13 @@ const ClaimAndReinvestModal: React.FC = () => {
     setReinvestUSDAmount(0);
     setReinvestAll(false);
     try {
-      const unclaimedUSD = await getUnclaimedUSD(
+      const { busd, blst } = await getUnclaimedWallet(
         web3,
         rewardpoolContract,
         account
       );
-      setUnclaimedUSD(unclaimedUSD);
-      console.log("unclaimed USD", unclaimedUSD);
+      setUnclaimedUSD(busd);
+      console.log("unclaimed USD", busd);
       let amountsForClaiming = await getAmountsForClaimingAndReinvesting(
         web3,
         rewardpoolContract,

@@ -2,7 +2,6 @@ import { gameState, updateState } from "../reducers/cryptolegions.reducer";
 import { AppDispatch, AppSelector } from "../store";
 import { Contract } from "web3-eth-contract";
 import {
-  getAdditionalInvestmentUSD,
   getAvailableLegionsCount,
   getBeastBalance,
   getBloodstoneBalance,
@@ -14,16 +13,12 @@ import {
   getFirstHuntTime,
   getLegionBalance,
   getMaxAttackPower,
-  getReinvestedTotalUSD,
   getReinvestedWalletBalanceInUSD,
   getSamaritanStars,
   getSellTotalFees,
-  getStartupInvestment,
   getSummoningPrice,
   getTaxLeftDays,
-  getTotalClaimedUSD,
-  getUnclaimedBLST,
-  getUnclaimedUSD,
+  getUnclaimedWallet,
   getUSDAmount,
   getVoucherWalletUSDBalance,
   getWarriorBalance,
@@ -45,13 +40,7 @@ export const getUserInfo = async (
       bloodstoneContract,
       account
     );
-    const unclaimedUSD =
-      (await getUnclaimedUSD(web3, rewardpoolContract, account)) / 10 ** 18;
-    const unclaimedBLST = await getUnclaimedBLST(
-      web3,
-      rewardpoolContract,
-      account
-    );
+    const { busd, blst } = await getUnclaimedWallet(web3, rewardpoolContract, account);
     const taxLeftDaysForClaim = (
       await getTaxLeftDays(rewardpoolContract, account)
     )[0];
@@ -81,26 +70,6 @@ export const getUserInfo = async (
       feehandlerContract,
       reinvestedWalletUSD
     );
-    // const startupInvestment = await getStartupInvestment(
-    //   web3,
-    //   rewardpoolContract,
-    //   account
-    // );
-    // const reinvestedTotalUSD = await getReinvestedTotalUSD(
-    //   web3,
-    //   rewardpoolContract,
-    //   account
-    // );
-    // const totalClaimedUSD = await getTotalClaimedUSD(
-    //   web3,
-    //   rewardpoolContract,
-    //   account
-    // );
-    // const additionalInvestment = await getAdditionalInvestmentUSD(
-    //   web3,
-    //   rewardpoolContract,
-    //   account
-    // );
     const firstHuntTime = await getFirstHuntTime(rewardpoolContract, account);
     const daysLeftUntilAbove3Stars =
       firstHuntTime == 0
@@ -125,19 +94,15 @@ export const getUserInfo = async (
     dispatch(
       updateState({
         BLSTBalance,
-        unclaimedUSD,
-        unclaimedBLST,
+        unclaimedUSD: busd,
+        unclaimedBLST: blst,
         currentSamaritanStars,
         reinvestedWalletBLST,
         reinvestedWalletUSD,
         taxLeftDaysForClaim,
         taxLeftDaysForReinvest,
         claimMinTaxPercent,
-        // startupInvestment,
-        // reinvestedTotalUSD,
-        // totalClaimedUSD,
         currentReinvestPercent,
-        // additionalInvestment,
         firstHuntTime,
         daysLeftUntilAbove3Stars,
         voucherWalletUSD,
@@ -173,7 +138,7 @@ export const getInventory = async (
       legionContract,
       account
     );
-    const unclaimedBLST = await getUnclaimedBLST(
+    const {busd, blst} = await getUnclaimedWallet(
       web3,
       rewardpoolContract,
       account
@@ -193,7 +158,7 @@ export const getInventory = async (
         warriorBalance,
         legionBalance,
         availableLegionsCount,
-        unclaimedBLST,
+        unclaimedBLST: blst,
         maxAttackPower,
         USDToBLST,
         BLSTToUSD,

@@ -50,7 +50,6 @@ export const navConfig = {
       path: "/duel",
       element: <Duel />
     },
-
     {
       path: "/beastsMarketplace",
       element: <BeastsMarketplace />,

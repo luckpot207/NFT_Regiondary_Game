@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Card, Typography } from "@mui/material";
 import { gameState } from "../../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../../store";
-import { getTranslation } from "../../../utils/utils";
 import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import {
@@ -20,8 +19,6 @@ import { getInventory } from "../../../helpers/basicInfo";
 import { getAllLegionsAct } from "../../../helpers/legion";
 import { getLegionLastHuntTime } from "../../../web3hooks/contractFunctions";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
-import { useMoralis } from "react-moralis";
-import gameVersion from "../../../constants/gameVersion";
 
 const YourInventory: React.FC = () => {
   // Hook Info
@@ -41,23 +38,7 @@ const YourInventory: React.FC = () => {
     USDToBLST,
     BLSTToUSD,
     allLegions,
-    startupInvestment,
-    reinvestedTotalUSD,
-    totalClaimedUSD,
-    currentSamaritanStars,
-    remainUnclaimedUSDWhenClaim,
-    remainUnclaimedUSDWhenReinvest,
-    currentReinvestPercent,
-    futureReinvestPercentWhenClaim,
-    futureReinvestPercentWhenReinvest,
-    futureSamaritanStarsWhenClaim,
-    futureSamaritanStarsWhenReinvest,
-    reinvestingUSDWithoutTax,
-    claimingUSDWithoutTax,
-    additionalInvestment,
-    daysLeftUntilAbove3Stars,
     claimMinTaxPercent,
-    taxLeftDaysForReinvest,
   } = AppSelector(gameState);
 
   // Account & Web3

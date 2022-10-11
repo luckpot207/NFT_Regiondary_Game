@@ -17,15 +17,10 @@ import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
 import {
   gameState,
-  getAllItemnames,
-  getAllLanguageTexts,
   getContactInfo,
   getPresentItem,
-  updateState,
 } from "../../reducers/cryptolegions.reducer";
 import { AppDispatch, AppSelector } from "../../store";
-import LanguageTranslate from "../../components/UI/LanguageTranslate";
-// import "sweetalert2/src/sweetalert2.css";
 
 const GameView: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -38,14 +33,10 @@ const GameView: React.FC = () => {
   const { account } = useWeb3React();
 
   const getBalance = async () => {
-    // dispatch(updateState({ initialDataLoading: true }));
-    try {
-      // await dispatch(getAllLanguageTexts());
-      // await dispatch(getAllItemnames());
-      await dispatch(getContactInfo(account?.toLowerCase()));
-      await dispatch(getPresentItem());
-    } catch (error) {}
-    // dispatch(updateState({ initialDataLoading: false }));
+    // try {
+    //   await dispatch(getContactInfo(account?.toLowerCase()));
+    //   await dispatch(getPresentItem());
+    // } catch (error) {}
   };
 
   useEffect(() => {

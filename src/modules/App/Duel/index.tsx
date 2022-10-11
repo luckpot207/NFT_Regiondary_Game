@@ -37,6 +37,7 @@ import CreateDuelModal from "../../../components/Modals/CreateDuel.modal";
 import JoinDuelModal from "../../../components/Modals/JoinDuel.modal";
 import ItemPagination from "../../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
+import UpdatePredictionModal from "../../../components/Modals/UpdatePrediction.modal";
 
 
 
@@ -272,6 +273,7 @@ const Duel: React.FC = () => {
             }
             <CreateDuelModal />
             <JoinDuelModal />
+            <UpdatePredictionModal />
         </Box>
     );
 };

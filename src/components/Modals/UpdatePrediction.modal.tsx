@@ -85,7 +85,7 @@ const UpdatePredictionModal: React.FC = () => {
 
     }
     return (
-        <Dialog open={updatePredictionModalOpen.valueOf()} onClose={handleClose}>
+        <Dialog open={true} onClose={handleClose}>
             <DialogTitle>Update Prediction</DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>

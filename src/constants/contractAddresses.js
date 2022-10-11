@@ -10,7 +10,7 @@ const testAddress = {
   feehandler: "0xb3e37F188Bcc594887d58F4d590C3c284DE83484",
   marketplace: "0x2A895b1e77F5a09eF22879c4f5EaDFd2F6abB69B",
   referralsystem: "0x2cCB87aA1CCD6B052606a6bcAc17A19C45748138",
-  duelsystem: "0x3Cf4224171B4367b61DEc81411CA9934313a9e47",
+  duelsystem: "0x3Cf4224171B4367b61DEc81411CA9934313a9e47"
 };
 
 const mainAddress = {

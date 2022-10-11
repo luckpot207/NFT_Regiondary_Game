@@ -5,8 +5,6 @@ import VideoPlayer from "../../../components/UI/VideoPlayer";
 import Constants from "../../../constants";
 import { gameState } from "../../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../../store";
-import { getTranslation } from "../../../utils/utils";
-import Economy from "./Economy";
 import EconomyStatus from "./EconomyStatus";
 import Leaderboard from "./Leaderboard";
 import NadodoWatch from "./Nadodo";
@@ -14,7 +12,6 @@ import QuotesPart from "./Quotes";
 import Referrals from "./Referrals";
 import SamaritanStars from "./SamaritanStars";
 import TakeAction from "./TakeAction";
-import TestVoucher from "./TestVoucher";
 import ToSocial from "./ToSocial";
 import YourInventory from "./YourInventory";
 

@@ -351,6 +351,7 @@ let initialState: I_ReduxState = {
   allowVote: false,
   createDuelModalOpen: false,
   joinDuelModalOpen: false,
+  updatePredictionModalOpen: false,
 
   /// Initial data from the backend
   initialDataLoading: false,

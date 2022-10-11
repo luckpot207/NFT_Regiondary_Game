@@ -118,8 +118,16 @@ const HuntModal: React.FC = () => {
           getLegionAddress(),
           account
         );
+        console.log("allowance: ", allowance, typeof allowance)
+        console.log('hunting monster id: ', huntingMonsterId)
+        console.log('all monsters: ', allMonsters)
+        console.log('require busd: ', 
+        (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
+          Number(huntTax)) /
+          100)
+        console.log('hunt tax: ', huntTax)
         if (
-          allowance <
+          Number(allowance) <
           (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
             Number(huntTax)) /
             100

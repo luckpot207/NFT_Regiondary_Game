@@ -112,7 +112,6 @@ let initialState: I_ReduxState = {
     attackPower: 0,
     supplies: 0,
     huntStatus: false,
-    duelStatus: false,
     jpg: "",
     mp4: "",
     executeStatus: false,
@@ -128,7 +127,6 @@ let initialState: I_ReduxState = {
     attackPower: 0,
     supplies: 0,
     huntStatus: false,
-    duelStatus: false,
     jpg: "",
     mp4: "",
     executeStatus: false,
@@ -314,7 +312,7 @@ let initialState: I_ReduxState = {
   endDate: "2022-09-13 16:24:34",
 
   // Duel
-  duelStatus: 0,
+  duelStatus: 1,
   allDuels: [],
   getAllDulesLoading: false,
   duelLegionFilterMinConstAP: 10,

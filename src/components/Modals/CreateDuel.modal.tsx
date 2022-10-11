@@ -7,23 +7,19 @@ import {
     DialogContent,
     Typography,
     FormControl,
-    InputLabel,
     Select,
     SelectChangeEvent,
-    Button,
-    ButtonGroup,
     InputBase,
 } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import React, { useState, useEffect } from "react";
-import { alpha, styled } from '@mui/material/styles';
-import Link from '@mui/material/Link';
+import { styled } from '@mui/material/styles';
 import {
     gameState,
     updateState,
 } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import { SelectorFactory, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import {
     useWeb3,
@@ -38,8 +34,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FireBtn from "../Buttons/FireBtn";
-import { createDuel } from "../../web3hooks/contractFunctions";
-import { getDuelSystemAddress } from "../../web3hooks/getAddress";
+import { createDuel, doingDuels, getAllDuels } from "../../web3hooks/contractFunctions";
 import { toast } from "react-toastify";
 
 const PriceTextField = styled(TextField)({
@@ -87,16 +82,16 @@ const CreateDuelModal: React.FC = () => {
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
-    const web3 = useWeb3();
 
     // Contract
     const duelContract = useDuelSystem();
 
-    const [isOpen, setIsOpen] = useState(false);
     const [allIn, setAllIn] = useState(false);
     const [estimatePrice, setEstimatePrice] = useState(0);
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
+
+    const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
 
     const handleSelectLegion = (e: SelectChangeEvent) => {
         const legionIndex = parseInt(e.target.value);
@@ -121,6 +116,20 @@ const CreateDuelModal: React.FC = () => {
         dispatch(updateState({ createDuelModalOpen: false }))
     }
 
+    const getBalance = async () => {
+        var legionsDueStatusTemp: boolean[] = [];
+        for (let i = 0; i < allLegions.length; i++) {
+            const legion = allLegions[i];
+            const res = await doingDuels(duelContract, legion.id)
+            legionsDueStatusTemp.push(res);
+        }
+        setLegionsDuelStatus(legionsDueStatusTemp)
+    }
+
+    useEffect(() => {
+        getBalance()
+    }, [allLegions]);
+
     const handleSubmit = async () => {
         if (estimatePrice.valueOf() < 0) {
             toast.error("Please provide valid value!");
@@ -128,13 +137,13 @@ const CreateDuelModal: React.FC = () => {
         }
         try {
             const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf(), allIn.valueOf());
-            console.log(res);
+            toast.success("Successfully created duel.");
+            dispatch(updateState({ createDuelModalOpen: false }));
         } catch (error) {
             console.log(error);
         }
+        
     }
-
-    console.log("allLegions", allLegions);
 
     return (
         <Dialog open={createDuelModalOpen.valueOf()} onClose={handleClose}>
@@ -164,7 +173,7 @@ const CreateDuelModal: React.FC = () => {
                                 {
                                     allLegions.length != 0
                                         ? allLegions.map((legion: I_Legion, index: number) =>
-                                            !legion.duelStatus ? (
+                                            legionsDuelStatus[index] ? (
                                                 <OrgMenuItem value={index} key={index}>
                                                     {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
                                                 </OrgMenuItem>
@@ -184,7 +193,7 @@ const CreateDuelModal: React.FC = () => {
 
                 {
                     allLegions.length != 0
-                        ? !allLegions[currentLegionIndex].duelStatus
+                        ? legionsDuelStatus[currentLegionIndex]
                             ? <Box><Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography></Box>
                             : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                                 ? <Box>

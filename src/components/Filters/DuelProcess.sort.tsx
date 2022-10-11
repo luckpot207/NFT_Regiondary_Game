@@ -13,7 +13,7 @@ const DuelProcessSort: React.FC = () => {
     };
 
     useEffect(() => {
-        dispatch(updateState({ duelStatus: 0 }));
+        dispatch(updateState({ duelStatus: 1 }));
     }, []);
 
     return (
@@ -22,15 +22,15 @@ const DuelProcessSort: React.FC = () => {
                 Sort By Duel Status:
             </Typography>
             <ButtonGroup>
-                {duelStatus == 0 || duelStatus == 2 ? <Button
-                    onClick={() => handleSort(1)}
+                {duelStatus == 1 || duelStatus == 3 ? <Button
+                    onClick={() => handleSort(2)}
                 >
                     Ongoing Dules
                 </Button> : <></>}
 
                 {
-                    duelStatus == 0 || duelStatus == 1 ? <Button
-                        onClick={() => handleSort(2)}
+                    duelStatus == 1 || duelStatus == 2 ? <Button
+                        onClick={() => handleSort(3)}
                     >
                         Duel Results
                     </Button> : <></>

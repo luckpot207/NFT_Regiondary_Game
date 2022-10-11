@@ -8,6 +8,7 @@ import {
   isApprovedForAll,
   setApprovalForAll,
   setBloodstoneApprove,
+  doingDuels,
 } from "../web3hooks/contractFunctions";
 import { I_Legion } from "../interfaces";
 import { getLegionMp4ImageUrl, getLegionJpgImageUrl } from "../utils/utils";
@@ -46,7 +47,6 @@ export const getAllLegionsAct = async (
         mp4: getLegionMp4ImageUrl(parseFloat(legionInfos[index].attack_power)),
         supplies: parseFloat(legionInfos[index].supplies),
         huntStatus: huntStatus[index],
-        duelStatus: true,
         executeStatus: false,
       };
       allLegions.push(temp);

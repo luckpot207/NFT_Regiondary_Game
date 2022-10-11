@@ -1,43 +1,25 @@
 import {
     Box,
-    Card,
     Grid,
     Dialog,
     DialogTitle,
     DialogContent,
     Typography,
-    FormControl,
-    InputLabel,
-    Select,
-    SelectChangeEvent,
-
-    Button,
-    ButtonGroup,
     InputBase,
 } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import React, { useState, useEffect } from "react";
-import { alpha, styled } from '@mui/material/styles';
-import Link from '@mui/material/Link';
+import { styled } from '@mui/material/styles';
 import {
     gameState,
     updateState,
 } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import { SelectorFactory, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { useWeb3 } from "../../web3hooks/useContract";
-import { I_Legion, I_Division } from "../../interfaces";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
-import OrgMenuItem from "../../components/UI/OrgMenuItem";
-import GreenMenuItem from "../../components/UI/GreenMenuItem";
-import RedMenuItem from "../../components/UI/RedMenuItem";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import FireBtn from "../Buttons/FireBtn";
-import { toast } from "react-toastify";
-import { ContactSupportOutlined } from "@mui/icons-material";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -52,28 +34,6 @@ const PriceTextField = styled(TextField)({
     },
 });
 
-const LegionSelectInput = styled(InputBase)(({ theme }) => ({
-    '.MuiSelect-select': {
-        paddingBottom: "5px",
-        textAlign: "right",
-        border: '1px solid #ced4da',
-    },
-    '& .MuiInputBase-input': {
-        borderRadius: 4,
-        position: 'relative',
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        paddingLeft: 10,
-        transition: theme.transitions.create(['border-color', 'box-shadow']),
-        // Use the system font instead of the default Roboto font.
-        '&:focus': {
-            borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-        }
-    }
-}));
-
 const JoinDuelModal: React.FC = () => {
     const dispatch = useDispatch();
     const {
@@ -81,17 +41,12 @@ const JoinDuelModal: React.FC = () => {
         joinDuelModalOpen,
         currentLegionIndexForDuel,
         divisions,
-        currentDuelId,
-        allDuels,
         endDateJoinDuel,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
     const web3 = useWeb3();
-    const [isOpen, setIsOpen] = useState(false);
-    const [allIn, setAllIn] = useState(false);
     const [estimatePrice, setEstimatePrice] = useState(0);
-    const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
     const [leftTime, setLeftTime] = useState("");
     const [joinLeftTime, setJoinLeftTime] = useState("");
@@ -107,10 +62,6 @@ const JoinDuelModal: React.FC = () => {
         }, 1000);
         return () => clearInterval(leftTimer);
     }, [leftTime, endDateJoinDuel])
-
-    const handleAllInCheck = () => {
-        setAllIn(!allIn);
-    }
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);

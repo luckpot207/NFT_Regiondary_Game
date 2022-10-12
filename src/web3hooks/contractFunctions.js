@@ -206,6 +206,7 @@ export const getWalletHuntPendingMonsterId = async (contract, account) => {
 // Reward Pool
 export const getUnclaimedWallet = async (web3, contract, account) => {
   const res = await contract.methods.getUnclaimedWallet(account).call();
+  console.log("account", account);
   return {busd: res[0] / 10**18, blst: res[1] / 10**18 };
 };
 
@@ -646,7 +647,6 @@ export const getAddressToFreeMintGiven = async (contract, account) => {
 // Duel
 
 export const createDuel = async (contract, account, legionId, tokenPrice, standard) => {
-  console.log("dueldata", legionId, tokenPrice, standard);
   const res = await contract.methods.createDuel(legionId, tokenPrice, standard).send({ from: account });
   return res;
 }

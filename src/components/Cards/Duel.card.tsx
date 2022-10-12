@@ -79,6 +79,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         );
     }
 
+    const handleDeleteBtnClick = () => {
+
+    }
+
     React.useEffect(() => {
         setDuelFlag(false);
         divisions.map((division: I_Division, index: Number) => {
@@ -221,6 +225,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                         cursor: "pointer",
                                         filter: "box-shadow(0px 0px 100px #fff)"
                                     }}
+                                    onClick={handleDeleteBtnClick}
                                     // src="/assets/images/execute.png"
                                     src="/assets/images/deleteBtn.png"
                                 ></img>
@@ -355,7 +360,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                                 "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
                                         }}
                                     >
-                                        {formatNumber(duel.creatorLegion.attackPower)} AP
+                                        {formatNumber(duel.joinerLegion.attackPower)} AP
                                     </Typography>
 
                                 </Box>
@@ -397,7 +402,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 <img
                                     src="/assets/images/vs.png"
                                     style={{
-                                        height: "50px",
+                                        height: "100px",
                                     }}
                                     alt="VS"
                                 />
@@ -553,7 +558,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                                 "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
                                         }}
                                     >
-                                        {formatNumber(duel.creatorLegion.attackPower)} AP
+                                        {formatNumber(duel.joinerLegion.attackPower)} AP
                                     </Typography>
 
                                 </Box>

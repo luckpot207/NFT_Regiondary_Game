@@ -136,7 +136,7 @@ const CreateDuelModal: React.FC = () => {
             return;
         }
         try {
-            const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf(), !allIn.valueOf());
+            const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf() * (10 ** 18), !allIn.valueOf());
             toast.success("Successfully created duel.");
             dispatch(updateState({ createDuelModalOpen: false }));
         } catch (error) {

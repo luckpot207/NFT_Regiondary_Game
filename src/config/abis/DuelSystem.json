@@ -32,11 +32,67 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "legionID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "standard",
+        "type": "bool"
+      }
+    ],
+    "name": "CreatedDuel",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "duelID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "tokenPrice",
         "type": "uint256"
       }
     ],
     "name": "FinishedDuel",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "duelID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "legionID",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "JoinedDuel",
     "type": "event"
   },
   {
@@ -213,6 +269,11 @@
         "internalType": "bool",
         "name": "standard",
         "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "resultPrice",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -289,6 +350,11 @@
             "internalType": "bool",
             "name": "standard",
             "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "resultPrice",
+            "type": "uint256"
           }
         ],
         "internalType": "struct DuelSystem.Duel[]",

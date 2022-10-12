@@ -682,5 +682,6 @@ export const doingDuels = async (contract, duelId) => {
 
 export const getAllDuels = async (contract) => {
   const res = await contract.methods.getAllDuels().call();
+  console.log("allDuelres", res);
   return res;
 }

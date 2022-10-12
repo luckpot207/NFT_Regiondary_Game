@@ -81,7 +81,7 @@ export const getAllDuelsAct = async (
         endDateTime: endDateTime,
         status: allDuelsRes[i].status,
         type: allDuelsRes[i].standard,
-        result: 0,
+        result: allDuelsRes[i].resultPrice,
       };
       allDuelsTemp.push(duelTemp);
     }

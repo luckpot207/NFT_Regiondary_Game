@@ -84,7 +84,6 @@ export const getAllDuelsAct = async (
         result: 0,
       };
       allDuelsTemp.push(duelTemp);
-      console.log("allduels", allDuelsTemp);
     }
     dispatch(updateState({ allDuels: allDuelsTemp }));
   } catch (error) {}

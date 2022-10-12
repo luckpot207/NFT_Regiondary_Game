@@ -102,16 +102,16 @@ const Duel: React.FC = () => {
         setLegionsDuelStatus(legionsDueStatusTemp)
     }
 
-
     useEffect(() => {
         getAllDuelsAct(dispatch, account, duelContract, legionContract);
+
     }, [allLegions]);
 
     useEffect(() => {
         getBalance()
     }, [allLegions]);
 
-    
+
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
@@ -122,20 +122,21 @@ const Duel: React.FC = () => {
         }
     );
 
+
     const StatusFilterVal = APFilterVal.filter(
         (duel: I_Duel) => duel.status == duelStatus
     );
-    
+
 
     const TimeFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => {
-            if (duelStatus == 0) {
+            if (duelStatus == 1) {
                 const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
                 return timeLeft >= duelJoinLeftMinTime.valueOf() &&
                     (duelJoinLeftMaxTime === duelJoinLeftMaxConstTime
                         ? true
                         : timeLeft <= duelJoinLeftMaxTime.valueOf())
-            } else if (duelStatus == 1) {
+            } else if (duelStatus == 2) {
                 const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
                 return timeLeft >= duelLeftMinTime.valueOf() &&
                     (duelLeftMaxTime === duelLeftMaxConstTime
@@ -156,13 +157,13 @@ const Duel: React.FC = () => {
         (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )
 
-    
+
 
     const DuelTypeFilterVal = OnlyMineFilterVal.filter(
         (duel: I_Duel) => duel.type == duelType
     )
-    
-    
+
+
     return (
         <Box>
             <Grid container spacing={2} sx={{ my: 4 }}>
@@ -270,30 +271,28 @@ const Duel: React.FC = () => {
                     : <Box>
                         <Grid container spacing={2} sx={{ mb: 4 }}>
                             {
-                            DuelTypeFilterVal
-                                .slice(
-                                    pageSize.valueOf() * (currentPage.valueOf() - 1),
-                                    pageSize.valueOf() * currentPage.valueOf()
-                                )
-                                .map((duel, index) => (
-                                    duel.status != 0 
-                                    ? duelStatus == 1
-                                        ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                                            <DuelCard duel={duel} />
-                                        </Grid>)
-                                        : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
-                                            <DuelCard duel={duel} />
-                                        </Grid>
-                                        )
-                                    : (<></>)
-                                ))}
+                                DuelTypeFilterVal
+                                    .slice(
+                                        pageSize.valueOf() * (currentPage.valueOf() - 1),
+                                        pageSize.valueOf() * currentPage.valueOf()
+                                    )
+                                    .map((duel, index) => (
+                                        duelStatus == 1
+                                            ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                                                <DuelCard duel={duel} />
+                                            </Grid>)
+                                            : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                                                <DuelCard duel={duel} />
+                                            </Grid>
+                                            )
+                                    ))}
                         </Grid>
                         {
                             DuelTypeFilterVal.length > 0 && (
                                 <Box>
-                                  <ItemPagination totalCount={DuelTypeFilterVal.length} />
+                                    <ItemPagination totalCount={DuelTypeFilterVal.length} />
                                 </Box>
-                              )
+                            )
                         }
                     </Box>
             }

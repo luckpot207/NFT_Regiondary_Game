@@ -13,7 +13,7 @@ const DuelTypeSort: React.FC = () => {
     };
 
       useEffect(() => {
-        dispatch(updateState({ duelType: false }));
+        dispatch(updateState({ duelType: true }));
       }, []);
 
     return (
@@ -23,14 +23,14 @@ const DuelTypeSort: React.FC = () => {
             </Typography>
             <ButtonGroup>
                 <Button
-                    variant={duelType === false ? "contained" : "outlined"}
-                    onClick={() => handleSort(false)}
+                    variant={duelType === true ? "contained" : "outlined"}
+                    onClick={() => handleSort(true)}
                 >
                     Standard
                 </Button>
                 <Button
-                    variant={duelType === true ? "contained" : "outlined"}
-                    onClick={() => handleSort(true)}
+                    variant={duelType === false ? "contained" : "outlined"}
+                    onClick={() => handleSort(false)}
                 >
                     All-In
                 </Button>

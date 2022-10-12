@@ -647,7 +647,7 @@ export const getAddressToFreeMintGiven = async (contract, account) => {
 // Duel
 
 export const createDuel = async (contract, account, legionId, tokenPrice, standard) => {
-  const res = await contract.methods.createDuel(legionId, tokenPrice, standard).send({ from: account });
+  const res = await contract.methods.createDuel(legionId, tokenPrice.toString(), standard).send({ from: account });
   return res;
 }
 
@@ -657,12 +657,12 @@ export const cancelDuel = async (contract, account, duelId) => {
 }
 
 export const joinDuel = async (contract, account, duelId, legionId, tokenPrice) => {
-  const res = await contract.methods.joinDuel(duelId, legionId, tokenPrice).send({ from: account });
+  const res = await contract.methods.joinDuel(duelId, legionId, tokenPrice.toString()).send({ from: account });
   return res;
 }
 
 export const updatePrediction = async (contract, account, duelId, price) => {
-  const res = await contract.methods.updatePrediction(duelId, price).send({ from: account });
+  const res = await contract.methods.updatePrediction(duelId, price.toString()).send({ from: account });
 }
 
 export const duels = async (contract, count) => {

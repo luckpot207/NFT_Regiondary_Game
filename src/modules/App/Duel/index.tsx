@@ -105,11 +105,13 @@ const Duel: React.FC = () => {
 
     useEffect(() => {
         getAllDuelsAct(dispatch, account, duelContract, legionContract);
-    }, []);
+    }, [allLegions]);
 
     useEffect(() => {
         getBalance()
     }, [allLegions]);
+
+    
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
@@ -123,6 +125,7 @@ const Duel: React.FC = () => {
     const StatusFilterVal = APFilterVal.filter(
         (duel: I_Duel) => duel.status == duelStatus
     );
+    
 
     const TimeFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => {

@@ -23,7 +23,7 @@ const DuelLeftTimeSort: React.FC = () => {
     duelResultFilterEndConst
   } = AppSelector(gameState);
   const handleChange = (event: Event, newValue: number | number[] | any) => {
-    if (duelStatus == 2) {
+    if (duelStatus == 3) {
       dispatch(
         updateState({
           duelResultFilterStart: Number(newValue[0]),
@@ -31,7 +31,7 @@ const DuelLeftTimeSort: React.FC = () => {
           currentPage: 1,
         })
       );
-    } else if (duelStatus == 1) {
+    } else if (duelStatus == 2) {
       dispatch(
         updateState({
           duelLeftMaxTime: Number(newValue[1]),
@@ -54,11 +54,11 @@ const DuelLeftTimeSort: React.FC = () => {
     <Box>
       <Typography>
         {
-          duelStatus == 2 ? "Filter By Days Ago" : "Filter By Time Left "
+          duelStatus == 3 ? "Filter By Days Ago" : "Filter By Time Left "
         }
       </Typography>
       {
-        duelStatus == 0
+        duelStatus == 1
           ? <Slider
             getAriaLabel={() => "Attack Power Range"}
             value={[Number(duelJoinLeftMinTime), Number(duelJoinLeftMaxTime)]}
@@ -77,7 +77,7 @@ const DuelLeftTimeSort: React.FC = () => {
               },
             ]}
           />
-          : duelStatus == 1 ?
+          : duelStatus == 2 ?
               <Slider
                 getAriaLabel={() => "Attack Power Range"}
                 value={[Number(duelLeftMinTime), Number(duelLeftMaxTime)]}

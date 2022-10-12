@@ -79,7 +79,7 @@ const JoinDuelModal: React.FC = () => {
 
     const handleJoinDuel = async () => {
         try {
-            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice);
+            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
             toast.success("Successfully joined");
         } catch (e) {
             toast.error("Network issue");

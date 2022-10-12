@@ -77,7 +77,7 @@ const UpdatePredictionModal: React.FC = () => {
             return;
         }
         try {
-            const res = await updatePrediction(duelContract, account, currentDuelId, estimatePrice);
+            const res = await updatePrediction(duelContract, account, currentDuelId, estimatePrice.valueOf() * (10 ** 18));
             console.log(res);
         } catch (error) {
             console.log(error);

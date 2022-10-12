@@ -73,9 +73,9 @@ export const getAllDuelsAct = async (
       var duelTemp: I_Duel = {
         duelId: i.toString(),
         isMine: isMine,
-        creatorEstmatePrice: allDuelsRes[i].price1,
+        creatorEstmatePrice: Math.round(allDuelsRes[i].price1/(10 ** 14))/(10 ** 4),
         creatorLegion: creatorLegion,
-        joinerEstmatePrice: allDuelsRes[i].price2,
+        joinerEstmatePrice: Math.round(allDuelsRes[i].price1/(10 ** 14))/(10 ** 4),
         joinerLegion: joinerLegion,
         betPrice: allDuelsRes[i].betAmount,
         endDateTime: endDateTime,

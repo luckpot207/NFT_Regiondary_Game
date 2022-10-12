@@ -48,11 +48,8 @@ import {
 } from "../../helpers/basicInfo";
 import { checkMintBeastPending } from "../../helpers/beast";
 import { checkMintWarriorPending } from "../../helpers/warrior";
-import StarRateIcon from "@mui/icons-material/StarRate";
 import ClaimAndReinvestModal from "../Modals/ClaimAndReinvest.modal";
 import LanguageTranslate from "../UI/LanguageTranslate";
-import { useDuelSystem } from "../../web3hooks/useContract";
-import { getAllDuelsAct } from "../../helpers/duel";
 
 const TopBar: React.FC = () => {
   // Hooks
@@ -84,8 +81,6 @@ const TopBar: React.FC = () => {
   const beastContract = useBeast();
   const warriorContract = useWarrior();
   const vrfContract = useVRF();
-  const duelContract = useDuelSystem();
-  const legionContract = useLegion();
 
   // States
   useEffect(() => {
@@ -108,7 +103,6 @@ const TopBar: React.FC = () => {
     checkMintWarriorPending(dispatch, account, warriorContract);
     dispatch(getReincarnation({ version: 3 }));
     dispatch(getVoteStatus());
-    getAllDuelsAct(dispatch, account, duelContract, legionContract);
     ///
     if (!hadSamaritanStar && currentSamaritanStars >= 4) {
       dispatch(addSamaritanStarHolder({ account: account as string }));

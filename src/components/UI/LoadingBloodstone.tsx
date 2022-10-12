@@ -43,6 +43,8 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
     buyItemLoading,
     updatePriceLoading,
     cancelItemLoading,
+
+    getAllDulesLoading,
   } = AppSelector(gameState);
 
   // State
@@ -124,6 +126,12 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
     if (loadingPage === "hunt") {
       if (getAllMonsterLoading) {
         setLoadingText(<LanguageTranslate translateKey="loadingMonsters" />);
+      }
+    }
+
+    if (loadingPage == "duel") {
+      if (getAllDulesLoading) {
+        setLoadingText("Loading Dules...")
       }
     }
   }, [

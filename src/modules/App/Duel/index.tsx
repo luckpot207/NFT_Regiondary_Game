@@ -266,10 +266,11 @@ const Duel: React.FC = () => {
             {
                 // getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
                 getAllDulesLoading.valueOf()
-                    ? <LoadingBloodstone loadingPage="legionsMarketplace" />
+                    ? <LoadingBloodstone loadingPage="duel" />
                     : <Box>
                         <Grid container spacing={2} sx={{ mb: 4 }}>
-                            {allDuels
+                            {
+                            DuelTypeFilterVal
                                 .slice(
                                     pageSize.valueOf() * (currentPage.valueOf() - 1),
                                     pageSize.valueOf() * currentPage.valueOf()

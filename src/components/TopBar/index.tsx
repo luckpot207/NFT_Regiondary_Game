@@ -88,6 +88,7 @@ const TopBar: React.FC = () => {
   }, [account]);
   // Functions
   const getBalance = async () => {
+
     const getAccount = () => accountRef.current;
     getSummonPrices(dispatch, web3, feehandlerContract);
     getUserInfo(

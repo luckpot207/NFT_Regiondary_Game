@@ -36,53 +36,53 @@ const getPresentItem = async () => {
 
 // Vote
 const vote = async (address: string, vote: boolean) => {
-  return Axios.post(`${serverLink}cryptolegions/vote/addVote`, {
+  return Axios.post(`${serverLink}vote/addVote`, {
     address: address,
     vote: vote,
   });
 };
 
 const getVoteByAddress = async (address: string) => {
-  return Axios.post(`${serverLink}cryptolegions/vote/getVoteByAddress`, {
+  return Axios.post(`${serverLink}vote/getVoteByAddress`, {
     address: address,
   });
 };
 
 const getVoteStatus = async () => {
-  return Axios.get(`${serverLink}cryptolegions/vote/getVoteCnt`);
+  return Axios.get(`${serverLink}vote/getVoteCnt`);
 };
 
 const confirmSamaritanStarHolder = async (account: string) => {
-  return Axios.post(`${serverLink}cryptolegions/samaritan/confirmSamaritanStarHolder`, {
+  return Axios.post(`${serverLink}samaritan/confirmSamaritanStarHolder`, {
     address: account,
   });
 };
 
 const addSamaritanStarHolder = async (account: string) => {
-  return Axios.post(`${serverLink}cryptolegions/samaritan/addSamaritanStarHolder`, {
+  return Axios.post(`${serverLink}samaritan/addSamaritanStarHolder`, {
     address: account,
   });
 };
 
 const getReincarnation = async (version: number) => {
-  return Axios.post(`${serverLink}cryptolegions/reincarnation/getReincarnation`, {
+  return Axios.post(`${serverLink}reincarnation/getReincarnation`, {
     version: version,
   });
 };
 
 const addReincarnationValue = async (address: string, value: number) => {
-  return Axios.post(`${serverLink}cryptolegions/reincarnation/addReincarnationValue`, {
+  return Axios.post(`${serverLink}reincarnation/addReincarnationValue`, {
     address: address,
     value: value,
   });
 };
 
 const getEconomyStatus = async () => {
-  return Axios.get(`${serverLink}cryptolegions/economy/getEconomyStatus`);
+  return Axios.get(`${serverLink}economy/getEconomyStatus`);
 };
 
 const getLeaderboardInfo = async (address: string) => {
-  return Axios.get(`${serverLink}cryptolegions/leaderboard/getLeaderboardInfo/${address}`);
+  return Axios.get(`${serverLink}leaderboard/getLeaderboardInfo/${address}`);
 };
 
 const addToLeaderboard = async (address: string) => {

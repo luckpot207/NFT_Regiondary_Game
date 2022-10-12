@@ -17,9 +17,11 @@ import {
 import { AppSelector } from "../../store";
 import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { useWeb3 } from "../../web3hooks/useContract";
+import { useDuelSystem, useWeb3 } from "../../web3hooks/useContract";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
 import FireBtn from "../Buttons/FireBtn";
+import { joinDuel } from "../../web3hooks/contractFunctions";
+import { toast } from "react-toastify";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -42,10 +44,13 @@ const JoinDuelModal: React.FC = () => {
         currentLegionIndexForDuel,
         divisions,
         endDateJoinDuel,
+        currentDuelId,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
     const web3 = useWeb3();
+    const duelContract = useDuelSystem();
+
     const [estimatePrice, setEstimatePrice] = useState(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
     const [leftTime, setLeftTime] = useState("");
@@ -70,6 +75,17 @@ const JoinDuelModal: React.FC = () => {
 
     const handleClose = () => {
         dispatch(updateState({ joinDuelModalOpen: false }))
+    }
+
+    const handleJoinDuel = async () => {
+        try {
+            console.log("joinduel", currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice);
+            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice);
+            toast.success("Successfully joined");
+        } catch (e) {
+            toast.error("Network issue");
+            console.log(e);
+        }
     }
 
     useEffect(() => {
@@ -117,7 +133,7 @@ const JoinDuelModal: React.FC = () => {
                     </Grid>
                     <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                     <Typography mb={1}>Time left to join this Duel: {joinLeftTime}</Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn sx={{ width: "100px" }}>Bet</FireBtn></Box>
+                    <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Bet</FireBtn></Box>
                 </Box>
             </DialogContent>
         </Dialog>

@@ -148,13 +148,17 @@ const Duel: React.FC = () => {
         }
     );
 
-    const OnlyMineFilterVal = TimeFilterVal.filter(
-        (duel: I_Duel) => duel.isMine
+
+    const OnlyMineFilterVal = StatusFilterVal.filter(
+        (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )
+
+    
 
     const DuelTypeFilterVal = OnlyMineFilterVal.filter(
         (duel: I_Duel) => duel.type == duelType
     )
+    
     
     return (
         <Box>
@@ -199,7 +203,7 @@ const Duel: React.FC = () => {
                                     </Typography>
                                 </Grid>
                                 {
-                                    duelStatus == 0 ?
+                                    duelStatus == 1 ?
                                         <Grid item xs={12} sm={6} md={6} lg={6} >
                                             <FormControl>
                                                 <Select

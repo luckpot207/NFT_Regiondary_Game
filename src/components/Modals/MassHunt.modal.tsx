@@ -134,6 +134,8 @@ const MassHuntModal: React.FC = () => {
           getLegionAddress(),
           account
         );
+        console.log("busd", allowance);
+        console.log("busd", payBUSD)
         if (allowance < payBUSD) {
           await setBUSDApprove(web3, busdContract, getLegionAddress(), account);
         }

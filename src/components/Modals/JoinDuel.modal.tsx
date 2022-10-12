@@ -79,7 +79,6 @@ const JoinDuelModal: React.FC = () => {
 
     const handleJoinDuel = async () => {
         try {
-            console.log("joinduel", currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice);
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice);
             toast.success("Successfully joined");
         } catch (e) {

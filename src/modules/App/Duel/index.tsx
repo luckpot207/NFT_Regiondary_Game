@@ -149,7 +149,7 @@ const Duel: React.FC = () => {
     );
 
 
-    const OnlyMineFilterVal = StatusFilterVal.filter(
+    const OnlyMineFilterVal = TimeFilterVal.filter(
         (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )
 
@@ -266,7 +266,7 @@ const Duel: React.FC = () => {
                     ? <LoadingBloodstone loadingPage="legionsMarketplace" />
                     : <Box>
                         <Grid container spacing={2} sx={{ mb: 4 }}>
-                            {DuelTypeFilterVal
+                            {allDuels
                                 .slice(
                                     pageSize.valueOf() * (currentPage.valueOf() - 1),
                                     pageSize.valueOf() * currentPage.valueOf()

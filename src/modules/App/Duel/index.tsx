@@ -199,8 +199,8 @@ const Duel: React.FC = () => {
                                         variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
                                     >
                                         {duelStatus == 1
-                                            ? "Duel"
-                                            : duelStatus == 2 ? "Ongoing Dules"
+                                            ? "Duels"
+                                            : duelStatus == 2 ? "Ongoing Duels"
                                                 : "Duel Results"}
                                     </Typography>
                                 </Grid>

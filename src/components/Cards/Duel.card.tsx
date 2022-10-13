@@ -78,13 +78,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
     const handleDeleteBtnClick = () => {
         Swal.fire({
-            title: "Warning",
-            text: "Are you sure you want to go All-In with your Legion? \nIf you lose this bet, then you will lose all the Attack Power of your legion and your legion will not be able to hunt anymore.",
+            title: "Cancel Duel",
+            text: "Are you sure?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#f66810",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Go All-In",
+            confirmButtonText: "Cancel Duel",
             background: "#111",
             color: "white",
         }).then((result) => {

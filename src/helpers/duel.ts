@@ -49,7 +49,7 @@ export const getAllDuelsAct = async (
         allDuelsRes[i].legion2
       );
       const joinerLegion: I_Legion = {
-        id: i.toString(),
+        id: joinerLegionTemp.id,
         name: joinerLegionTemp.name,
         beastIds: joinerLegionTemp.beastIds,
         warriorIds: joinerLegionTemp.warriorIds,

@@ -85,12 +85,14 @@ const JoinDuelModal: React.FC = () => {
     }
 
     const handleJoinDuel = async () => {
+        
         if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice) ;
             toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
         }
         try {
+            console.log("betprice", allLegions[currentLegionIndexForDuel.valueOf()].id);
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
@@ -103,7 +105,7 @@ const JoinDuelModal: React.FC = () => {
 
     useEffect(() => {
         if (allLegions.length != 0) {
-            divisions.map((division, index) => {
+            divisions.forEach((division, index) => {
                 if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
                     setDivisionIndex(index);
                 }

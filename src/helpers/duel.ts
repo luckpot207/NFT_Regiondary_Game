@@ -77,7 +77,7 @@ export const getAllDuelsAct = async (
         creatorLegion: creatorLegion,
         joinerEstmatePrice: Math.round(allDuelsRes[i].price2/(10 ** 14))/(10 ** 4),
         joinerLegion: joinerLegion,
-        betPrice: allDuelsRes[i].betAmount,
+        betPrice: allDuelsRes[i].betAmount/(10 ** 18),
         endDateTime: endDateTime,
         status: allDuelsRes[i].status,
         type: allDuelsRes[i].standard,

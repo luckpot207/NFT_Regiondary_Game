@@ -47,7 +47,7 @@ export const navConfig = {
       element: <Hunt />,
     },
     {
-      path: "/duel",
+      path: "/duels",
       element: <Duel />
     },
     {

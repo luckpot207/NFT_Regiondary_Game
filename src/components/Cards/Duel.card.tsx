@@ -32,6 +32,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         allLegions,
         divisions,
         currentLegionIndexForDuel,
+        duelType,
     } = AppSelector(gameState);
     const { account } = useWeb3React();
     const duelContract = useDuelSystem();
@@ -99,23 +100,22 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
     React.useEffect(() => {
         setDuelFlag(false);
-        divisions.map((division: I_Division, index: Number) => {
+        divisions.forEach((division: I_Division, index: Number) => {
             if (duel.creatorLegion.attackPower >= division.minAP && duel.creatorLegion.attackPower < division.maxAP) {
                 if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
                     setDuelFlag(true);
                 }
             }
         });
-        realTimeUpdate();
-    }, [currentLegionIndexForDuel]);
+    }, [currentLegionIndexForDuel, duelType]);
 
-    const realTimeUpdate = () => {
-        setTimeout(() => {
+    useEffect(() => {
+        const leftTimer = setInterval(() => {
             const left_time = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime());
             setLeftTime("" + Math.floor(left_time / (60 * 60 * 1000)) + "h " + Math.floor(left_time % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(left_time % (60 * 1000) / (1000)) + "s")
-            realTimeUpdate();
         }, 1000);
-    };
+        return () => clearInterval(leftTimer);
+    }, [leftTime, duel.endDateTime])
 
     const duelResult = () => {
         const priceDifference1 = Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100;

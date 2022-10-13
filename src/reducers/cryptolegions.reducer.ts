@@ -327,7 +327,7 @@ let initialState: I_ReduxState = {
   duelLeftMinTime: 1,
   duelLeftMaxConstTime: 1080,
   duelLeftMinConstTime: 1,
-  duelResultFilterStart: 1,
+  duelResultFilterStart: 0,
   duelResultFilterEnd: 30,
   duelResultFilterStartConst: 1,
   duelResultFilterEndConst: 30,

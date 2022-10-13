@@ -24,6 +24,7 @@ import { useWeb3React } from "@web3-react/core";
 import {
     useWeb3,
     useDuelSystem,
+    useFeeHandler,
 } from "../../web3hooks/useContract";
 import { I_Legion, I_Division } from "../../interfaces";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
@@ -34,8 +35,10 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FireBtn from "../Buttons/FireBtn";
-import { createDuel, doingDuels, getAllDuels } from "../../web3hooks/contractFunctions";
+import { createDuel, doingDuels, getAllDuels, getBLSTAmount } from "../../web3hooks/contractFunctions";
 import { toast } from "react-toastify";
+import { confirmUnclaimedWallet } from "../../helpers/duel";
+import Swal from "sweetalert2";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -82,9 +85,11 @@ const CreateDuelModal: React.FC = () => {
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
+    const web3 = useWeb3();
 
     // Contract
     const duelContract = useDuelSystem();
+    const feeHandlerContract = useFeeHandler();
 
     const [allIn, setAllIn] = useState(false);
     const [estimatePrice, setEstimatePrice] = useState(0);
@@ -104,7 +109,26 @@ const CreateDuelModal: React.FC = () => {
     };
 
     const handleAllInCheck = () => {
-        setAllIn(!allIn);
+        if (!allIn) {
+            Swal.fire({
+                title: "Warning",
+                text: "Are you sure you want to go All-In with your Legion? \nIf you lose this bet, then you will lose all the Attack Power of your legion and your legion will not be able to hunt anymore.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#f66810",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Go All-In",
+                background: "#111",
+                color: "white",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setAllIn(!allIn);
+                }
+            });
+        } else {
+            setAllIn(!allIn);
+        }
+        
     }
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,8 +155,14 @@ const CreateDuelModal: React.FC = () => {
     }, [allLegions]);
 
     const handleSubmit = async () => {
+        confirmUnclaimedWallet(40);
         if (estimatePrice.valueOf() < 0) {
             toast.error("Please provide valid value!");
+            return;
+        }
+        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+            const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
+            toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
         }
         try {

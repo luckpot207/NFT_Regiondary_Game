@@ -1,14 +1,7 @@
 import {
     Box,
-    Button,
-    ButtonGroup,
     Card,
-    CardContent,
     CardMedia,
-    Grid,
-    IconButton,
-    Skeleton,
-    Tooltip,
     Typography,
 } from "@mui/material";
 
@@ -22,6 +15,9 @@ import FireBtn from "../Buttons/FireBtn";
 import GreyBtn from "../Buttons/GreyBtn";
 import { formatNumber, getTranslation } from "../../utils/utils";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { cancelDuel } from "../../web3hooks/contractFunctions";
+import { useDuelSystem } from "../../web3hooks/useContract";
 
 type Props = {
     duel: I_Duel;
@@ -31,19 +27,16 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     // Hook info
     const dispatch = useDispatch();
     const {
-        language,
-        showAnimation,
         duelStatus,
         allLegions,
         divisions,
-        currentDuelId,
-        endDateJoinDuel,
-        updatePredictionModalOpen,
         currentLegionIndexForDuel,
     } = AppSelector(gameState);
+    const { account } = useWeb3React();
+    const duelSystem = useDuelSystem();
+
     const [loaded, setLoaded] = useState(false);
     const [leftTime, setLeftTime] = useState("");
-    const { account } = useWeb3React();
 
     // Functions
     const handleImageLoaded = () => {
@@ -79,8 +72,26 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         );
     }
 
-    const handleDeleteBtnClick = () => {
+    const handleCancelDuel = async () => {
+        cancelDuel(duelSystem, account, duel.duelId);
+    }
 
+    const handleDeleteBtnClick = () => {
+        Swal.fire({
+            title: "Cancel Duel",
+            text: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#f66810",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Cancel Duel",
+            background: "#111",
+            color: "white",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleCancelDuel();
+            }
+        });
     }
 
     React.useEffect(() => {
@@ -103,11 +114,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         }, 1000);
     };
 
-    const duelResult = Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100 === Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) * 100) / 100
-        ? 0
-        : Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100 < Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) * 100) / 100
-            ? 2
-            : 1;
+    const duelResult = () => {
+        const priceDifference1 = Math.round(Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) * 100) / 100;
+        const priceDifference2 = Math.round(Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) * 100) / 100;
+        if (priceDifference1 == priceDifference2) {
+            return 0;
+        } else if (priceDifference1 > priceDifference2) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
 
     return <Box>
         {
@@ -449,8 +466,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
                         </Box>
                     </>
-                    : duelStatus == 3 ?
-                     <>
+                    : <>
                         <Box sx={{
                             border: "2px #00d0ff solid",
                             padding: "4px",
@@ -467,7 +483,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                     onLoad={handleImageLoaded}
                                     sx={{
                                         border: "2px solid",
-                                        borderColor: duelResult == 0 ? "orange" : duelResult == 1 ? "red" : "green"
+                                        borderColor: duelResult() == 0 ? "orange" : duelResult() == 1 ? "red" : "green"
                                     }}
                                 />
                                 <Typography
@@ -525,7 +541,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                     onLoad={handleImageLoaded}
                                     sx={{
                                         border: "2px solid",
-                                        borderColor: duelResult == 0 ? "orange" : duelResult == 1 ? "green" : "red"
+                                        borderColor: duelResult() == 0 ? "orange" : duelResult() == 1 ? "green" : "red"
                                     }}
                                 />
                                 <Typography
@@ -589,9 +605,9 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             }}>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.2em",
+                                        fontSize: "1.4em",
                                         fontWeight: "bold",
-                                        color: "yellow",
+                                        color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
                                     }}
                                 >
@@ -605,34 +621,26 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                     <img
                                         src="/assets/images/vs.png"
                                         style={{
-                                            width: "50px",
+                                            width: "80px",
                                         }}
                                         alt="VS"
                                     />
                                     <Typography
                                         sx={{
-                                            fontSize: "1em",
-                                            color: "#15c7fd",
+                                            fontSize: "1.2em !important",
+                                            color: "#3afcff",
                                             WebkitTextStroke: "0.2px white",
                                         }}
-                                    >
-                                        BLST price was
+                                    > 
+                                        BLST price was ${duel.result}
                                     </Typography>
-                                    <Typography
-                                        sx={{
-                                            fontSize: "1.2em",
-                                            color: "#15c7fd",
-                                            WebkitTextStroke: "0.2px white",
-                                        }}
-                                    >
-                                        ${duel.result}
-                                    </Typography>
+                                    
                                 </Box>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.2em",
+                                        fontSize: "1.4em",
                                         fontWeight: "bold",
-                                        color: "yellow",
+                                        color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
                                     }}
                                 >
@@ -671,7 +679,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
                         </Box>
                     </>
-                    : <></>
         }
 
     </Box>;

@@ -200,7 +200,7 @@ const Duel: React.FC = () => {
                                     >
                                         {duelStatus == 1
                                             ? "Duels"
-                                            : duelStatus == 2 ? "Ongoing Dules"
+                                            : duelStatus == 2 ? "Ongoing Duels"
                                                 : "Duel Results"}
                                     </Typography>
                                 </Grid>

@@ -17,7 +17,7 @@ import {
 import { AppSelector } from "../../store";
 import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { useDuelSystem, useFeeHandler, useWeb3 } from "../../web3hooks/useContract";
+import { useDuelSystem, useFeeHandler, useLegion, useWeb3 } from "../../web3hooks/useContract";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
 import FireBtn from "../Buttons/FireBtn";
 import { joinDuel, getBLSTAmount } from "../../web3hooks/contractFunctions";
@@ -56,6 +56,7 @@ const JoinDuelModal: React.FC = () => {
     // contract
     const feeHandlerContract = useFeeHandler();
     const duelContract = useDuelSystem();
+    const legionContract = useLegion();
 
     const [estimatePrice, setEstimatePrice] = useState(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
@@ -93,6 +94,7 @@ const JoinDuelModal: React.FC = () => {
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
+            getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (e) {
             toast.error("Network issue");
             console.log(e);

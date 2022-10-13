@@ -16,8 +16,9 @@ import GreyBtn from "../Buttons/GreyBtn";
 import { formatNumber, getTranslation } from "../../utils/utils";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { cancelDuel } from "../../web3hooks/contractFunctions";
-import { useDuelSystem } from "../../web3hooks/useContract";
+import { cancelDuel, duelCounter } from "../../web3hooks/contractFunctions";
+import { useDuelSystem, useLegion } from "../../web3hooks/useContract";
+import { getAllDuelsAct } from "../../helpers/duel";
 
 type Props = {
     duel: I_Duel;
@@ -33,7 +34,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         currentLegionIndexForDuel,
     } = AppSelector(gameState);
     const { account } = useWeb3React();
-    const duelSystem = useDuelSystem();
+    const duelContract = useDuelSystem();
+    const legionContract = useLegion();
 
     const [loaded, setLoaded] = useState(false);
     const [leftTime, setLeftTime] = useState("");
@@ -73,7 +75,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     }
 
     const handleCancelDuel = async () => {
-        cancelDuel(duelSystem, account, duel.duelId);
+        cancelDuel(duelContract, account, duel.duelId);
     }
 
     const handleDeleteBtnClick = () => {
@@ -91,6 +93,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             if (result.isConfirmed) {
                 handleCancelDuel();
             }
+            getAllDuelsAct(dispatch, account, duelContract, legionContract);
         });
     }
 
@@ -408,9 +411,9 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             }}>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.2em",
+                                        fontSize: "1.4em",
                                         fontWeight: "bold",
-                                        color: "yellow",
+                                        color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
                                     }}
                                 >
@@ -419,15 +422,15 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 <img
                                     src="/assets/images/vs.png"
                                     style={{
-                                        height: "100px",
+                                        width: "80px",
                                     }}
                                     alt="VS"
                                 />
                                 <Typography
                                     sx={{
-                                        fontSize: "1.2em",
+                                        fontSize: "1.4em",
                                         fontWeight: "bold",
-                                        color: "yellow",
+                                        color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
                                     }}
                                 >

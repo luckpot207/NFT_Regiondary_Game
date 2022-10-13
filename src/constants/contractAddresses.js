@@ -9,7 +9,7 @@ const testAddress = {
   rewardpool: "0xdF53EcD7F4ac06B5E42Eee6558CEfa28C1E5202e",
   feehandler: "0x9ccb1823670bbef35d7BC36e19A52C1EFbC978d7",
   marketplace: "0x12C422f156666669392D7874b9d7d6cb4Ff572c4",
-  referralsystem: "0x93E24685291ECc70AE1544391f38668379e3F751",
+  referralsystem: "0xdF53EcD7F4ac06B5E42Eee6558CEfa28C1E5202e",
   duelsystem: "0x5E835bB7c392A1206CD8D2a5282C647d7f2dC243",
 };
 

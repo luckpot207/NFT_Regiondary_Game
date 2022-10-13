@@ -27,11 +27,13 @@ import { useWeb3React } from "@web3-react/core";
 import {
     useWeb3,
     useDuelSystem,
+    useLegion,
 } from "../../web3hooks/useContract";
 
 import FireBtn from "../Buttons/FireBtn";
 import { updatePrediction } from "../../web3hooks/contractFunctions";
 import { toast } from "react-toastify";
+import { getAllDuelsAct } from "../../helpers/duel";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -59,6 +61,7 @@ const UpdatePredictionModal: React.FC = () => {
 
     // Contract
     const duelContract = useDuelSystem();
+    const legionContract = useLegion();
 
     const [estimatePrice, setEstimatePrice] = useState(0);
 
@@ -78,9 +81,11 @@ const UpdatePredictionModal: React.FC = () => {
         }
         try {
             const res = await updatePrediction(duelContract, account, currentDuelId, estimatePrice.valueOf() * (10 ** 18));
-            console.log(res);
+            toast.success("Successfully updated");
+            dispatch(updateState({ updatePredictionModalOpen: false }));
+            getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
-            console.log(error);
+            toast.error("Network issue")
         }
 
     }
@@ -120,7 +125,7 @@ const UpdatePredictionModal: React.FC = () => {
                     <FireBtn
                         sx={{ width: "100px" }}
                         onClick={handleSubmit}
-                    >Bet</FireBtn>
+                    >Update</FireBtn>
                 </Box>
             </DialogContent>
         </Dialog>

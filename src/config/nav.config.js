@@ -111,9 +111,9 @@ export const navConfig = {
       },
       {
         type: "navlink",
-        title: "duel",
+        title: "duels",
         icon: "hunt.png",
-        path: "/duel",
+        path: "/duels",
       },
       {
         type: "divider",

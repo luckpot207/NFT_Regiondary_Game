@@ -151,8 +151,6 @@ const Duel: React.FC = () => {
         }
     );
 
-    console.log("allduelstart", duelResultFilterStart);
-
     const OnlyMineFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )

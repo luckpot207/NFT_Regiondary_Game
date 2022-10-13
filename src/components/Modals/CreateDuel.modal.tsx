@@ -25,6 +25,7 @@ import {
     useWeb3,
     useDuelSystem,
     useFeeHandler,
+    useLegion,
 } from "../../web3hooks/useContract";
 import { I_Legion, I_Division } from "../../interfaces";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
@@ -39,6 +40,7 @@ import { createDuel, doingDuels, getAllDuels, getBLSTAmount } from "../../web3ho
 import { toast } from "react-toastify";
 import { confirmUnclaimedWallet } from "../../helpers/duel";
 import Swal from "sweetalert2";
+import { getAllDuelsAct } from "../../helpers/duel";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -90,6 +92,7 @@ const CreateDuelModal: React.FC = () => {
     // Contract
     const duelContract = useDuelSystem();
     const feeHandlerContract = useFeeHandler();
+    const legionContract = useLegion();
 
     const [allIn, setAllIn] = useState(false);
     const [estimatePrice, setEstimatePrice] = useState(0);
@@ -160,7 +163,7 @@ const CreateDuelModal: React.FC = () => {
             toast.error("Please provide valid value!");
             return;
         }
-        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+        if ( !allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
@@ -169,6 +172,7 @@ const CreateDuelModal: React.FC = () => {
             const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf() * (10 ** 18), !allIn.valueOf());
             toast.success("Successfully created duel.");
             dispatch(updateState({ createDuelModalOpen: false }));
+            getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
             console.log(error);
         }

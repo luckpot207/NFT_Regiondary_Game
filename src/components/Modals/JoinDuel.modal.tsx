@@ -48,6 +48,7 @@ const JoinDuelModal: React.FC = () => {
         divisions,
         endDateJoinDuel,
         currentDuelId,
+        allDuels,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
@@ -62,6 +63,8 @@ const JoinDuelModal: React.FC = () => {
     const [divisionIndex, setDivisionIndex] = useState(0);
     const [leftTime, setLeftTime] = useState("");
     const [joinLeftTime, setJoinLeftTime] = useState("");
+    const [duelType, setDuelType] = useState(true);
+
 
     useEffect(() => {
         const leftTimer = setInterval(() => {
@@ -85,14 +88,12 @@ const JoinDuelModal: React.FC = () => {
     }
 
     const handleJoinDuel = async () => {
-        
-        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+        if (duelType && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice) ;
             toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
         }
         try {
-            console.log("betprice", allLegions[currentLegionIndexForDuel.valueOf()].id);
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
@@ -111,7 +112,14 @@ const JoinDuelModal: React.FC = () => {
                 }
             });
         }
-    }, [currentLegionIndexForDuel])
+
+        allDuels.forEach((duel, index) => {
+            if (duel.duelId == currentDuelId) {
+                setDuelType(duel.type.valueOf());
+            }
+        });
+
+    }, [currentLegionIndexForDuel, currentDuelId])
 
     return (
         <Dialog open={joinDuelModalOpen.valueOf()} onClose={handleClose}>

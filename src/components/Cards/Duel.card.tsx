@@ -76,7 +76,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     }
 
     const handleCancelDuel = async () => {
-        cancelDuel(duelContract, account, duel.duelId);
+        try {
+            const res = await cancelDuel(duelContract, account, duel.duelId);
+            toast.success("Success");
+            getAllDuelsAct(dispatch, account, duelContract, legionContract);
+        } catch (e) {
+            toast.error("Network issue");
+        }
     }
 
     const handleDeleteBtnClick = () => {
@@ -94,7 +100,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             if (result.isConfirmed) {
                 handleCancelDuel();
             }
-            getAllDuelsAct(dispatch, account, duelContract, legionContract);
         });
     }
 
@@ -234,7 +239,11 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                             "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
                                     }}
                                 >
-                                    ${duel.betPrice}
+                                    {
+                                        duel.type.valueOf()
+                                            ? "$" + duel.betPrice
+                                            : "All-in"
+                                    }
                                 </Typography>
                                 : <img
                                     style={{
@@ -465,7 +474,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                         "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
                                 }}
                             >
-                                ${duel.betPrice}
+                                {
+                                    duel.type.valueOf()
+                                        ? "$" + duel.betPrice
+                                        : "All-in"
+                                }
+
                             </Typography>
                         </Box>
                     </>
@@ -634,10 +648,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                             color: "#3afcff",
                                             WebkitTextStroke: "0.2px white",
                                         }}
-                                    > 
+                                    >
                                         BLST price was ${duel.result}
                                     </Typography>
-                                    
+
                                 </Box>
                                 <Typography
                                     sx={{
@@ -678,7 +692,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                         "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
                                 }}
                             >
-                                ${duel.betPrice}
+                                {
+                                    duel.type.valueOf()
+                                        ? "$" + duel.betPrice
+                                        : "All-in"
+                                }
+
                             </Typography>
                         </Box>
                     </>

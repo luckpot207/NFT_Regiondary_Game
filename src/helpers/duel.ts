@@ -68,24 +68,35 @@ export const getAllDuelsAct = async (
       } else {
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000
-        ).toISOString();
+        ).toDateString();
       }
       var duelTemp: I_Duel = {
         duelId: i.toString(),
         isMine: isMine,
         creatorEstmatePrice: Math.round(allDuelsRes[i].price1/(10 ** 14))/(10 ** 4),
         creatorLegion: creatorLegion,
-        joinerEstmatePrice: Math.round(allDuelsRes[i].price1/(10 ** 14))/(10 ** 4),
+        joinerEstmatePrice: Math.round(allDuelsRes[i].price2/(10 ** 14))/(10 ** 4),
         joinerLegion: joinerLegion,
         betPrice: allDuelsRes[i].betAmount,
         endDateTime: endDateTime,
         status: allDuelsRes[i].status,
         type: allDuelsRes[i].standard,
-        result: allDuelsRes[i].resultPrice,
+        result: Math.round(allDuelsRes[i].resultPrice/(10 ** 14))/(10 ** 4),
       };
       allDuelsTemp.push(duelTemp);
     }
+    console.log("allDuel", allDuelsTemp);
     dispatch(updateState({ allDuels: allDuelsTemp }));
   } catch (error) {}
   dispatch(updateState({ getAllDulesLoading: false }));
 };
+
+
+export const confirmUnclaimedWallet = (betAmount: Number) => {
+  const state = store.getState();
+  if (state.cryptolegions.unclaimedUSD >= betAmount) {
+    return true; 
+  } else {
+    return false;
+  }
+}

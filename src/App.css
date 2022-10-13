@@ -38,3 +38,7 @@
   --bg-color-4: #16161699;
   --bg-color-5: #161616cc;
 }
+
+.swal2-container {
+  z-index: 9999 !important;
+}

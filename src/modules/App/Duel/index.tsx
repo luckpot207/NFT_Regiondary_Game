@@ -102,9 +102,9 @@ const Duel: React.FC = () => {
         setLegionsDuelStatus(legionsDueStatusTemp)
     }
 
+
     useEffect(() => {
         getAllDuelsAct(dispatch, account, duelContract, legionContract);
-
     }, [allLegions]);
 
     useEffect(() => {
@@ -115,13 +115,12 @@ const Duel: React.FC = () => {
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
-            return duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 &&
-                (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP
-                    ? true
-                    : duel.creatorLegion.attackPower <= duelLegionFilterMaxAP.valueOf() * 1000);
+            return duel.status != 3
+                ? duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 && (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP ? true
+                    : duel.creatorLegion.attackPower <= duelLegionFilterMaxAP.valueOf() * 1000)
+                : true
         }
     );
-
 
     const StatusFilterVal = APFilterVal.filter(
         (duel: I_Duel) => duel.status == duelStatus
@@ -130,13 +129,13 @@ const Duel: React.FC = () => {
 
     const TimeFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => {
-            if (duelStatus == 1) {
+            if (duelStatus == 0) {
                 const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
                 return timeLeft >= duelJoinLeftMinTime.valueOf() &&
                     (duelJoinLeftMaxTime === duelJoinLeftMaxConstTime
                         ? true
                         : timeLeft <= duelJoinLeftMaxTime.valueOf())
-            } else if (duelStatus == 2) {
+            } else if (duelStatus == 1) {
                 const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
                 return timeLeft >= duelLeftMinTime.valueOf() &&
                     (duelLeftMaxTime === duelLeftMaxConstTime
@@ -152,8 +151,9 @@ const Duel: React.FC = () => {
         }
     );
 
+    console.log("allduelstart", duelResultFilterStart);
 
-    const OnlyMineFilterVal = TimeFilterVal.filter(
+    const OnlyMineFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )
 
@@ -242,8 +242,8 @@ const Duel: React.FC = () => {
             <Grid container spacing={3} sx={{ mb: 2 }}>
                 <Grid item xs={12} md={6} lg={3}>
                     <ButtonGroup>
-                        {duelStatus != 1 ? <Button onClick={() => handleDuelSort(1)}>Back to Duels</Button> : allLegions.length != 0 ?
-                            <Button onClick={() => showCreateDuelModal()}>Create Duel</Button> : <></>}
+                        {duelStatus != 1 ? <FireBtn onClick={() => handleDuelSort(1)}>Back to Duels</FireBtn> : allLegions.length != 0 ?
+                            <FireBtn onClick={() => showCreateDuelModal()}>Create Duel</FireBtn> : <></>}
                     </ButtonGroup>
                 </Grid>
             </Grid>
@@ -281,7 +281,7 @@ const Duel: React.FC = () => {
                                             ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                                                 <DuelCard duel={duel} />
                                             </Grid>)
-                                            : (<Grid item xs={12} sm={6} md={6} lg={4} key={index}>
+                                            : (<Grid item xs={12} sm={6} md={6} lg={6} key={index}>
                                                 <DuelCard duel={duel} />
                                             </Grid>
                                             )

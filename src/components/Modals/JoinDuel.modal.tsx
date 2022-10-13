@@ -17,11 +17,14 @@ import {
 import { AppSelector } from "../../store";
 import { useDispatch } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import { useDuelSystem, useWeb3 } from "../../web3hooks/useContract";
+import { useDuelSystem, useFeeHandler, useWeb3 } from "../../web3hooks/useContract";
 import LanguageTranslate from "../../components/UI/LanguageTranslate";
 import FireBtn from "../Buttons/FireBtn";
-import { joinDuel } from "../../web3hooks/contractFunctions";
+import { joinDuel, getBLSTAmount } from "../../web3hooks/contractFunctions";
 import { toast } from "react-toastify";
+import { getAllDuelsAct } from "../../helpers/duel";
+import { confirmUnclaimedWallet } from "../../helpers/duel";
+
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -49,6 +52,9 @@ const JoinDuelModal: React.FC = () => {
     // Account & Web3
     const { account } = useWeb3React();
     const web3 = useWeb3();
+
+    // contract
+    const feeHandlerContract = useFeeHandler();
     const duelContract = useDuelSystem();
 
     const [estimatePrice, setEstimatePrice] = useState(0);
@@ -78,8 +84,14 @@ const JoinDuelModal: React.FC = () => {
     }
 
     const handleJoinDuel = async () => {
+        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+            const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice) ;
+            toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
+            return;
+        }
         try {
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
+            dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
         } catch (e) {
             toast.error("Network issue");

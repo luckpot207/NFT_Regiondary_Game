@@ -107,7 +107,7 @@ const DuelLeftTimeSort: React.FC = () => {
                 marks={[
                   {
                     value: duelResultFilterStartConst.valueOf(),
-                    label: "1 day",
+                    label: "0 day",
                   },
                   {
                     value: duelResultFilterEnd.valueOf(),

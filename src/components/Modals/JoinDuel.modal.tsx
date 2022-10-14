@@ -176,7 +176,7 @@ const JoinDuelModal: React.FC = () => {
                         </Grid>
                         <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
                     </Grid>
-                    <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                    <Typography mb={1}>To Join this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                     <Typography mb={1}>Time left to join this Duel: {joinLeftTime}</Typography>
                     <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Bet</FireBtn></Box>
                 </Box>

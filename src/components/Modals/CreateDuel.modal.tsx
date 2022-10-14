@@ -161,6 +161,9 @@ const CreateDuelModal: React.FC = () => {
             }
         });
         setEstimatePrice(0);
+        if (allLegions.length != 0) {
+            setCurrentLegionIndex(0);
+        }
     }, [allLegions, createDuelModalOpen]);
 
     const handleSubmit = async () => {
@@ -171,12 +174,12 @@ const CreateDuelModal: React.FC = () => {
         }
         if ( !allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
-            toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
+            toast.error(`To create this duel, you need to have at least ${Math.round(blstAmount)} $BLST in your Unclaimed Wallet.\nGo more hunting!`);
             return;
         }
         try {
             const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf() * (10 ** 18), !allIn.valueOf());
-            toast.success("Successfully created duel.");
+            toast.success("Your Duel has been created.");
             dispatch(updateState({ createDuelModalOpen: false }));
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {

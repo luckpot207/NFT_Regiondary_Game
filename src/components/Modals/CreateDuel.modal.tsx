@@ -41,6 +41,7 @@ import { toast } from "react-toastify";
 import { confirmUnclaimedWallet } from "../../helpers/duel";
 import Swal from "sweetalert2";
 import { getAllDuelsAct } from "../../helpers/duel";
+import { FaTimes } from "react-icons/fa";
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -189,7 +190,27 @@ const CreateDuelModal: React.FC = () => {
 
     return (
         <Dialog open={createDuelModalOpen.valueOf()} onClose={handleClose}>
-            <DialogTitle>Create Duel</DialogTitle>
+            <DialogTitle sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItem: "center",
+                justifyContent: "space-between"
+            }}>
+                <Typography 
+                variant="h4"
+                sx={{
+                    fontWeight: "bold"
+                }}
+                >
+                    Create Duel
+                </Typography>
+                <FaTimes 
+                    style={{
+                        cursor: "pointer",
+                    }}
+                    onClick={handleClose}
+                />
+            </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>
                 <Box
@@ -200,7 +221,7 @@ const CreateDuelModal: React.FC = () => {
 
                     }}
                 >
-                    <a href="https://pancakeswap.finance/swap?outputCurrency=0x63441E5C9F55B5A9141f3D834a28426Ca1c5C5cC&inputCurrency=BNB" target="_blank" style={{ color: "orange", textDecoration: "none" }}>Check Price Now</a>
+                    <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>Check $CRYPTO Price Now</a>
                 </Box>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6} md={4} lg={4}>Select your Legion :</Grid>

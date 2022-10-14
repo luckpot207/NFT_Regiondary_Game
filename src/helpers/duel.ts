@@ -1,12 +1,8 @@
 import { AppDispatch, store } from "../store";
 import { Contract } from "web3-eth-contract";
 import { updateState } from "../reducers/cryptolegions.reducer";
-import {
-  getAllDuels,
-  getLegion,
-} from "../web3hooks/contractFunctions";
+import { getAllDuels, getLegion } from "../web3hooks/contractFunctions";
 import { I_Legion, I_Duel } from "../interfaces";
-
 
 export const getAllDuelsAct = async (
   dispatch: AppDispatch,
@@ -25,8 +21,8 @@ export const getAllDuelsAct = async (
       var isMine: Boolean = false;
       all_legions.forEach((legion: I_Legion) => {
         if (legion.id == allDuelsRes[i].legion1) {
-            isMine = true;
-        } 
+          isMine = true;
+        }
       });
       const creatorLegionTemp: any = await getLegion(
         legionContract,
@@ -66,22 +62,31 @@ export const getAllDuelsAct = async (
           Number(allDuelsRes[i].startTime) * 1000 + 6 * 3600 * 1000
         ).toISOString();
       } else {
-        endDateTime = new Date(
+        const endDateTimeTemp = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000
-        ).toDateString();
+        );
+        endDateTime =
+          endDateTimeTemp.toDateString() +
+          " at " +
+          endDateTimeTemp.getUTCHours() +
+          ":" +
+          endDateTimeTemp.getUTCMinutes() +
+          " UTC";
       }
       var duelTemp: I_Duel = {
         duelId: i.toString(),
         isMine: isMine,
-        creatorEstmatePrice: Math.round(allDuelsRes[i].price1/(10 ** 14))/(10 ** 4),
+        creatorEstmatePrice:
+          Math.round(allDuelsRes[i].price1 / 10 ** 14) / 10 ** 4,
         creatorLegion: creatorLegion,
-        joinerEstmatePrice: Math.round(allDuelsRes[i].price2/(10 ** 14))/(10 ** 4),
+        joinerEstmatePrice:
+          Math.round(allDuelsRes[i].price2 / 10 ** 14) / 10 ** 4,
         joinerLegion: joinerLegion,
-        betPrice: allDuelsRes[i].betAmount/(10 ** 18),
+        betPrice: allDuelsRes[i].betAmount / 10 ** 18,
         endDateTime: endDateTime,
         status: allDuelsRes[i].status,
         type: allDuelsRes[i].standard,
-        result: Math.round(allDuelsRes[i].resultPrice/(10 ** 14))/(10 ** 4),
+        result: Math.round(allDuelsRes[i].resultPrice / 10 ** 14) / 10 ** 4,
       };
       allDuelsTemp.push(duelTemp);
     }
@@ -90,12 +95,11 @@ export const getAllDuelsAct = async (
   dispatch(updateState({ getAllDulesLoading: false }));
 };
 
-
 export const confirmUnclaimedWallet = (betAmount: Number) => {
   const state = store.getState();
   if (state.cryptolegions.unclaimedUSD >= betAmount) {
-    return true; 
+    return true;
   } else {
     return false;
   }
-}
+};

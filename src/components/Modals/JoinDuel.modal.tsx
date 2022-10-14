@@ -149,7 +149,7 @@ const JoinDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly {leftTime} hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${BLSTToUSD}</Typography>
+                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100}</Typography>
                 <Box
                     sx={{
                         padding: "20px",

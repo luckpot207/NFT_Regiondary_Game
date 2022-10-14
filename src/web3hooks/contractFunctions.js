@@ -165,6 +165,14 @@ export const addSupply = async (
   return res;
 };
 
+export const ownerOf = async (
+  contract,
+  tokenId
+) => {
+  const res = await contract.methods.ownerOf(tokenId).call();
+  return res;
+}
+
 // Monster
 export const getAllMonsters = async (contract) => {
   const res = await contract.methods.getAllMonsters().call();

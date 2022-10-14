@@ -20,8 +20,14 @@ export const getAllDuelsAct = async (
       if (allDuelsRes[i].status == 0) continue;
       var isMine: Boolean = false;
       all_legions.forEach((legion: I_Legion) => {
-        if (legion.id == allDuelsRes[i].legion1) {
-          isMine = true;
+        if (allDuelsRes[i].status == 1) {
+          if (legion.id == allDuelsRes[i].legion1) {
+            isMine = true;
+          }
+        } else if (allDuelsRes[i].status == 2 || allDuelsRes[i].status == 3) {
+          if (legion.id == allDuelsRes[i].legion1 || legion.id == allDuelsRes[i].legion2) {
+            isMine = true;
+          }
         }
       });
       const creatorLegionTemp: any = await getLegion(

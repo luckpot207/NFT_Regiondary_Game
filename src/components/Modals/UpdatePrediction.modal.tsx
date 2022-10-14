@@ -85,13 +85,12 @@ const UpdatePredictionModal: React.FC = () => {
         }
         try {
             const res = await updatePrediction(duelContract, account, currentDuelId, estimatePrice.valueOf() * (10 ** 18));
-            toast.success("Successfully updated");
+            toast.success("Your prediction has been updated.");
             dispatch(updateState({ updatePredictionModalOpen: false }));
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
             toast.error("Network issue")
         }
-
     }
 
     useEffect(() => {

@@ -39,8 +39,9 @@ import ItemPagination from "../../../components/Pagination/Pagination";
 import { toast } from "react-toastify";
 import UpdatePredictionModal from "../../../components/Modals/UpdatePrediction.modal";
 import { useDuelSystem } from "../../../web3hooks/useContract";
-import { doingDuels } from "../../../web3hooks/contractFunctions";
+import { doingDuels, ownerOf } from "../../../web3hooks/contractFunctions";
 import { getAllDuelsAct } from "../../../helpers/duel";
+import { formatNumber } from "../../../utils/utils";
 
 const Duel: React.FC = () => {
     const dispatch = useDispatch();
@@ -77,6 +78,13 @@ const Duel: React.FC = () => {
 
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
+    const [currentInvitations, setCurrentInvitations] = useState<number>(0);
+    const [ongoingDuels, setOngoingDuels] = useState<number>(0);
+    const [pastDuels, setPastDuels] = useState<number>(0);
+    const [totalPastDuels, setTotalPastDuels] = useState<number>(0);
+    const [totalOngoingDuels, setTotalOngoingDuels] = useState<number>(0);
+    const [nextDuelResultDateTime, setNextDuelResultDateTime] = useState<string>("");
+    const [leftTimeForNextDuelResult, setLeftTimeForNextDuelResult] = useState<string>("");
 
     const handleDuelSort = (val: Number) => {
         dispatch(updateState({ duelStatus: val }));
@@ -93,25 +101,71 @@ const Duel: React.FC = () => {
     }
 
     const getBalance = async () => {
+        getAllDuelsAct(dispatch, account, duelContract, legionContract);
         var legionsDueStatusTemp: boolean[] = [];
         for (let i = 0; i < allLegions.length; i++) {
             const legion = allLegions[i];
             const res = await doingDuels(duelContract, legion.id)
             legionsDueStatusTemp.push(res);
         }
-        setLegionsDuelStatus(legionsDueStatusTemp)
+        setLegionsDuelStatus(legionsDueStatusTemp);
+
     }
 
+    useEffect(() => {
+        const leftTimer = setInterval(() => {
+            if ( nextDuelResultDateTime == "") {
+                setLeftTimeForNextDuelResult("");
+            } else {
+                const timeDifference = (new Date(nextDuelResultDateTime.valueOf()).getTime() - new Date().getTime());
+                const leftTimeStr = "" + Math.floor(timeDifference / (60 * 60 * 1000)) + "h " + Math.floor(timeDifference % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(timeDifference % (60 * 1000) / (1000)) + "s";
+                setLeftTimeForNextDuelResult(leftTimeStr)
+            }
+
+        }, 1000);
+        return () => clearInterval(leftTimer);
+    }, [nextDuelResultDateTime, leftTimeForNextDuelResult])
 
     useEffect(() => {
-        getAllDuelsAct(dispatch, account, duelContract, legionContract);
+        getBalance();
     }, [allLegions]);
 
+    const getOwnDuelStatus = async () => {
+        try {
+            let endDate: string = "";
+            const currentInvitationsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 1);
+            const ongoingDuelsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 2);
+            const pastDuelsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 3);
+            const totalPastDuelsTemp = allDuels.filter((duel) => duel.status == 3);
+            const totalOngoingDuelsTemp = allDuels.filter((duel) => duel.status == 2)
+
+            ongoingDuelsTemp.forEach((duel) => {
+                if (duel.status != 0) {
+                    if (endDate == "") {
+                        endDate = duel.endDateTime.valueOf();
+                    } else {
+                        if (new Date(endDate).getTime() > new Date(duel.endDateTime.valueOf()).valueOf()) {
+                            endDate = duel.endDateTime.valueOf();
+                        }
+                    }
+                }
+            });
+
+            setNextDuelResultDateTime(endDate);
+            setCurrentInvitations(currentInvitationsTemp.length);
+            setOngoingDuels(ongoingDuelsTemp.length);
+            setPastDuels(pastDuelsTemp.length);
+            setTotalPastDuels(totalPastDuelsTemp.length);
+            setTotalOngoingDuels(totalOngoingDuelsTemp.length);
+        } catch (e) {
+            console.log(e);
+        }
+    }
     useEffect(() => {
-        getBalance()
-    }, [allLegions]);
-
-
+        if (allDuels.length != 0) {
+            getOwnDuelStatus();
+        }
+    }, [allDuels]);
 
     const APFilterVal = allDuels.filter(
         (duel: I_Duel) => {
@@ -125,7 +179,6 @@ const Duel: React.FC = () => {
     const StatusFilterVal = APFilterVal.filter(
         (duel: I_Duel) => duel.status == duelStatus
     );
-
 
     const TimeFilterVal = StatusFilterVal.filter(
         (duel: I_Duel) => {
@@ -155,12 +208,9 @@ const Duel: React.FC = () => {
         (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
     )
 
-
-
     const DuelTypeFilterVal = OnlyMineFilterVal.filter(
         (duel: I_Duel) => duel.type == duelType
     )
-
 
     return (
         <Box>
@@ -204,54 +254,84 @@ const Duel: React.FC = () => {
                                                 : "Duel Results"}
                                     </Typography>
                                 </Grid>
-                                {
-                                    duelStatus == 1 ?
-                                        <Grid item xs={12} sm={6} md={6} lg={6} >
-                                            <FormControl>
-                                                <Select
-                                                    id="hunt-legion-select"
-                                                    value={currentLegionIndex.toString()}
-                                                    onChange={handleSelectLegion}
-                                                >
-                                                    {allLegions
-                                                        .map((legion: I_Legion, index: number) =>
-                                                            legionsDuelStatus[index] ? (
-                                                                <OrgMenuItem value={index} key={index}>
-                                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                                                </OrgMenuItem>
-                                                            ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
-                                                                <GreenMenuItem value={index} key={index}>
-                                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                                                </GreenMenuItem>
-                                                            ) : <RedMenuItem value={index} key={index}>
-                                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                                            </RedMenuItem>
-                                                        )}
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                        : <></>
-                                }
                             </Grid>
                         }
                     </Card>
                 </Grid>
             </Grid>
-            <Grid container spacing={3} sx={{ mb: 2 }}>
-                <Grid item xs={12} md={6} lg={3}>
-                    <ButtonGroup>
-                        {duelStatus != 1 ? <FireBtn onClick={() => handleDuelSort(1)}>Back to Duels</FireBtn> : allLegions.length != 0 ?
-                            <FireBtn onClick={() => showCreateDuelModal()}>Create Duel</FireBtn> : <></>}
-                    </ButtonGroup>
+            <Grid container spacing={1} sx={{ mb: 2 }}>
+                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Card className="bg-c5 info-card" sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}>
+                        <Typography>Your Current Invitations: {formatNumber(currentInvitations)}</Typography>
+                        <Typography>Your Ongoing Duels: {formatNumber(ongoingDuels)}</Typography>
+                        <Typography>Time Until Your Next Duel Results: {leftTimeForNextDuelResult}</Typography>
+                        <Typography mb={1}>Your Past Duels: {formatNumber(pastDuels)}</Typography>
+                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
+                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
+                    </Card>
+
+                </Grid>
+                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Card className="bg-c5 info-card" sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}>
+                        <Typography mb={2}>Total Ongoing Duels</Typography>
+                        <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}>{formatNumber(totalOngoingDuels)}</Typography>
+                        <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Card className="bg-c5 info-card" sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                    }}>
+                        <Typography mb={2}>Total Past Duels</Typography>
+                        <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}>{formatNumber(totalPastDuels)}</Typography>
+                        <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
+                    </Card>
                 </Grid>
             </Grid>
             <Grid container spacing={3} mb={3}>
                 <Grid item xs={12} md={6} lg={3}>
                     <DuelLegionAPFilter />
                 </Grid>
-                <Grid item xs={12} md={6} lg={2}>
-                    <DuelProcessSort />
-                </Grid>
+
+                {
+                    duelStatus == 1
+                        ?
+                        <Grid item xs={12} md={6} lg={2}> <FormControl>
+                            <Select
+                                id="hunt-legion-select"
+                                value={currentLegionIndex.toString()}
+                                onChange={handleSelectLegion}
+                            >
+                                {allLegions
+                                    .map((legion: I_Legion, index: number) =>
+                                        legionsDuelStatus[index] ? (
+                                            <OrgMenuItem value={index} key={index}>
+                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                            </OrgMenuItem>
+                                        ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
+                                            <GreenMenuItem value={index} key={index}>
+                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                            </GreenMenuItem>
+                                        ) : <RedMenuItem value={index} key={index}>
+                                            {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                        </RedMenuItem>
+                                    )}
+                            </Select>
+                        </FormControl>
+                        </Grid>
+                        : <></>
+                }
+
                 <Grid item xs={12} md={6} lg={3}>
                     <DuelLeftTimeSort />
                 </Grid>

@@ -24,6 +24,7 @@ import { joinDuel, getBLSTAmount } from "../../web3hooks/contractFunctions";
 import { toast } from "react-toastify";
 import { getAllDuelsAct } from "../../helpers/duel";
 import { confirmUnclaimedWallet } from "../../helpers/duel";
+import { FaTimes } from "react-icons/fa";
 
 
 const PriceTextField = styled(TextField)({
@@ -123,7 +124,28 @@ const JoinDuelModal: React.FC = () => {
 
     return (
         <Dialog open={joinDuelModalOpen.valueOf()} onClose={handleClose}>
-            <DialogTitle>Join Duel</DialogTitle>
+            <DialogTitle sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItem: "center",
+                justifyContent: "space-between"
+            }}>
+                <Typography 
+                variant="h4"
+                sx={{
+                    fontWeight: "bold"
+                }}
+                >
+                    Join Duel
+                </Typography>
+                <FaTimes 
+                    style={{
+                        cursor: "pointer",
+                        fontSize: "1.8em",
+                    }}
+                    onClick={handleClose}
+                />
+            </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly {leftTime} hours from now?</Typography>
                 <Box
@@ -133,7 +155,7 @@ const JoinDuelModal: React.FC = () => {
                         fontWeight: "bold",
                     }}
                 >
-                    <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "orange", textDecoration: "none" }}>Check Price Now</a>
+                    <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>Check $CRYPTO Price Now</a>
                 </Box>
                 <Box>
                     <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>

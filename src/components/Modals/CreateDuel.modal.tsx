@@ -155,7 +155,13 @@ const CreateDuelModal: React.FC = () => {
 
     useEffect(() => {
         getBalance()
-    }, [allLegions]);
+        divisions.map((division: I_Division, index: Number) => {
+            if (allLegions[0].attackPower >= division.minAP && allLegions[0].attackPower < division.maxAP) {
+                setDivisionIndex(index.valueOf());
+            }
+        });
+        setEstimatePrice(0);
+    }, [allLegions, createDuelModalOpen]);
 
     const handleSubmit = async () => {
         confirmUnclaimedWallet(40);

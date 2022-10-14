@@ -178,9 +178,11 @@ const NavList: React.FC = () => {
                       />
                       <ListItemText
                         primary={
-                          <LanguageTranslate
-                            translateKey={navItem.title as string}
-                          />
+                          navItem.title == "duels"
+                            ? "Duels"
+                            : <LanguageTranslate
+                              translateKey={navItem.title as string}
+                            />
                         }
                       />
                     </ListItemButton>

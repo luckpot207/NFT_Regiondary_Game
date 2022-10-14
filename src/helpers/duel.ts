@@ -68,9 +68,16 @@ export const getAllDuelsAct = async (
           Number(allDuelsRes[i].startTime) * 1000 + 6 * 3600 * 1000
         ).toISOString();
       } else {
-        endDateTime = new Date(
+        const endDateTimeTemp = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000
-        ).toDateString();
+        );
+        endDateTime =
+          endDateTimeTemp.toDateString() +
+          " at " +
+          endDateTimeTemp.getUTCHours() +
+          ":" +
+          endDateTimeTemp.getUTCMinutes() +
+          " UTC";
       }
       var duelTemp: I_Duel = {
         duelId: i.toString(),

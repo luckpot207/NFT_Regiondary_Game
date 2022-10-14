@@ -207,6 +207,7 @@ const CreateDuelModal: React.FC = () => {
                 <FaTimes 
                     style={{
                         cursor: "pointer",
+                        fontSize: "1.8em",
                     }}
                     onClick={handleClose}
                 />

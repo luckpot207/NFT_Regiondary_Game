@@ -50,6 +50,7 @@ const JoinDuelModal: React.FC = () => {
         endDateJoinDuel,
         currentDuelId,
         allDuels,
+        BLSTToUSD,
     } = AppSelector(gameState);
     // Account & Web3
     const { account } = useWeb3React();
@@ -148,6 +149,7 @@ const JoinDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly {leftTime} hours from now?</Typography>
+                <Typography>Currently 1 $CRYPTO = ${BLSTToUSD}</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -155,7 +157,7 @@ const JoinDuelModal: React.FC = () => {
                         fontWeight: "bold",
                     }}
                 >
-                    <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>Check $CRYPTO Price Now</a>
+                    <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>See Price Chart</a>
                 </Box>
                 <Box>
                     <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>

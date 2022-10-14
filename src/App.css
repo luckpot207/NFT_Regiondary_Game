@@ -42,3 +42,7 @@
 .swal2-container {
   z-index: 9999 !important;
 }
+
+.border-blue {
+  border: 6px #3baaf5 solid !important;
+}

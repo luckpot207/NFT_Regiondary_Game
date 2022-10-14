@@ -260,7 +260,7 @@ const Duel: React.FC = () => {
                 </Grid>
             </Grid>
             <Grid container spacing={1} sx={{ mb: 2 }}>
-                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Grid item xs={12} md={4} className={duelStatus == 1 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Card className="bg-c5 info-card" sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -275,7 +275,7 @@ const Duel: React.FC = () => {
                     </Card>
 
                 </Grid>
-                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Grid item xs={12} md={4} className={duelStatus == 2 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Card className="bg-c5 info-card" sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -286,7 +286,7 @@ const Duel: React.FC = () => {
                         <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Grid item xs={12} md={4} className={duelStatus == 3 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Card className="bg-c5 info-card" sx={{
                         display: "flex",
                         flexDirection: "column",

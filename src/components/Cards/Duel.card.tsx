@@ -196,35 +196,32 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             </Typography>
 
                         </Box>
-                        {
-                            duel.isMine
-                                ? <Typography
-                                    variant="subtitle2"
-                                    sx={{
-                                        position: "absolute",
-                                        bottom: "8px",
-                                        left: "20px",
-                                        fontWeight: "bold",
-                                        fontSize: "1.4rem",
-                                        textShadow:
-                                            "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
-                                    }}
-                                >
-                                    ${duel.betPrice}
-                                </Typography>
-                                : <Typography
-                                    variant="subtitle2"
-                                    sx={{
-                                        position: "absolute",
-                                        bottom: "8px",
-                                        left: "20px",
-                                        color: "darkgrey",
-                                    }}
-                                >
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                position: "absolute",
+                                bottom: "8px",
+                                right: "20px",
+                                fontWeight: "bold",
+                                fontSize: "1.4rem",
+                                textShadow:
+                                    "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
+                            }}
+                        >
+                            ${duel.betPrice}
+                        </Typography>
+                        <Typography
+                            variant="subtitle2"
+                            sx={{
+                                position: "absolute",
+                                bottom: "8px",
+                                left: "20px",
+                                color: "darkgrey",
+                            }}
+                        >
 
-                                    #{duel.creatorLegion.id}
-                                </Typography>
-                        }
+                            #{duel.creatorLegion.id}
+                        </Typography>
                         {
                             !duel.isMine
                                 ? <Typography
@@ -248,14 +245,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 : <img
                                     style={{
                                         position: "absolute",
-                                        bottom: "20px",
-                                        right: "20px",
+                                        bottom: "40px",
+                                        left: "20px",
                                         width: "2rem",
                                         cursor: "pointer",
                                         filter: "box-shadow(0px 0px 100px #fff)"
                                     }}
                                     onClick={handleDeleteBtnClick}
-                                    // src="/assets/images/execute.png"
                                     src="/assets/images/deleteBtn.png"
                                 ></img>
                         }

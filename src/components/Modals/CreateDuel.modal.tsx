@@ -154,14 +154,14 @@ const CreateDuelModal: React.FC = () => {
     }
 
     useEffect(() => {
-        getBalance()
-        divisions.map((division: I_Division, index: Number) => {
-            if (allLegions[0].attackPower >= division.minAP && allLegions[0].attackPower < division.maxAP) {
-                setDivisionIndex(index.valueOf());
-            }
-        });
         setEstimatePrice(0);
         if (allLegions.length != 0) {
+            getBalance()
+            divisions.map((division: I_Division, index: Number) => {
+                if (allLegions[0].attackPower >= division.minAP && allLegions[0].attackPower < division.maxAP) {
+                    setDivisionIndex(index.valueOf());
+                }
+            });
             setCurrentLegionIndex(0);
         }
     }, [allLegions, createDuelModalOpen]);
@@ -183,7 +183,7 @@ const CreateDuelModal: React.FC = () => {
             dispatch(updateState({ createDuelModalOpen: false }));
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
-            console.log(error);
+            toast.error("Network issue.")
         }
     }
 

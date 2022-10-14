@@ -416,7 +416,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             }}>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.4em",
+                                        fontSize: "3em",
                                         fontWeight: "bold",
                                         color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
@@ -427,13 +427,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 <img
                                     src="/assets/images/vs.png"
                                     style={{
-                                        width: "80px",
+                                        width: "180px",
                                     }}
                                     alt="VS"
                                 />
                                 <Typography
                                     sx={{
-                                        fontSize: "1.4em",
+                                        fontSize: "3em",
                                         fontWeight: "bold",
                                         color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
@@ -484,7 +484,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             border: "2px #00d0ff solid",
                             padding: "4px",
                             display: 'flex',
-                            flexDirection: 'row',
+                            flexDirection: 'column',
                             position: 'relative',
                         }}>
                             <Card sx={{ position: 'relative' }}>
@@ -603,7 +603,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                     #{duel.joinerLegion.id}
                                 </Typography>
                             </Card>
-                            <Box sx={{
+                            {/* <Box sx={{
                                 width: "100%",
                                 height: "100%",
                                 paddingLeft: "20%",
@@ -618,7 +618,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                             }}>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.4em",
+                                        fontSize: "3rem",
                                         fontWeight: "bold",
                                         color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
@@ -626,32 +626,9 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 >
                                     ${duel.creatorEstmatePrice}
                                 </Typography>
-                                <Box sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    flexDirection: "column",
-                                }}>
-                                    <img
-                                        src="/assets/images/vs.png"
-                                        style={{
-                                            width: "80px",
-                                        }}
-                                        alt="VS"
-                                    />
-                                    <Typography
-                                        sx={{
-                                            fontSize: "1.2em !important",
-                                            color: "#3afcff",
-                                            WebkitTextStroke: "0.2px white",
-                                        }}
-                                    >
-                                        BLST price was ${duel.result}
-                                    </Typography>
-
-                                </Box>
                                 <Typography
                                     sx={{
-                                        fontSize: "1.4em",
+                                        fontSize: "3rem",
                                         fontWeight: "bold",
                                         color: "#0df8f9",
                                         WebkitTextStroke: "1px black",
@@ -659,7 +636,47 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                                 >
                                     ${duel.joinerEstmatePrice}
                                 </Typography>
+                            </Box> */}
+                            <Box
+                                sx={{
+                                    width: "30%",
+                                    position: "absolute",
+                                    top: "7%",
+                                    left: "40%"
+                                }}
+                            >
+                                <img
+                                    src="/assets/images/vs.png"
+                                    style={{
+                                        width: "70%"
+                                    }}
+                                    alt="VS"
+                                />
                             </Box>
+
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    flexDirection: "column",
+                                    width: "40%",
+                                    position: "absolute",
+                                    bottom: "15%",
+                                    left: "30%"
+                                }}
+                            >
+                                <Typography
+                                    sx={{
+                                        fontSize: "1.2em !important",
+                                        color: "#3afcff",
+                                        WebkitTextStroke: "0.2px white",
+                                    }}
+                                >
+                                    BLST price was ${duel.result}
+                                </Typography>
+                            </Box>
+
+
                             <Box
                                 sx={{
                                     display: "flex",

@@ -271,7 +271,7 @@ const Duel: React.FC = () => {
                         <Typography>Time Until Your Next Duel Results: {leftTimeForNextDuelResult}</Typography>
                         <Typography mb={1}>Your Past Duels: {formatNumber(pastDuels)}</Typography>
                         <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
-                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
+                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duels</FireBtn></Box>
                     </Card>
 
                 </Grid>
@@ -302,36 +302,6 @@ const Duel: React.FC = () => {
                 <Grid item xs={12} md={6} lg={3}>
                     <DuelLegionAPFilter />
                 </Grid>
-
-                {
-                    duelStatus == 1
-                        ?
-                        <Grid item xs={12} md={6} lg={2}> <FormControl>
-                            <Select
-                                id="hunt-legion-select"
-                                value={currentLegionIndex.toString()}
-                                onChange={handleSelectLegion}
-                            >
-                                {allLegions
-                                    .map((legion: I_Legion, index: number) =>
-                                        legionsDuelStatus[index] ? (
-                                            <OrgMenuItem value={index} key={index}>
-                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                            </OrgMenuItem>
-                                        ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
-                                            <GreenMenuItem value={index} key={index}>
-                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                            </GreenMenuItem>
-                                        ) : <RedMenuItem value={index} key={index}>
-                                            {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                        </RedMenuItem>
-                                    )}
-                            </Select>
-                        </FormControl>
-                        </Grid>
-                        : <></>
-                }
-
                 <Grid item xs={12} md={6} lg={3}>
                     <DuelLeftTimeSort />
                 </Grid>

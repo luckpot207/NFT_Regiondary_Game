@@ -441,10 +441,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
-                width: "40%",
+                width: "100%",
                 position: "absolute",
                 bottom: "20%",
-                left: "30%",
+                left: "0%",
               }}
             >
               <Typography

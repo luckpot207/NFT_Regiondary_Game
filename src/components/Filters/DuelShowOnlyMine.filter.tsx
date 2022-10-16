@@ -19,7 +19,7 @@ const DuelShowOnlyMineFilter: React.FC = () => {
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
+      <Typography>
         <LanguageTranslate translateKey="showonlymine" />:
       </Typography>
       <Checkbox checked={duelShowOnlyMine.valueOf()} onChange={handleFilter} />

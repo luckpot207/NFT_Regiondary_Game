@@ -215,7 +215,7 @@ const CreateDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100}</Typography>
+                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100} BUSD</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -266,25 +266,22 @@ const CreateDuelModal: React.FC = () => {
                                     <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>
                                     <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
                                     <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8}</Typography>
-                                    <Grid container mb={1} spacing={1}>
-                                        <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
-                                        <Grid item xs={6} sm={4} md={4} lg={2}>
+
+                                    <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                    <Grid container mb={1} spacing={1} >
+                                        <Grid item xs={12} sm={5} md={5} lg={5} sx={{fontWeight: "bold"}}>I think 1 $BLST will be = </Grid>
+                                        <Grid item xs={6} sm={2} md={2} lg={2}>
                                             <PriceTextField
                                                 id="outlined-number"
                                                 variant="standard"
-                                                // InputLabelProps={{
-                                                //     shrink: true,
-                                                // }}
                                                 type="number"
                                                 value={estimatePrice}
                                                 onChange={handleChangeEstimatePrice}
                                                 sx={{ padding: "0 !important" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
+                                        <Grid item xs={6} sm={2} md={2} lg={1} sx={{fontWeight: "bold"}}>BUSD</Grid>
                                     </Grid>
-
-                                    <Typography mb={1}>To Create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                                     <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                                         <FireBtn
                                             sx={{ width: "100px" }}

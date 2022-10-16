@@ -97,7 +97,7 @@ const JoinDuelModal: React.FC = () => {
     const [endDateJoinDuel, setEndDateJoinDuel] = useState<string>("");
     const [leftTime, setLeftTime] = useState<string>("");
     const [joinLeftTime, setJoinLeftTime] = useState<string>("");
-    const [duelType, setDuelType] = useState<boolean>(true);
+    const [duelType, setDuelType] = useState<number>(1);
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
 
@@ -249,16 +249,20 @@ const JoinDuelModal: React.FC = () => {
                     </Grid>
                 </Grid>
                 {
-                    !legionsDuelStatus[currentLegionIndex]
+                    !legionsDuelStatus[currentLegionIndex] && allLegions.length != 0
                         ? divisionIndex == currentDuelDivisionIndex
                             ? <Box>
                                 <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
                                 <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}</Typography>
                                 <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
                                 <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}</Typography>
-                                <Grid container mb={1} spacing={1}>
-                                    <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
-                                    <Grid item xs={6} sm={4} md={4} lg={2}>
+                                
+                                <Typography mb={1}>To join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                
+                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
+                                <Grid container mb={1} spacing={1} sx={{fontWeight: "bold"}}>
+                                    <Grid item xs={12} sm={5} md={5} lg={5}>I think 1 $BLST will be = </Grid>
+                                    <Grid item xs={6} sm={2} md={2} lg={2}>
                                         <PriceTextField
                                             id="outlined-number"
                                             variant="standard"
@@ -270,8 +274,6 @@ const JoinDuelModal: React.FC = () => {
                                     </Grid>
                                     <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
                                 </Grid>
-                                <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
                                 <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Join</FireBtn></Box>
                             </Box>
                             : <Box><Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography></Box>

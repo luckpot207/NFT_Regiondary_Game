@@ -154,7 +154,7 @@ export interface I_Duel {
   creatorEstmatePrice: Number;
   joinerLegion: I_Legion;
   joinerEstmatePrice: Number;
-  type: Boolean;
+  type: Number;
   status: Number;
   endDateTime: String;
   betPrice: Number;
@@ -373,7 +373,7 @@ export interface I_ReduxState {
   duelResultFilterStartConst: Number;
   duelResultFilterEndConst: Number;
   duelShowOnlyMine: Boolean;
-  duelType: Boolean;
+  duelType: Number;
   // 
   sortAP: Number;
   sortPrice: Number;

@@ -8,12 +8,12 @@ import LanguageTranslate from "../UI/LanguageTranslate";
 const DuelTypeSort: React.FC = () => {
       const dispatch = useDispatch();
       const { duelType } = AppSelector(gameState);
-    const handleSort = (val: Boolean) => {
+    const handleSort = (val: Number) => {
         dispatch(updateState({ duelType: val, currentPage: 1 }));
     };
 
       useEffect(() => {
-        dispatch(updateState({ duelType: true }));
+        dispatch(updateState({ duelType: 0 }));
       }, []);
 
     return (
@@ -23,14 +23,20 @@ const DuelTypeSort: React.FC = () => {
             </Typography>
             <ButtonGroup>
                 <Button
-                    variant={duelType === true ? "contained" : "outlined"}
-                    onClick={() => handleSort(true)}
+                    variant={duelType === 0 ? "contained" : "outlined"}
+                    onClick={() => handleSort(0)}
+                >
+                    All
+                </Button>
+                <Button
+                    variant={duelType === 1 ? "contained" : "outlined"}
+                    onClick={() => handleSort(1)}
                 >
                     Standard
                 </Button>
                 <Button
-                    variant={duelType === false ? "contained" : "outlined"}
-                    onClick={() => handleSort(false)}
+                    variant={duelType === 2 ? "contained" : "outlined"}
+                    onClick={() => handleSort(2)}
                 >
                     All-In
                 </Button>

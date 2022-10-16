@@ -6,6 +6,9 @@ import {
     DialogContent,
     Typography,
     InputBase,
+    FormControl,
+    Select,
+    SelectChangeEvent,
 } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import React, { useState, useEffect } from "react";
@@ -25,7 +28,34 @@ import { toast } from "react-toastify";
 import { getAllDuelsAct } from "../../helpers/duel";
 import { confirmUnclaimedWallet } from "../../helpers/duel";
 import { FaTimes } from "react-icons/fa";
+import OrgMenuItem from "../../components/UI/OrgMenuItem";
+import GreenMenuItem from "../../components/UI/GreenMenuItem";
+import RedMenuItem from "../../components/UI/RedMenuItem";
+import { I_Legion, I_Division } from "../../interfaces";
+import { doingDuels } from "../../web3hooks/contractFunctions";
 
+
+const LegionSelectInput = styled(InputBase)(({ theme }) => ({
+    '.MuiSelect-select': {
+        paddingBottom: "5px",
+        textAlign: "right",
+        border: '1px solid #ced4da',
+    },
+    '& .MuiInputBase-input': {
+        borderRadius: 4,
+        position: 'relative',
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        paddingLeft: 10,
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        // Use the system font instead of the default Roboto font.
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        }
+    }
+}));
 
 const PriceTextField = styled(TextField)({
     "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -47,7 +77,7 @@ const JoinDuelModal: React.FC = () => {
         joinDuelModalOpen,
         currentLegionIndexForDuel,
         divisions,
-        endDateJoinDuel,
+        // endDateJoinDuel,
         currentDuelId,
         allDuels,
         BLSTToUSD,
@@ -61,12 +91,26 @@ const JoinDuelModal: React.FC = () => {
     const duelContract = useDuelSystem();
     const legionContract = useLegion();
 
-    const [estimatePrice, setEstimatePrice] = useState(0);
-    const [divisionIndex, setDivisionIndex] = useState(0);
-    const [leftTime, setLeftTime] = useState("");
-    const [joinLeftTime, setJoinLeftTime] = useState("");
-    const [duelType, setDuelType] = useState(true);
+    const [estimatePrice, setEstimatePrice] = useState<number>(0);
+    const [divisionIndex, setDivisionIndex] = useState<number>(0);
+    const [currentDuelDivisionIndex, setCurrentDuelDivisionIndex] = useState<number>(0);
+    const [endDateJoinDuel, setEndDateJoinDuel] = useState<string>("");
+    const [leftTime, setLeftTime] = useState<string>("");
+    const [joinLeftTime, setJoinLeftTime] = useState<string>("");
+    const [duelType, setDuelType] = useState<boolean>(true);
+    const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
+    const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
 
+
+    const getBalance = async () => {
+        var legionsDueStatusTemp: boolean[] = [];
+        for (let i = 0; i < allLegions.length; i++) {
+            const legion = allLegions[i];
+            const res = await doingDuels(duelContract, legion.id)
+            legionsDueStatusTemp.push(res);
+        }
+        setLegionsDuelStatus(legionsDueStatusTemp)
+    }
 
     useEffect(() => {
         const leftTimer = setInterval(() => {
@@ -91,12 +135,12 @@ const JoinDuelModal: React.FC = () => {
 
     const handleJoinDuel = async () => {
         if (duelType && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
-            const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice) ;
+            const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
         }
         try {
-            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf()* (10 ** 18));
+            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
@@ -106,22 +150,37 @@ const JoinDuelModal: React.FC = () => {
         }
     }
 
-    useEffect(() => {
-        if (allLegions.length != 0) {
-            divisions.forEach((division, index) => {
-                if (allLegions[currentLegionIndexForDuel.valueOf()].attackPower >= division.minAP && allLegions[currentLegionIndexForDuel.valueOf()].attackPower < division.maxAP) {
-                    setDivisionIndex(index);
-                }
-            });
-        }
+    const handleSelectLegion = (e: SelectChangeEvent) => {
+        const legionIndex = parseInt(e.target.value);
+        setCurrentLegionIndex(legionIndex);
+        setDivisionIndex(-1);
+        divisions.forEach((division: I_Division, index: Number) => {
+            if (allLegions[legionIndex].attackPower >= division.minAP && allLegions[legionIndex].attackPower < division.maxAP) {
+                setDivisionIndex(index.valueOf());
+            }
+        });
+    };
 
+    useEffect(() => {
+        getBalance();
         allDuels.forEach((duel, index) => {
             if (duel.duelId == currentDuelId) {
                 setDuelType(duel.type.valueOf());
+                setEndDateJoinDuel(duel.endDateTime.valueOf());
+                divisions.forEach((division, index) => {
+                    if (duel.creatorLegion.attackPower >= division.minAP && duel.creatorLegion.attackPower < division.maxAP) {
+                        setCurrentDuelDivisionIndex(index);
+                        setEstimatePrice(0);
+                        setCurrentLegionIndex(0);
+                    }
+                    if (allLegions[0].attackPower >= division.minAP && allLegions[0].attackPower < division.maxAP) {
+                        setDivisionIndex(index);
+                    }
+                });
             }
         });
 
-    }, [currentLegionIndexForDuel, currentDuelId])
+    }, [joinDuelModalOpen, allLegions])
 
     return (
         <Dialog open={joinDuelModalOpen.valueOf()} onClose={handleClose}>
@@ -131,15 +190,15 @@ const JoinDuelModal: React.FC = () => {
                 alignItem: "center",
                 justifyContent: "space-between"
             }}>
-                <Typography 
-                variant="h4"
-                sx={{
-                    fontWeight: "bold"
-                }}
+                <Typography
+                    variant="h4"
+                    sx={{
+                        fontWeight: "bold"
+                    }}
                 >
                     Join Duel
                 </Typography>
-                <FaTimes 
+                <FaTimes
                     style={{
                         cursor: "pointer",
                         fontSize: "1.8em",
@@ -149,7 +208,7 @@ const JoinDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly {leftTime} hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${BLSTToUSD}</Typography>
+                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100}</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -159,29 +218,66 @@ const JoinDuelModal: React.FC = () => {
                 >
                     <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>See Price Chart</a>
                 </Box>
-                <Box>
-                    <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                    <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>
-                    <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
-                    <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8}</Typography>
-                    <Grid container mb={1} spacing={1}>
-                        <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
-                        <Grid item xs={6} sm={4} md={4} lg={2}>
-                            <PriceTextField
-                                id="outlined-number"
-                                variant="standard"
-                                type="number"
-                                value={estimatePrice}
-                                onChange={handleChangeEstimatePrice}
-                                sx={{ padding: "0 !important" }}
-                            />
-                        </Grid>
-                        <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6} md={4} lg={4}>Select your Legion :</Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6} >
+                        <FormControl>
+                            <Select
+                                id="hunt-legion-select"
+                                value={currentLegionIndex.toString()}
+                                onChange={handleSelectLegion}
+                                input={<LegionSelectInput />}
+                            >
+                                {
+                                    allLegions.length != 0
+                                        ? allLegions.map((legion: I_Legion, index: number) =>
+                                            legionsDuelStatus[index] ? (
+                                                <OrgMenuItem value={index} key={index}>
+                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                </OrgMenuItem>
+                                            ) : legion.attackPower >= divisions[currentDuelDivisionIndex].minAP && legion.attackPower < divisions[currentDuelDivisionIndex].maxAP ? (
+                                                <GreenMenuItem value={index} key={index}>
+                                                    {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                                </GreenMenuItem>
+                                            ) : <RedMenuItem value={index} key={index}>
+                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                                            </RedMenuItem>
+
+                                        ) : <></>}
+                            </Select>
+                        </FormControl>
                     </Grid>
-                    <Typography mb={1}>To Join this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                    <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Bet</FireBtn></Box>
-                </Box>
+                </Grid>
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                        ? divisionIndex == currentDuelDivisionIndex
+                            ? <Box>
+                                <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
+                                <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}</Typography>
+                                <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
+                                <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}</Typography>
+                                <Grid container mb={1} spacing={1}>
+                                    <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
+                                    <Grid item xs={6} sm={4} md={4} lg={2}>
+                                        <PriceTextField
+                                            id="outlined-number"
+                                            variant="standard"
+                                            type="number"
+                                            value={estimatePrice}
+                                            onChange={handleChangeEstimatePrice}
+                                            sx={{ padding: "0 !important" }}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
+                                </Grid>
+                                <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
+                                <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Join</FireBtn></Box>
+                            </Box>
+                            : <Box><Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography></Box>
+                        : <Box mt={2} mb={2}>You can't join with this legion.</Box>
+                }
+
             </DialogContent>
         </Dialog>
     );

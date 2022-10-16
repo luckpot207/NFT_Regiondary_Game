@@ -83,8 +83,11 @@ const Duel: React.FC = () => {
   const [pastDuels, setPastDuels] = useState<number>(0);
   const [totalPastDuels, setTotalPastDuels] = useState<number>(0);
   const [totalOngoingDuels, setTotalOngoingDuels] = useState<number>(0);
-  const [nextDuelResultDateTime, setNextDuelResultDateTime] = useState<string>("");
-  const [leftTimeForNextDuelResult, setLeftTimeForNextDuelResult] = useState<string>("");
+  const [nextDuelResultDateTime, setNextDuelResultDateTime] =
+    useState<string>("");
+  const [leftTimeForNextDuelResult, setLeftTimeForNextDuelResult] =
+    useState<string>("");
+
 
   const handleDuelSort = (val: Number) => {
     dispatch(updateState({ duelStatus: val }));
@@ -98,33 +101,40 @@ const Duel: React.FC = () => {
 
   const showCreateDuelModal = () => {
     dispatch(updateState({ createDuelModalOpen: true }));
-  }
+  };
+
 
   const getBalance = async () => {
     getAllDuelsAct(dispatch, account, duelContract, legionContract);
     var legionsDueStatusTemp: boolean[] = [];
     for (let i = 0; i < allLegions.length; i++) {
       const legion = allLegions[i];
-      const res = await doingDuels(duelContract, legion.id)
+      const res = await doingDuels(duelContract, legion.id);
       legionsDueStatusTemp.push(res);
     }
     setLegionsDuelStatus(legionsDueStatusTemp);
-
-  }
-
+  };
   useEffect(() => {
     const leftTimer = setInterval(() => {
       if (nextDuelResultDateTime == "") {
         setLeftTimeForNextDuelResult("");
       } else {
-        const timeDifference = (new Date(nextDuelResultDateTime.valueOf()).getTime() - new Date().getTime());
-        const leftTimeStr = "" + Math.floor(timeDifference / (60 * 60 * 1000)) + "h " + Math.floor(timeDifference % (60 * 60 * 1000) / (60 * 1000)) + "m " + Math.floor(timeDifference % (60 * 1000) / (1000)) + "s";
-        setLeftTimeForNextDuelResult(leftTimeStr)
+        const timeDifference =
+          new Date(nextDuelResultDateTime.valueOf()).getTime() -
+          new Date().getTime();
+        const leftTimeStr =
+          "" +
+          Math.floor(timeDifference / (60 * 60 * 1000)) +
+          "h " +
+          Math.floor((timeDifference % (60 * 60 * 1000)) / (60 * 1000)) +
+          "m " +
+          Math.floor((timeDifference % (60 * 1000)) / 1000) +
+          "s";
+        setLeftTimeForNextDuelResult(leftTimeStr);
       }
-
     }, 1000);
     return () => clearInterval(leftTimer);
-  }, [nextDuelResultDateTime, leftTimeForNextDuelResult])
+  }, [nextDuelResultDateTime, leftTimeForNextDuelResult]);
 
   useEffect(() => {
     getBalance();
@@ -133,18 +143,26 @@ const Duel: React.FC = () => {
   const getOwnDuelStatus = async () => {
     try {
       let endDate: string = "";
-      const currentInvitationsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 1);
-      const ongoingDuelsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 2);
-      const pastDuelsTemp = allDuels.filter((duel) => duel.isMine && duel.status == 3);
+      const currentInvitationsTemp = allDuels.filter(
+        (duel) => duel.isMine && duel.status == 1
+      );
+      const ongoingDuelsTemp = allDuels.filter(
+        (duel) => duel.isMine && duel.status == 2
+      );
+      const pastDuelsTemp = allDuels.filter(
+        (duel) => duel.isMine && duel.status == 3
+      );
       const totalPastDuelsTemp = allDuels.filter((duel) => duel.status == 3);
-      const totalOngoingDuelsTemp = allDuels.filter((duel) => duel.status == 2)
-
+      const totalOngoingDuelsTemp = allDuels.filter((duel) => duel.status == 2);
       ongoingDuelsTemp.forEach((duel) => {
         if (duel.status != 0) {
           if (endDate == "") {
             endDate = duel.endDateTime.valueOf();
           } else {
-            if (new Date(endDate).getTime() > new Date(duel.endDateTime.valueOf()).valueOf()) {
+            if (
+              new Date(endDate).getTime() >
+              new Date(duel.endDateTime.valueOf()).valueOf()
+            ) {
               endDate = duel.endDateTime.valueOf();
             }
           }
@@ -160,57 +178,71 @@ const Duel: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
+
   useEffect(() => {
     if (allDuels.length != 0) {
       getOwnDuelStatus();
     }
   }, [allDuels]);
-
-  const APFilterVal = allDuels.filter(
-    (duel: I_Duel) => {
-      return duel.status != 3
-        ? duel.creatorLegion.attackPower >= duelLegionFilterMinAP.valueOf() * 1000 && (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP ? true
-          : duel.creatorLegion.attackPower <= duelLegionFilterMaxAP.valueOf() * 1000)
-        : true
-    }
-  );
+  const APFilterVal = allDuels.filter((duel: I_Duel) => {
+    return duel.status != 3
+      ? duel.creatorLegion.attackPower >=
+      duelLegionFilterMinAP.valueOf() * 1000 &&
+      (duelLegionFilterMaxAP === duelLegionFilterMaxConstAP
+        ? true
+        : duel.creatorLegion.attackPower <=
+        duelLegionFilterMaxAP.valueOf() * 1000)
+      : true;
+  });
 
   const StatusFilterVal = APFilterVal.filter(
     (duel: I_Duel) => duel.status == duelStatus
   );
-
-  const TimeFilterVal = StatusFilterVal.filter(
-    (duel: I_Duel) => {
-      if (duelStatus == 0) {
-        const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
-        return timeLeft >= duelJoinLeftMinTime.valueOf() &&
-          (duelJoinLeftMaxTime === duelJoinLeftMaxConstTime
-            ? true
-            : timeLeft <= duelJoinLeftMaxTime.valueOf())
-      } else if (duelStatus == 1) {
-        const timeLeft: Number = (new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime()) / (60 * 1000);
-        return timeLeft >= duelLeftMinTime.valueOf() &&
-          (duelLeftMaxTime === duelLeftMaxConstTime
-            ? true
-            : timeLeft <= duelLeftMaxTime.valueOf())
-      } else {
-        const daysAgo: Number = (new Date().getTime() - new Date(duel.endDateTime.valueOf()).getTime()) / (24 * 60 * 60 * 1000);
-        return daysAgo >= duelResultFilterStart.valueOf() &&
-          (duelResultFilterEnd === duelResultFilterEndConst
-            ? true
-            : daysAgo <= duelResultFilterEnd.valueOf())
-      }
+  const TimeFilterVal = StatusFilterVal.filter((duel: I_Duel) => {
+    if (duelStatus == 0) {
+      const timeLeft: Number =
+        (new Date(duel.endDateTime.valueOf()).getTime() -
+          new Date().getTime()) /
+        (60 * 1000);
+      return (
+        timeLeft >= duelJoinLeftMinTime.valueOf() &&
+        (duelJoinLeftMaxTime === duelJoinLeftMaxConstTime
+          ? true
+          : timeLeft <= duelJoinLeftMaxTime.valueOf())
+      );
+    } else if (duelStatus == 1) {
+      const timeLeft: Number =
+        (new Date(duel.endDateTime.valueOf()).getTime() -
+          new Date().getTime()) /
+        (60 * 1000);
+      return (
+        timeLeft >= duelLeftMinTime.valueOf() &&
+        (duelLeftMaxTime === duelLeftMaxConstTime
+          ? true
+          : timeLeft <= duelLeftMaxTime.valueOf())
+      );
+    } else {
+      const daysAgo: Number =
+        (new Date().getTime() -
+          new Date(duel.endDateTime.valueOf()).getTime()) /
+        (24 * 60 * 60 * 1000);
+      return (
+        daysAgo >= duelResultFilterStart.valueOf() &&
+        (duelResultFilterEnd === duelResultFilterEndConst
+          ? true
+          : daysAgo <= duelResultFilterEnd.valueOf())
+      );
     }
-  );
+  });
 
-  const OnlyMineFilterVal = StatusFilterVal.filter(
-    (duel: I_Duel) => duelShowOnlyMine ? duel.isMine : true
-  )
+  const OnlyMineFilterVal = StatusFilterVal.filter((duel: I_Duel) =>
+    duelShowOnlyMine ? duel.isMine : true
+  );
 
   const DuelTypeFilterVal = OnlyMineFilterVal.filter(
     (duel: I_Duel) => duel.type == duelType
-  )
+  );
 
   return (
     <Box>

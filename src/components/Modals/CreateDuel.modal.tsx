@@ -256,7 +256,6 @@ const CreateDuelModal: React.FC = () => {
                         </FormControl>
                     </Grid>
                 </Grid>
-
                 {
                     allLegions.length != 0
                         ? legionsDuelStatus[currentLegionIndex]

@@ -241,7 +241,7 @@ const Duel: React.FC = () => {
   );
 
   const DuelTypeFilterVal = OnlyMineFilterVal.filter(
-    (duel: I_Duel) => duel.type == duelType
+    (duel: I_Duel) => duelType == 0 ? true : duel.type == duelType
   );
 
   return (
@@ -276,12 +276,12 @@ const Duel: React.FC = () => {
                 </NavLink>
               </Box>
               : <Grid container spacing={2}>
-                <Grid item xs={6} sm={6} md={4}>
+                <Grid item xs={12} sm={12} md={12}>
                   <Typography
                     variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
                   >
                     {duelStatus == 1
-                      ? "Duels"
+                      ? "Available Dules when I am on this page"
                       : duelStatus == 2 ? "Ongoing Duels"
                         : "Duel Results"}
                   </Typography>
@@ -292,85 +292,66 @@ const Duel: React.FC = () => {
         </Grid>
       </Grid>
       <Grid container spacing={1} sx={{ mb: 2 }}>
-        <Grid item xs={12} md={4} className={duelStatus == 1 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Card className="bg-c5 info-card" sx={{
+        <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+          <Card 
+          className={duelStatus == 1 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+          onClick={() => handleDuelSort(1)}
+          sx={{
             display: "flex",
             flexDirection: "column",
             width: "100%",
           }}>
-            <Typography>Your Current Invitations: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(currentInvitations)}</span></Typography>
-            <Typography>Your Ongoing Duels: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(ongoingDuels)}</span></Typography>
-            <Typography>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: "+leftTimeForNextDuelResult}</Typography>
-            <Typography mb={1}>Your Past Duels: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(pastDuels)}</span></Typography>
+            <Typography sx={{fontWeight: "bold"}}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
+            <Typography sx={{fontWeight: "bold"}} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
+            <Typography sx={{fontWeight: "bold"}}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
+            <Typography mb={1} sx={{fontWeight: "bold"}}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
           </Card>
 
         </Grid>
-        <Grid item xs={12} md={4} className={duelStatus == 2 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Card className="bg-c5 info-card" sx={{
+        <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+          <Card 
+          className={duelStatus == 2 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+          onClick={() => handleDuelSort(2)}
+          sx={{
             display: "flex",
             flexDirection: "column",
             width: "100%",
           }}>
-            <Typography mb={2}>Total Ongoing Duels</Typography>
-            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(totalOngoingDuels)}</span></Typography>
+            <Typography sx={{fontWeight: "bold"}}>Total Ongoing Duels</Typography>
+            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4} className={duelStatus == 3 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Card className="bg-c5 info-card" sx={{
+        <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
+          <Card 
+          className={duelStatus == 3 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+          onClick={() => handleDuelSort(3)}
+          sx={{
             display: "flex",
             flexDirection: "column",
             width: "100%",
           }}>
-            <Typography mb={2}>Total Past Duels</Typography>
-            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(totalPastDuels)}</span></Typography>
+            <Typography sx={{fontWeight: "bold"}}>Total Past Duels</Typography>
+            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
           </Card>
         </Grid>
       </Grid>
       <Grid container spacing={3} mb={3}>
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12} md={5} lg={2}>
           <DuelLegionAPFilter />
         </Grid>
-
-        {
-          duelStatus == 1
-            ?
-            <Grid item xs={12} md={6} lg={2}> <FormControl>
-              <Select
-                id="hunt-legion-select"
-                value={currentLegionIndex.toString()}
-                onChange={handleSelectLegion}
-              >
-                {allLegions
-                  .map((legion: I_Legion, index: number) =>
-                    legionsDuelStatus[index] ? (
-                      <OrgMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                      </OrgMenuItem>
-                    ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
-                      <GreenMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                      </GreenMenuItem>
-                    ) : <RedMenuItem value={index} key={index}>
-                      {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                    </RedMenuItem>
-                  )}
-              </Select>
-            </FormControl>
-            </Grid>
-            : <></>
-        }
-
-        <Grid item xs={12} md={6} lg={3}>
+        <Grid item xs={12} md={1} lg={1}></Grid>
+        <Grid item xs={12} md={5} lg={2}>
           <DuelLeftTimeSort />
         </Grid>
+        <Grid item xs={12} md={1} lg={1}></Grid>
         <Grid item xs={12} md={6} lg={2}>
           <DuelShowOnlyMineFilter />
         </Grid>
-        <Grid item xs={12} md={6} lg={2}>
+        <Grid item xs={12} md={6} lg={3}>
           <DuelTypeSort />
         </Grid>
       </Grid>

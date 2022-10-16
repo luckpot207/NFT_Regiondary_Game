@@ -332,7 +332,7 @@ let initialState: I_ReduxState = {
   duelResultFilterStartConst: 1,
   duelResultFilterEndConst: 30,
   duelShowOnlyMine: false,
-  duelType: false,
+  duelType: 0,
   currentLegionIndexForDuel: 0,
   divisions: divisionsTest,
   currentDuelId: "",

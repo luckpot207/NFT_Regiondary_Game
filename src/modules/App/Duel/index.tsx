@@ -88,6 +88,7 @@ const Duel: React.FC = () => {
   const [leftTimeForNextDuelResult, setLeftTimeForNextDuelResult] =
     useState<string>("");
 
+
   const handleDuelSort = (val: Number) => {
     dispatch(updateState({ duelStatus: val }));
   };
@@ -102,6 +103,7 @@ const Duel: React.FC = () => {
     dispatch(updateState({ createDuelModalOpen: true }));
   };
 
+
   const getBalance = async () => {
     getAllDuelsAct(dispatch, account, duelContract, legionContract);
     var legionsDueStatusTemp: boolean[] = [];
@@ -112,7 +114,6 @@ const Duel: React.FC = () => {
     }
     setLegionsDuelStatus(legionsDueStatusTemp);
   };
-
   useEffect(() => {
     const leftTimer = setInterval(() => {
       if (nextDuelResultDateTime == "") {
@@ -153,7 +154,6 @@ const Duel: React.FC = () => {
       );
       const totalPastDuelsTemp = allDuels.filter((duel) => duel.status == 3);
       const totalOngoingDuelsTemp = allDuels.filter((duel) => duel.status == 2);
-
       ongoingDuelsTemp.forEach((duel) => {
         if (duel.status != 0) {
           if (endDate == "") {
@@ -179,12 +179,12 @@ const Duel: React.FC = () => {
       console.log(e);
     }
   };
+
   useEffect(() => {
     if (allDuels.length != 0) {
       getOwnDuelStatus();
     }
   }, [allDuels]);
-
   const APFilterVal = allDuels.filter((duel: I_Duel) => {
     return duel.status != 3
       ? duel.creatorLegion.attackPower >=
@@ -199,7 +199,6 @@ const Duel: React.FC = () => {
   const StatusFilterVal = APFilterVal.filter(
     (duel: I_Duel) => duel.status == duelStatus
   );
-
   const TimeFilterVal = StatusFilterVal.filter((duel: I_Duel) => {
     if (duelStatus == 0) {
       const timeLeft: Number =
@@ -245,182 +244,173 @@ const Duel: React.FC = () => {
     (duel: I_Duel) => duel.type == duelType
   );
 
-    return (
-        <Box>
-            <Grid container spacing={2} sx={{ my: 4 }}>
-                <Grid item xs={12}>
-                    <Card sx={{ p: 4 }} className="bg-c5">
-                        {allLegions.length == 0
-                            ? <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    paddingBottom: "10px",
-                                    paddingLeft: "10px",
-                                    paddingRight: "10px",
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        fontWeight: "bold",
-                                        fontSize: "calc(17px + 5 * (100vw - 320px) / 1080)",
-                                        mr: 1,
-                                    }}
-                                >
-                                    You need to create Legion to start Duel!
-                                </Box>
-                                <NavLink to="/createlegions" className="td-none">
-                                    <FireBtn>
-                                        <LanguageTranslate translateKey="createLegion" />
-                                    </FireBtn>
-                                </NavLink>
-                            </Box>
-                            : <Grid container spacing={2}>
-                                <Grid item xs={6} sm={6} md={4}>
-                                    <Typography
-                                        variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
-                                    >
-                                        {duelStatus == 1
-                                            ? "Duels"
-                                            : duelStatus == 2 ? "Ongoing Duels"
-                                                : "Duel Results"}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                        }
-                    </Card>
+  return (
+    <Box>
+      <Grid container spacing={2} sx={{ my: 4 }}>
+        <Grid item xs={12}>
+          <Card sx={{ p: 4 }} className="bg-c5">
+            {allLegions.length == 0
+              ? <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "10px",
+                  paddingLeft: "10px",
+                  paddingRight: "10px",
+                }}
+              >
+                <Box
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "calc(17px + 5 * (100vw - 320px) / 1080)",
+                    mr: 1,
+                  }}
+                >
+                  You need to create Legion to start Duel!
+                </Box>
+                <NavLink to="/createlegions" className="td-none">
+                  <FireBtn>
+                    <LanguageTranslate translateKey="createLegion" />
+                  </FireBtn>
+                </NavLink>
+              </Box>
+              : <Grid container spacing={2}>
+                <Grid item xs={6} sm={6} md={4}>
+                  <Typography
+                    variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
+                  >
+                    {duelStatus == 1
+                      ? "Duels"
+                      : duelStatus == 2 ? "Ongoing Duels"
+                        : "Duel Results"}
+                  </Typography>
                 </Grid>
-            </Grid>
-            <Grid container spacing={1} sx={{ mb: 2 }}>
-                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-                    <Card 
-                    onClick={() => handleDuelSort(1)}
-                    className={duelStatus == 1 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                    }}>
-                        <Typography>Your Current Invitations: {formatNumber(currentInvitations)}</Typography>
-                        <Typography>Your Ongoing Duels: {formatNumber(ongoingDuels)}</Typography>
-                        <Typography>Time Until Your Next Duel Results: {leftTimeForNextDuelResult}</Typography>
-                        <Typography mb={1}>Your Past Duels: {formatNumber(pastDuels)}</Typography>
-                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
-                        <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
-                    </Card>
+              </Grid>
+            }
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} sx={{ mb: 2 }}>
+        <Grid item xs={12} md={4} className={duelStatus == 1 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Card className="bg-c5 info-card" sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}>
+            <Typography>Your Current Invitations: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(currentInvitations)}</span></Typography>
+            <Typography>Your Ongoing Duels: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(ongoingDuels)}</span></Typography>
+            <Typography>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: "+leftTimeForNextDuelResult}</Typography>
+            <Typography mb={1}>Your Past Duels: <span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(pastDuels)}</span></Typography>
+            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
+            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
+          </Card>
 
-                </Grid>
-                <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-                    <Card
-                    onClick={() => handleDuelSort(2)} 
-                    className={duelStatus == 2 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"} 
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                    }}>
-                        <Typography mb={2}>Total Ongoing Duels</Typography>
-                        <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}>{formatNumber(totalOngoingDuels)}</Typography>
-                        <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} md={4}sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-                    <Card
-                    onClick={() => handleDuelSort(3)}
-                    className={duelStatus == 3 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                    }}>
-                        <Typography mb={2}>Total Past Duels</Typography>
-                        <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}>{formatNumber(totalPastDuels)}</Typography>
-                        <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
-                    </Card>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} mb={3}>
-                <Grid item xs={12} md={6} lg={3}>
-                    <DuelLegionAPFilter />
-                </Grid>
+        </Grid>
+        <Grid item xs={12} md={4} className={duelStatus == 2 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Card className="bg-c5 info-card" sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}>
+            <Typography mb={2}>Total Ongoing Duels</Typography>
+            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(totalOngoingDuels)}</span></Typography>
+            <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4} className={duelStatus == 3 ? "border-blue" : ""} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Card className="bg-c5 info-card" sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+          }}>
+            <Typography mb={2}>Total Past Duels</Typography>
+            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{fontWeight: "bold", color:"#24feff"}}>{formatNumber(totalPastDuels)}</span></Typography>
+            <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} mb={3}>
+        <Grid item xs={12} md={6} lg={3}>
+          <DuelLegionAPFilter />
+        </Grid>
 
-                {
+        {
+          duelStatus == 1
+            ?
+            <Grid item xs={12} md={6} lg={2}> <FormControl>
+              <Select
+                id="hunt-legion-select"
+                value={currentLegionIndex.toString()}
+                onChange={handleSelectLegion}
+              >
+                {allLegions
+                  .map((legion: I_Legion, index: number) =>
+                    legionsDuelStatus[index] ? (
+                      <OrgMenuItem value={index} key={index}>
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                      </OrgMenuItem>
+                    ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
+                      <GreenMenuItem value={index} key={index}>
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                      </GreenMenuItem>
+                    ) : <RedMenuItem value={index} key={index}>
+                      {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                    </RedMenuItem>
+                  )}
+              </Select>
+            </FormControl>
+            </Grid>
+            : <></>
+        }
+
+        <Grid item xs={12} md={6} lg={3}>
+          <DuelLeftTimeSort />
+        </Grid>
+        <Grid item xs={12} md={6} lg={2}>
+          <DuelShowOnlyMineFilter />
+        </Grid>
+        <Grid item xs={12} md={6} lg={2}>
+          <DuelTypeSort />
+        </Grid>
+      </Grid>
+      {
+        // getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
+        getAllDulesLoading.valueOf()
+          ? <LoadingBloodstone loadingPage="duel" />
+          : <Box>
+            <Grid container spacing={2} sx={{ mb: 4 }}>
+              {
+                DuelTypeFilterVal
+                  .slice(
+                    pageSize.valueOf() * (currentPage.valueOf() - 1),
+                    pageSize.valueOf() * currentPage.valueOf()
+                  )
+                  .map((duel, index) => (
                     duelStatus == 1
-                        ?
-                        <Grid item xs={12} md={6} lg={2}> <FormControl>
-                            <Select
-                                id="hunt-legion-select"
-                                value={currentLegionIndex.toString()}
-                                onChange={handleSelectLegion}
-                            >
-                                {allLegions
-                                    .map((legion: I_Legion, index: number) =>
-                                        legionsDuelStatus[index] ? (
-                                            <OrgMenuItem value={index} key={index}>
-                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                            </OrgMenuItem>
-                                        ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
-                                            <GreenMenuItem value={index} key={index}>
-                                                {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                            </GreenMenuItem>
-                                        ) : <RedMenuItem value={index} key={index}>
-                                            {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
-                                        </RedMenuItem>
-                                    )}
-                            </Select>
-                        </FormControl>
-                        </Grid>
-                        : <></>
-                }
-
-                <Grid item xs={12} md={6} lg={3}>
-                    <DuelLeftTimeSort />
-                </Grid>
-                <Grid item xs={12} md={6} lg={2}>
-                    <DuelShowOnlyMineFilter />
-                </Grid>
-                <Grid item xs={12} md={6} lg={2}>
-                    <DuelTypeSort />
-                </Grid>
+                      ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <DuelCard duel={duel} />
+                      </Grid>)
+                      : (<Grid item xs={12} sm={12} md={12} lg={6} key={index}>
+                        <DuelCard duel={duel} />
+                      </Grid>
+                      )
+                  ))}
             </Grid>
             {
-                // getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
-                getAllDulesLoading.valueOf()
-                    ? <LoadingBloodstone loadingPage="duel" />
-                    : <Box>
-                        <Grid container spacing={2} sx={{ mb: 4 }}>
-                            {
-                                DuelTypeFilterVal
-                                    .slice(
-                                        pageSize.valueOf() * (currentPage.valueOf() - 1),
-                                        pageSize.valueOf() * currentPage.valueOf()
-                                    )
-                                    .map((duel, index) => (
-                                        duelStatus == 1
-                                            ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                                                <DuelCard duel={duel} />
-                                            </Grid>)
-                                            : (<Grid item xs={12} sm={12} md={12} lg={6} key={index}>
-                                                <DuelCard duel={duel} />
-                                            </Grid>
-                                            )
-                                    ))}
-                        </Grid>
-                        {
-                            DuelTypeFilterVal.length > 0 && (
-                                <Box>
-                                    <ItemPagination totalCount={DuelTypeFilterVal.length} />
-                                </Box>
-                            )
-                        }
-                    </Box>
+              DuelTypeFilterVal.length > 0 && (
+                <Box>
+                  <ItemPagination totalCount={DuelTypeFilterVal.length} />
+                </Box>
+              )
             }
-            <CreateDuelModal />
-            <JoinDuelModal />
-            <UpdatePredictionModal />
-        </Box>
-    );
+          </Box>
+      }
+      <CreateDuelModal />
+      <JoinDuelModal />
+      <UpdatePredictionModal />
+    </Box>
+  );
 };
 
 export default Duel;

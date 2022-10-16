@@ -215,7 +215,7 @@ const CreateDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${BLSTToUSD}</Typography>
+                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100}</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -256,7 +256,6 @@ const CreateDuelModal: React.FC = () => {
                         </FormControl>
                     </Grid>
                 </Grid>
-
                 {
                     allLegions.length != 0
                         ? legionsDuelStatus[currentLegionIndex]

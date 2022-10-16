@@ -26,8 +26,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     duelStatus,
     allLegions,
     divisions,
+    allDuels,
     currentLegionIndexForDuel,
-    duelType,
   } = AppSelector(gameState);
   const { account } = useWeb3React();
   const duelContract = useDuelSystem();
@@ -102,17 +102,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         duel.creatorLegion.attackPower >= division.minAP &&
         duel.creatorLegion.attackPower < division.maxAP
       ) {
-        if (
-          allLegions[currentLegionIndexForDuel.valueOf()].attackPower >=
-          division.minAP &&
-          allLegions[currentLegionIndexForDuel.valueOf()].attackPower <
-          division.maxAP
-        ) {
-          setDuelFlag(true);
-        }
+        allLegions.forEach((legion) => {
+          if (
+            legion.attackPower >= division.minAP &&
+            legion.attackPower < division.maxAP
+          ) {
+            setDuelFlag(true);
+          }
+        })
       }
     });
-  }, [currentLegionIndexForDuel, duelType]);
+  }, [allDuels]);
 
   useEffect(() => {
     const leftTimer = setInterval(() => {

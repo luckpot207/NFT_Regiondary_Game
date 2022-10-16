@@ -123,8 +123,10 @@
 .duel-result-price-text {
   font-size: 1.5em !important;
   color: white !important;
-  font-weight: bold;
-  -webkit-text-stroke: 0.2px white;
+  font-weight: bold !important;
+  -webkit-text-stroke: 0.2px white !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
 }
 
 .duel-estimate-price-div {
@@ -144,24 +146,28 @@
 .winner-price-text {
   font-size: 3rem !important;
   font-weight: bold !important;
-  color: green !important;
+  color: #09d909 !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
 }
 
 .loser-price-text {
   font-size: 3rem !important;
-  font-weight: bold !important; 
+  font-weight: bold !important;
   color: red !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
 }
 
 .draw-price-text {
   font-size: 3rem !important;
-  font-weight: bold !important; 
+  font-weight: bold !important;
   color: orange !important;
 }
 
 .estimate-price {
   font-size: 3rem !important;
-  font-weight: bold !important; 
+  font-weight: bold !important;
   color: #39fcff !important;
 }
 
@@ -178,7 +184,6 @@
   .estimate-price {
     font-size: 2em !important;
   }
-
 }
 @media only screen and (max-width: 600px) {
   .loser-price-text {
@@ -211,7 +216,6 @@
     font-size: 0.9em !important;
   }
 }
-
 
 @media only screen and (max-width: 600px) {
   .legion-name-text {

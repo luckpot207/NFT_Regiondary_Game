@@ -101,8 +101,25 @@ const CreateDuelModal: React.FC = () => {
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
     const [createDuelLoading, setCreateDuelLoading] = useState<boolean>(false);
-
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
+    const [blstAmount, setBlstAmount] = useState<number>(0);
+    const [blstAmountWin, setBlstAmountWin] = useState<number>(0);
+
+    const setBlstAmountForDuel = async () => {
+        try {
+            const blstAmountTemp = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
+            setBlstAmount(blstAmountTemp);
+            const blstAmountWinTemp = await getBLSTAmount(web3, feeHandlerContract, 2 * divisions[divisionIndex].betPrice.valueOf() * 0.8);
+            setBlstAmountWin(blstAmountWinTemp);
+
+        } catch(e) {
+
+        }
+    }
+
+    useEffect(() => {
+        setBlstAmountForDuel();
+    }, [divisionIndex]);
 
     const handleSelectLegion = (e: SelectChangeEvent) => {
         const legionIndex = parseInt(e.target.value);
@@ -170,7 +187,6 @@ const CreateDuelModal: React.FC = () => {
     }, [allLegions, createDuelModalOpen]);
 
     const handleSubmit = async () => {
-        confirmUnclaimedWallet(40);
         if (estimatePrice.valueOf() < 0) {
             toast.error("Please provide valid value!");
             return;
@@ -268,9 +284,9 @@ const CreateDuelModal: React.FC = () => {
                             : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                                 ? <Box>
                                     <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                    <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice}</Typography>
+                                    <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount*100)/100} $CRYPTO)</Typography>
                                     <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
-                                    <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8}</Typography>
+                                    <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin*100)/100} $CRYPTO)</Typography>
 
                                     <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                                     <Grid container mb={1} spacing={1} >

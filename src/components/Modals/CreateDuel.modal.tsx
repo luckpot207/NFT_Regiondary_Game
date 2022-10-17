@@ -101,7 +101,6 @@ const CreateDuelModal: React.FC = () => {
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
     const [createDuelLoading, setCreateDuelLoading] = useState<boolean>(false);
-
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
 
     const handleSelectLegion = (e: SelectChangeEvent) => {
@@ -139,6 +138,10 @@ const CreateDuelModal: React.FC = () => {
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
+        if (price > 100 || price*1000 - Math.floor(price*1000) > 0) {
+            setEstimatePrice(estimatePrice);
+            return;
+        }
         setEstimatePrice(price)
     }
 

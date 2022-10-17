@@ -131,8 +131,12 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
 
     if (loadingPage == "duel") {
       if (getAllDulesLoading) {
-        setLoadingText("Loading Dules...")
+        setLoadingText("Loading Duels...")
       }
+    }
+
+    if (loadingPage == "cancelDuel") {
+      setLoadingText("Canceling Duel...")
     }
   }, [
     getAllBeastsLoading,

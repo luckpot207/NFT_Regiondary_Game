@@ -19,7 +19,7 @@ const DuelTypeSort: React.FC = () => {
     return (
         <Box>
             <Typography sx={{ mb: 1 }}>
-                Sort By Duel Status:
+                Sort By Duel Type:
             </Typography>
             <ButtonGroup>
                 <Button

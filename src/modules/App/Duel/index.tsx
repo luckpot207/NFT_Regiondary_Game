@@ -68,6 +68,7 @@ const Duel: React.FC = () => {
     currentLegionIndexForDuel,
     currentPage,
     pageSize,
+    cancelDuelLoading,
   } = AppSelector(gameState);
   // Account & Web3
   const { account } = useWeb3React();
@@ -293,47 +294,47 @@ const Duel: React.FC = () => {
       </Grid>
       <Grid container spacing={1} sx={{ mb: 2 }}>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-          <Card 
-          className={duelStatus == 1 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
-          onClick={() => handleDuelSort(1)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-          }}>
-            <Typography sx={{fontWeight: "bold"}}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
-            <Typography sx={{fontWeight: "bold"}} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
-            <Typography sx={{fontWeight: "bold"}}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
-            <Typography mb={1} sx={{fontWeight: "bold"}}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
+          <Card
+            className={duelStatus == 1 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+            onClick={() => handleDuelSort(1)}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+            }}>
+            <Typography sx={{ fontWeight: "bold" }}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
+            <Typography sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
+            <Typography sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
+            <Typography mb={1} sx={{ fontWeight: "bold" }}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
           </Card>
 
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-          <Card 
-          className={duelStatus == 2 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
-          onClick={() => handleDuelSort(2)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-          }}>
-            <Typography sx={{fontWeight: "bold"}}>Total Ongoing Duels</Typography>
+          <Card
+            className={duelStatus == 2 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+            onClick={() => handleDuelSort(2)}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+            }}>
+            <Typography sx={{ fontWeight: "bold" }}>Total Ongoing Duels</Typography>
             <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
           </Card>
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
-          <Card 
-          className={duelStatus == 3 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
-          onClick={() => handleDuelSort(3)}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-          }}>
-            <Typography sx={{fontWeight: "bold"}}>Total Past Duels</Typography>
+          <Card
+            className={duelStatus == 3 ? "bg-c5 info-card border-blue" : "bg-c5 info-card"}
+            onClick={() => handleDuelSort(3)}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+            }}>
+            <Typography sx={{ fontWeight: "bold" }}>Total Past Duels</Typography>
             <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
           </Card>
@@ -359,33 +360,35 @@ const Duel: React.FC = () => {
         // getAllDulesLoading.valueOf() || getAllLegionsLoading.valueOf()
         getAllDulesLoading.valueOf()
           ? <LoadingBloodstone loadingPage="duel" />
-          : <Box>
-            <Grid container spacing={2} sx={{ mb: 4 }}>
+          : cancelDuelLoading.valueOf()
+            ? <LoadingBloodstone loadingPage="cancelDuel" />
+            : <Box>
+              <Grid container spacing={2} sx={{ mb: 4 }}>
+                {
+                  DuelTypeFilterVal
+                    .slice(
+                      pageSize.valueOf() * (currentPage.valueOf() - 1),
+                      pageSize.valueOf() * currentPage.valueOf()
+                    )
+                    .map((duel, index) => (
+                      duelStatus == 1
+                        ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                          <DuelCard duel={duel} />
+                        </Grid>)
+                        : (<Grid item xs={12} sm={12} md={12} lg={6} key={index}>
+                          <DuelCard duel={duel} />
+                        </Grid>
+                        )
+                    ))}
+              </Grid>
               {
-                DuelTypeFilterVal
-                  .slice(
-                    pageSize.valueOf() * (currentPage.valueOf() - 1),
-                    pageSize.valueOf() * currentPage.valueOf()
-                  )
-                  .map((duel, index) => (
-                    duelStatus == 1
-                      ? (<Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <DuelCard duel={duel} />
-                      </Grid>)
-                      : (<Grid item xs={12} sm={12} md={12} lg={6} key={index}>
-                        <DuelCard duel={duel} />
-                      </Grid>
-                      )
-                  ))}
-            </Grid>
-            {
-              DuelTypeFilterVal.length > 0 && (
-                <Box>
-                  <ItemPagination totalCount={DuelTypeFilterVal.length} />
-                </Box>
-              )
-            }
-          </Box>
+                DuelTypeFilterVal.length > 0 && (
+                  <Box>
+                    <ItemPagination totalCount={DuelTypeFilterVal.length} />
+                  </Box>
+                )
+              }
+            </Box>
       }
       <CreateDuelModal />
       <JoinDuelModal />

@@ -63,11 +63,12 @@ const UpdatePredictionModal: React.FC = () => {
     // Contract
     const duelContract = useDuelSystem();
     const legionContract = useLegion();
-    const [estimatePrice, setEstimatePrice] = useState(0);
-    const [endDateTime, setEndDateTime] = useState("");
-    const [leftTime, setLeftTime] = useState("");
-    const [duelLeftTime, setDuelLeftTime] = useState("");
-    const [currentPrediction, setCurrentPrediction] = useState(0);
+    const [estimatePrice, setEstimatePrice] = useState<number>(0);
+    const [endDateTime, setEndDateTime] = useState<string>("");
+    const [leftTime, setLeftTime] = useState<string>("");
+    const [duelLeftTime, setDuelLeftTime] = useState<string>("");
+    const [currentPrediction, setCurrentPrediction] = useState<number>(0);
+    const [updatePredictionLoading, setUpdatePredictionLoading] = useState<boolean>(false);
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
@@ -84,9 +85,11 @@ const UpdatePredictionModal: React.FC = () => {
             return;
         }
         try {
+            setUpdatePredictionLoading(true);
             const res = await updatePrediction(duelContract, account, currentDuelId, estimatePrice.valueOf() * (10 ** 18));
-            toast.success("Your prediction has been updated.");
+            setUpdatePredictionLoading(false);
             dispatch(updateState({ updatePredictionModalOpen: false }));
+            toast.success("Your prediction has been updated.");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
             toast.error("Network issue")
@@ -171,6 +174,7 @@ const UpdatePredictionModal: React.FC = () => {
                     <FireBtn
                         sx={{ width: "100px" }}
                         onClick={handleSubmit}
+                        loading={updatePredictionLoading}
                     >Update</FireBtn>
                 </Box>
             </DialogContent>

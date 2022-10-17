@@ -410,6 +410,7 @@ export interface I_ReduxState {
   currentDuelId: String;
   endDateJoinDuel: String;
   divisions: I_Division[];
+  cancelDuelLoading: Boolean;
 
   // modal
   tutorialModalOpen: Boolean;

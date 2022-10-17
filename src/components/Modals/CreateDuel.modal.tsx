@@ -113,7 +113,7 @@ const CreateDuelModal: React.FC = () => {
             setBlstAmountWin(blstAmountWinTemp);
 
         } catch(e) {
-
+            console.log(e);
         }
     }
 

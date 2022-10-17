@@ -198,10 +198,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             ) : (
               <img
+                src="/assets/images/execute.png"
                 className="duel-delete-btn"
                 onClick={handleDeleteBtnClick}
-                src="/assets/images/deleteBtn.png"
-              ></img>
+                style={{ height: "20px" }}
+                alt="Execute"
+              />
             )}
           </Card>
           <Box sx={{ textAlign: "center", mt: 1 }}>

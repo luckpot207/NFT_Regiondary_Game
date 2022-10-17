@@ -100,6 +100,7 @@ const JoinDuelModal: React.FC = () => {
     const [duelType, setDuelType] = useState<boolean>(true);
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
+    const [joinDuelLoading, setJoinDuelLoading] = useState<boolean>(false);
 
 
     const getBalance = async () => {
@@ -140,13 +141,13 @@ const JoinDuelModal: React.FC = () => {
             return;
         }
         try {
+            setJoinDuelLoading(true);
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
+            setJoinDuelLoading(false);
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (e) {
-            toast.error("Network issue");
-            console.log(e);
         }
     }
 
@@ -273,7 +274,7 @@ const JoinDuelModal: React.FC = () => {
                                 </Grid>
                                 <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                                 <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
-                                <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }}>Join</FireBtn></Box>
+                                <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }} loading={joinDuelLoading}>Join</FireBtn></Box>
                             </Box>
                             : <Box><Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography></Box>
                         : <Box mt={2} mb={2}>You can't join with this legion.</Box>

@@ -337,6 +337,7 @@ let initialState: I_ReduxState = {
   divisions: divisionsTest,
   currentDuelId: "",
   endDateJoinDuel: "",
+  cancelDuelLoading: false,
 
   // modal
   tutorialModalOpen: localStorage.getItem("tutorial") === "true" ? false : true,

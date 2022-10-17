@@ -69,7 +69,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
 
   const handleCancelDuel = async () => {
     try {
+      dispatch(
+        updateState({
+          cancelDuelLoading: true
+        })
+      );
       const res = await cancelDuel(duelContract, account, duel.duelId);
+      dispatch(
+        updateState({
+          cancelDuelLoading: false
+        })
+      );
       toast.success("Success");
       getAllDuelsAct(dispatch, account, duelContract, legionContract);
     } catch (e) {

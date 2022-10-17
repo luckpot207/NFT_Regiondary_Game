@@ -100,6 +100,7 @@ const CreateDuelModal: React.FC = () => {
     const [estimatePrice, setEstimatePrice] = useState(0);
     const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
     const [divisionIndex, setDivisionIndex] = useState(0);
+    const [createDuelLoading, setCreateDuelLoading] = useState<boolean>(false);
 
     const [legionsDuelStatus, setLegionsDuelStatus] = useState<boolean[]>([]);
 
@@ -175,17 +176,21 @@ const CreateDuelModal: React.FC = () => {
             return;
         }
         if ( !allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+            
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create this duel, you need to have at least ${Math.round(blstAmount)} $BLST in your Unclaimed Wallet.\nGo more hunting!`);
             return;
         }
         try {
+            setCreateDuelLoading(true);
             const res = await createDuel(duelContract, account, allLegions[currentLegionIndex].id.valueOf(), estimatePrice.valueOf() * (10 ** 18), !allIn.valueOf());
-            toast.success("Your Duel has been created.");
+            setCreateDuelLoading(false);
             dispatch(updateState({ createDuelModalOpen: false }));
+            toast.success("Your Duel has been created.");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
-            toast.error("Network issue.")
+            setCreateDuelLoading(false);
+            // toast.error("Network issue.")
         }
     }
 
@@ -286,6 +291,7 @@ const CreateDuelModal: React.FC = () => {
                                         <FireBtn
                                             sx={{ width: "100px" }}
                                             onClick={handleSubmit}
+                                            loading={createDuelLoading}
                                         >Bet</FireBtn>
                                     </Box>
                                     <FormGroup>

@@ -46,3 +46,225 @@
 .border-blue {
   border: 6px #3baaf5 solid !important;
 }
+
+/* Duel Card */
+
+.legion-name-text {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-weight: bold !important;
+  font-size: 1em;
+}
+
+.duel-left-time {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  top: 15px;
+  right: 10px;
+  font-weight: bold !important;
+}
+
+.legion-ap-div {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  bottom: 10px;
+  font-size: 1em;
+}
+
+.legion-ap-text {
+  font-weight: bold !important;
+  font-size: 1.4rem !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
+}
+
+.duel-bet-price-text {
+  position: absolute;
+  bottom: 8px;
+  right: 20px;
+  font-weight: bold !important;
+  font-size: 1.4rem !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
+}
+
+.legion-id-text {
+  position: absolute !important;
+  bottom: 8px !important;
+  left: 20px !important;
+  color: darkgrey;
+  font-size: 1em !important;
+}
+
+.duel-delete-btn {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  width: 2rem;
+  cursor: pointer;
+  filter: box-shadow(0px 0px 100px #fff);
+}
+
+.duel-result-price-text {
+  font-size: 1.5em !important;
+  color: white !important;
+  font-weight: bold !important;
+  -webkit-text-stroke: 0.2px white !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
+}
+
+.duel-estimate-price-div {
+  width: 100%;
+  height: 100%;
+  padding-left: 20%;
+  padding-right: 20%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.winner-price-text {
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  color: #09d909 !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
+}
+
+.loser-price-text {
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  color: red !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
+}
+
+.draw-price-text {
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  color: orange !important;
+}
+
+.estimate-price {
+  font-size: 3rem !important;
+  font-weight: bold !important;
+  color: #39fcff !important;
+}
+
+@media only screen and (max-width: 800px) {
+  .loser-price-text {
+    font-size: 2em !important;
+  }
+  .winner-price-text {
+    font-size: 2em !important;
+  }
+  .draw-price-text {
+    font-size: 2em !important;
+  }
+  .estimate-price {
+    font-size: 2em !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .loser-price-text {
+    font-size: 1.5em !important;
+  }
+  .winner-price-text {
+    font-size: 1.5em !important;
+  }
+  .draw-price-text {
+    font-size: 1.5em !important;
+  }
+  .estimate-price {
+    font-size: 1.5em !important;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  .duel-left-time {
+    top: 15px;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .duel-left-time {
+    top: 5px;
+  }
+  .legion-ap-div {
+    bottom: 10px;
+  }
+}
+
+
+@media only screen and (max-width: 1280px) {
+  .duel-result-price-text {
+    font-size: 1.3em !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .duel-result-price-text {
+    font-size: 2em !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .duel-result-price-text {
+    font-size: 1.5em !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .legion-name-text {
+    font-size: 1em !important;
+  }
+
+  .legion-ap-div {
+    bottom: 0px;
+  }
+  .legion-ap-text {
+    font-size: 1em !important;
+  }
+
+  .legion-id-text {
+    font-size: 1em !important;
+  }
+
+  .duel-bet-price-text {
+    font-size: 1em !important;
+  }
+
+  .duel-left-time {
+    top: 5px;
+  }
+  .duel-left-time-text {
+    font-size: 0.7em !important;
+    top: 20px !important;
+  }
+
+  .duel-result-price-text {
+    font-size: 1em !important;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .legion-name-text {
+    font-size: 0.7em;
+    top: 10px;
+  }
+  .legion-ap-text {
+    font-size: 0.7em !important;
+    bottom: 15px;
+  }
+
+  .duel-result-price-text {
+    font-size: 0.7em !important;
+  }
+}

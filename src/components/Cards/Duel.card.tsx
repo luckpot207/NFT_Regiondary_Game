@@ -96,6 +96,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
       confirmButtonColor: "#f66810",
       cancelButtonColor: "#d33",
       confirmButtonText: "Cancel Duel",
+      cancelButtonText: "Keep Duel",
       background: "#111",
       color: "white",
     }).then((result) => {
@@ -198,10 +199,11 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             ) : (
               <img
+                src="/assets/images/execute.png"
                 className="duel-delete-btn"
                 onClick={handleDeleteBtnClick}
-                src="/assets/images/deleteBtn.png"
-              ></img>
+                alt="Cancel"
+              />
             )}
           </Card>
           <Box sx={{ textAlign: "center", mt: 1 }}>

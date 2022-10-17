@@ -103,7 +103,7 @@
   position: absolute;
   bottom: 40px;
   left: 20px;
-  width: 2rem;
+  width: 20px;
   cursor: pointer;
   filter: box-shadow(0px 0px 100px #fff);
 }

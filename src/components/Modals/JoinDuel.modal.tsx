@@ -163,6 +163,7 @@ const JoinDuelModal: React.FC = () => {
         }
         try {
             setJoinDuelLoading(true);
+            console.log("Join duel: ", account, currentDuelId, allLegions[currentLegionIndex.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
             const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndex.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
             setJoinDuelLoading(false);
             dispatch(updateState({ joinDuelModalOpen: false }));
@@ -274,42 +275,67 @@ const JoinDuelModal: React.FC = () => {
                         </FormControl>
                     </Grid>
                 </Grid>
+              
                 {
-                    !legionsDuelStatus[currentLegionIndex] && allLegions.length != 0
-                        ? divisionIndex == currentDuelDivisionIndex
-                            ? <Box>
-                                <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                {
-                                    !duelType
-                                        ? <Box>
-                                            <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
-                                        </Box>
-                                        : <Box>
-                                            <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
-                                            <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
-                                            <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
-                                            <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                        </Box>
-                                }
-                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
-                                <Grid container mb={1} spacing={1}>
-                                    <Grid item xs={12} sm={5} md={5} lg={5} sx={{fontWeight:  "bold"}}>I think 1 $BLST will be = </Grid>
-                                    <Grid item xs={6} sm={4} md={4} lg={2}>
-                                        <PriceTextField
-                                            id="outlined-number"
-                                            variant="standard"
-                                            type="number"
-                                            value={estimatePrice}
-                                            onChange={handleChangeEstimatePrice}
-                                            sx={{ padding: "0 !important" }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={2} md={4} lg={1} sx={{fontWeight:  "bold"}}>BUSD</Grid>
-                                </Grid>
-                                <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }} loading={joinDuelLoading}>Join</FireBtn></Box>
-                            </Box>
-                            : <Box><Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography></Box>
-                        : <Box mt={2} mb={2}>You can't join with this legion.</Box>
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && duelType
+                    && <>
+                        <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
+                        <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                    </>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && duelType
+                    && <>
+                        <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
+                    </>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && <>
+                        <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
+                        <Grid container mb={1} spacing={1}>
+                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
+                            <Grid item xs={6} sm={4} md={4} lg={2}>
+                                <PriceTextField
+                                    id="outlined-number"
+                                    variant="standard"
+                                    type="number"
+                                    value={estimatePrice}
+                                    onChange={handleChangeEstimatePrice}
+                                    sx={{ padding: "0 !important" }}
+                                />
+                            </Grid>
+                            <Grid item xs={6} sm={2} md={4} lg={1} sx={{ fontWeight: "bold" }}>BUSD</Grid>
+                        </Grid>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }} loading={joinDuelLoading}>Join</FireBtn></Box>
+                    </>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex != currentDuelDivisionIndex
+                    && <Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography>
+                }
+                {
+                    (legionsDuelStatus[currentLegionIndex]
+                    || allLegions.length == 0)
+                    && <Box mt={2} mb={2}>You can't join with this legion.</Box>
                 }
             </DialogContent>
         </Dialog>

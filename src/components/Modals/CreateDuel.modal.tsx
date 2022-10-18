@@ -268,7 +268,7 @@ const CreateDuelModal: React.FC = () => {
                                                 <OrgMenuItem value={index} key={index}>
                                                     {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
                                                 </OrgMenuItem>
-                                            ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower <= 70000 ? (
+                                            ) : legion.attackPower.valueOf() >= 10000 && legion.attackPower < 70000 ? (
                                                 <GreenMenuItem value={index} key={index}>
                                                     {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
                                                 </GreenMenuItem>
@@ -283,48 +283,75 @@ const CreateDuelModal: React.FC = () => {
                 </Grid>
                 {
                     allLegions.length != 0
-                        ? legionsDuelStatus[currentLegionIndex]
-                            ? <Box><Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography></Box>
-                            : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
-                                ? <Box>
-                                    <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                    {
-                                        allIn
-                                            ? <Box><Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower}AP</Typography></Box>
-                                            : <Box>
-                                                <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
-                                                <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
-                                                <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
-                                                <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                            </Box>
-                                    }
-                                    <Grid container mb={1} spacing={1} >
-                                        <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
-                                        <Grid item xs={6} sm={2} md={2} lg={2}>
-                                            <PriceTextField
-                                                id="outlined-number"
-                                                variant="standard"
-                                                type="number"
-                                                value={estimatePrice}
-                                                onChange={handleChangeEstimatePrice}
-                                                sx={{ padding: "0 !important" }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6} sm={2} md={2} lg={1} sx={{ fontWeight: "bold" }}>BUSD</Grid>
-                                    </Grid>
-                                    <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
-                                        <FireBtn
-                                            sx={{ width: "100px" }}
-                                            onClick={handleSubmit}
-                                            loading={createDuelLoading}
-                                        >Bet</FireBtn>
-                                    </Box>
-                                    <FormGroup>
-                                        <FormControlLabel control={<Checkbox checked={allIn} onChange={handleAllInCheck} defaultChecked />} label="All-In" />
-                                    </FormGroup>
-                                </Box>
-                                : <Box><Typography mt={1} mb={1}>Your legion's Attack Power is too high or low.</Typography></Box>
-                        : <></>
+                    && legionsDuelStatus[currentLegionIndex]
+                    && <Typography mt={1} mb={1}>Your legion is in the midst of a duel.</Typography>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                    && <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                    && allIn
+                    && <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower}AP</Typography>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                    && !allIn
+                    && <>
+                        <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
+                        <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                    </>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                    && <>
+                        <Grid container mb={1} spacing={1} >
+                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={2}>
+                                <PriceTextField
+                                    id="outlined-number"
+                                    variant="standard"
+                                    type="number"
+                                    value={estimatePrice}
+                                    onChange={handleChangeEstimatePrice}
+                                    sx={{ padding: "0 !important" }}
+                                />
+                            </Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={1} sx={{ fontWeight: "bold" }}>BUSD</Grid>
+                        </Grid>
+                        <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
+                            <FireBtn
+                                sx={{ width: "100px" }}
+                                onClick={handleSubmit}
+                                loading={createDuelLoading}
+                            >Bet</FireBtn>
+                        </Box>
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox checked={allIn} onChange={handleAllInCheck} defaultChecked />} label="All-In" />
+                        </FormGroup>
+                    </>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && ( allLegions[currentLegionIndex].attackPower.valueOf() < 10000
+                    || allLegions[currentLegionIndex].attackPower.valueOf() >= 70000 )
+                    && <Typography mt={1} mb={1}>Your legion's Attack Power is too high or low.</Typography>
                 }
 
             </DialogContent>

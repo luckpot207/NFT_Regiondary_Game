@@ -406,7 +406,6 @@ export interface I_ReduxState {
   duelStatus: Number;
   allDuels: I_Duel[];
   getAllDulesLoading: Boolean;
-  currentLegionIndexForDuel: Number;
   currentDuelId: String;
   endDateJoinDuel: String;
   divisions: I_Division[];

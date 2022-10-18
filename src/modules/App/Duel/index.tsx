@@ -3,12 +3,6 @@ import {
   Card,
   Grid,
   Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  SelectChangeEvent,
-  Button,
-  ButtonGroup,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
@@ -22,12 +16,8 @@ import { useLegion, useWeb3 } from "../../../web3hooks/useContract";
 import { AppSelector } from "../../../store";
 import LanguageTranslate from "../../../components/UI/LanguageTranslate";
 import { I_Duel, I_Legion } from "../../../interfaces";
-import OrgMenuItem from "../../../components/UI/OrgMenuItem";
-import GreenMenuItem from "../../../components/UI/GreenMenuItem";
-import RedMenuItem from "../../../components/UI/RedMenuItem";
 import DuelLegionAPFilter from "../../../components/Filters/DuelLegionAP.filter";
 import DuelLeftTimeSort from "../../../components/Filters/DuelLeftTime.sort";
-import DuelProcessSort from "../../../components/Filters/DuelProcess.sort";
 import DuelShowOnlyMineFilter from "../../../components/Filters/DuelShowOnlyMine.filter";
 import DuelTypeSort from "../../../components/Filters/DuelType.sort";
 import DuelCard from "../../../components/Cards/Duel.card";
@@ -65,7 +55,6 @@ const Duel: React.FC = () => {
     duelResultFilterEndConst,
     duelShowOnlyMine,
     duelType,
-    currentLegionIndexForDuel,
     currentPage,
     pageSize,
     cancelDuelLoading,
@@ -92,12 +81,6 @@ const Duel: React.FC = () => {
 
   const handleDuelSort = (val: Number) => {
     dispatch(updateState({ duelStatus: val }));
-  };
-
-  const handleSelectLegion = (e: SelectChangeEvent) => {
-    const legionIndex = parseInt(e.target.value);
-    setCurrentLegionIndex(legionIndex);
-    dispatch(updateState({ currentLegionIndexForDuel: legionIndex }));
   };
 
   const showCreateDuelModal = () => {
@@ -184,6 +167,13 @@ const Duel: React.FC = () => {
   useEffect(() => {
     if (allDuels.length != 0) {
       getOwnDuelStatus();
+    } else {
+      setNextDuelResultDateTime("");
+      setCurrentInvitations(0);
+      setOngoingDuels(0);
+      setPastDuels(0);
+      setTotalPastDuels(0);
+      setTotalOngoingDuels(0);
     }
   }, [allDuels]);
   const APFilterVal = allDuels.filter((duel: I_Duel) => {

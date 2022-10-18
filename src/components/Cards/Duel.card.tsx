@@ -27,7 +27,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     allLegions,
     divisions,
     allDuels,
-    currentLegionIndexForDuel,
   } = AppSelector(gameState);
   const { account } = useWeb3React();
   const duelContract = useDuelSystem();
@@ -83,6 +82,11 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
       toast.success("Success");
       getAllDuelsAct(dispatch, account, duelContract, legionContract);
     } catch (e) {
+      dispatch(
+        updateState({
+          cancelDuelLoading: false
+        })
+      );
       toast.error("Network issue");
     }
   };

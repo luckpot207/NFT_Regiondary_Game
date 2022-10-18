@@ -96,6 +96,7 @@ const UpdatePredictionModal: React.FC = () => {
             toast.success("Your prediction has been updated.");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (error) {
+            setUpdatePredictionLoading(false);
             toast.error("Network issue")
         }
     }

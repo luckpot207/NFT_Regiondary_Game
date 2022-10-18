@@ -75,7 +75,6 @@ const JoinDuelModal: React.FC = () => {
     const {
         allLegions,
         joinDuelModalOpen,
-        currentLegionIndexForDuel,
         divisions,
         // endDateJoinDuel,
         currentDuelId,
@@ -128,7 +127,7 @@ const JoinDuelModal: React.FC = () => {
             const res = await doingDuels(duelContract, legion.id)
             legionsDueStatusTemp.push(res);
         }
-        setLegionsDuelStatus(legionsDueStatusTemp)
+        setLegionsDuelStatus(legionsDueStatusTemp);
     }
 
     useEffect(() => {
@@ -164,12 +163,13 @@ const JoinDuelModal: React.FC = () => {
         }
         try {
             setJoinDuelLoading(true);
-            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndexForDuel.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
+            const res = await joinDuel(duelContract, account, currentDuelId, allLegions[currentLegionIndex.valueOf()].id, estimatePrice.valueOf() * (10 ** 18));
             setJoinDuelLoading(false);
             dispatch(updateState({ joinDuelModalOpen: false }));
             toast.success("Successfully joined");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (e) {
+            setJoinDuelLoading(false);
             toast.error("Network issue");
             console.log(e);
         }

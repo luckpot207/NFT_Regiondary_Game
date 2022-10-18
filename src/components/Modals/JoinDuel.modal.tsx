@@ -145,6 +145,10 @@ const JoinDuelModal: React.FC = () => {
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
+        if (price > 10000 || price * 1000 - Math.floor(price * 1000) > 0) {
+            setEstimatePrice(estimatePrice);
+            return;
+        }
         setEstimatePrice(price)
     }
 
@@ -166,6 +170,8 @@ const JoinDuelModal: React.FC = () => {
             toast.success("Successfully joined");
             getAllDuelsAct(dispatch, account, duelContract, legionContract);
         } catch (e) {
+            toast.error("Network issue");
+            console.log(e);
         }
     }
 

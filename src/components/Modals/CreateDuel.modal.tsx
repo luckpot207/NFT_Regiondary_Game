@@ -112,7 +112,7 @@ const CreateDuelModal: React.FC = () => {
             const blstAmountWinTemp = await getBLSTAmount(web3, feeHandlerContract, 2 * divisions[divisionIndex].betPrice.valueOf() * 0.8);
             setBlstAmountWin(blstAmountWinTemp);
 
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }
@@ -288,11 +288,16 @@ const CreateDuelModal: React.FC = () => {
                             : allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                                 ? <Box>
                                     <Typography mt={1} mb={1}>Your Legion's division : {divisions[divisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                    <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount*100)/100} $CRYPTO)</Typography>
-                                    <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
-                                    <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin*100)/100} $CRYPTO)</Typography>
-
-                                    <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                    {
+                                        allIn
+                                            ? <Box><Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower}AP</Typography></Box>
+                                            : <Box>
+                                                <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                                                <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
+                                                <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                                                <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                            </Box>
+                                    }
                                     <Grid container mb={1} spacing={1} >
                                         <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
                                         <Grid item xs={6} sm={2} md={2} lg={2}>

@@ -112,7 +112,7 @@ const JoinDuelModal: React.FC = () => {
             const blstAmountWinTemp = await getBLSTAmount(web3, feeHandlerContract, 2 * divisions[divisionIndex].betPrice.valueOf() * 0.8);
             setBlstAmountWin(blstAmountWinTemp);
 
-        } catch(e) {
+        } catch (e) {
             console.log(e);
         }
     }
@@ -279,11 +279,21 @@ const JoinDuelModal: React.FC = () => {
                         ? divisionIndex == currentDuelDivisionIndex
                             ? <Box>
                                 <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
-                                <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount*100)/100} $CRYPTO)</Typography>
-                                <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
-                                <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin*100)/100} $CRYPTO)</Typography>
+                                {
+                                    !duelType
+                                        ? <Box>
+                                            <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
+                                        </Box>
+                                        : <Box>
+                                            <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                                            <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
+                                            <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                                            <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                                        </Box>
+                                }
+                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
                                 <Grid container mb={1} spacing={1}>
-                                    <Grid item xs={12} sm={4} md={4} lg={4}>I think 1 $BLST will be = </Grid>
+                                    <Grid item xs={12} sm={5} md={5} lg={5} sx={{fontWeight:  "bold"}}>I think 1 $BLST will be = </Grid>
                                     <Grid item xs={6} sm={4} md={4} lg={2}>
                                         <PriceTextField
                                             id="outlined-number"
@@ -294,10 +304,8 @@ const JoinDuelModal: React.FC = () => {
                                             sx={{ padding: "0 !important" }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={2} md={4} lg={1}>BUSD</Grid>
+                                    <Grid item xs={6} sm={2} md={4} lg={1} sx={{fontWeight:  "bold"}}>BUSD</Grid>
                                 </Grid>
-                                <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
-                                <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
                                 <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}><FireBtn onClick={handleJoinDuel} sx={{ width: "100px" }} loading={joinDuelLoading}>Join</FireBtn></Box>
                             </Box>
                             : <Box><Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography></Box>

@@ -133,12 +133,12 @@ const CreateDuelModal: React.FC = () => {
         } else {
             setAllIn(!allIn);
         }
-        
+
     }
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
-        if (price > 100 || price*1000 - Math.floor(price*1000) > 0) {
+        if (price > 10000 || price * 1000 - Math.floor(price * 1000) > 0) {
             setEstimatePrice(estimatePrice);
             return;
         }
@@ -178,8 +178,8 @@ const CreateDuelModal: React.FC = () => {
             toast.error("Please provide valid value!");
             return;
         }
-        if ( !allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
-            
+        if (!allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create this duel, you need to have at least ${Math.round(blstAmount)} $BLST in your Unclaimed Wallet.\nGo more hunting!`);
             return;
@@ -205,15 +205,15 @@ const CreateDuelModal: React.FC = () => {
                 alignItem: "center",
                 justifyContent: "space-between"
             }}>
-                <Typography 
-                variant="h4"
-                sx={{
-                    fontWeight: "bold"
-                }}
+                <Typography
+                    variant="h4"
+                    sx={{
+                        fontWeight: "bold"
+                    }}
                 >
                     Create Duel
                 </Typography>
-                <FaTimes 
+                <FaTimes
                     style={{
                         cursor: "pointer",
                         fontSize: "1.8em",
@@ -223,7 +223,7 @@ const CreateDuelModal: React.FC = () => {
             </DialogTitle>
             <DialogContent dividers>
                 <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf()*10000)/100} BUSD</Typography>
+                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf() * 10000) / 100} BUSD</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -277,7 +277,7 @@ const CreateDuelModal: React.FC = () => {
 
                                     <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                                     <Grid container mb={1} spacing={1} >
-                                        <Grid item xs={12} sm={5} md={5} lg={5} sx={{fontWeight: "bold"}}>I think 1 $BLST will be = </Grid>
+                                        <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
                                         <Grid item xs={6} sm={2} md={2} lg={2}>
                                             <PriceTextField
                                                 id="outlined-number"
@@ -288,7 +288,7 @@ const CreateDuelModal: React.FC = () => {
                                                 sx={{ padding: "0 !important" }}
                                             />
                                         </Grid>
-                                        <Grid item xs={6} sm={2} md={2} lg={1} sx={{fontWeight: "bold"}}>BUSD</Grid>
+                                        <Grid item xs={6} sm={2} md={2} lg={1} sx={{ fontWeight: "bold" }}>BUSD</Grid>
                                     </Grid>
                                     <Box sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
                                         <FireBtn

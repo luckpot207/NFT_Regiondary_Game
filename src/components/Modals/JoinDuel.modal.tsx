@@ -127,7 +127,7 @@ const JoinDuelModal: React.FC = () => {
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
-        if (price > 100 || price * 1000 - Math.floor(price * 1000) > 0) {
+        if (price > 10000 || price * 1000 - Math.floor(price * 1000) > 0) {
             setEstimatePrice(estimatePrice);
             return;
         }

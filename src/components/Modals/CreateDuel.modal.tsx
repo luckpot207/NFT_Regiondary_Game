@@ -195,7 +195,7 @@ const CreateDuelModal: React.FC = () => {
             toast.error("Please provide valid value!");
             return;
         }
-        if (!allIn && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
 
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create this duel, you need to have at least ${Math.round(blstAmount)} $BLST in your Unclaimed Wallet.\nGo more hunting!`);
@@ -298,6 +298,15 @@ const CreateDuelModal: React.FC = () => {
                     && !legionsDuelStatus[currentLegionIndex]
                     && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
+                    && <>
+                        <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                    </>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && allIn
                     && <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower}AP</Typography>
                 }
@@ -307,9 +316,14 @@ const CreateDuelModal: React.FC = () => {
                     && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && !allIn
+                    && <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
+                }
+                {
+                    allLegions.length != 0
+                    && !legionsDuelStatus[currentLegionIndex]
+                    && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
+                    && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && <>
-                        <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
-                        <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
                         <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
                         <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                     </>

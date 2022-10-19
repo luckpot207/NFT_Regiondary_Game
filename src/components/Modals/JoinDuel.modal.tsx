@@ -156,7 +156,7 @@ const JoinDuelModal: React.FC = () => {
     }
 
     const handleJoinDuel = async () => {
-        if (duelType && !confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+        if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
             const blstAmount = await getBLSTAmount(web3, feeHandlerContract, divisions[divisionIndex].betPrice);
             toast.error(`To create duel, you need have ${Math.round(blstAmount)} $BLST in your UnClainedWallet`);
             return;
@@ -286,12 +286,17 @@ const JoinDuelModal: React.FC = () => {
                     !legionsDuelStatus[currentLegionIndex]
                     && allLegions.length != 0
                     && divisionIndex == currentDuelDivisionIndex
-                    && duelType
                     && <>
                         <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
-                        <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
-                        <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
-                        <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                    </>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && !duelType
+                    && <>
+                        <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
                     </>
                 }
                 {
@@ -300,7 +305,16 @@ const JoinDuelModal: React.FC = () => {
                     && divisionIndex == currentDuelDivisionIndex
                     && duelType
                     && <>
-                        <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
+                        <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
+                    </>
+                }
+                {
+                    !legionsDuelStatus[currentLegionIndex]
+                    && allLegions.length != 0
+                    && divisionIndex == currentDuelDivisionIndex
+                    && <>
+                        <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
                     </>
                 }
                 {

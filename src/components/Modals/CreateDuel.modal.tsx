@@ -135,7 +135,7 @@ const CreateDuelModal: React.FC = () => {
         if (!allIn) {
             Swal.fire({
                 title: "Warning",
-                text: "Are you sure you want to go All-In with your Legion? \nIf you lose this bet, then you will lose all the Attack Power of your legion and your legion will not be able to hunt anymore.",
+                text: "Are you sure you want to go All-In with your Cyber? \nIf you lose this bet, then you will lose all the Attack Power of your Cyber and your Cyber will not be able to hunt anymore.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#f66810",
@@ -239,8 +239,8 @@ const CreateDuelModal: React.FC = () => {
                 />
             </DialogTitle>
             <DialogContent dividers>
-                <Typography>What do you think the $BLST price in BUSD will be in exactly 24 hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf() * 10000) / 100} BUSD</Typography>
+                <Typography>What do you think the $CRYPTO price in BUSD will be in exactly 24 hours from now?</Typography>
+                <Typography>Currently 1 $CRYPTO = {Math.round(BLSTToUSD.valueOf() * 10000) / 100} BUSD</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -252,7 +252,7 @@ const CreateDuelModal: React.FC = () => {
                     <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>See Price Chart</a>
                 </Box>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6} md={4} lg={4}>Select your Legion :</Grid>
+                    <Grid item xs={12} sm={6} md={4} lg={4}>Select your Cyber :</Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6} >
                         <FormControl>
                             <Select
@@ -299,7 +299,7 @@ const CreateDuelModal: React.FC = () => {
                     && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && <>
-                        <Typography mb={1}>You will bet : ${divisions[divisionIndex].betPrice} ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>You will bet : {divisions[divisionIndex].betPrice} BUSD ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
                     </>
                 }
                 {
@@ -324,8 +324,8 @@ const CreateDuelModal: React.FC = () => {
                     && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && <>
-                        <Typography mb={1}>You might win: ${2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
-                        <Typography mb={1}>To create this Duel, you must bet ${divisions[divisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                        <Typography mb={1}>You might win: {2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} BUSD ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>To create this Duel, you must bet {divisions[divisionIndex].betPrice.valueOf()} BUSD from your Unclaimed Wallet</Typography>
                     </>
                 }
                 {
@@ -335,7 +335,7 @@ const CreateDuelModal: React.FC = () => {
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && <>
                         <Grid container mb={1} spacing={1} >
-                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
+                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $CRYPTO will be = </Grid>
                             <Grid item xs={6} sm={2} md={2} lg={2}>
                                 <PriceTextField
                                     id="outlined-number"
@@ -365,7 +365,7 @@ const CreateDuelModal: React.FC = () => {
                     && !legionsDuelStatus[currentLegionIndex]
                     && ( allLegions[currentLegionIndex].attackPower.valueOf() < 10000
                     || allLegions[currentLegionIndex].attackPower.valueOf() >= 70000 )
-                    && <Typography mt={1} mb={1}>Your legion's Attack Power is too high or low.</Typography>
+                    && <Typography mt={1} mb={1}>Your Cyber's Attack Power is too high or low.</Typography>
                 }
 
             </DialogContent>

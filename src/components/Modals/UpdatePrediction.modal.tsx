@@ -162,7 +162,7 @@ const UpdatePredictionModal: React.FC = () => {
                     <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>Check $CRYPTO Price Now</a>
                 </Box>
                 <Grid container mb={1} spacing={1}>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>I think 1 $BLST will be = </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>I think 1 $CRYPTO will be = </Grid>
                     <Grid item xs={6} sm={4} md={4} lg={2}>
                         <PriceTextField
                             id="outlined-number"

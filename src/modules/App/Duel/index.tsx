@@ -258,11 +258,11 @@ const Duel: React.FC = () => {
                     mr: 1,
                   }}
                 >
-                  You need to create Legion to start Duel!
+                  You need to create Cyber to start Duel!
                 </Box>
                 <NavLink to="/createlegions" className="td-none">
                   <FireBtn>
-                    <LanguageTranslate translateKey="createLegion" />
+                    Create Cyber
                   </FireBtn>
                 </NavLink>
               </Box>
@@ -272,7 +272,7 @@ const Duel: React.FC = () => {
                     variant="h3" sx={{ fontWeight: "bold", mx: 4 }}
                   >
                     {duelStatus == 1
-                      ? "Available Dules when I am on this page"
+                      ? "Available Duels"
                       : duelStatus == 2 ? "Ongoing Duels"
                         : "Duel Results"}
                   </Typography>
@@ -292,14 +292,10 @@ const Duel: React.FC = () => {
               flexDirection: "column",
               width: "100%",
             }}>
-            <Typography sx={{ fontWeight: "bold" }}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
-            <Typography sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
-            <Typography sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
-            <Typography mb={1} sx={{ fontWeight: "bold" }}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
+            <Typography sx={{ fontWeight: "bold" }} mb={2}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
           </Card>
-
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
           <Card
@@ -310,6 +306,8 @@ const Duel: React.FC = () => {
               flexDirection: "column",
               width: "100%",
             }}>
+            <Typography sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
+            <Typography sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
             <Typography sx={{ fontWeight: "bold" }}>Total Ongoing Duels</Typography>
             <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
@@ -324,6 +322,7 @@ const Duel: React.FC = () => {
               flexDirection: "column",
               width: "100%",
             }}>
+            <Typography mb={1} sx={{ fontWeight: "bold" }}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
             <Typography sx={{ fontWeight: "bold" }}>Total Past Duels</Typography>
             <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>

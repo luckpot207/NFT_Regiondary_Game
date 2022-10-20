@@ -234,8 +234,8 @@ const JoinDuelModal: React.FC = () => {
                 />
             </DialogTitle>
             <DialogContent dividers>
-                <Typography>What do you think the $BLST price in BUSD will be in exactly {leftTime} hours from now?</Typography>
-                <Typography>Currently 1 $CRYPTO = ${Math.round(BLSTToUSD.valueOf() * 10000) / 100}</Typography>
+                <Typography>What do you think the $CRYPTO price in BUSD will be in exactly {leftTime} hours from now?</Typography>
+                <Typography>Currently 1 $CRYPTO = {Math.round(BLSTToUSD.valueOf() * 10000) / 100} BUSD</Typography>
                 <Box
                     sx={{
                         padding: "20px",
@@ -246,7 +246,7 @@ const JoinDuelModal: React.FC = () => {
                     <a href="https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae" target="_blank" style={{ color: "#0df8f9", textDecoration: "none" }}>See Price Chart</a>
                 </Box>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6} md={4} lg={4}>Select your Legion :</Grid>
+                    <Grid item xs={12} sm={6} md={4} lg={4}>Select your Cyber :</Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6} >
                         <FormControl>
                             <Select
@@ -280,14 +280,14 @@ const JoinDuelModal: React.FC = () => {
                     !legionsDuelStatus[currentLegionIndex]
                     && allLegions.length != 0
                     && divisionIndex == currentDuelDivisionIndex
-                    && <Typography mt={1} mb={1}>Your Legion's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
+                    && <Typography mt={1} mb={1}>Your Cyber's division : {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K - {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP </Typography>
                 }
                 {
                     !legionsDuelStatus[currentLegionIndex]
                     && allLegions.length != 0
                     && divisionIndex == currentDuelDivisionIndex
                     && <>
-                        <Typography mb={1}>You will bet : ${divisions[currentDuelDivisionIndex].betPrice}  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>You will bet : {divisions[currentDuelDivisionIndex].betPrice} BUSD  ( = {Math.round(blstAmount * 100) / 100} $CRYPTO)</Typography>
                     </>
                 }
                 {
@@ -296,7 +296,7 @@ const JoinDuelModal: React.FC = () => {
                     && divisionIndex == currentDuelDivisionIndex
                     && !duelType
                     && <>
-                        <Typography mb={1}>You might lose up to all of your legion's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
+                        <Typography mb={1}>You might lose up to all of your Cyber's AP ({allLegions[currentLegionIndex].attackPower.valueOf()})</Typography>
                     </>
                 }
                 {
@@ -313,8 +313,8 @@ const JoinDuelModal: React.FC = () => {
                     && allLegions.length != 0
                     && divisionIndex == currentDuelDivisionIndex
                     && <>
-                        <Typography mb={1}>You might win: ${2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8}  ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
-                        <Typography mb={1}>To Join this Duel, you must bet ${divisions[currentDuelDivisionIndex].betPrice.valueOf()} from your Unclaimed Wallet</Typography>
+                        <Typography mb={1}>You might win: {2 * divisions[currentDuelDivisionIndex].betPrice.valueOf() * 0.8} BUSD ( = {Math.round(blstAmountWin * 100) / 100} $CRYPTO)</Typography>
+                        <Typography mb={1}>To Join this Duel, you must bet {divisions[currentDuelDivisionIndex].betPrice.valueOf()} BUSD from your Unclaimed Wallet</Typography>
                     </>
                 }
                 {
@@ -324,7 +324,7 @@ const JoinDuelModal: React.FC = () => {
                     && <>
                         <Typography mb={1}>You have {joinLeftTime} left to join this Duel</Typography>
                         <Grid container mb={1} spacing={1}>
-                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $BLST will be = </Grid>
+                            <Grid item xs={12} sm={5} md={5} lg={5} sx={{ fontWeight: "bold" }}>I think 1 $CRYPTO will be = </Grid>
                             <Grid item xs={6} sm={4} md={4} lg={2}>
                                 <PriceTextField
                                     id="outlined-number"
@@ -344,12 +344,12 @@ const JoinDuelModal: React.FC = () => {
                     !legionsDuelStatus[currentLegionIndex]
                     && allLegions.length != 0
                     && divisionIndex != currentDuelDivisionIndex
-                    && <Typography mt={1} mb={1}>Your Legion is outside of current duel division.</Typography>
+                    && <Typography mt={1} mb={1}>Your Cyber is outside of current duel division.</Typography>
                 }
                 {
                     (legionsDuelStatus[currentLegionIndex]
                     || allLegions.length == 0)
-                    && <Box mt={2} mb={2}>You can't join with this legion.</Box>
+                    && <Box mt={2} mb={2}>You can't join with this Cyber.</Box>
                 }
             </DialogContent>
         </Dialog>

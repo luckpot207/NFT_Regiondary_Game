@@ -258,7 +258,7 @@ const Duel: React.FC = () => {
                     mr: 1,
                   }}
                 >
-                  You need to create Cyber to start Duel!
+                  You need to create a Cyber first to start a Duel!
                 </Box>
                 <NavLink to="/createlegions" className="td-none">
                   <FireBtn>
@@ -294,7 +294,7 @@ const Duel: React.FC = () => {
             }}>
             <Typography sx={{ fontWeight: "bold" }} mb={2}>Your Current Invitations: <span style={{ color: "#24feff" }}>{formatNumber(currentInvitations)}</span></Typography>
             <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => showCreateDuelModal()}>Create Duel</FireBtn></Box>
-            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duel</FireBtn></Box>
+            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(1)}>Available Duels</FireBtn></Box>
           </Card>
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
@@ -308,9 +308,9 @@ const Duel: React.FC = () => {
             }}>
             <Typography sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
             <Typography sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
-            <Typography sx={{ fontWeight: "bold" }}>Total Ongoing Duels</Typography>
             <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
             <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
+            <Typography sx={{ fontWeight: "bold" }}>Total Ongoing Duels</Typography>
           </Card>
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
@@ -323,9 +323,9 @@ const Duel: React.FC = () => {
               width: "100%",
             }}>
             <Typography mb={1} sx={{ fontWeight: "bold" }}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
+            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
             <Typography sx={{ fontWeight: "bold" }}>Total Past Duels</Typography>
-            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
-            <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
+            <Typography sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
           </Card>
         </Grid>
       </Grid>

@@ -197,18 +197,19 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             <Typography variant="subtitle2" className="legion-id-text">
               #{duel.creatorLegion.id}
             </Typography>
-            {!duel.isMine ? (
-              <Typography variant="subtitle2" className="duel-bet-price-text">
-                {duel.type.valueOf() ? "$" + duel.betPrice : "All-in"}
-              </Typography>
-            ) : (
+            <Box className="duel-price-div">
               <img
-                src="/assets/images/execute.png"
-                className="duel-delete-btn"
-                onClick={handleDeleteBtnClick}
-                alt="Cancel"
+                src="/assets/images/allinduel.png"
+                style={{
+                  width: "15px",
+                }}
+                alt="allin"
               />
-            )}
+              &nbsp;
+              <Typography variant="subtitle2" className="duel-bet-price-text">
+                {"$" + duel.betPrice}
+              </Typography>
+            </Box>
           </Card>
           <Box sx={{ textAlign: "center", mt: 1 }}>
             {duel.isMine ? (
@@ -327,9 +328,19 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             <Box className="duel-left-time">
               <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{leftTime}</Typography>
             </Box>
-            <Typography variant="subtitle2" className="duel-bet-price-text">
-              {duel.type.valueOf() ? "$" + duel.betPrice : "All-in"}
-            </Typography>
+            <Box className="duel-price-div">
+              <img
+                src="/assets/images/allinduel.png"
+                style={{
+                  width: "15px",
+                }}
+                alt="allin"
+              />
+              &nbsp;
+              <Typography variant="subtitle2" className="duel-bet-price-text">
+                {"$" + duel.betPrice}
+              </Typography>
+            </Box>
           </Box>
         </>
       ) : (
@@ -472,9 +483,19 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             <Box className="duel-left-time">
               <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{duel.endDateTime}</Typography>
             </Box>
-            <Typography variant="subtitle2" className="duel-bet-price-text">
-              {duel.type.valueOf() ? "$" + duel.betPrice : "All-in"}
-            </Typography>
+            <Box className="duel-price-div">
+              <img
+                src="/assets/images/allinduel.png"
+                style={{
+                  width: "15px",
+                }}
+                alt="allin"
+              />
+              &nbsp;
+              <Typography variant="subtitle2" className="duel-bet-price-text">
+                {"$" + duel.betPrice}
+              </Typography>
+            </Box>
           </Box>
         </>
       )}

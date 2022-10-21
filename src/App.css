@@ -70,8 +70,7 @@
   display: flex;
   position: absolute;
   align-items: center;
-  bottom: 10px;
-  font-size: 1em;
+  bottom: 5px;
 }
 
 .legion-ap-text {
@@ -81,12 +80,19 @@
     1px 1px 0 #000 !important;
 }
 
-.duel-bet-price-text {
+.duel-price-div {
   position: absolute;
   bottom: 8px;
-  right: 20px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.duel-bet-price-text {
   font-weight: bold !important;
-  font-size: 1.4rem !important;
+  font-size: 1.2rem !important;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000 !important;
 }
@@ -120,8 +126,8 @@
 .duel-estimate-price-div {
   width: 100%;
   height: 100%;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -157,6 +163,8 @@
   font-size: 3rem !important;
   font-weight: bold !important;
   color: #39fcff !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000 !important;
 }
 
 @media only screen and (max-width: 800px) {

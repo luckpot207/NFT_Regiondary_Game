@@ -72,7 +72,7 @@ const UpdatePredictionModal: React.FC = () => {
 
     const handleChangeEstimatePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = parseFloat(e.target.value);
-        if (price > 10000 || price * 1000 - Math.floor(price * 1000) > 0) {
+        if (price > 10000 || price * 10000 - Math.floor(price * 10000) > 0) {
             setEstimatePrice(estimatePrice);
             return;
         }

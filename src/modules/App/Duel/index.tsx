@@ -232,7 +232,7 @@ const Duel: React.FC = () => {
   );
 
   const DuelTypeFilterVal = OnlyMineFilterVal.filter(
-    (duel: I_Duel) => duelType == 0 ? true : duel.type == duelType
+    (duel: I_Duel) => duelType == 0 ? true : duelType == 1 ? duel.type : !duel.type
   );
 
   return (

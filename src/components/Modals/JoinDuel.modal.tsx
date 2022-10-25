@@ -305,7 +305,7 @@ const JoinDuelModal: React.FC = () => {
                     && divisionIndex == currentDuelDivisionIndex
                     && duelType
                     && <>
-                        <Typography mb={1}>You might lose up to {allLegions[currentLegionIndex].attackPower.valueOf() / 10}AP</Typography>
+                        <Typography mb={1}>You might lose up to {Math.round(allLegions[currentLegionIndex].attackPower.valueOf() / 10)}AP</Typography>
                     </>
                 }
                 {

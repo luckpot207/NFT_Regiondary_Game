@@ -198,13 +198,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               #{duel.creatorLegion.id}
             </Typography>
             <Box className="duel-price-div">
-              <img
-                src="/assets/images/allinduel.png"
-                style={{
-                  width: "15px",
-                }}
-                alt="allin"
-              />
+              {
+                !duel.type && (
+                  <img
+                    src="/assets/images/allinduel.png"
+                    style={{
+                      width: "15px",
+                    }}
+                    alt="allin"
+                  />
+                )
+              }
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -329,13 +333,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{leftTime}</Typography>
             </Box>
             <Box className="duel-price-div">
-              <img
-                src="/assets/images/allinduel.png"
-                style={{
-                  width: "15px",
-                }}
-                alt="allin"
-              />
+              {
+                !duel.type && (
+                  <img
+                    src="/assets/images/allinduel.png"
+                    style={{
+                      width: "15px",
+                    }}
+                    alt="allin"
+                  />
+                )
+              }
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -484,13 +492,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{duel.endDateTime}</Typography>
             </Box>
             <Box className="duel-price-div">
-              <img
-                src="/assets/images/allinduel.png"
-                style={{
-                  width: "15px",
-                }}
-                alt="allin"
-              />
+              {
+                !duel.type && (
+                  <img
+                    src="/assets/images/allinduel.png"
+                    style={{
+                      width: "15px",
+                    }}
+                    alt="allin"
+                  />
+                )
+              }
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}

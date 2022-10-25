@@ -316,7 +316,7 @@ const CreateDuelModal: React.FC = () => {
                     && allLegions[currentLegionIndex].attackPower.valueOf() >= 10000
                     && allLegions[currentLegionIndex].attackPower.valueOf() <= 70000
                     && !allIn
-                    && <Typography mb={1}>You might lose up to {divisions[divisionIndex].maxAP.valueOf() / 10}AP</Typography>
+                    && <Typography mb={1}>You might lose up to {Math.round(divisions[divisionIndex].maxAP.valueOf() / 10)}AP</Typography>
                 }
                 {
                     allLegions.length != 0

@@ -200,6 +200,9 @@
   .duel-left-time {
     top: 15px;
   }
+  .legion-ap-div {
+    bottom: 10px;
+  }
 }
 
 @media only screen and (min-width: 1300px) {
@@ -207,7 +210,7 @@
     top: 5px;
   }
   .legion-ap-div {
-    bottom: 10px;
+    bottom: 0px;
   }
 }
 

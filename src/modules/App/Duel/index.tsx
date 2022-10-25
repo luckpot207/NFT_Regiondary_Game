@@ -306,11 +306,11 @@ const Duel: React.FC = () => {
               flexDirection: "column",
               width: "100%",
             }}>
-            <Typography sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
-            <Typography sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
-            <Typography mb={2} sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
-            <Box><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
+            <Typography mb={1} sx={{ fontWeight: "bold" }} >Your Ongoing Duels: <span style={{ color: "#24feff" }}>{formatNumber(ongoingDuels)}</span></Typography>
+            <Typography mb={1} sx={{ fontWeight: "bold" }}>{leftTimeForNextDuelResult == "" ? "You are not waiting for any pending results." : "Time Until Your Next Duel Results: " + leftTimeForNextDuelResult}</Typography>
+            <Box  mb={2}><FireBtn  sx={{ width: "150px" }} onClick={() => handleDuelSort(2)}>Ongoing Duels</FireBtn></Box>
             <Typography sx={{ fontWeight: "bold" }}>Total Ongoing Duels</Typography>
+            <Typography sx={{ fontSize: "2em", textAlign: "center", lineHeight: "1em" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalOngoingDuels)}</span></Typography>
           </Card>
         </Grid>
         <Grid item xs={12} md={4} sx={{ display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }}>
@@ -323,9 +323,9 @@ const Duel: React.FC = () => {
               width: "100%",
             }}>
             <Typography mb={1} sx={{ fontWeight: "bold" }}>Your Past Duels: <span style={{ color: "#24feff" }}>{formatNumber(pastDuels)}</span></Typography>
-            <Box mb={1}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
+            <Box mb={2}><FireBtn sx={{ width: "150px" }} onClick={() => handleDuelSort(3)}>Duel Results</FireBtn></Box>
             <Typography sx={{ fontWeight: "bold" }}>Total Past Duels</Typography>
-            <Typography sx={{ fontSize: "2em", textAlign: "center" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
+            <Typography sx={{ fontSize: "2em", textAlign: "center", lineHeight: "1em" }}><span style={{ fontWeight: "bold", color: "#24feff" }}>{formatNumber(totalPastDuels)}</span></Typography>
           </Card>
         </Grid>
       </Grid>

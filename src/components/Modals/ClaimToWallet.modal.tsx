@@ -122,7 +122,6 @@ const ClaimToWalletModal: React.FC = () => {
   };
 
   const handleTransferToWallet = async () => {
-    console.log(claimToWalletAmount);
     if (claimToWalletAmount == 0 || Number.isNaN(claimToWalletAmount)) {
       toast.error("Please input valid amount.");
       return;

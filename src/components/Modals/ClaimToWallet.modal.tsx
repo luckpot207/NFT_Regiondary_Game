@@ -122,7 +122,8 @@ const ClaimToWalletModal: React.FC = () => {
   };
 
   const handleTransferToWallet = async () => {
-    if (claimToWalletAmount == 0) {
+    console.log(claimToWalletAmount);
+    if (claimToWalletAmount == 0 || Number.isNaN(claimToWalletAmount)) {
       toast.error("Please input valid amount.");
       return;
     }
@@ -213,16 +214,16 @@ const ClaimToWalletModal: React.FC = () => {
               sx={{ padding: "0 !important" }}
             />
             <Typography sx={{ fontWeight: "bold" }}>
-              $CRYPTO{" "}
+              BUSD{" "}
             </Typography>
             <MaxCheckBox checked={isMax} onChange={handleIsMax} />
             <Typography>
               Max{" "}
-              {formatNumber(Number(claimedBLST).toFixed(2))} $CRYPTO{" "}
+              {formatNumber(Number(claimedUSD).toFixed(2))} BUSD{" "}
             </Typography>
             <Typography>
               {" "}
-              (= {formatNumber(Number(claimedUSD).toFixed(2))} BUSD)
+              (= {formatNumber(Number(claimedBLST).toFixed(2))} $CRYPTO)
             </Typography>
           </Stack>
           <Box sx={{ textAlign: "center" }}>

@@ -241,6 +241,8 @@ export interface I_ReduxState {
   availableLegionsCount: Number;
   unclaimedUSD: Number;
   unclaimedBLST: Number;
+  claimedUSD: Number;
+  claimedBLST: Number;
   taxLeftDaysForClaim: Number;
   taxLeftDaysForReinvest: Number;
   maxAttackPower: Number;
@@ -423,6 +425,7 @@ export interface I_ReduxState {
   createDuelModalOpen: Boolean;
   joinDuelModalOpen: Boolean;
   updatePredictionModalOpen: Boolean;
+  claimToWalletModalOpen: Boolean;
 
   /// Initial data from the backend
   initialDataLoading: Boolean;

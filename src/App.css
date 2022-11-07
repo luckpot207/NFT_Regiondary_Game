@@ -167,6 +167,14 @@
     1px 1px 0 #000 !important;
 }
 
+.duel-cancel-div {
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+}
+.duel-cancel-div img {
+  cursor: pointer;
+}
 @media only screen and (max-width: 800px) {
   .loser-price-text {
     font-size: 2em !important;

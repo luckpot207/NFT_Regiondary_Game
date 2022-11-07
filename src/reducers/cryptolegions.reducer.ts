@@ -178,6 +178,8 @@ let initialState: I_ReduxState = {
   availableLegionsCount: 0,
   unclaimedUSD: 0,
   unclaimedBLST: 0,
+  claimedUSD: 0,
+  claimedBLST: 0,
   taxLeftDaysForClaim: 0,
   taxLeftDaysForReinvest: 0,
   maxAttackPower: 0,
@@ -350,6 +352,7 @@ let initialState: I_ReduxState = {
   createDuelModalOpen: false,
   joinDuelModalOpen: false,
   updatePredictionModalOpen: false,
+  claimToWalletModalOpen: false,
 
   /// Initial data from the backend
   initialDataLoading: false,

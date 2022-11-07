@@ -22,6 +22,7 @@ import {
   getUSDAmount,
   getVoucherWalletUSDBalance,
   getWarriorBalance,
+  getClaimedUSD,
 } from "../web3hooks/contractFunctions";
 import { getSamaritanStarsWithPercentAndFirstHuntTime } from "../utils/utils";
 import { addSamaritanStarHolder } from "../reducers/cryptolegions.reducer";
@@ -40,7 +41,14 @@ export const getUserInfo = async (
       bloodstoneContract,
       account
     );
+    
     const { busd, blst } = await getUnclaimedWallet(web3, rewardpoolContract, account);
+    const claimedUSD = await getClaimedUSD(rewardpoolContract, account);
+    const claimedBLST = await getBLSTAmount(
+      web3,
+      feehandlerContract,
+      claimedUSD
+    );
     const taxLeftDaysForClaim = (
       await getTaxLeftDays(rewardpoolContract, account)
     )[0];
@@ -96,6 +104,8 @@ export const getUserInfo = async (
         BLSTBalance,
         unclaimedUSD: busd,
         unclaimedBLST: blst,
+        claimedUSD: claimedUSD,
+        claimedBLST: claimedBLST,
         currentSamaritanStars,
         reinvestedWalletBLST,
         reinvestedWalletUSD,
@@ -143,6 +153,12 @@ export const getInventory = async (
       rewardpoolContract,
       account
     );
+    const claimedUSD = await getClaimedUSD(rewardpoolContract, account);
+    const claimedBLST = await getBLSTAmount(
+      web3,
+      feehandlerContract,
+      claimedUSD
+    );
     const maxAttackPower = await getMaxAttackPower(legionContract, account);
     const USDToBLST = await getBLSTAmount(web3, feehandlerContract, 1);
     const BLSTToUSD = await getUSDAmount(web3, feehandlerContract, 1);
@@ -159,6 +175,8 @@ export const getInventory = async (
         legionBalance,
         availableLegionsCount,
         unclaimedBLST: blst,
+        claimedUSD: claimedUSD,
+        claimedBLST: claimedBLST,
         maxAttackPower,
         USDToBLST,
         BLSTToUSD,

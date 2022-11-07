@@ -213,10 +213,28 @@ export const getWalletHuntPendingMonsterId = async (contract, account) => {
 
 // Reward Pool
 export const getUnclaimedWallet = async (web3, contract, account) => {
+  console.log("blst balance:", account);
   const res = await contract.methods.getUnclaimedWallet(account).call();
-  console.log("account", account);
+  console.log("blst balance:", res);
   return {busd: res[0] / 10**18, blst: res[1] / 10**18 };
 };
+
+export const getClaimedUSD = async (contract, account) => {
+  const res = await contract.methods.claimedUSD(account).call();
+  return res / 10**18;
+}
+
+export const claimToWallet = async (web3, contract, account, usdAmount) => {
+  const res = await contract.methods
+  .claimToWallet(web3.utils.toWei(usdAmount, "ether"))
+  .send({from: account});
+  return res;
+}
+
+export const lastClaimedTime = async (contract, account) => {
+  const res = await contract.methods.lastClaimedTime(account).call();
+  return res;
+}
 
 export const getTaxLeftDays = async (contract, account) => {
   const res = await contract.methods.getTaxLeftDays(account).call();

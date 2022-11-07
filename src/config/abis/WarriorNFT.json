@@ -999,6 +999,11 @@
         "internalType": "uint8",
         "name": "level",
         "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "isWhitelisted",
+        "type": "bool"
       }
     ],
     "name": "whitelist",

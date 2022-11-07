@@ -22,12 +22,8 @@ type Props = {
 const DuelCard: React.FC<Props> = ({ duel }) => {
   // Hook info
   const dispatch = useDispatch();
-  const {
-    duelStatus,
-    allLegions,
-    divisions,
-    allDuels,
-  } = AppSelector(gameState);
+  const { duelStatus, allLegions, divisions, allDuels } =
+    AppSelector(gameState);
   const { account } = useWeb3React();
   const duelContract = useDuelSystem();
   const legionContract = useLegion();
@@ -70,13 +66,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     try {
       dispatch(
         updateState({
-          cancelDuelLoading: true
+          cancelDuelLoading: true,
         })
       );
       const res = await cancelDuel(duelContract, account, duel.duelId);
       dispatch(
         updateState({
-          cancelDuelLoading: false
+          cancelDuelLoading: false,
         })
       );
       toast.success("Success");
@@ -84,7 +80,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     } catch (e) {
       dispatch(
         updateState({
-          cancelDuelLoading: false
+          cancelDuelLoading: false,
         })
       );
       toast.error("Network issue");
@@ -124,7 +120,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
           ) {
             setDuelFlag(true);
           }
-        })
+        });
       }
     });
   }, [allDuels]);
@@ -135,12 +131,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime();
       setLeftTime(
         "" +
-        Math.floor(left_time / (60 * 60 * 1000)) +
-        "h " +
-        Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
-        "m " +
-        Math.floor((left_time % (60 * 1000)) / 1000) +
-        "s"
+          Math.floor(left_time / (60 * 60 * 1000)) +
+          "h " +
+          Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
+          "m " +
+          Math.floor((left_time % (60 * 1000)) / 1000) +
+          "s"
       );
     }, 1000);
     return () => clearInterval(leftTimer);
@@ -150,12 +146,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     const priceDifference1 =
       Math.round(
         Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) *
-        100
+          100
       ) / 100;
     const priceDifference2 =
       Math.round(
         Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) *
-        100
+          100
       ) / 100;
     if (priceDifference1 == priceDifference2) {
       return 0;
@@ -197,18 +193,26 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             <Typography variant="subtitle2" className="legion-id-text">
               #{duel.creatorLegion.id}
             </Typography>
+            <Box className="duel-cancel-div">
+              <img
+                src="/assets/images/execute.png"
+                style={{
+                  width: "1.5em",
+                }}
+                alt="allin"
+                onClick={handleDeleteBtnClick}
+              />
+            </Box>
             <Box className="duel-price-div">
-              {
-                !duel.type && (
-                  <img
-                    src="/assets/images/allinduel.png"
-                    style={{
-                      width: "15px",
-                    }}
-                    alt="allin"
-                  />
-                )
-              }
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -302,14 +306,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             </Card>
             <Box className="duel-estimate-price-div">
-              <Typography
-                className="estimate-price"
-              >
+              <Typography className="estimate-price">
                 ${duel.creatorEstmatePrice}
               </Typography>
-              <Typography
-                className="estimate-price"
-              >
+              <Typography className="estimate-price">
                 ${duel.joinerEstmatePrice}
               </Typography>
             </Box>
@@ -330,20 +330,23 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               />
             </Box>
             <Box className="duel-left-time">
-              <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{leftTime}</Typography>
+              <Typography
+                className="duel-left-time-text"
+                sx={{ fontWeight: "bold" }}
+              >
+                {leftTime}
+              </Typography>
             </Box>
             <Box className="duel-price-div">
-              {
-                !duel.type && (
-                  <img
-                    src="/assets/images/allinduel.png"
-                    style={{
-                      width: "15px",
-                    }}
-                    alt="allin"
-                  />
-                )
-              }
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -375,8 +378,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     duelResult() == 0
                       ? "orange"
                       : duelResult() == 1
-                        ? "red"
-                        : "green",
+                      ? "red"
+                      : "green",
                 }}
               />
               <Typography variant="h6" className="legion-name-text">
@@ -409,8 +412,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     duelResult() == 0
                       ? "orange"
                       : duelResult() == 1
-                        ? "green"
-                        : "red",
+                      ? "green"
+                      : "red",
                 }}
               />
               <Typography variant="h6" className="legion-name-text">
@@ -436,8 +439,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                   duelResult() == 0
                     ? "draw-price-text"
                     : duelResult() == 1
-                      ? "loser-price-text"
-                      : "winner-price-text"
+                    ? "loser-price-text"
+                    : "winner-price-text"
                 }
               >
                 ${duel.creatorEstmatePrice}
@@ -447,8 +450,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                   duelResult() == 0
                     ? "draw-price-text"
                     : duelResult() == 2
-                      ? "loser-price-text"
-                      : "winner-price-text"
+                    ? "loser-price-text"
+                    : "winner-price-text"
                 }
               >
                 ${duel.joinerEstmatePrice}
@@ -482,27 +485,28 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 left: "0%",
               }}
             >
-              <Typography
-                className="duel-result-price-text"
-              >
+              <Typography className="duel-result-price-text">
                 $CRYPTO price was {duel.result}
               </Typography>
             </Box>
             <Box className="duel-left-time">
-              <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{duel.endDateTime}</Typography>
+              <Typography
+                className="duel-left-time-text"
+                sx={{ fontWeight: "bold" }}
+              >
+                {duel.endDateTime}
+              </Typography>
             </Box>
             <Box className="duel-price-div">
-              {
-                !duel.type && (
-                  <img
-                    src="/assets/images/allinduel.png"
-                    style={{
-                      width: "15px",
-                    }}
-                    alt="allin"
-                  />
-                )
-              }
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}

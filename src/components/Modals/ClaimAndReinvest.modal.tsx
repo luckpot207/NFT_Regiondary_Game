@@ -35,6 +35,7 @@ import {
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { MdClose } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const ClaimAndReinvestModal: React.FC = () => {
   // Hook info
@@ -49,6 +50,7 @@ const ClaimAndReinvestModal: React.FC = () => {
     claimMinTaxPercent,
     futureSamaritanStarsWhenClaim,
     futureSamaritanStarsWhenReinvest,
+    claimedUSD,
   } = AppSelector(gameState);
 
   const theme = useTheme();
@@ -181,6 +183,12 @@ const ClaimAndReinvestModal: React.FC = () => {
   };
 
   const handleClaimAndReinvestReward = async (reinvested: boolean) => {
+    if (Number(claimedUSD) != 0) {
+      toast.error(
+        "You need to empty your Claim Wallet first, before claiming again."
+      );
+      return;
+    }
     setClaimAndReinvestLoading(true);
     try {
       let amountsForReinvesting = await getAmountsForClaimingAndReinvesting(

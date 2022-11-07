@@ -65,6 +65,7 @@ const ClaimToWalletModal: React.FC = () => {
   const [isMax, setIsMax] = useState<boolean>(false);
   const [lastClaimTime, setLastClaimTime] = useState<string>("");
   const [leftTime, setLeftTime] = useState<string>("");
+  const [transferLoading, setTransferLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (isMax) {
@@ -127,6 +128,7 @@ const ClaimToWalletModal: React.FC = () => {
       return;
     }
     try {
+      setTransferLoading(true);
       const busdAmount = await getUSDAmount(
         web3,
         feehandlerContract,
@@ -139,8 +141,10 @@ const ClaimToWalletModal: React.FC = () => {
         busdAmount
       );
       toast.success("Successfully transfered");
+      setTransferLoading(false);
       handleClose();
     } catch (e) {
+      setTransferLoading(false);
       console.log(e);
     }
   };
@@ -226,7 +230,7 @@ const ClaimToWalletModal: React.FC = () => {
             </Typography>
           </Stack>
           <Box sx={{ textAlign: "center" }}>
-            <FireBtn onClick={handleTransferToWallet}>
+            <FireBtn onClick={handleTransferToWallet} loading={transferLoading}>
               Transfer
             </FireBtn>
           </Box>

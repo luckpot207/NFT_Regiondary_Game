@@ -232,7 +232,7 @@ const TopBar: React.FC = () => {
             }}
           >
             <img
-              src="/assets/images/logo_dashboard.png"
+              src="/assets/images/logo.png"
               style={{ height: "55px" }}
               alt="logo"
             />

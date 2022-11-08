@@ -138,15 +138,15 @@ const vote = {
 };
 
 const color = {
-  color1: "#e89f38",
-  color2: "#f66810",
-  color3: "#a44916",
+  color1: "#24feff",
+  color2: "#2da6f7",
+  color3: "#195db3",
   bg1: "#121212",
   bg2: "#161616",
   bg3: "linear-gradient(0deg,hsl(0deg 0% 12%) 0%,hsl(0deg 0% 7%) 100%)",
   bg4: "#16161699",
   bg5: "#161616cc",
-  bg6: "linear-gradient(360deg, #622500, #ffffff29),radial-gradient(#953e0a, #9ca90b)",
+  bg6: "linear-gradient(360deg, #174f95, #ffffff29),radial-gradient(#12273c, #75a3c5)",
 };
 
 const alarmAudio = "assets/audio/busdclaimedalarm.mp3";

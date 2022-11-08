@@ -8,7 +8,7 @@ export const themeConfig = createTheme({
   components: {},
   palette: {
     primary: {
-      main: "#f66810",
+      main: "#2da6f7",
     },
     mode: "dark",
   },

@@ -1,20 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
+
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 import { Web3ReactProvider } from "@web3-react/core";
-import { getLibrary } from "./wallet";
 import { Provider } from "react-redux";
-import { store } from "./store";
 import { CssBaseline } from "@mui/material";
 import { themeConfig } from "./config/theme.config";
-import { MoralisProvider } from "react-moralis";
-import gameVersion from "./constants/gameVersion";
 
-const { moralisServerUrl, moralisAppId } = gameVersion;
+import "./index.css";
+import App from "./App";
+import { getLibrary } from "./wallet";
+import { store } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>

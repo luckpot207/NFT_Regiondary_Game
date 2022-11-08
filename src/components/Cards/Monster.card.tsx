@@ -1,3 +1,6 @@
+import React, { useEffect, useState, memo } from "react";
+import { useDispatch } from "react-redux";
+import { useWeb3React } from "@web3-react/core";
 import {
   Button,
   Card,
@@ -6,64 +9,46 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { checkHuntRevealStatus } from "../../helpers/hunt";
-import { I_Legion, I_Monster } from "../../interfaces";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
-import {
-  formatNumber,
-  getMonsterGifImage,
-  getMonsterJpgImage,
-  getTranslation,
-  toCapitalize,
-} from "../../utils/utils";
+import { formatNumber, getTranslation, toCapitalize } from "../../utils/utils";
+import { useLegion, useVRF } from "../../web3hooks/useContract";
+import { ILegion, IMonster } from "../../types";
+import { commonState } from "../../reducers/common.reduer";
 import {
   getCanAttackMonster25,
-  getWalletHuntPending,
   getWalletHuntPendingLegionId,
   getWalletHuntPendingMonsterId,
   getWarriorCountForMonster25,
   initiateHunt,
-} from "../../web3hooks/contractFunctions";
-import { useLegion, useVRF, useWeb3 } from "../../web3hooks/useContract";
-import Tutorial from "../Tutorial/Tutorial";
-import LanguageTranslate from "../UI/LanguageTranslate";
+} from "../../web3hooks/contractFunctions/legion.contract";
+import { getWalletHuntPending } from "../../web3hooks/contractFunctions/common.contract";
+import { updateLegionState } from "../../reducers/legion.reducer";
+import HuntService from "../../services/hunt.service";
 
 type Props = {
-  monster: I_Monster;
+  monster: IMonster;
   isHuntable: Boolean;
-  legion: I_Legion;
+  legion: ILegion;
 };
 
 const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
-  // Hook info
   const dispatch = useDispatch();
-  const { language, showAnimation, itemnames, presentItem } =
-    AppSelector(gameState);
+  const { showAnimation, presentItem } = AppSelector(commonState);
 
-  // Account & web3
   const { account } = useWeb3React();
-  const web3 = useWeb3();
 
-  // Contracts
   const legionContract = useLegion();
   const vrfContract = useVRF();
 
-  // State
   const {
     id: monsterID,
     percent,
     attackPower,
     BLSTReward,
     BUSDReward,
+    name,
   } = monster;
-
-  const name = itemnames.find(
-    (item) => item.type === "monster" && item.number === monsterID
-  )?.name;
 
   let legionID = "0";
   let legionAttackPower = 0;
@@ -87,10 +72,10 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
     bonus = expBonus + Number(percent) > 89 ? 89 - Number(percent) : expBonus;
   }
 
-  // Functions
-  const handleImageLoaded = () => {
-    setLoaded(true);
-  };
+  // Use Effect
+  useEffect(() => {
+    getBalance();
+  }, [monsterID, account]);
 
   const getBalance = async () => {
     try {
@@ -106,11 +91,14 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
     } catch (error) {}
   };
 
+  const handleImageLoaded = () => {
+    setLoaded(true);
+  };
   const handleInitialHunt = async () => {
     try {
       let huntPending = await getWalletHuntPending(legionContract, account);
       dispatch(
-        updateState({
+        updateLegionState({
           huntPending,
           huntingLegionId: parseInt(legionID),
           huntingMonsterId: monsterID,
@@ -118,7 +106,7 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
       );
       if (!huntPending) {
         dispatch(
-          updateState({
+          updateLegionState({
             initialHuntLoading: true,
           })
         );
@@ -133,9 +121,8 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
           legionContract,
           account
         );
-        console.log(huntingLegionId, huntingMonsterId);
         dispatch(
-          updateState({
+          updateLegionState({
             huntPending,
             initialHuntLoading: false,
             huntingLegionId,
@@ -143,22 +130,22 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
             huntingSuccessPercent: Number(percent) + Number(bonus),
           })
         );
-        checkHuntRevealStatus(dispatch, account, legionContract, vrfContract);
+        HuntService.checkHuntRevealStatus(
+          dispatch,
+          account,
+          legionContract,
+          vrfContract
+        );
       }
     } catch (error) {
       console.log(error);
     }
     dispatch(
-      updateState({
+      updateLegionState({
         initialHuntLoading: false,
       })
     );
   };
-
-  // Use Effect
-  useEffect(() => {
-    getBalance();
-  }, [monsterID]);
 
   return (
     <Card sx={{ position: "relative", textAlign: "center" }}>
@@ -177,34 +164,28 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
         <Grid container spacing={2} sx={{ justifyContent: "space-around" }}>
           <Grid item>
             <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
-              <LanguageTranslate translateKey="min" />{" "}
-              <LanguageTranslate translateKey="ap" />
+              {getTranslation("min")} {getTranslation("ap")}
             </Typography>
             <Typography variant="h6">{attackPower}</Typography>
           </Grid>
           {monsterID !== 25 && (
             <Grid item>
-              <Typography variant="h6">
-                <LanguageTranslate translateKey="base" /> %
-              </Typography>
+              <Typography variant="h6">{getTranslation("base")} %</Typography>
               <Typography variant="h6">{percent}</Typography>
             </Grid>
           )}
           <Grid item>
             <Typography variant="h6">
               {monsterID === 25 ? (
-                <LanguageTranslate translateKey="unlockStatus" />
+                getTranslation("unlockStatus")
               ) : (
-                <>
-                  <LanguageTranslate translateKey="bonus" /> %
-                </>
+                <>{getTranslation("bonus")} %</>
               )}
             </Typography>
             <Typography variant="h6">
               {monsterID === 25 ? (
                 <>
-                  {warriorCnt}/{warriorBaseCnt}{" "}
-                  <LanguageTranslate translateKey="warriorsUsed" />
+                  {warriorCnt}/{warriorBaseCnt} {getTranslation("warriorsUsed")}
                 </>
               ) : (
                 bonus
@@ -278,13 +259,12 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
       >
         <Grid item>
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-            {Number(percent) + Number(bonus)}%{" "}
-            <LanguageTranslate translateKey="toWin" />
+            {Number(percent) + Number(bonus)}% {getTranslation("toWin")}
           </Typography>
         </Grid>
         <Grid item>
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            {formatNumber(BLSTReward.toFixed(2))} $BLST
+            {formatNumber(BLSTReward.toFixed(2))} ${getTranslation("blst")}
           </Typography>
           <Typography
             sx={{ color: "gray", fontSize: "14px", fontWeight: "bold" }}
@@ -293,38 +273,19 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
           </Typography>
         </Grid>
         <Grid item>
-          {monsterID === 1 ? (
-            <Tutorial
-              curStep={18}
-              placement="bottom-end"
-              isHuntable={isHuntable}
-            >
-              <Button
-                variant="outlined"
-                disabled={!isHuntable}
-                onClick={() => handleInitialHunt()}
-                id="hunt-monster1"
-              >
-                <LanguageTranslate translateKey="hunt" />
-              </Button>
-            </Tutorial>
-          ) : (
-            <Button
-              variant="outlined"
-              disabled={
-                monsterID === 25
-                  ? !isHuntable || !canHuntMonster25
-                  : !isHuntable
-              }
-              onClick={() => handleInitialHunt()}
-            >
-              <LanguageTranslate translateKey="hunt" />
-            </Button>
-          )}
+          <Button
+            variant="outlined"
+            disabled={
+              monsterID === 25 ? !isHuntable || !canHuntMonster25 : !isHuntable
+            }
+            onClick={() => handleInitialHunt()}
+          >
+            {getTranslation("hunt")}
+          </Button>
         </Grid>
       </Grid>
     </Card>
   );
 };
 
-export default MonsterCard;
+export default memo(MonsterCard);

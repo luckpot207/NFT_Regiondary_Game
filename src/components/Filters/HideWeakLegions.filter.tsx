@@ -1,25 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
-import { AppSelector } from "../../store";
 import { Box, Checkbox, Typography } from "@mui/material";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { AppSelector } from "../../store";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { getTranslation } from "../../utils/utils";
 
 const HideWeakLegionsFilter: React.FC = () => {
   const dispatch = useDispatch();
-  const { hideWeakLegion } = AppSelector(gameState);
+  const { hideWeakLegion } = AppSelector(filterAndPageState);
   const handleFilter = () => {
-    dispatch(updateState({ hideWeakLegion: !hideWeakLegion }));
+    dispatch(updateFilterAndPageState({ hideWeakLegion: !hideWeakLegion }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ hideWeakLegion: false }));
+    dispatch(updateFilterAndPageState({ hideWeakLegion: false }));
   }, []);
 
   return (
     <Box>
       <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="hideweaklegions" />:
+        {getTranslation("hideweaklegions")}
       </Typography>
       <Checkbox checked={hideWeakLegion.valueOf()} onChange={handleFilter} />
     </Box>

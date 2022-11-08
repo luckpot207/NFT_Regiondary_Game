@@ -1,6 +1,6 @@
-import { Box, Grid } from "@mui/material";
 import React from "react";
 import ReactPlayer from "react-player";
+import { Box, Grid } from "@mui/material";
 
 type Props = {
   link: string | undefined;

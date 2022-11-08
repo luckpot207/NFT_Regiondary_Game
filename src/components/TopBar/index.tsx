@@ -1,4 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useWeb3React } from "@web3-react/core";
+import MenuIcon from "@mui/icons-material/Menu";
+import BadgeIcon from "@mui/icons-material/Badge";
 import {
   AppBar,
   Box,
@@ -11,63 +16,50 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import { navConfig } from "../../config/nav.config";
-import { NavLink } from "react-router-dom";
-import Tutorial from "../Tutorial/Tutorial";
 import FireBtn from "../Buttons/FireBtn";
 import { AppDispatch, AppSelector } from "../../store";
-import {
-  gameState,
-  updateState,
-  confirmSamaritanStarHolder,
-  getVoteStatus,
-  addSamaritanStarHolder,
-  getReincarnation,
-  getVoteByAddress,
-} from "../../reducers/cryptolegions.reducer";
 import { formatNumber, getTranslation, showWallet } from "../../utils/utils";
-import MenuIcon from "@mui/icons-material/Menu";
-import BadgeIcon from "@mui/icons-material/Badge";
-import { useWeb3React } from "@web3-react/core";
 import NavList from "../Nav/NavList";
-import { useDispatch } from "react-redux";
 import {
   useBeast,
   useBloodstone,
   useFeeHandler,
-  useLegion,
   useRewardPool,
   useVRF,
   useWarrior,
   useWeb3,
 } from "../../web3hooks/useContract";
-import {
-  getNadodoWatch,
-  getSummonPrices,
-  getUserInfo,
-} from "../../helpers/basicInfo";
-import { checkMintBeastPending } from "../../helpers/beast";
-import { checkMintWarriorPending } from "../../helpers/warrior";
+import BeastService from "../../services/beast.service";
+import WarriorService from "../../services/warrior.service";
+import { getVoteByAddress, getVoteStatus } from "../../reducers/vote.reducer";
+import CommonService from "../../services/common.service";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { inventoryState } from "../../reducers/inventory.reducer";
+import InventoryService from "../../services/inventory.service";
 import ClaimAndReinvestModal from "../Modals/ClaimAndReinvest.modal";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import ClaimToWalletModal from "../Modals/ClaimToWallet.modal";
+import constants from "../../constants";
 
 const TopBar: React.FC = () => {
-  // Hooks
+  let getBalanceTimer: any = 0;
+
   const dispatch: AppDispatch = useDispatch();
   const theme: any = useTheme();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
+  const { isSideBarOpen, reloadStatusTime } = AppSelector(commonState);
+
   const {
-    language,
-    isSideBarOpen,
     BLSTBalance,
     unclaimedBLST,
-    reloadContractStatus,
+    claimedBLST,
     reinvestedWalletBLST,
-    reinvestedWalletUSD,
     currentSamaritanStars,
-    hadSamaritanStar,
-    unclaimedUSD,
-  } = AppSelector(gameState);
+  } = AppSelector(inventoryState);
+
+  const unclaimedBLSTFromWei = Number(unclaimedBLST) / 10 ** 18;
 
   // Account & Web3
   const { account } = useWeb3React();
@@ -80,36 +72,62 @@ const TopBar: React.FC = () => {
   const bloodstoneContract = useBloodstone();
   const beastContract = useBeast();
   const warriorContract = useWarrior();
-  const vrfContract = useVRF();
 
-  // States
   useEffect(() => {
     accountRef.current = account;
   }, [account]);
-  // Functions
-  const getBalance = async () => {
 
+  useEffect(() => {
+    getBalance();
+  }, [reloadStatusTime]);
+
+  useEffect(() => {
+    dispatch(getVoteByAddress({ address: account as string }));
+    CommonService.getNadodoWatch(
+      dispatch,
+      feehandlerContract,
+      bloodstoneContract
+    );
+    getBalance();
+    getBalanceTimer = setInterval(() => {
+      getBalance();
+      console.log("I am in the timer!");
+    }, 5000);
+    return () => {
+      clearInterval(getBalanceTimer);
+    };
+  }, []);
+
+  const getBalance = async () => {
     const getAccount = () => accountRef.current;
-    getSummonPrices(dispatch, web3, feehandlerContract);
-    getUserInfo(
+    CommonService.getSummonPrices(dispatch, web3, feehandlerContract);
+    InventoryService.getWalletAndUnclaimedBalance(
       dispatch,
       web3,
-      getAccount(),
+      account,
       bloodstoneContract,
       rewardpoolContract,
       feehandlerContract
     );
-    getNadodoWatch(dispatch, feehandlerContract, bloodstoneContract);
-    checkMintBeastPending(dispatch, account, beastContract);
-    checkMintWarriorPending(dispatch, account, warriorContract);
-    dispatch(getReincarnation({ version: 3 }));
+    InventoryService.getReinvestedAndVoucherBalance(
+      dispatch,
+      web3,
+      account,
+      rewardpoolContract,
+      feehandlerContract
+    );
+    InventoryService.getClaimAndReinvestInfo(
+      dispatch,
+      account,
+      rewardpoolContract
+    );
+    BeastService.checkMintBeastPending(dispatch, getAccount(), beastContract);
+    WarriorService.checkMintWarriorPending(
+      dispatch,
+      getAccount(),
+      warriorContract
+    );
     dispatch(getVoteStatus());
-    ///
-    if (!hadSamaritanStar && currentSamaritanStars >= 4) {
-      dispatch(addSamaritanStarHolder({ account: account as string }));
-    } else if (hadSamaritanStar) {
-      dispatch(confirmSamaritanStarHolder({ account: account as string }));
-    }
   };
 
   const toggleDrawer = (open: boolean) => (event: any) => {
@@ -120,7 +138,7 @@ const TopBar: React.FC = () => {
     ) {
       return;
     }
-    dispatch(updateState({ isSideBarOpen: open }));
+    dispatch(updateCommonState({ isSideBarOpen: open }));
   };
 
   const renderStars = () => {
@@ -150,25 +168,11 @@ const TopBar: React.FC = () => {
   };
 
   const handleOpenModal = () => {
-    dispatch(updateState({ claimAndReinvestModalOpen: true }));
+    dispatch(updateModalState({ claimAndReinvestModalOpen: true }));
   };
 
-  // UseEffect
-  useEffect(() => {
-    getBalance();
-  }, [reloadContractStatus]);
-
-  React.useEffect(() => {
-    dispatch(getVoteByAddress({ address: account as string }));
-    realTimeUpdate();
-  }, []);
-
-  const realTimeUpdate = () => {
-    console.log("-----------realTimeUpdate----------");
-    setTimeout(() => {
-      getBalance();
-      realTimeUpdate();
-    }, 20000);
+  const handleClaimToWalletModalOpen = () => {
+    dispatch(updateModalState({ claimToWalletModalOpen: true }));
   };
 
   return (
@@ -228,7 +232,7 @@ const TopBar: React.FC = () => {
             }}
           >
             <img
-              src="/assets/images/logo.png"
+              src="/assets/images/logo_dashboard.png"
               style={{ height: "55px" }}
               alt="logo"
             />
@@ -236,24 +240,33 @@ const TopBar: React.FC = () => {
           <Box sx={{ flexGrow: 0, ml: { xs: "auto" } }}>
             {isSmallerThanMD ? (
               <Box>
-                <Box sx={{ mb: 1 }}>
+                <Box sx={{ mb: 1, display: "flex", justifyContent: "center" }}>
                   <FireBtn
                     sx={{
                       mr: { xs: 1, md: 1 },
                       fontSize: { xs: "0.7rem", md: "1rem" },
                       px: 2,
                       "&:hover": {
-                        background:
-                          "linear-gradient(360deg, #622500, #ffffff29),radial-gradient(#953e0a, #9ca90b)",
+                        background: constants.color.bg6,
                       },
-                      background:
-                        "linear-gradient(360deg, #622500, #ffffff29),radial-gradient(#953e0a, #9ca90b)",
+                      background: constants.color.bg6,
                     }}
                     size="small"
                   >
                     {renderStars()}
-                    {formatNumber(Number(reinvestedWalletBLST).toFixed(2))}{" "}
-                    $BLST
+                    {formatNumber(Number(reinvestedWalletBLST).toFixed(2))}
+                  </FireBtn>
+                  <FireBtn
+                    sx={{
+                      mr: { xs: 1, md: 1 },
+                      fontSize: { xs: "0.7rem", md: "1rem" },
+                      px: 2,
+                    }}
+                    onClick={() => handleClaimToWalletModalOpen()}
+                    size="small"
+                  >
+                    {getTranslation("claim")}{" "}
+                    {formatNumber(Number(Number(claimedBLST)).toFixed(2))}
                   </FireBtn>
                   <FireBtn
                     sx={{
@@ -264,8 +277,10 @@ const TopBar: React.FC = () => {
                     onClick={() => handleOpenModal()}
                     size="small"
                   >
-                    <LanguageTranslate translateKey="claim" />{" "}
-                    {formatNumber(Number(unclaimedBLST).toFixed(2))} $ BLST
+                    {getTranslation("unclaimedwallet")}{" "}
+                    {formatNumber(
+                      Number(Number(unclaimedBLSTFromWei)).toFixed(2)
+                    )}
                   </FireBtn>
                 </Box>
                 <Box
@@ -290,17 +305,6 @@ const TopBar: React.FC = () => {
                     }}
                   >
                     {formatNumber(Number(BLSTBalance).toFixed(2))}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontSize: {
-                        xs: "0.8rem",
-                        md: "1rem",
-                      },
-                    }}
-                  >
-                    $BLST
                   </Typography>
                   <Button
                     variant="contained"
@@ -353,31 +357,46 @@ const TopBar: React.FC = () => {
                 <FireBtn
                   sx={{
                     mr: { xs: 0, md: 1 },
-                    fontSize: { xs: "0.7rem", md: "1rem" },
+                    fontSize: { xs: "0.7rem", md: "0.8rem" },
                     px: 2,
                     "&:hover": {
-                      background:
-                        "linear-gradient(360deg, #622500, #ffffff29),radial-gradient(#953e0a, #9ca90b)",
+                      background: constants.color.bg6,
                     },
-                    background:
-                      "linear-gradient(360deg, #622500, #ffffff29),radial-gradient(#953e0a, #9ca90b)",
+                    background: constants.color.bg6,
                   }}
                   size="small"
                 >
                   {renderStars()}
-                  {formatNumber(Number(reinvestedWalletBLST).toFixed(2))} $BLST
+                  {formatNumber(Number(reinvestedWalletBLST).toFixed(2))} $
+                  {getTranslation("blst")}
+                </FireBtn>
+                <FireBtn
+                  sx={{
+                    mr: { xs: 0, md: 1 },
+                    fontSize: { xs: "0.7rem", md: "0.8rem" },
+                    px: 2,
+                  }}
+                  onClick={() => handleClaimToWalletModalOpen()}
+                  size="small"
+                >
+                  {getTranslation("claim")}{" "}
+                  {formatNumber(Number(Number(claimedBLST)).toFixed(2))} $
+                  {getTranslation("blst")}
                 </FireBtn>
                 <FireBtn
                   sx={{
                     mr: { xs: 0, md: 5 },
-                    fontSize: { xs: "0.7rem", md: "1rem" },
+                    fontSize: { xs: "0.7rem", md: "0.8rem" },
                     px: 2,
                   }}
                   onClick={() => handleOpenModal()}
                   size="small"
                 >
-                  <LanguageTranslate translateKey="claim" />{" "}
-                  {formatNumber(Number(unclaimedBLST).toFixed(2))} $ BLST
+                  {getTranslation("unclaimedwallet")}{" "}
+                  {formatNumber(
+                    Number(Number(unclaimedBLSTFromWei)).toFixed(2)
+                  )}{" "}
+                  ${getTranslation("blst")}
                 </FireBtn>
                 <Box
                   sx={{
@@ -407,26 +426,15 @@ const TopBar: React.FC = () => {
                           },
                         }}
                       >
-                        {formatNumber(Number(BLSTBalance).toFixed(2))}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: {
-                            xs: "0.8rem",
-                            md: "1rem",
-                          },
-                        }}
-                      >
-                        $BLST
+                        {formatNumber(Number(BLSTBalance).toFixed(2))} $
+                        {getTranslation("blst")}
                       </Typography>
                     </Box>
                     <Button
                       variant="contained"
                       sx={{
                         fontWeight: "bold",
-                        background: "#195db3",
-                        color: "white",
+                        background: "#622f11",
                       }}
                     >
                       <IconButton
@@ -465,6 +473,7 @@ const TopBar: React.FC = () => {
         </Toolbar>
       </Container>
       <ClaimAndReinvestModal />
+      <ClaimToWalletModal />
     </AppBar>
   );
 };

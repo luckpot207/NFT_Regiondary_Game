@@ -1,9 +1,13 @@
 import { Box, Slider, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import {
+    filterAndPageState,
+    updateFilterAndPageState,
+  } from "../../reducers/filterAndPage.reducer";
+
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { getTranslation } from "../../utils/utils";
 
 const DuelLegionAPFilter: React.FC = () => {
   const dispatch = useDispatch();
@@ -12,11 +16,11 @@ const DuelLegionAPFilter: React.FC = () => {
     duelLegionFilterMaxConstAP,
     duelLegionFilterMinAP,
     duelLegionFilterMaxAP,
-  } = AppSelector(gameState);
+  } = AppSelector(filterAndPageState);
 
   const handleChange = (event: Event, newValue: number | number[] | any) => {
     dispatch(
-      updateState({
+      updateFilterAndPageState({
         duelLegionFilterMinAP: Number(newValue[0]),
         duelLegionFilterMaxAP: Number(newValue[1]),
         currentPage: 1,
@@ -24,20 +28,11 @@ const DuelLegionAPFilter: React.FC = () => {
     );
   };
 
-  // useEffect(() => {
-  //   dispatch(
-  //     updateState({
-  //       duelLegionFilterMinAP: duelLegionFilterMinConstAP,
-  //       duelLegionFilterMaxAP: duelLegionFilterMaxConstAP.valueOf()-1,
-  //       currentPage: 1,
-  //     })
-  //   );
-  // }, []);
-
+ 
 return (
   <Box>
     <Typography>
-      <LanguageTranslate translateKey="filterbyap" />:
+      {getTranslation("filterbyap")}
     </Typography>
     <Slider
       getAriaLabel={() => "Attack Power Range"}

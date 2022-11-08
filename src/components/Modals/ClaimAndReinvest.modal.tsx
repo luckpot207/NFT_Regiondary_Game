@@ -1,18 +1,10 @@
-import {
-  Box,
-  Checkbox,
-  Dialog,
-  Input,
-  SelectChangeEvent,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
 import { useDispatch } from "react-redux";
-import { getUserInfo } from "../../helpers/basicInfo";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import { Box, Checkbox, Dialog, Input, Typography } from "@mui/material";
+import { MdClose } from "react-icons/md";
+import { toast } from "react-toastify";
+
 import { AppSelector } from "../../store";
 import {
   claimAndReinvest,
@@ -24,24 +16,25 @@ import {
   getReinvestTimesInTaxCycle,
   getSamaritanStars,
   getUnclaimedWallet,
-  getUSDAmount,
-} from "../../web3hooks/contractFunctions";
+} from "../../web3hooks/contractFunctions/rewardpool.contract";
+import { getUSDAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
 import {
-  useBloodstone,
   useFeeHandler,
-  useLegion,
   useRewardPool,
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import { MdClose } from "react-icons/md";
+import { formatNumber, getTranslation } from "../../utils/utils";
+import {
+  inventoryState,
+  updateInventoryState,
+} from "../../reducers/inventory.reducer";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { updateCommonState } from "../../reducers/common.reduer";
 
 const ClaimAndReinvestModal: React.FC = () => {
-  // Hook info
   const dispatch = useDispatch();
   const {
-    language,
-    claimAndReinvestModalOpen,
     currentSamaritanStars,
     unclaimedBLST,
     taxLeftDaysForClaim,
@@ -49,35 +42,34 @@ const ClaimAndReinvestModal: React.FC = () => {
     claimMinTaxPercent,
     futureSamaritanStarsWhenClaim,
     futureSamaritanStarsWhenReinvest,
-  } = AppSelector(gameState);
+    futureReinvestPercentWhenReinvest,
+    futureReinvestPercentWhenClaim,
+    claimedUSD,
+  } = AppSelector(inventoryState);
 
-  const theme = useTheme();
-  const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const unclaimedBLSTFromWei = Number(unclaimedBLST) / 10 ** 18;
 
-  // Account & Web3
+  const { claimAndReinvestModalOpen } = AppSelector(modalState);
+
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const feehandlerContract = useFeeHandler();
-  const bloodstoneContract = useBloodstone();
-  const legionContract = useLegion();
   const rewardpoolContract = useRewardPool();
 
-  // States
   const claimAmount =
     ((100 - Number(claimMinTaxPercent) - 2 * Number(taxLeftDaysForClaim)) *
-      Number(unclaimedBLST)) /
+      Number(unclaimedBLSTFromWei)) /
     100;
   const claimTaxAmount =
     ((Number(claimMinTaxPercent) + 2 * Number(taxLeftDaysForClaim)) *
-      Number(unclaimedBLST)) /
+      Number(unclaimedBLSTFromWei)) /
     100;
 
   const [unclaimedUSD, setUnclaimedUSD] = useState(0);
   const [showOrder, setShowOrder] = useState(0);
   const [reinvestBLSTAmount, setReinvestBLSTAmount] = useState("0");
-  const [reinvestUSDAmount, setReinvestUSDAmount] = useState(0);
+  const [reinvestUSDAmount, setReinvestUSDAmount] = useState("0");
   const [reinvestAll, setReinvestAll] = useState(false);
   const [claimAndReinvestLoading, setClaimAndReinvestLoading] = useState(false);
 
@@ -85,20 +77,16 @@ const ClaimAndReinvestModal: React.FC = () => {
   const [futureClaimMinTaxPercent, setFutureClaimMinTaxPercent] = useState(0);
   const [futureReinvestTaxPercent, setFutureReinvestTaxPercent] = useState(0);
 
-  // Functions
+  const [isCalculated, setIsCalculated] = useState(false);
+
   const getBalance = async () => {
     setShowOrder(-2);
     setReinvestBLSTAmount("0");
-    setReinvestUSDAmount(0);
+    setReinvestUSDAmount("0");
     setReinvestAll(false);
     try {
-      const { busd, blst } = await getUnclaimedWallet(
-        web3,
-        rewardpoolContract,
-        account
-      );
-      setUnclaimedUSD(busd);
-      console.log("unclaimed USD", busd);
+      const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(rewardpoolContract, account);
+      setUnclaimedUSD(unclaimedUSD);
       let amountsForClaiming = await getAmountsForClaimingAndReinvesting(
         web3,
         rewardpoolContract,
@@ -106,43 +94,39 @@ const ClaimAndReinvestModal: React.FC = () => {
         false,
         0
       );
-      console.log("amountsForClaiming: ", amountsForClaiming);
       let futureReinvestPercentWhenClaim = await getReinvestPercent(
-        web3,
         rewardpoolContract,
         account,
         false,
         0
-      );
-      console.log(
-        "futureReinvestPercentWhenClaim: ",
-        futureReinvestPercentWhenClaim
       );
       let futureSamaritanStarsWhenClaim = await getSamaritanStars(
         rewardpoolContract,
         account,
         futureReinvestPercentWhenClaim
       );
-      console.log(
-        "futureSamaritanStarsWhenClaim:",
+      let futureClaimMaxTaxPercent = await getClaimMaxTaxPercent(
+        rewardpoolContract,
         futureSamaritanStarsWhenClaim
       );
+      let futureReinvestTaxPercent = await getReinvestTaxPercent(
+        rewardpoolContract,
+        futureSamaritanStarsWhenClaim
+      );
+      setFutureClaimMaxTaxPercent(futureClaimMaxTaxPercent);
+      setFutureReinvestTaxPercent(futureReinvestTaxPercent);
       let amountsForReinvesting = await getAmountsForClaimingAndReinvesting(
         web3,
         rewardpoolContract,
         account,
         true,
         unclaimedUSD
-        // Number(Number(unclaimedUSD).toFixed(0))
       );
-      console.log("amountsForReinvesting: ", amountsForReinvesting);
       let futureReinvestPercentWhenReinvest = await getReinvestPercent(
-        web3,
         rewardpoolContract,
         account,
         true,
         unclaimedUSD
-        // Number(Number(unclaimedUSD).toFixed(0))
       );
       let futureSamaritanStarsWhenReinvest = await getSamaritanStars(
         rewardpoolContract,
@@ -151,7 +135,7 @@ const ClaimAndReinvestModal: React.FC = () => {
       );
 
       dispatch(
-        updateState({
+        updateInventoryState({
           futureReinvestPercentWhenClaim,
           futureSamaritanStarsWhenClaim,
           futureReinvestPercentWhenReinvest,
@@ -166,7 +150,7 @@ const ClaimAndReinvestModal: React.FC = () => {
           ),
         })
       );
-      if (Number(unclaimedBLST) === 0) {
+      if (Number(unclaimedBLSTFromWei) === 0) {
         setShowOrder(-1);
       } else {
         setShowOrder(0);
@@ -177,20 +161,16 @@ const ClaimAndReinvestModal: React.FC = () => {
   };
 
   const handleClose = () => {
-    dispatch(updateState({ claimAndReinvestModalOpen: false }));
+    dispatch(updateModalState({ claimAndReinvestModalOpen: false }));
   };
 
   const handleClaimAndReinvestReward = async (reinvested: boolean) => {
+    if (Number(claimedUSD) != 0) {
+      toast.error(getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain"));
+      return;
+    }
     setClaimAndReinvestLoading(true);
     try {
-      let amountsForReinvesting = await getAmountsForClaimingAndReinvesting(
-        web3,
-        rewardpoolContract,
-        account,
-        true,
-        reinvestUSDAmount
-      );
-      console.log("amountsForReinvesting: ", amountsForReinvesting);
       await claimAndReinvest(
         web3,
         rewardpoolContract,
@@ -198,15 +178,8 @@ const ClaimAndReinvestModal: React.FC = () => {
         reinvested,
         reinvestUSDAmount
       );
-      getUserInfo(
-        dispatch,
-        web3,
-        account,
-        bloodstoneContract,
-        rewardpoolContract,
-        feehandlerContract
-      );
-      dispatch(updateState({ claimAndReinvestModalOpen: false }));
+      dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
+      dispatch(updateModalState({ claimAndReinvestModalOpen: false }));
     } catch (error) {
       console.log("handleClaimAndReinvestReward error", error);
     }
@@ -224,16 +197,21 @@ const ClaimAndReinvestModal: React.FC = () => {
       } else {
         setShowOrder(1);
       }
-      getReinvestSamaritanStars();
+      getReinvestSamaritanStars(reinvestUSDAmount);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getReinvestSamaritanStars = async () => {
+  const getReinvestSamaritanStars = async (reinvestUSDAmount: any) => {
     try {
+      console.log(
+        "BUSD Amount: ",
+        reinvestUSDAmount,
+        web3.utils.fromWei(reinvestUSDAmount, "ether")
+      );
+      console.log("BLST Amount: ", reinvestBLSTAmount);
       let futureReinvestPercent = await getReinvestPercent(
-        web3,
         rewardpoolContract,
         account,
         true,
@@ -263,12 +241,12 @@ const ClaimAndReinvestModal: React.FC = () => {
         true,
         reinvestUSDAmount
       );
-      console.log("amountsForReinvesting: ", amountsForReinvesting);
+      console.log("Amount for Reinvesting: ", amountsForReinvesting);
       setFutureClaimMaxTaxPercent(futureClaimMaxTaxPercent);
       setFutureClaimMinTaxPercent(futureClaimMinTaxPercent);
       setFutureReinvestTaxPercent(futureReinvestTaxPercent);
-      dispatch(
-        updateState({
+      await dispatch(
+        updateInventoryState({
           futureSamaritanStarsWhenReinvest: futureSamaritanStars,
           futureReinvestPercentWhenReinvest: futureReinvestPercent,
           reinvestingUSDWithoutTax: web3.utils.fromWei(
@@ -281,12 +259,14 @@ const ClaimAndReinvestModal: React.FC = () => {
           ),
         })
       );
+      setIsCalculated(true);
     } catch (error) {
-      console.log("getReinvestSamaritanStars: ", error);
+      console.log("Calculation Error: ", error);
     }
   };
 
   const handleReinvestAmount = async (e: any) => {
+    setIsCalculated(false);
     let amount = e.target.value;
     if (amount >= 1) {
       if (amount[0] == "0") {
@@ -299,21 +279,24 @@ const ClaimAndReinvestModal: React.FC = () => {
     } else {
       amount = "0";
     }
-    setReinvestBLSTAmount(amount);
 
     try {
       const usd = await getUSDAmount(web3, feehandlerContract, amount);
-      setReinvestUSDAmount(Number(web3.utils.toWei(usd, "ether")));
+      setReinvestBLSTAmount(amount);
+      setReinvestUSDAmount(String(web3.utils.toWei(usd, "ether")));
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleReinvestAll = (e: any) => {
+    setIsCalculated(false);
     setReinvestAll(e.target.checked);
     if (e.target.checked) {
-      setReinvestBLSTAmount(Number(unclaimedBLST).toString());
-      setReinvestUSDAmount(unclaimedUSD);
+      console.log("hehe");
+      setReinvestBLSTAmount(Number(unclaimedBLSTFromWei).toString());
+      setReinvestUSDAmount(unclaimedUSD.toString());
+      getReinvestSamaritanStars(unclaimedUSD.toString());
     }
   };
 
@@ -322,11 +305,11 @@ const ClaimAndReinvestModal: React.FC = () => {
   }, [claimAndReinvestModalOpen]);
 
   useEffect(() => {
-    getReinvestSamaritanStars();
+    getReinvestSamaritanStars(reinvestUSDAmount);
   }, [reinvestUSDAmount, reinvestAll, unclaimedUSD]);
 
   return (
-    <Dialog onClose={handleClose} open={claimAndReinvestModalOpen.valueOf()}>
+    <Dialog onClose={handleClose} open={claimAndReinvestModalOpen}>
       {showOrder !== -2 && (
         <Box sx={{ p: 2, display: "flex" }}>
           <MdClose
@@ -343,7 +326,7 @@ const ClaimAndReinvestModal: React.FC = () => {
       {showOrder === -1 && (
         <Box sx={{ p: 4, pt: 0 }}>
           <Typography>
-            You have no $BLST in your Unclaimed Wallet. Go more hunting!
+            {getTranslation("youHaveNoInUnclaimedWallet")}
           </Typography>
         </Box>
       )}
@@ -351,52 +334,96 @@ const ClaimAndReinvestModal: React.FC = () => {
         <Box sx={{ p: 4, pt: 0 }}>
           <Typography>
             <span style={{ fontSize: 16, fontWeight: "bold" }}>
-              Choose your tax
+              {getTranslation("chooseYourTax")}
             </span>
           </Typography>
           <br />
           <Typography>
-            Your current Samaritan Rank: {currentSamaritanStars}
+            {getTranslation("youHaveSthInUnclaimedWallet", {
+              CL1: formatNumber(Number(unclaimedBLSTFromWei).toFixed(2)),
+              CL2: formatNumber((Number(unclaimedUSD) / 10 ** 18).toFixed(2)),
+            })}
           </Typography>
-          <br />
           <Typography>
-            <span style={{ fontSize: 16, fontWeight: "bold" }}>a) Claim:</span>
-            <br />- If you claim your total {Number(unclaimedBLST).toFixed(
-              2
-            )}{" "}
-            BLST to your wallet, then you will pay{" "}
-            {Number(taxLeftDaysForClaim) * 2 + Number(claimMinTaxPercent)}%
-            Claim Tax today.
-            <br />- You will pay {claimTaxAmount.toFixed(2)} BLST Claim Tax, and
-            get {claimAmount.toFixed(2)} BLST in your Metamask wallet.
-            <br />- You will reach the minimum Claim Tax of{" "}
-            {Number(claimMinTaxPercent)}% in {Number(taxLeftDaysForClaim)} days.
-            <br />- Your new Samaritan Rank will be{" "}
-            {futureSamaritanStarsWhenClaim}.
+            {getTranslation("yourCurrentSamaritanRank")}:{" "}
+            {currentSamaritanStars}
           </Typography>
           <br />
           <Typography>
             <span style={{ fontSize: 16, fontWeight: "bold" }}>
-              b) Reinvest:
+              a) {getTranslation("claim")}:
             </span>
-            <br />- On all BLST you transfer to your Reinvest Wallet, you will
-            pay {2 * Number(taxLeftDaysForReinvest)}% Reinvest Tax today.
-            <br />- You will pay{" "}
-            {(
-              (2 * Number(taxLeftDaysForReinvest) * Number(unclaimedBLST)) /
-              100
-            ).toFixed(2)}{" "}
-            BLST Reinvest Tax, and get{" "}
-            {(
-              ((100 - 2 * Number(taxLeftDaysForReinvest)) *
-                Number(unclaimedBLST)) /
-              100
-            ).toFixed(2)}{" "}
-            BLST in your Reinvest Wallet.
-            <br />- You will reach the minimum Reinvest Tax of {0}% in{" "}
-            {Number(taxLeftDaysForReinvest)} days.
-            <br />- Your new Samaritan Rank will be{" "}
-            {futureSamaritanStarsWhenReinvest}.
+            <br />-{" "}
+            {getTranslation("ifYouClaimTotal", {
+              CL1: Number(unclaimedBLSTFromWei).toFixed(2),
+              CL2: Number(taxLeftDaysForClaim) * 2 + Number(claimMinTaxPercent),
+            })}
+            <br />-{" "}
+            {getTranslation("youWillPayClaimTax", {
+              CL1: claimTaxAmount.toFixed(2),
+              CL2: claimAmount.toFixed(2),
+            })}
+            <br />-{" "}
+            {getTranslation("ifYouWaitWithClaiming", {
+              CL1: Number(claimMinTaxPercent),
+              CL2: Number(taxLeftDaysForClaim),
+            })}
+            <br />-{" "}
+            {getTranslation("yourTaxLevelsWillBeReset", {
+              CL1: futureClaimMaxTaxPercent,
+              CL2: futureReinvestTaxPercent,
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewSamaritanRankWill", {
+              CL1: futureSamaritanStarsWhenClaim,
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewReinvestPercentageWill", {
+              CL1: futureReinvestPercentWhenClaim,
+            })}
+          </Typography>
+          <br />
+          <Typography>
+            <span style={{ fontSize: 16, fontWeight: "bold" }}>
+              b) {getTranslation("reinvest")}:
+            </span>
+            <br />-{" "}
+            {getTranslation("onAllYouTransferToYourReinvestWallet", {
+              CL1: 2 * Number(taxLeftDaysForReinvest),
+            })}
+            <br />-{" "}
+            {getTranslation("youWillPayReinvestTax", {
+              CL1: (
+                (2 *
+                  Number(taxLeftDaysForReinvest) *
+                  Number(unclaimedBLSTFromWei)) /
+                100
+              ).toFixed(2),
+              CL2: (
+                ((100 - 2 * Number(taxLeftDaysForReinvest)) *
+                  Number(unclaimedBLSTFromWei)) /
+                100
+              ).toFixed(2),
+            })}
+            <br />-{" "}
+            {getTranslation("youWillReachTheMinimumReinvestTax", {
+              CL1: 0,
+              CL2: Number(taxLeftDaysForReinvest),
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewSamaritanRankWill", {
+              CL1:
+                isCalculated || reinvestAll
+                  ? futureSamaritanStarsWhenReinvest
+                  : "...",
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewReinvestPercentageWill", {
+              CL1:
+                isCalculated || reinvestAll
+                  ? futureReinvestPercentWhenReinvest
+                  : "...",
+            })}
           </Typography>
           <br />
           <Box
@@ -410,20 +437,22 @@ const ClaimAndReinvestModal: React.FC = () => {
               onClick={() => handleClaimAndReinvestReward(false)}
               loading={claimAndReinvestLoading}
             >
-              Claim
+              {getTranslation("claim")}
             </FireBtn>
             <FireBtn
               onClick={() => handleToReinvestShow()}
               disabled={claimAndReinvestLoading}
             >
-              Reinvest
+              {getTranslation("reinvest")}
             </FireBtn>
           </Box>
         </Box>
       )}
       {showOrder === 1 && (
         <Box sx={{ p: 4, pt: 0 }}>
-          <Typography>Amount to transfer to your Reinvest wallet</Typography>
+          <Typography>
+            {getTranslation("amountToTransferToYourReinvestWallet")}
+          </Typography>
           <Input
             inputProps={{ step: "0.1" }}
             value={reinvestBLSTAmount}
@@ -431,48 +460,63 @@ const ClaimAndReinvestModal: React.FC = () => {
             disabled={reinvestAll || claimAndReinvestLoading}
             type="number"
           />
-          $BLST
+          ${getTranslation("blst")}
           <Checkbox
             checked={reinvestAll}
             onChange={(e) => handleReinvestAll(e)}
             disabled={claimAndReinvestLoading}
           />
-          Reinvest All
+          {getTranslation("reinvestAll")}
           <Typography variant="subtitle1">
-            (= {Number(reinvestUSDAmount / 10 ** 18).toFixed(2)} USD)
+            (= {Number(Number(reinvestUSDAmount) / 10 ** 18).toFixed(2)} USD)
           </Typography>
           {Number(reinvestUSDAmount) === 0 && (
-            <Typography color={"#fb3636"}>You cannot reinvest 0.</Typography>
+            <Typography color={"#fb3636"}>
+              {getTranslation("youCannotReinvest0")}
+            </Typography>
           )}
           {Number(reinvestUSDAmount) > Number(unclaimedUSD) && (
             <Typography color={"#fb3636"}>
-              You cannot reinvest more than the amount in your Unclaimed Wallet.
+              {getTranslation("youCannotReinvestMoreThan")}
             </Typography>
           )}
           <br />
           <Typography>
-            - You will pay{" "}
-            {(
-              (parseFloat(reinvestBLSTAmount) *
-                2 *
-                Number(taxLeftDaysForReinvest)) /
-              100
-            ).toFixed(2)}{" "}
-            BLST Reinvest Tax, and get{" "}
-            {(
-              (parseFloat(reinvestBLSTAmount) *
-                (100 - 2 * Number(taxLeftDaysForReinvest))) /
-              100
-            ).toFixed(2)}{" "}
-            BLST in your Reinvest Wallet.
-            <br />- Your new Samaritan Rank will be{" "}
-            {futureSamaritanStarsWhenReinvest}.
-            <br />- There will be no change to your Claim Tax length/percentage.
-            <br />- There will be no change to your Reinvest Tax, and you will
-            reach the minimum Reinvest Tax of 0 % in{" "}
-            {Number(taxLeftDaysForReinvest)} days.
-            <br />- You cannot transfer money out of the Reinvest Wallet. You
-            can only use the Reinvest Wallet to pay for items within the game.
+            -{" "}
+            {getTranslation("youWillPayReinvestTax", {
+              CL1: (
+                (parseFloat(reinvestBLSTAmount) *
+                  2 *
+                  Number(taxLeftDaysForReinvest)) /
+                100
+              ).toFixed(2),
+              CL2: (
+                (parseFloat(reinvestBLSTAmount) *
+                  (100 - 2 * Number(taxLeftDaysForReinvest))) /
+                100
+              ).toFixed(2),
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewSamaritanRankWill", {
+              CL1:
+                isCalculated || reinvestAll
+                  ? futureSamaritanStarsWhenReinvest
+                  : "...",
+            })}
+            <br />-{" "}
+            {getTranslation("yourNewReinvestPercentageWill", {
+              CL1:
+                isCalculated || reinvestAll
+                  ? futureReinvestPercentWhenReinvest
+                  : "...",
+            })}
+            <br />- {getTranslation("noChangeToYourClaimTax")}
+            <br />-{" "}
+            {getTranslation("noChangeToYourReinvestTax", {
+              CL1: Number(taxLeftDaysForReinvest),
+            })}
+            <br />-{" "}
+            {getTranslation("youCannotTransferMoneyOutOfReinvestWallet")}
           </Typography>
           <br />
           <FireBtn
@@ -483,13 +527,15 @@ const ClaimAndReinvestModal: React.FC = () => {
               Number(reinvestUSDAmount) === 0
             }
           >
-            Transfer to Reinvest
+            {getTranslation("transferToReinvest")}
           </FireBtn>
         </Box>
       )}
       {showOrder === 2 && (
         <Box sx={{ p: 4, pt: 0 }}>
-          <Typography>Amount to transfer to your Reinvest wallet</Typography>
+          <Typography>
+            {getTranslation("amountToTransferToYourReinvestWallet")}
+          </Typography>
           <Input
             inputProps={{ step: "0.1" }}
             value={reinvestBLSTAmount}
@@ -497,70 +543,90 @@ const ClaimAndReinvestModal: React.FC = () => {
             disabled={reinvestAll || claimAndReinvestLoading}
             type="number"
           />
-          $BLST
+          ${getTranslation("blst")}
           <Checkbox
             checked={reinvestAll}
             onChange={(e) => handleReinvestAll(e)}
             disabled={claimAndReinvestLoading}
           />
-          Reinvest All
+          {getTranslation("reinvestAll")}
           <Typography variant="subtitle1">
-            (= {Number(reinvestUSDAmount / 10 ** 18).toFixed(2)} USD)
+            (= {Number(Number(reinvestUSDAmount) / 10 ** 18).toFixed(2)} USD)
           </Typography>
           {Number(reinvestUSDAmount) === 0 && (
-            <Typography color={"#fb3636"}>You cannot reinvest 0.</Typography>
+            <Typography color={"#fb3636"}>
+              {getTranslation("youCannotReinvest0")}
+            </Typography>
           )}
           {Number(reinvestUSDAmount) > Number(unclaimedUSD) && (
             <Typography color={"#fb3636"}>
-              You cannot reinvest more than the amount in your Unclaimed Wallet.
+              {getTranslation("youCannotReinvestMoreThan")}
             </Typography>
           )}
           <br />
           {Number(taxLeftDaysForReinvest) !== 0 ? (
             <Typography>
-              You will pay{" "}
-              {(
-                (parseFloat(reinvestBLSTAmount) *
-                  2 *
-                  Number(taxLeftDaysForReinvest)) /
-                100
-              ).toFixed(2)}{" "}
-              BLST Reinvest Tax, and get{" "}
-              {(
-                (parseFloat(reinvestBLSTAmount) *
-                  (100 - 2 * Number(taxLeftDaysForReinvest))) /
-                100
-              ).toFixed(2)}{" "}
-              BLST in your Reinvest Wallet.
+              {getTranslation("youWillPayReinvestTax", {
+                CL1: (
+                  (parseFloat(reinvestBLSTAmount) *
+                    2 *
+                    Number(taxLeftDaysForReinvest)) /
+                  100
+                ).toFixed(2),
+                CL2: (
+                  (parseFloat(reinvestBLSTAmount) *
+                    (100 - 2 * Number(taxLeftDaysForReinvest))) /
+                  100
+                ).toFixed(2),
+              })}
               <br />
-              Your new Samaritan Rank will be {futureSamaritanStarsWhenReinvest}
-              .
+              {getTranslation("yourNewSamaritanRankWill", {
+                CL1: futureSamaritanStarsWhenReinvest,
+              })}
               <br />
-              Your amount of Reinvest Tax days left will stay{" "}
-              {taxLeftDaysForReinvest} days.
+              {getTranslation("yourNewReinvestPercentageWill", {
+                CL1: futureReinvestPercentWhenReinvest,
+              })}
+              <br />
+              {getTranslation("yourAmountOfReinvestTaxDays", {
+                CL1: taxLeftDaysForReinvest,
+              })}
             </Typography>
           ) : (
             <Typography>
-              You will pay 0% Reinvest Tax, and get{" "}
-              {Number(reinvestBLSTAmount).toFixed(2)} BLST in your Reinvest
-              Wallet.
+              {getTranslation("reinvestTax", {
+                CL1: Number(reinvestBLSTAmount).toFixed(2),
+              })}
               <br />
-              Your new Samaritan Rank will be {futureSamaritanStarsWhenReinvest}
-              .
+              {getTranslation("yourNewSamaritanRankWill", {
+                CL1: futureSamaritanStarsWhenReinvest,
+              })}
+              <br />
+              {getTranslation("yourNewReinvestPercentageWill", {
+                CL1: futureReinvestPercentWhenReinvest,
+              })}
             </Typography>
           )}
           <br />
           <Typography>
-            Your Tax levels will be reset to:
-            <br />- {futureClaimMaxTaxPercent}% for Claim Tax decreasing 2% each
-            day over{" "}
-            {(Number(futureClaimMaxTaxPercent) -
-              Number(futureClaimMinTaxPercent)) /
-              2}{" "}
-            days to reach a minimum of {Number(futureClaimMinTaxPercent)} %
-            <br />- {futureReinvestTaxPercent}% for Reinvest Tax decreasing 2%
-            each day over {Number(futureReinvestTaxPercent) / 2} days to reach a
-            minimum of 0 %
+            {getTranslation("yourTaxLevelsWillBeResetTo")}
+            <br />-{" "}
+            {getTranslation("claimTaxDecreasing", {
+              CL1: futureClaimMaxTaxPercent,
+              CL2: 2,
+              CL3:
+                (Number(futureClaimMaxTaxPercent) -
+                  Number(futureClaimMinTaxPercent)) /
+                2,
+              CL4: Number(futureClaimMinTaxPercent),
+            })}
+            <br />-{" "}
+            {getTranslation("reinvestTaxDecreasing", {
+              CL1: futureReinvestTaxPercent,
+              CL2: 2,
+              CL3: Number(futureReinvestTaxPercent) / 2,
+              CL4: 0,
+            })}
           </Typography>
           <br />
           <FireBtn
@@ -571,7 +637,7 @@ const ClaimAndReinvestModal: React.FC = () => {
               Number(reinvestUSDAmount) === 0
             }
           >
-            Transfer to Reinvest
+            {getTranslation("transferToReinvest")}
           </FireBtn>
         </Box>
       )}

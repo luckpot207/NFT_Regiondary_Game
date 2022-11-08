@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useWeb3React } from "@web3-react/core";
 import {
   Box,
   Card,
@@ -8,54 +11,38 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { handleExecuteBeasts } from "../../helpers/beast";
-import { I_Beast } from "../../interfaces";
-import {
-  changeBeastExecuteStatus,
-  gameState,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
 import { useBeast } from "../../web3hooks/useContract";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { IBeast } from "../../types";
+import { commonState } from "../../reducers/common.reduer";
+import { changeBeastExecuteStatus } from "../../reducers/beast.reducer";
+import { getTranslation } from "../../utils/utils";
+import BeastService from "../../services/beast.service";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
+import gameConfig from "../../config/game.config";
 
 type Props = {
-  beast: I_Beast;
+  beast: IBeast;
   isActionBtns: boolean;
 };
 
 const BeastCard: React.FC<Props> = ({ beast, isActionBtns }) => {
-  // Hook Info
   const dispatch = useDispatch();
-  const { showAnimation, itemnames } = AppSelector(gameState);
+  const { showAnimation } = AppSelector(commonState);
   const theme = useTheme();
 
-  // Account
   const { account } = useWeb3React();
 
-  // Contracts
   const beastContract = useBeast();
 
-  // States
-  const warningText = LanguageTranslate({ translateKey: "warning" });
-  const executeText = LanguageTranslate({ translateKey: "execute" });
-  const executeWarningText = LanguageTranslate({
-    translateKey: "executeWarning",
-  });
-
-  const { id, mp4, jpg, capacity, executeStatus } = beast;
-  const type = itemnames.find(
-    (item) => item.type === "beast" && item.number === capacity
-  )?.name;
-  const [loaded, setLoaded] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { id, mp4, jpg, capacity, executeStatus, type } = beast;
+  const [loaded, setLoaded] = useState(false);
 
-  // Functions
   const handleImageLoaded = () => {
     setLoaded(true);
   };
@@ -67,31 +54,37 @@ const BeastCard: React.FC<Props> = ({ beast, isActionBtns }) => {
   const handleExecuteBeast = () => {
     if (capacity > 2) {
       Swal.fire({
-        title: warningText,
-        text: executeWarningText,
+        title: getTranslation("warning"),
+        text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#f66810",
         cancelButtonColor: "#d33",
-        confirmButtonText: executeText,
+        confirmButtonText: getTranslation("execute"),
         background: "#111",
         color: "white",
       }).then((result) => {
         if (result.isConfirmed) {
-          handleExecuteBeasts(dispatch, account, beastContract, [id]);
+          BeastService.handleExecuteBeasts(dispatch, account, beastContract, [
+            id,
+          ]);
         }
       });
     } else {
-      handleExecuteBeasts(dispatch, account, beastContract, [id]);
+      BeastService.handleExecuteBeasts(dispatch, account, beastContract, [id]);
     }
   };
 
   const handleToMarketplace = () => {
     dispatch(
-      updateState({
-        listOnMarketplaceModal: true,
+      updateModalState({
+        listOnMarketplaceModalOpen: true,
+      })
+    );
+    dispatch(
+      updateMarketplaceState({
         listingPrice: 0,
-        listingType: 1,
+        listingType: gameConfig.nftItemType.beast,
         listingId: id,
       })
     );

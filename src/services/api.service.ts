@@ -1,8 +1,9 @@
 import Axios from "axios";
 import { apiConfig } from "../config/api.config";
 
-const serverLink = apiConfig.devServer;
-const localLink = apiConfig.localServer;
+const devLink = apiConfig.devServer;
+const proLink = apiConfig.proServer;
+const serverLink = devLink;
 
 const getAllLanguageTexts = async () => {
   return Axios.get(`${serverLink}/language/getAllLanguageTexts`);
@@ -36,53 +37,62 @@ const getPresentItem = async () => {
 
 // Vote
 const vote = async (address: string, vote: boolean) => {
-  return Axios.post(`${serverLink}vote/addVote`, {
+  return Axios.post(`${serverLink}/vote/addVote`, {
     address: address,
     vote: vote,
   });
 };
 
 const getVoteByAddress = async (address: string) => {
-  return Axios.post(`${serverLink}vote/getVoteByAddress`, {
+  return Axios.post(`${serverLink}/vote/getVoteByAddress`, {
     address: address,
   });
 };
 
 const getVoteStatus = async () => {
-  return Axios.get(`${serverLink}vote/getVoteCnt`);
+  return Axios.get(`${serverLink}/vote/getVoteCnt`);
 };
 
 const confirmSamaritanStarHolder = async (account: string) => {
-  return Axios.post(`${serverLink}samaritan/confirmSamaritanStarHolder`, {
+  return Axios.post(`${serverLink}/samaritan/confirmSamaritanStarHolder`, {
     address: account,
   });
 };
 
 const addSamaritanStarHolder = async (account: string) => {
-  return Axios.post(`${serverLink}samaritan/addSamaritanStarHolder`, {
+  return Axios.post(`${serverLink}/samaritan/addSamaritanStarHolder`, {
     address: account,
   });
 };
 
 const getReincarnation = async (version: number) => {
-  return Axios.post(`${serverLink}reincarnation/getReincarnation`, {
+  return Axios.post(`${serverLink}/reincarnation/getReincarnation`, {
     version: version,
   });
 };
 
 const addReincarnationValue = async (address: string, value: number) => {
-  return Axios.post(`${serverLink}reincarnation/addReincarnationValue`, {
+  return Axios.post(`${serverLink}/reincarnation/addReincarnationValue`, {
     address: address,
     value: value,
   });
 };
 
+const getReincarnationValueByAddress = async (address: string) => {
+  return Axios.post(
+    `${serverLink}/reincarnation/getReincarnationValueByAddress`,
+    {
+      address: address,
+    }
+  );
+};
+
 const getEconomyStatus = async () => {
-  return Axios.get(`${serverLink}economy/getEconomyStatus`);
+  return Axios.get(`${serverLink}/economy/getEconomyStatus`);
 };
 
 const getLeaderboardInfo = async (address: string) => {
-  return Axios.get(`${serverLink}leaderboard/getLeaderboardInfo/${address}`);
+  return Axios.get(`${serverLink}/leaderboard/getLeaderboardInfo/${address}`);
 };
 
 const addToLeaderboard = async (address: string) => {
@@ -94,6 +104,22 @@ const addToLeaderboard = async (address: string) => {
 const removeFromLeaderboard = async (address: string) => {
   return Axios.post(`${serverLink}/leaderboard/removeFromLeaderboard`, {
     address: address,
+  });
+};
+
+const getAllTips = async () => {
+  return Axios.get(`${serverLink}/tipsandtricks/getAll`);
+};
+
+const getClaimedBUSDAlertAmount = async (address: string) => {
+  return Axios.post(`${serverLink}/claimedBUSD/getClaimedBUSDAlertAmount`, {
+    address: address,
+  });
+};
+const setClaimedBUSDAlertAmount = async (address: string, amount: number) => {
+  return Axios.post(`${serverLink}/claimedBUSD/setClaimedBUSDAlertAmount`, {
+    address: address,
+    amount: amount,
   });
 };
 
@@ -111,10 +137,14 @@ const ApiService = {
   addSamaritanStarHolder,
   getReincarnation,
   addReincarnationValue,
+  getReincarnationValueByAddress,
   getEconomyStatus,
   getLeaderboardInfo,
   addToLeaderboard,
   removeFromLeaderboard,
+  getAllTips,
+  getClaimedBUSDAlertAmount,
+  setClaimedBUSDAlertAmount,
 };
 
 export default ApiService;

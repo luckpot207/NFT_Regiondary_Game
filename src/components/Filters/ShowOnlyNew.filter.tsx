@@ -1,26 +1,27 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
 import { Box, Checkbox, Typography } from "@mui/material";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { getTranslation } from "../../utils/utils";
 
 const ShowOnlyNewFilter: React.FC = () => {
   const dispatch = useDispatch();
-  const { showOnlyNew } = AppSelector(gameState);
+  const { showOnlyNew } = AppSelector(filterAndPageState);
   const handleFilter = () => {
-    dispatch(updateState({ showOnlyNew: !showOnlyNew }));
+    dispatch(updateFilterAndPageState({ showOnlyNew: !showOnlyNew }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ showOnlyNew: false }));
+    dispatch(updateFilterAndPageState({ showOnlyNew: false }));
   }, []);
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="showonlynew" />:
-      </Typography>
+      <Typography sx={{ mb: 1 }}>{getTranslation("showonlynew")}</Typography>
       <Checkbox checked={showOnlyNew.valueOf()} onChange={handleFilter} />
     </Box>
   );

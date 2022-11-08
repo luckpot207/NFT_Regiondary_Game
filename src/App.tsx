@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
+import "react-toastify/dist/ReactToastify.css";
+
+import Login from "./pages/Auth";
+import GameView from "./pages/App";
+import ReferralPage from "./pages/Referral";
+
+import "./App.css";
 
 import { injected } from "./wallet";
-import Login from "./modules/Auth/Login";
-import GameView from "./modules/App";
-
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
-import ReferralPage from "./modules/Referral";
 
 const App: React.FC = () => {
   const [loaded, setLoaded] = useState(false);

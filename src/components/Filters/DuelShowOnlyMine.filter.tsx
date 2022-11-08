@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
-import { AppSelector } from "../../store";
 import { Box, Checkbox, Typography } from "@mui/material";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { AppSelector } from "../../store";
+import { getTranslation } from "../../utils/utils";
 
 const DuelShowOnlyMineFilter: React.FC = () => {
   const dispatch = useDispatch();
-  const { duelShowOnlyMine } = AppSelector(gameState);
-  // const [duelShowOnlyMine, setDuelShowOnlyMine] = useState(false);
+  const { duelShowOnlyMine } = AppSelector(filterAndPageState);
   const handleFilter = () => {
-    dispatch(updateState({ duelShowOnlyMine: !duelShowOnlyMine }));
+    dispatch(updateFilterAndPageState({ duelShowOnlyMine: !duelShowOnlyMine }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ duelShowOnlyMine: false }));
+    dispatch(updateFilterAndPageState({ duelShowOnlyMine: false }));
   }, []);
 
   return (
     <Box>
       <Typography>
-        <LanguageTranslate translateKey="showonlymine" />:
+        {getTranslation("showonlymine")}:
       </Typography>
       <Checkbox checked={duelShowOnlyMine.valueOf()} onChange={handleFilter} />
     </Box>

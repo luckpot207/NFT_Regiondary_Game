@@ -1,14 +1,12 @@
-import React, { FC } from "react";
+import React from "react";
 import "./Spinner.css";
 
 type SpinnerProps = {
-  //   animationDuration: any;
   size: any;
   color: any;
 };
 
-export const Spinner: FC<SpinnerProps> = function Spinner({
-  //   animationDuration,
+export const Spinner: React.FC<SpinnerProps> = function Spinner({
   size,
   color,
 }) {
@@ -41,7 +39,6 @@ export const Spinner: FC<SpinnerProps> = function Spinner({
 };
 
 Spinner.defaultProps = {
-  //   animationDuration: 1000,
   size: 40,
   color: "#2c6fa5",
 };

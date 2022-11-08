@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   Box,
   Button,
@@ -12,77 +15,21 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { NavLink, useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import {
-  gameState,
-  reloadContractStatus,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import { AppSelector } from "../../store";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Tutorial from "../Tutorial/Tutorial";
-import { getTranslation } from "../../utils/utils";
-import { languages } from "../../constants/languages";
 import { navConfig } from "../../config/nav.config";
-import { useDispatch } from "react-redux";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { getTranslation } from "../../utils/utils";
+import gameConfig from "../../config/game.config";
 
 const NavList: React.FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
 
-  const { tutorialOn, tutorialRestartStep, language } = AppSelector(gameState);
+  const { language } = AppSelector(commonState);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const languageOpen = Boolean(anchorEl);
-
-  const getTutorialStep = (title: string) => {
-    let step = -1;
-    switch (title) {
-      case "/warriors":
-        step = 1;
-        break;
-      case "/beasts":
-        step = 7;
-        break;
-      case "/hunt":
-        step = 17;
-        break;
-      case "whitepaper":
-        step = 20;
-        break;
-      default:
-        break;
-    }
-    return step;
-  };
-
-  const setTutorialOn = () => {
-    if (
-      location.pathname == "/warriors" ||
-      location.pathname == "/beasts" ||
-      location.pathname == "/createlegions" ||
-      location.pathname == "/legions" ||
-      location.pathname == "/hunt"
-    ) {
-      dispatch(
-        updateState({
-          tutorialOn: !tutorialOn,
-          isSideBarOpen: false,
-        })
-      );
-    } else {
-      dispatch(
-        updateState({
-          tutorialOn: !tutorialOn,
-          tutorialStep: [1],
-          isSideBarOpen: true,
-        })
-      );
-    }
-  };
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -93,11 +40,10 @@ const NavList: React.FC = () => {
   };
 
   const handleLanguage = (value: any) => {
-    console.log(value);
     setAnchorEl(null);
     localStorage.setItem("lang", value);
     dispatch(
-      updateState({
+      updateCommonState({
         language: value,
       })
     );
@@ -115,80 +61,48 @@ const NavList: React.FC = () => {
         {navConfig.navBar.left.map((navItem, index) => (
           <React.Fragment key={"nav_item_" + index}>
             {navItem.type === "link" && (
-              <Tutorial
-                placement="bottom"
-                curStep={getTutorialStep(navItem.title ? navItem.title : "")}
-              >
-                <a
-                  target="_blank"
-                  className="nav-bar-item"
-                  href={
-                    navItem.title === "whitepaper" && language === "es"
-                      ? navItem.esPath
-                      : navItem.path || ""
-                  }
-                >
-                  <Tooltip title={navItem.title || ""} placement="right">
-                    <ListItemButton>
-                      <img
-                        src={`/assets/images/${navItem.icon}`}
-                        style={{
-                          width: "22px",
-                          height: "22px",
-                          marginRight: "34px",
-                        }}
-                        alt="icon"
-                      />
-                      <ListItemText
-                        primary={
-                          <LanguageTranslate
-                            translateKey={navItem.title as string}
-                          />
-                        }
-                      />
-                    </ListItemButton>
-                  </Tooltip>
-                </a>
-              </Tutorial>
+              <a target="_blank" className="nav-bar-item" href={navItem.path}>
+                <Tooltip title={navItem.title || ""} placement="right">
+                  <ListItemButton>
+                    <img
+                      src={`/assets/images/${navItem.icon}`}
+                      style={{
+                        width: "22px",
+                        height: "22px",
+                        marginRight: "34px",
+                      }}
+                      alt="icon"
+                    />
+                    <ListItemText primary={getTranslation(navItem.title)} />
+                  </ListItemButton>
+                </Tooltip>
+              </a>
             )}
             {navItem.type === "navlink" && (
-              <Tutorial
-                placement="bottom"
-                curStep={getTutorialStep(navItem.path ? navItem.path : "")}
+              <NavLink
+                to={navItem.path || ""}
+                className={({ isActive }) =>
+                  "nav-bar-item " + (isActive ? "active" : "")
+                }
+                onClick={() =>
+                  dispatch(updateCommonState({ isSideBarOpen: false }))
+                }
               >
-                <NavLink
-                  to={navItem.path || ""}
-                  className={({ isActive }) =>
-                    "nav-bar-item " + (isActive ? "active" : "")
-                  }
-                  onClick={() =>
-                    dispatch(updateState({ isSideBarOpen: false }))
-                  }
-                >
-                  <Tooltip title={navItem.title || ""} placement="right">
-                    <ListItemButton>
-                      <img
-                        src={`/assets/images/${navItem.icon}`}
-                        style={{
-                          width: "22px",
-                          height: "22px",
-                          marginRight: "34px",
-                        }}
-                        alt="icon"
-                      />
-                      <ListItemText
-                        primary={
-                          navItem.title == "duels"
-                            ? "Duels"
-                            : <LanguageTranslate
-                              translateKey={navItem.title as string}
-                            />
-                        }
-                      />
-                    </ListItemButton>
-                  </Tooltip>
-                </NavLink>
-              </Tutorial>
+                <Tooltip title={navItem.title || ""} placement="right">
+                  <ListItemButton>
+                    <img
+                      src={`/assets/images/${navItem.icon}`}
+                      style={{
+                        width: "22px",
+                        height: "22px",
+                        marginRight: "34px",
+                      }}
+                      alt="icon"
+                    />
+                    <ListItemText primary={getTranslation(navItem.title)} />
+                  </ListItemButton>
+                </Tooltip>
+              </NavLink>
             )}
             {navItem.type === "divider" && (
               <Divider sx={{ borderColor: "#ffffff1f" }} />
@@ -205,40 +119,9 @@ const NavList: React.FC = () => {
                   paddingBottom: "10px",
                 }}
               >
-                <LanguageTranslate translateKey={navItem.title as string} />
+                {getTranslation(navItem.title)}
               </Typography>
             )}
-            {/* {localStorage.getItem("tutorial") == "true" &&
-              navItem.type === "tutorial" && (
-                <Tutorial curStep={tutorialRestartStep} placement="top">
-                  <Box
-                    onClick={() => setTutorialOn()}
-                    className={tutorialOn && "nav-bar-item active"}
-                  >
-                    <Tooltip
-                      title={
-                        "You can always restart the tutorial by clicking here"
-                      }
-                      placement="right"
-                    >
-                      <ListItemButton>
-                        <img
-                          src={`/assets/images/${navItem.icon}`}
-                          style={{
-                            width: "22px",
-                            height: "22px",
-                            marginRight: "34px",
-                          }}
-                          alt="icon"
-                        />
-                        <ListItemText
-                          primary={tutorialOn ? "CANCEL Tutorial" : "Tutorial"}
-                        />
-                      </ListItemButton>
-                    </Tooltip>
-                  </Box>
-                </Tutorial>
-              )} */}
           </React.Fragment>
         ))}
 
@@ -273,7 +156,9 @@ const NavList: React.FC = () => {
             sx={{ color: "white" }}
           >
             <img
-              src={`/assets/images/flags/${language}.svg`}
+              src={`/assets/images/flags/${
+                gameConfig.languages.find((item) => item.title == language)?.img
+              }`}
               style={{ width: "30px" }}
             />
             <ArrowDropDownIcon />
@@ -287,10 +172,10 @@ const NavList: React.FC = () => {
               "aria-labelledby": "language-button",
             }}
           >
-            {languages.map((item, index) => (
+            {gameConfig.languages.map((item: any, index: any) => (
               <MenuItem key={index} onClick={() => handleLanguage(item.title)}>
                 <img
-                  src={`/assets/images/flags/${item.title}.svg`}
+                  src={`/assets/images/flags/${item.img}`}
                   style={{ width: "30px", marginRight: "10px" }}
                 />{" "}
                 {item.name}
@@ -311,11 +196,7 @@ const NavList: React.FC = () => {
                   <Tooltip title={navItem.title || ""} placement="right">
                     <ListItemButton>
                       <ListItemText
-                        primary={
-                          <LanguageTranslate
-                            translateKey={navItem.title as string}
-                          />
-                        }
+                        primary={getTranslation(navItem.title)}
                         className="fc-gray"
                         sx={{ fontSize: "0.7rem" }}
                       />
@@ -329,7 +210,7 @@ const NavList: React.FC = () => {
           (navItem, index) =>
             navItem.type === "footer" && (
               <a
-                href="https://cryptogames.agency"
+                href={gameConfig.companySiteUrl}
                 target="_blank"
                 className="fc-gray td-none"
                 key={index}
@@ -348,9 +229,7 @@ const NavList: React.FC = () => {
                       alignItems: "center",
                     }}
                   >
-                    <LanguageTranslate
-                      translateKey={navItem.title1 as string}
-                    />
+                    {getTranslation(navItem.title1)}
                     <img
                       src="/assets/images/heart.png"
                       alt="favorite"
@@ -361,9 +240,7 @@ const NavList: React.FC = () => {
                       }}
                     />
 
-                    <LanguageTranslate
-                      translateKey={navItem.title2 as string}
-                    />
+                    {getTranslation(navItem.title2)}
                   </Typography>
                 </Card>
               </a>

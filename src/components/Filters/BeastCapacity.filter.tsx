@@ -1,8 +1,8 @@
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
   ButtonGroup,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -10,11 +10,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { getTranslation } from "../../utils/utils";
 
 type Props = {
   showSmall: boolean;
@@ -25,26 +27,34 @@ const BeastCapacityFilter: React.FC<Props> = ({ showSmall }) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { beastFilterCapacity } = AppSelector(gameState);
+  const { beastFilterCapacity } = AppSelector(filterAndPageState);
 
   const handleCapacityFilter = (capacity: Number) => {
-    dispatch(updateState({ beastFilterCapacity: capacity, currentPage: 1 }));
+    dispatch(
+      updateFilterAndPageState({
+        beastFilterCapacity: capacity,
+        currentPage: 1,
+      })
+    );
   };
 
   const handleChange = (event: SelectChangeEvent) => {
     dispatch(
-      updateState({ beastFilterCapacity: event.target.value, currentPage: 1 })
+      updateFilterAndPageState({
+        beastFilterCapacity: event.target.value,
+        currentPage: 1,
+      })
     );
   };
 
   useEffect(() => {
-    dispatch(updateState({ beastFilterCapacity: 0 }));
+    dispatch(updateFilterAndPageState({ beastFilterCapacity: 0 }));
   }, []);
 
   return (
     <Box>
       <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="filterbycapacity" />:
+        {getTranslation("filterbycapacity")}
       </Typography>
       {isSmallerThanSM && showSmall ? (
         <>
@@ -68,7 +78,7 @@ const BeastCapacityFilter: React.FC<Props> = ({ showSmall }) => {
             variant={beastFilterCapacity === 0 ? "contained" : "outlined"}
             onClick={() => handleCapacityFilter(0)}
           >
-            <LanguageTranslate translateKey="all" />
+            {getTranslation("all")}
           </Button>
           <Button
             variant={beastFilterCapacity === 1 ? "contained" : "outlined"}

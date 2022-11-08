@@ -1,9 +1,12 @@
+import React from "react";
 import { Box, Slider, Typography } from "@mui/material";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { getTranslation } from "../../utils/utils";
 
 const LegionSuppliesFilter: React.FC = () => {
   const dispatch = useDispatch();
@@ -12,11 +15,11 @@ const LegionSuppliesFilter: React.FC = () => {
     legionFilterMaxConstSupplies,
     legionFilterMinSupplies,
     legionFilterMaxSupplies,
-  } = AppSelector(gameState);
+  } = AppSelector(filterAndPageState);
 
   const handleChange = (event: Event, newValue: number | number[] | any) => {
     dispatch(
-      updateState({
+      updateFilterAndPageState({
         legionFilterMinSupplies: Number(newValue[0]),
         legionFilterMaxSupplies: Number(newValue[1]),
         currentPage: 1,
@@ -26,9 +29,7 @@ const LegionSuppliesFilter: React.FC = () => {
 
   return (
     <Box>
-      <Typography>
-        <LanguageTranslate translateKey="filterbyhuntsleft" />:
-      </Typography>
+      <Typography>{getTranslation("filterbyhuntsleft")}</Typography>
       <Slider
         getAriaLabel={() => "Attack Power Range"}
         value={[

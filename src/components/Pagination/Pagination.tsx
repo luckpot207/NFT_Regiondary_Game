@@ -1,8 +1,13 @@
-import { Box, Button, Pagination } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+
+import { Box, Pagination } from "@mui/material";
+
 import { AppSelector } from "../../store";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
 
 type Props = {
   totalCount: number;
@@ -10,14 +15,14 @@ type Props = {
 
 const ItemPagination: React.FC<Props> = ({ totalCount }) => {
   const dispatch = useDispatch();
-  const { pageSize, currentPage } = AppSelector(gameState);
+  const { pageSize, currentPage } = AppSelector(filterAndPageState);
 
   const handlePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    dispatch(updateState({ currentPage: value }));
+    dispatch(updateFilterAndPageState({ currentPage: value }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ currentPage: 1 }));
+    dispatch(updateFilterAndPageState({ currentPage: 1 }));
   }, []);
 
   return (

@@ -1,4 +1,3 @@
-import { Button, ButtonProps } from "@mui/material";
 import LoadingButton, { LoadingButtonProps } from "@mui/lab/LoadingButton";
 
 import { styled } from "@mui/material/styles";
@@ -9,11 +8,11 @@ const FireBtn = styled(LoadingButton)<LoadingButtonProps>(({}) => ({
   textShadow:
     "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
   background:
-    "linear-gradient(360deg, #195db3, #ffffff29),radial-gradient(#275381, #97d3ff)",
+    "linear-gradient(360deg, #973b04, #ffffff29), radial-gradient(#db5300, #ecff0e)",
   transition: ".4s all",
   "&:hover": {
     background:
-      "linear-gradient(360deg, #174f95, #ffffff29),radial-gradient(#12273c, #75a3c5)",
+      "linear-gradient(360deg, #8d4405, #ffffff29), radial-gradient(#702c02, #98a500)",
     transition: ".4s all",
   },
   "&[disabled]": {

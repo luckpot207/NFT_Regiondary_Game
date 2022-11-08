@@ -1,118 +1,65 @@
-import { Box, Card, CardMedia, Typography } from "@mui/material";
-
+import { Box, Card, CardMedia, Typography, Skeleton } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
-import { I_Legion, I_Duel, I_Division } from "../../interfaces";
 import { useDispatch } from "react-redux";
-import { AppSelector } from "../../store";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
-import FireBtn from "../Buttons/FireBtn";
-import GreyBtn from "../Buttons/GreyBtn";
-import { formatNumber, getTranslation } from "../../utils/utils";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { cancelDuel, duelCounter } from "../../web3hooks/contractFunctions";
-import { useDuelSystem, useLegion } from "../../web3hooks/useContract";
-import { getAllDuelsAct } from "../../helpers/duel";
+import { IDuel, IDivision } from "../../types";
+import { AppSelector } from "../../store";
+import { filterAndPageState } from "../../reducers/filterAndPage.reducer";
+import { duelState, updateDuelState } from "../../reducers/duel.reducer";
+import { legionState } from "../../reducers/legion.reducer";
+import { updateModalState } from "../../reducers/modal.reducer";
+import FireBtn from "../Buttons/FireBtn";
+import GreyBtn from "../Buttons/GreyBtn";
+import { getTranslation, formatNumber } from "../../utils/utils";
+import { cancelDuel } from "../../web3hooks/contractFunctions/duel.contract";
+import { useLegion, useDuelSystem } from "../../web3hooks/useContract";
+import { getAllDuelsAct } from "../../services/duel.service";
+import constants from "../../constants";
 
 type Props = {
-  duel: I_Duel;
+  duel: IDuel;
 };
 
 const DuelCard: React.FC<Props> = ({ duel }) => {
   // Hook info
   const dispatch = useDispatch();
-  const {
-    duelStatus,
-    allLegions,
-    divisions,
-    allDuels,
-  } = AppSelector(gameState);
+
+  const { duelStatus } = AppSelector(filterAndPageState);
+  const { allDuels, divisions } = AppSelector(duelState);
+  const { allLegions } = AppSelector(legionState);
   const { account } = useWeb3React();
   const duelContract = useDuelSystem();
   const legionContract = useLegion();
 
   const [loaded, setLoaded] = useState(false);
   const [leftTime, setLeftTime] = useState("");
-
-  // Functions
-  const handleImageLoaded = () => {
-    setLoaded(true);
-  };
-
   const [duelFlag, setDuelFlag] = useState(false);
 
-  const handleDuelBtnClick = () => {
-    if (duelFlag == false) {
-      toast.error("You can't duel using your selected legion.");
-      return;
+  const duelResult = () => {
+    const priceDifference1 =
+      Math.round(
+        Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) *
+          100
+      ) / 100;
+    const priceDifference2 =
+      Math.round(
+        Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) *
+          100
+      ) / 100;
+    if (priceDifference1 == priceDifference2) {
+      return 0;
+    } else if (priceDifference1 > priceDifference2) {
+      return 1;
+    } else {
+      return 2;
     }
-    dispatch(
-      updateState({
-        joinDuelModalOpen: true,
-        currentDuelId: duel.duelId.valueOf(),
-        endDateJoinDuel: duel.endDateTime.valueOf(),
-      })
-    );
-  };
-
-  const handleUpdatePrediction = () => {
-    dispatch(
-      updateState({
-        updatePredictionModalOpen: true,
-        currentDuelId: duel.duelId.valueOf(),
-        endDateJoinDuel: duel.endDateTime.valueOf(),
-      })
-    );
-  };
-
-  const handleCancelDuel = async () => {
-    try {
-      dispatch(
-        updateState({
-          cancelDuelLoading: true
-        })
-      );
-      const res = await cancelDuel(duelContract, account, duel.duelId);
-      dispatch(
-        updateState({
-          cancelDuelLoading: false
-        })
-      );
-      toast.success("Success");
-      getAllDuelsAct(dispatch, account, duelContract, legionContract);
-    } catch (e) {
-      dispatch(
-        updateState({
-          cancelDuelLoading: false
-        })
-      );
-      toast.error("Network issue");
-    }
-  };
-
-  const handleDeleteBtnClick = () => {
-    Swal.fire({
-      title: "Cancel Duel",
-      text: "Are you sure?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#f66810",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Cancel Duel",
-      cancelButtonText: "Keep Duel",
-      background: "#111",
-      color: "white",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        handleCancelDuel();
-      }
-    });
   };
 
   React.useEffect(() => {
     setDuelFlag(false);
-    divisions.forEach((division: I_Division, index: Number) => {
+    divisions.forEach((division: IDivision) => {
       if (
         duel.creatorLegion.attackPower >= division.minAP &&
         duel.creatorLegion.attackPower < division.maxAP
@@ -124,7 +71,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
           ) {
             setDuelFlag(true);
           }
-        })
+        });
       }
     });
   }, [allDuels]);
@@ -135,35 +82,91 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime();
       setLeftTime(
         "" +
-        Math.floor(left_time / (60 * 60 * 1000)) +
-        "h " +
-        Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
-        "m " +
-        Math.floor((left_time % (60 * 1000)) / 1000) +
-        "s"
+          Math.floor(left_time / (60 * 60 * 1000)) +
+          "h " +
+          Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
+          "m " +
+          Math.floor((left_time % (60 * 1000)) / 1000) +
+          "s"
       );
     }, 1000);
     return () => clearInterval(leftTimer);
-  }, [leftTime, duel.endDateTime]);
+  }, []);
 
-  const duelResult = () => {
-    const priceDifference1 =
-      Math.round(
-        Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) *
-        100
-      ) / 100;
-    const priceDifference2 =
-      Math.round(
-        Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) *
-        100
-      ) / 100;
-    if (priceDifference1 == priceDifference2) {
-      return 0;
-    } else if (priceDifference1 > priceDifference2) {
-      return 1;
-    } else {
-      return 2;
+  const handleDuelBtnClick = () => {
+    dispatch(
+      updateModalState({
+        joinDuelModalOpen: true,
+        endDateJoinDuel: duel.endDateTime.valueOf(),
+      })
+    );
+    dispatch(
+      updateDuelState({
+        currentDuelId: duel.duelId.valueOf(),
+      })
+    );
+  };
+
+  const handleUpdatePrediction = () => {
+    dispatch(
+      updateModalState({
+        updatePredictionModalOpen: true,
+      })
+    );
+    dispatch(
+      updateDuelState({
+        currentDuelId: duel.duelId.valueOf(),
+        endDateJoinDuel: duel.endDateTime.valueOf(),
+      })
+    );
+  };
+
+  const handleCancelDuel = async () => {
+    try {
+      dispatch(
+        updateDuelState({
+          cancelDuelLoading: true,
+        })
+      );
+      const res = await cancelDuel(duelContract, account, duel.duelId);
+      dispatch(
+        updateDuelState({
+          cancelDuelLoading: false,
+        })
+      );
+      toast.success("Success");
+      getAllDuelsAct(dispatch, duelContract, legionContract);
+    } catch (e) {
+      dispatch(
+        updateDuelState({
+          cancelDuelLoading: false,
+        })
+      );
+      console.log("Cancel duel error: ", e);
     }
+  };
+
+  const handleDeleteBtnClick = () => {
+    Swal.fire({
+      title: getTranslation("cancelDuel"),
+      text: getTranslation("areYouSure"),
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: constants.color.color2,
+      cancelButtonColor: "#d33",
+      confirmButtonText: getTranslation("cancelDuel"),
+      cancelButtonText: getTranslation("keepDuel"),
+      background: "#111",
+      color: "white",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleCancelDuel();
+      }
+    });
+  };
+
+  const handleImageLoaded = () => {
+    setLoaded(true);
   };
 
   return (
@@ -178,6 +181,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               loading="lazy"
               onLoad={handleImageLoaded}
             />
+            {loaded === false && (
+              <React.Fragment>
+                <Skeleton variant="rectangular" width="100%" height="200px" />
+                <Skeleton />
+                <Skeleton width="60%" />
+              </React.Fragment>
+            )}
             <Typography variant="h6" className="legion-name-text">
               {duel.creatorLegion.name}
             </Typography>
@@ -197,14 +207,26 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             <Typography variant="subtitle2" className="legion-id-text">
               #{duel.creatorLegion.id}
             </Typography>
-            <Box className="duel-price-div">
+            <Box className="duel-cancel-div">
               <img
-                src="/assets/images/allinduel.png"
+                src="/assets/images/execute.png"
                 style={{
-                  width: "15px",
+                  width: "1.5em",
                 }}
                 alt="allin"
+                onClick={handleDeleteBtnClick}
               />
+            </Box>
+            <Box className="duel-price-div">
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -217,21 +239,21 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
                 onClick={handleUpdatePrediction}
               >
-                Update Prediction
+                {getTranslation("updateprediction")}
               </FireBtn>
             ) : duelFlag ? (
               <FireBtn
                 sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
                 onClick={handleDuelBtnClick}
               >
-                Duel
+                {getTranslation("duel")}
               </FireBtn>
             ) : (
               <GreyBtn
                 sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
                 onClick={handleDuelBtnClick}
               >
-                Duel
+                {getTranslation("duel")}
               </GreyBtn>
             )}
           </Box>
@@ -255,6 +277,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 loading="lazy"
                 onLoad={handleImageLoaded}
               />
+              {loaded === false && (
+                <React.Fragment>
+                  <Skeleton variant="rectangular" width="100%" height="200px" />
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </React.Fragment>
+              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.creatorLegion.name}
               </Typography>
@@ -280,6 +309,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 loading="lazy"
                 onLoad={handleImageLoaded}
               />
+              {loaded === false && (
+                <React.Fragment>
+                  <Skeleton variant="rectangular" width="100%" height="200px" />
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </React.Fragment>
+              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.joinerLegion.name}
               </Typography>
@@ -298,14 +334,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             </Card>
             <Box className="duel-estimate-price-div">
-              <Typography
-                className="estimate-price"
-              >
+              <Typography className="estimate-price">
                 ${duel.creatorEstmatePrice}
               </Typography>
-              <Typography
-                className="estimate-price"
-              >
+              <Typography className="estimate-price">
                 ${duel.joinerEstmatePrice}
               </Typography>
             </Box>
@@ -326,16 +358,23 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               />
             </Box>
             <Box className="duel-left-time">
-              <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{leftTime}</Typography>
+              <Typography
+                className="duel-left-time-text"
+                sx={{ fontWeight: "bold" }}
+              >
+                {leftTime}
+              </Typography>
             </Box>
             <Box className="duel-price-div">
-              <img
-                src="/assets/images/allinduel.png"
-                style={{
-                  width: "15px",
-                }}
-                alt="allin"
-              />
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}
@@ -367,10 +406,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     duelResult() == 0
                       ? "orange"
                       : duelResult() == 1
-                        ? "red"
-                        : "green",
+                      ? "red"
+                      : "green",
                 }}
               />
+              {loaded === false && (
+                <React.Fragment>
+                  <Skeleton variant="rectangular" width="100%" height="200px" />
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </React.Fragment>
+              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.creatorLegion.name}
               </Typography>
@@ -401,10 +447,17 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     duelResult() == 0
                       ? "orange"
                       : duelResult() == 1
-                        ? "green"
-                        : "red",
+                      ? "green"
+                      : "red",
                 }}
               />
+              {loaded === false && (
+                <React.Fragment>
+                  <Skeleton variant="rectangular" width="100%" height="200px" />
+                  <Skeleton />
+                  <Skeleton width="60%" />
+                </React.Fragment>
+              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.joinerLegion.name}
               </Typography>
@@ -428,8 +481,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                   duelResult() == 0
                     ? "draw-price-text"
                     : duelResult() == 1
-                      ? "loser-price-text"
-                      : "winner-price-text"
+                    ? "loser-price-text"
+                    : "winner-price-text"
                 }
               >
                 ${duel.creatorEstmatePrice}
@@ -439,8 +492,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                   duelResult() == 0
                     ? "draw-price-text"
                     : duelResult() == 2
-                      ? "loser-price-text"
-                      : "winner-price-text"
+                    ? "loser-price-text"
+                    : "winner-price-text"
                 }
               >
                 ${duel.joinerEstmatePrice}
@@ -474,23 +527,30 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 left: "0%",
               }}
             >
-              <Typography
-                className="duel-result-price-text"
-              >
-                $CRYPTO price was {duel.result}
+              <Typography className="duel-result-price-text">
+                {getTranslation("cryptopricewas", {
+                  CL1: duel.result,
+                })}
               </Typography>
             </Box>
             <Box className="duel-left-time">
-              <Typography className="duel-left-time-text" sx={{ fontWeight: "bold" }}>{duel.endDateTime}</Typography>
+              <Typography
+                className="duel-left-time-text"
+                sx={{ fontWeight: "bold" }}
+              >
+                {duel.endDateTime}
+              </Typography>
             </Box>
             <Box className="duel-price-div">
-              <img
-                src="/assets/images/allinduel.png"
-                style={{
-                  width: "15px",
-                }}
-                alt="allin"
-              />
+              {!duel.type && (
+                <img
+                  src="/assets/images/allinduel.png"
+                  style={{
+                    width: "15px",
+                  }}
+                  alt="allin"
+                />
+              )}
               &nbsp;
               <Typography variant="subtitle2" className="duel-bet-price-text">
                 {"$" + duel.betPrice}

@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Box,
   Dialog,
@@ -5,40 +7,46 @@ import {
   Typography,
   DialogTitle,
 } from "@mui/material";
-import React from "react";
-import { FaTimes } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { useWeb3React } from "@web3-react/core";
-import { AppDispatch, AppSelector } from "../../store";
-import { IVoteInput } from "../../interfaces";
-import {
-  gameState,
-  updateState,
-  vote,
-  getVoteByAddress,
-  getVoteStatus,
-} from "../../reducers/cryptolegions.reducer";
-import FireBtn from "../Buttons/FireBtn";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { FaTimes } from "react-icons/fa";
+import { useWeb3React } from "@web3-react/core";
 import { toast } from "react-toastify";
 
+import { AppDispatch, AppSelector } from "../../store";
+import FireBtn from "../Buttons/FireBtn";
+import {
+  getVoteByAddress,
+  getVoteStatus,
+  vote,
+  voteState,
+} from "../../reducers/vote.reducer";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+
 const VoteModal: React.FC = () => {
-  // Hook Info
-  const [status, setStatus] = React.useState<boolean>(false);
-  const [voteExpiredLeftDateTime, setVoteExpiredLeftDateTime] =
-    React.useState("");
+  let clockTimer: any = 0;
+
   const dispatch: AppDispatch = useDispatch();
-  const {
-    language,
-    allowVote,
-    alreadyVoted,
-    voteExpired,
-    lastestVoteDate,
-    expireVoteDate,
-  } = AppSelector(gameState);
+  const { alreadyVoted, voteExpired, lastestVoteDate, myVote } =
+    AppSelector(voteState);
+  const { voteModalOpen } = AppSelector(modalState);
+
   const { account } = useWeb3React();
+
+  const [status, setStatus] = useState<boolean>(myVote.valueOf());
+  const [voteExpiredLeftDateTime, setVoteExpiredLeftDateTime] = useState("");
+  const [currenTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    clockTimer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => {
+      clearInterval(clockTimer);
+    };
+  }, []);
+
   const handleSubmit = async () => {
     if (!account) {
       toast.error("You must connect your wallet!");
@@ -60,63 +68,62 @@ const VoteModal: React.FC = () => {
 
   const handleClose = () => {
     dispatch(
-      updateState({
-        allowVote: false,
+      updateModalState({
+        voteModalOpen: false,
       })
     );
   };
 
-  const calcVoteExpireDateTime = () => {
+  const calcVoteExpireDateTime = (lastestVoteDate: string) => {
     if (alreadyVoted && !voteExpired) {
-      setVoteExpiredLeftDateTime(
-        `${Math.floor(
-          (new Date(lastestVoteDate).getTime() -
-            new Date().getTime() +
-            3 * 24 * 60 * 60 * 1000) /
-            (24 * 60 * 60 * 1000)
-        )} days ${Math.floor(
-          ((new Date(lastestVoteDate).getTime() -
-            new Date().getTime() +
-            3 * 24 * 60 * 60 * 1000) %
-            (24 * 60 * 60 * 1000)) /
-            (60 * 60 * 1000)
-        )} hours ${Math.floor(
-          ((new Date(lastestVoteDate).getTime() -
-            new Date().getTime() +
-            3 * 24 * 60 * 60 * 1000) %
-            (60 * 60 * 1000)) /
-            (60 * 1000)
-        )} minutes`
-      );
+      return `${Math.floor(
+        (new Date(lastestVoteDate).getTime() -
+          currenTime.getTime() +
+          3 * 24 * 60 * 60 * 1000) /
+          (24 * 60 * 60 * 1000)
+      )} days ${Math.floor(
+        ((new Date(lastestVoteDate).getTime() -
+          currenTime.getTime() +
+          3 * 24 * 60 * 60 * 1000) %
+          (24 * 60 * 60 * 1000)) /
+          (60 * 60 * 1000)
+      )} hours ${Math.floor(
+        ((new Date(lastestVoteDate).getTime() -
+          currenTime.getTime() +
+          3 * 24 * 60 * 60 * 1000) %
+          (60 * 60 * 1000)) /
+          (60 * 1000)
+      )} minutes`;
     }
-  };
-
-  React.useEffect(() => {
-    realTimeUpdate();
-  }, []);
-
-  const realTimeUpdate = () => {
-    setInterval(() => {
-      calcVoteExpireDateTime();
-    }, 5000);
   };
 
   //
   return (
-    <Dialog open={allowVote.valueOf()} onClose={handleClose}>
-      <DialogContent>
+    <Dialog open={voteModalOpen} onClose={handleClose}>
+      <DialogTitle sx={{ position: "relative" }}>
         <Box>
           <Typography
             variant="h6"
             sx={{
               fontWeight: "bold",
               textAlign: "center",
-              marginBottom: 3,
             }}
           >
             Vote about the current economy status:
           </Typography>
         </Box>
+        <FaTimes
+          style={{
+            position: "absolute",
+            top: "1em",
+            right: "1em",
+            cursor: "pointer",
+            fontSize: "1.2em",
+          }}
+          onClick={handleClose}
+        />
+      </DialogTitle>
+      <DialogContent>
         <Box
           sx={{
             textAlign: "Center",
@@ -128,8 +135,9 @@ const VoteModal: React.FC = () => {
             name="radio-buttons-group"
             sx={{
               alignItems: "center",
-              marginBottom: 2,
+              marginBottom: 1,
             }}
+            value={status}
           >
             <FormControlLabel
               value="true"
@@ -155,7 +163,24 @@ const VoteModal: React.FC = () => {
               marginBottom: 0,
             }}
           >
-            Your GOOD/BAD vote expires in {voteExpiredLeftDateTime}.
+            {alreadyVoted &&
+              "Your " +
+                (myVote.valueOf() ? "Good" : "Bad") +
+                " vote expires in " +
+                calcVoteExpireDateTime(lastestVoteDate.toString()) +
+                "."}
+            {(!alreadyVoted || voteExpired) &&
+              "Your vote will expire in 3 days."}
+          </Typography>
+          <Typography
+            fontSize={15}
+            sx={{
+              fontWeight: "normal",
+              textAlign: "left",
+            }}
+          >
+            You can change your vote, or vote the same to restart the countdown
+            timer.
           </Typography>
           <Typography
             fontSize={15}
@@ -165,10 +190,8 @@ const VoteModal: React.FC = () => {
               marginBottom: 2,
             }}
           >
-            You can change your vote, or vote the same to restart the countdown
-            timer.
+            V3 will stay live as long as at least 30% players vote Good.
           </Typography>
-
           <FireBtn
             sx={{
               mb: 1,
@@ -180,7 +203,9 @@ const VoteModal: React.FC = () => {
             onClick={handleSubmit}
             aria-describedby="summon-beast-btn"
           >
-            Vote
+            {!alreadyVoted && "Vote"}
+            {alreadyVoted && !voteExpired && "Update Vote"}
+            {alreadyVoted && voteExpired && "Vote again"}
           </FireBtn>
         </Box>
       </DialogContent>

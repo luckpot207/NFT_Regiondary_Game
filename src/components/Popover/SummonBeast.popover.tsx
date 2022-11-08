@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Box, DialogTitle, Popover } from "@mui/material";
-import { AppSelector } from "../../store";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { useDispatch } from "react-redux";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+
+import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
 import FireBtn from "../Buttons/FireBtn";
 import { useWeb3React } from "@web3-react/core";
@@ -13,52 +14,40 @@ import {
   useVRF,
   useWeb3,
 } from "../../web3hooks/useContract";
+import { getBeastAddress } from "../../web3hooks/getAddress";
+import WalletSelectModal from "../Modals/WalletSelect.modal";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { inventoryState } from "../../reducers/inventory.reducer";
 import {
   getBloodstoneAllowance,
   getWalletMintPending,
   initialMintBeastAndWarrior,
   setBloodstoneApprove,
-} from "../../web3hooks/contractFunctions";
-import { getBeastAddress } from "../../web3hooks/getAddress";
-import { toast } from "react-toastify";
-import {
-  checkBeastRevealStatus,
-  checkMintBeastPending,
-} from "../../helpers/beast";
-import Swal from "sweetalert2";
-import WalletSelectModal from "../Modals/WalletSelect.modal";
-import LanguageTranslate from "../UI/LanguageTranslate";
+} from "../../web3hooks/contractFunctions/common.contract";
+import BeastService from "../../services/beast.service";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { updateBeastState } from "../../reducers/beast.reducer";
 
 const SummonBeastPopover: React.FC = () => {
-  // Hook info
   const dispatch = useDispatch();
-  const {
-    summonBeastAnchorEl,
-    language,
-    summonPrice,
-    summonReductionPer,
-    reinvestedWalletBLST,
-    reinvestedWalletUSD,
-    voucherWalletUSD,
-  } = AppSelector(gameState);
+  const { summonBeastAnchorEl, summonPrice, summonReductionPer } =
+    AppSelector(commonState);
+  const { reinvestedWalletUSD, reinvestedTotalUSD, voucherWalletUSD } =
+    AppSelector(inventoryState);
 
-  // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const bloodstoneContract = useBloodstone();
   const beastContract = useBeast();
   const vrfContract = useVRF();
 
-  // State
   const open = Boolean(summonBeastAnchorEl);
   const [quantity, setQuantity] = useState<Number>(0);
 
-  // Function
   const handleClose = () => {
     dispatch(
-      updateState({
+      updateCommonState({
         summonBeastAnchorEl: null,
       })
     );
@@ -66,7 +55,7 @@ const SummonBeastPopover: React.FC = () => {
 
   const handleSelectWallet = async (walletNumber: number) => {
     handleClose();
-    dispatch(updateState({ walletSelectModalOpen: false }));
+    dispatch(updateModalState({ walletSelectModalOpen: false }));
     let key: any = "p1";
     switch (quantity) {
       case 1:
@@ -87,7 +76,7 @@ const SummonBeastPopover: React.FC = () => {
       default:
         break;
     }
-    dispatch(updateState({ initialMintBeastLoading: true }));
+    dispatch(updateBeastState({ initialMintBeastLoading: true }));
     try {
       const allowance = await getBloodstoneAllowance(
         web3,
@@ -112,9 +101,9 @@ const SummonBeastPopover: React.FC = () => {
           Number(summonPrice[key as keyof typeof summonPrice].usd)
         ) {
           toast.error(
-            <LanguageTranslate translateKey="notEnoughUSDInReinvestWalletToMintBeasts" />
+            getTranslation("notEnoughUSDInReinvestWalletToMintBeasts")
           );
-          dispatch(updateState({ initialMintBeastLoading: false }));
+          dispatch(updateBeastState({ initialMintBeastLoading: false }));
           return;
         }
       } else if (walletNumber === 2) {
@@ -123,9 +112,9 @@ const SummonBeastPopover: React.FC = () => {
           Number(summonPrice[key as keyof typeof summonPrice].usd)
         ) {
           toast.error(
-            <LanguageTranslate translateKey="notEnoughUSDInVoucherWalletToMintBeasts" />
+            getTranslation("notEnoughUSDInVoucherWalletToMintBeasts")
           );
-          dispatch(updateState({ initialMintBeastLoading: false }));
+          dispatch(updateBeastState({ initialMintBeastLoading: false }));
           return;
         }
       }
@@ -133,7 +122,7 @@ const SummonBeastPopover: React.FC = () => {
         beastContract,
         account
       );
-      dispatch(updateState({ mintBeastPending }));
+      dispatch(updateBeastState({ mintBeastPending }));
       if (!mintBeastPending) {
         await initialMintBeastAndWarrior(
           beastContract,
@@ -146,23 +135,28 @@ const SummonBeastPopover: React.FC = () => {
           account
         );
         dispatch(
-          updateState({ mintBeastPending, initialMintBeastLoading: false })
+          updateBeastState({ mintBeastPending, initialMintBeastLoading: false })
         );
-        checkBeastRevealStatus(dispatch, account, beastContract, vrfContract);
-        toast.success(<LanguageTranslate translateKey="plzRevealBeast" />);
+        BeastService.checkBeastRevealStatus(
+          dispatch,
+          account,
+          beastContract,
+          vrfContract
+        );
+        toast.success(getTranslation("plzRevealBeast"));
       }
       setTimeout(() => {
-        checkMintBeastPending(dispatch, account, beastContract);
+        BeastService.checkMintBeastPending(dispatch, account, beastContract);
       }, 1000);
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ initialMintBeastLoading: false }));
+    dispatch(updateBeastState({ initialMintBeastLoading: false }));
   };
 
   const handleMint = async (quantity: Number) => {
     setQuantity(quantity);
-    dispatch(updateState({ walletSelectModalOpen: true }));
+    dispatch(updateModalState({ walletSelectModalOpen: true }));
   };
 
   return (
@@ -192,9 +186,7 @@ const SummonBeastPopover: React.FC = () => {
           <FaTimes onClick={handleClose} />
         </Box>
       </Box>
-      <DialogTitle>
-        <LanguageTranslate translateKey="summonBeastQuantity" />
-      </DialogTitle>
+      <DialogTitle>{getTranslation("summonBeastQuantity")}</DialogTitle>
       <Box
         sx={{
           padding: 3,
@@ -203,23 +195,28 @@ const SummonBeastPopover: React.FC = () => {
         }}
       >
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(1)}>
-          1 ({Number(summonPrice["p1"].blst).toFixed(2)} $BLST)
+          1 ({Number(summonPrice["p1"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(10)}>
           10 ({summonReductionPer["p10"]}% |{" "}
-          {Number(summonPrice["p10"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p10"].blst).toFixed(2)} ${getTranslation("blst")}
+          )
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(50)}>
           50 ({summonReductionPer["p50"]}% |{" "}
-          {Number(summonPrice["p50"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p50"].blst).toFixed(2)} ${getTranslation("blst")}
+          )
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(100)}>
           100 ({summonReductionPer["p100"]}% |{" "}
-          {Number(summonPrice["p100"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p100"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(150)}>
           150 ({summonReductionPer["p150"]}% |{" "}
-          {Number(summonPrice["p150"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p150"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
       </Box>
       <WalletSelectModal handleSelectWallet={handleSelectWallet} />

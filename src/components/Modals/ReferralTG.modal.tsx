@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Dialog,
@@ -8,32 +9,29 @@ import {
   TextField,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { AppDispatch, AppSelector } from "../../store";
 import {
   addContactInfo,
+  commonState,
   editContactInfo,
-  gameState,
   getContactInfo,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
-import { AppDispatch, AppSelector } from "../../store";
+} from "../../reducers/common.reduer";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
 
 const ReferralTGModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const {
-    referralTGModalOpen,
-    contactInfo,
-    addContactLoading,
-    editContactLoading,
-  } = AppSelector(gameState);
+  const { contactInfo, addContactLoading, editContactLoading } =
+    AppSelector(commonState);
+
+  const { referralTGModalOpen } = AppSelector(modalState);
 
   const { account } = useWeb3React();
   const [TGName, setTGName] = useState("");
 
   const handleClose = () => {
-    dispatch(updateState({ referralTGModalOpen: false }));
+    dispatch(updateModalState({ referralTGModalOpen: false }));
   };
 
   const handleTGName = () => {
@@ -77,7 +75,7 @@ const ReferralTGModal: React.FC = () => {
   }, [contactInfo]);
 
   return (
-    <Dialog onClose={handleClose} open={referralTGModalOpen.valueOf()}>
+    <Dialog onClose={handleClose} open={referralTGModalOpen}>
       <Box sx={{ display: "flex", p: 2 }}>
         <FaTimes
           style={{ marginLeft: "auto", cursor: "pointer" }}

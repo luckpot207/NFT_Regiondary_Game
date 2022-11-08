@@ -1,17 +1,16 @@
-// import beast from "../config/abis/beast.json";
-import bloodstone from "../config/abis/bloodstone.json";
-import busd from "../config/abis/busd.json";
+import bloodstone from "../constants/abis/bloodstone.json";
+import busd from "../constants/abis/busd.json";
 
-import beast from "../config/abis/BeastNFT.json";
-import feehandler from "../config/abis/FeeHandler.json";
-import legion from "../config/abis/LegionNFT.json";
-import marketplace from "../config/abis/Marketplace.json";
-import monster from "../config/abis/Monster.json";
-import vrfv2consumer from "../config/abis/VRFv2Consumer.json";
-import warrior from "../config/abis/WarriorNFT.json";
-import rewardpool from "../config/abis/RewardPool.json";
-import referralsystem from "../config/abis/ReferralSystem.json";
-import duelsystem from "../config/abis/DuelSystem.json";
+import beast from "../constants/abis/BeastNFT.json";
+import feehandler from "../constants/abis/FeeHandler.json";
+import legion from "../constants/abis/LegionNFT.json";
+import marketplace from "../constants/abis/Marketplace.json";
+import monster from "../constants/abis/Monster.json";
+import vrfv2consumer from "../constants/abis/VRFv2Consumer.json";
+import warrior from "../constants/abis/WarriorNFT.json";
+import rewardpool from "../constants/abis/RewardPool.json";
+import referralsystem from "../constants/abis/ReferralSystem.json";
+import duelsystem from "../constants/abis/DuelSystem.json"
 
 export const getBloodstoneAbi = () => {
   return bloodstone;

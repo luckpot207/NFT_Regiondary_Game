@@ -1,51 +1,49 @@
-import { Card, CardMedia, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { gameState } from "../../reducers/cryptolegions.reducer";
+import { Card, CardMedia, Grid, Typography } from "@mui/material";
 import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
-import LanguageTranslate from "./LanguageTranslate";
+import { beastState } from "../../reducers/beast.reducer";
+import { warriorState } from "../../reducers/warrior.reducer";
+import { legionState } from "../../reducers/legion.reducer";
+import { marketplaceState } from "../../reducers/marketplace.reducer";
+import { monsterState } from "../../reducers/monster.reducer";
 
 type Props = {
   loadingPage: string;
 };
 
 const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
-  // Hook info
   const {
-    language,
     getAllBeastsLoading,
     initialMintBeastLoading,
     mintBeastPending,
     revealBeastLoading,
     executeBeastsLoading,
-
+  } = AppSelector(beastState);
+  const {
     getAllWarriorsLoading,
     initialMintWarriorLoading,
     mintWarriorPending,
     revealWarriorLoading,
     executeWarriorsLoading,
-
+  } = AppSelector(warriorState);
+  const {
     isApprovedBeastForLegion,
     isApprovedWarriorForLegion,
-
     getAllLegionsLoading,
     executeLegionsLoading,
     buySuppliesLoading,
-
-    getAllMonsterLoading,
-
+  } = AppSelector(legionState);
+  const { getAllMonsterLoading } = AppSelector(monsterState);
+  const {
     listingLoading,
-
     getAllBeastsMarketItemsLoading,
     getAllWarriorsMarketItemsLoading,
     getAllLegionsMarketItemsLoading,
-
     buyItemLoading,
     updatePriceLoading,
     cancelItemLoading,
-
-    getAllDulesLoading,
-  } = AppSelector(gameState);
+  } = AppSelector(marketplaceState);
 
   // State
   const [loadingText, setLoadingText] = useState<any>("");
@@ -55,32 +53,32 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
     if (loadingPage === "beasts" || loadingPage === "beastsMarketplace") {
       // Beast
       if (getAllBeastsLoading || getAllBeastsMarketItemsLoading) {
-        setLoadingText(<LanguageTranslate translateKey="loadingBeasts" />);
+        setLoadingText(getTranslation("loadingBeasts"));
       }
       if (initialMintBeastLoading) {
-        setLoadingText(<LanguageTranslate translateKey="summoningBeasts" />);
+        setLoadingText(getTranslation("summoningBeasts"));
       }
       if (mintBeastPending) {
-        setLoadingText(<LanguageTranslate translateKey="revealTextBeasts" />);
+        setLoadingText(getTranslation("revealTextBeasts"));
       }
       if (revealBeastLoading) {
-        setLoadingText(<LanguageTranslate translateKey="revealingBeasts" />);
+        setLoadingText(getTranslation("revealingBeasts"));
       }
     }
 
     if (loadingPage === "warriors" || loadingPage === "warriorsMarketplace") {
       // Warrior
       if (getAllWarriorsLoading || getAllWarriorsMarketItemsLoading) {
-        setLoadingText(<LanguageTranslate translateKey="loadingWarriors" />);
+        setLoadingText(getTranslation("loadingWarriors"));
       }
       if (initialMintWarriorLoading) {
-        setLoadingText(<LanguageTranslate translateKey="summoningWarriors" />);
+        setLoadingText(getTranslation("summoningWarriors"));
       }
       if (mintWarriorPending) {
-        setLoadingText(<LanguageTranslate translateKey="revealTextWarriors" />);
+        setLoadingText(getTranslation("revealTextWarriors"));
       }
       if (revealWarriorLoading) {
-        setLoadingText(<LanguageTranslate translateKey="revealingWarriors" />);
+        setLoadingText(getTranslation("revealingWarriors"));
       }
     }
     if (
@@ -92,51 +90,37 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
       updatePriceLoading ||
       cancelItemLoading
     ) {
-      setLoadingText(<LanguageTranslate translateKey="pleaseWait" />);
+      setLoadingText(getTranslation("pleaseWait"));
     }
 
     if (loadingPage === "createLegion" || loadingPage === "updateLegion") {
       if (getAllBeastsLoading && getAllWarriorsLoading) {
-        setLoadingText(<LanguageTranslate translateKey="loadingTitle" />);
+        setLoadingText(getTranslation("loadingTitle"));
       }
       if (!isApprovedBeastForLegion) {
-        setLoadingText(<LanguageTranslate translateKey="approvalAllBeasts" />);
+        setLoadingText(getTranslation("approvalAllBeasts"));
       }
       if (!isApprovedWarriorForLegion) {
-        setLoadingText(
-          <LanguageTranslate translateKey="approvalAllWarriors" />
-        );
+        setLoadingText(getTranslation("approvalAllWarriors"));
       }
       if (!isApprovedBeastForLegion && !isApprovedWarriorForLegion) {
-        setLoadingText(
-          <LanguageTranslate translateKey="approvalAllBeastsAndWarriors" />
-        );
+        setLoadingText(getTranslation("approvalAllBeastsAndWarriors"));
       }
     }
 
     if (loadingPage === "legions" || loadingPage === "legionsMarketplace") {
       if (getAllLegionsLoading || getAllLegionsMarketItemsLoading) {
-        setLoadingText(<LanguageTranslate translateKey="loadingLegions" />);
+        setLoadingText(getTranslation("loadingLegions"));
       }
       if (buySuppliesLoading) {
-        setLoadingText(<LanguageTranslate translateKey="buyingSupplies" />);
+        setLoadingText(getTranslation("buyingSupplies"));
       }
     }
 
     if (loadingPage === "hunt") {
       if (getAllMonsterLoading) {
-        setLoadingText(<LanguageTranslate translateKey="loadingMonsters" />);
+        setLoadingText(getTranslation("loadingMonsters"));
       }
-    }
-
-    if (loadingPage == "duel") {
-      if (getAllDulesLoading) {
-        setLoadingText("Loading Duels...")
-      }
-    }
-
-    if (loadingPage == "cancelDuel") {
-      setLoadingText("Canceling Duel...")
     }
   }, [
     getAllBeastsLoading,

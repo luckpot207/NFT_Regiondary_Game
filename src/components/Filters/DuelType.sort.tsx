@@ -1,44 +1,47 @@
 import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { getTranslation } from "../../utils/utils";
 
 const DuelTypeSort: React.FC = () => {
       const dispatch = useDispatch();
-      const { duelType } = AppSelector(gameState);
+      const { duelType } = AppSelector(filterAndPageState);
     const handleSort = (val: Number) => {
-        dispatch(updateState({ duelType: val, currentPage: 1 }));
+        dispatch(updateFilterAndPageState({ duelType: val, currentPage: 1 }));
     };
 
       useEffect(() => {
-        dispatch(updateState({ duelType: 0 }));
+        dispatch(updateFilterAndPageState({ duelType: 0 }));
       }, []);
 
     return (
         <Box>
             <Typography sx={{ mb: 1 }}>
-                Sort By Duel Type:
+                {getTranslation("sortbydueltype")}:
             </Typography>
             <ButtonGroup>
                 <Button
                     variant={duelType === 0 ? "contained" : "outlined"}
                     onClick={() => handleSort(0)}
                 >
-                    All
+                    {getTranslation("all")}
                 </Button>
                 <Button
                     variant={duelType === 1 ? "contained" : "outlined"}
                     onClick={() => handleSort(1)}
                 >
-                    Standard
+                    {getTranslation("standard")}
                 </Button>
                 <Button
                     variant={duelType === 2 ? "contained" : "outlined"}
                     onClick={() => handleSort(2)}
                 >
-                    All-In
+                    {getTranslation("allin")}
                 </Button>
             </ButtonGroup>
         </Box>

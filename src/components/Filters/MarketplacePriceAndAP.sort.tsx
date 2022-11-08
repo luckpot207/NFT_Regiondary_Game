@@ -1,56 +1,53 @@
-import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { getTranslation } from "../../utils/utils";
 
 const MarketplacePriceAndAPSort: React.FC = () => {
   const dispatch = useDispatch();
-  const { sortAPandPrice } = AppSelector(gameState);
+  const { sortAPandPrice } = AppSelector(filterAndPageState);
 
   const handleSort = (val: Number) => {
-    dispatch(updateState({ sortAPandPrice: val, currentPage: 1 }));
+    dispatch(updateFilterAndPageState({ sortAPandPrice: val, currentPage: 1 }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ sortAPandPrice: 0 }));
+    dispatch(updateFilterAndPageState({ sortAPandPrice: 0 }));
   }, []);
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="sortby" />:
-      </Typography>
+      <Typography sx={{ mb: 1 }}>{getTranslation("sortby")}</Typography>
       <ButtonGroup sx={{ width: "100%" }}>
         <Button
           variant={sortAPandPrice === 2 ? "contained" : "outlined"}
           onClick={() => handleSort(2)}
           sx={{ textAlign: "center" }}
         >
-          <LanguageTranslate translateKey="lowest" />{" "}
-          <LanguageTranslate translateKey="ap" />
+          {getTranslation("lowest")} {getTranslation("ap")}
         </Button>
         <Button
           variant={sortAPandPrice === 3 ? "contained" : "outlined"}
           onClick={() => handleSort(3)}
         >
-          <LanguageTranslate translateKey="highest" />{" "}
-          <LanguageTranslate translateKey="ap" />
+          {getTranslation("highest")} {getTranslation("ap")}
         </Button>
         <Button
           variant={sortAPandPrice === 0 ? "contained" : "outlined"}
           onClick={() => handleSort(0)}
         >
-          <LanguageTranslate translateKey="lowest" />{" "}
-          <LanguageTranslate translateKey="$" />
+          {getTranslation("lowest")} {getTranslation("$")}
         </Button>
         <Button
           variant={sortAPandPrice === 1 ? "contained" : "outlined"}
           onClick={() => handleSort(1)}
         >
-          <LanguageTranslate translateKey="highest" />{" "}
-          <LanguageTranslate translateKey="$" />
+          {getTranslation("highest")} {getTranslation("$")}
         </Button>
       </ButtonGroup>
     </Box>

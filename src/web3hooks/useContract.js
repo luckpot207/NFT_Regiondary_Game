@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { useWeb3React } from "@web3-react/core";
-import gameVersion from "../constants/gameVersion";
 
+import gameConfig from "../config/game.config";
 import {
   getBloodstoneAddress,
   getBeastAddress,
@@ -14,7 +14,7 @@ import {
   getBUSDAddress,
   getVRFAddress,
   getReferralSystemAddress,
-  getDuelSystemAddress,
+  getDuelSystemAddress
 } from "./getAddress";
 
 import {
@@ -32,6 +32,7 @@ import {
   getDuelSystemAbi,
 } from "./getAbi";
 
+const gameVersion = gameConfig.version;
 const RPC_URL = gameVersion.rpcUrl;
 const RPC_WS_URL = gameVersion.rpcWsUrl;
 

@@ -1,40 +1,29 @@
+import React, { useState, useEffect } from "react";
 import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { revealBeast } from "../../helpers/beast";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
 import {
-  getBLSTAmount,
-  getVoucherWalletUSDBalance,
-} from "../../web3hooks/contractFunctions";
-import {
-  useBeast,
   useFeeHandler,
   useRewardPool,
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { updateCommonState } from "../../reducers/common.reduer";
+import { getVoucherWalletUSDBalance } from "../../web3hooks/contractFunctions/rewardpool.contract";
+import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
 
 type Props = {
   handleSelectWallet: Function;
 };
 
 const WalletSelectModal: React.FC<Props> = ({ handleSelectWallet }) => {
-  // Hook Info
   const dispatch = useDispatch();
-  const {
-    language,
-    walletSelectModalOpen,
-    showVoucherWalletBtn,
-    allBeasts,
-    allWarriors,
-    allLegions,
-  } = AppSelector(gameState);
+  const { walletSelectModalOpen } = AppSelector(modalState);
 
   // Account & Web3
   const { account } = useWeb3React();
@@ -52,12 +41,12 @@ const WalletSelectModal: React.FC<Props> = ({ handleSelectWallet }) => {
   // Functions
   const handleClose = () => {
     dispatch(
-      updateState({
+      updateCommonState({
         summonBeastAnchorEl: null,
         summonWarriorAnchorEl: null,
       })
     );
-    dispatch(updateState({ walletSelectModalOpen: false }));
+    dispatch(updateModalState({ walletSelectModalOpen: false }));
   };
 
   const getBalance = async () => {
@@ -87,7 +76,7 @@ const WalletSelectModal: React.FC<Props> = ({ handleSelectWallet }) => {
           <FaTimes />
         </Box> */}
         <DialogTitle sx={{ textAlign: "center", wordBreak: "break-word" }}>
-          <LanguageTranslate translateKey="plzSelectWallet" />
+          {getTranslation("plzSelectWallet")}
         </DialogTitle>
         <Box
           sx={{
@@ -108,21 +97,21 @@ const WalletSelectModal: React.FC<Props> = ({ handleSelectWallet }) => {
             sx={{ fontWeight: "bold", mx: 1, mb: 1 }}
             onClick={() => handleSelectWallet(0)}
           >
-            <LanguageTranslate translateKey="metamask" />
+            {getTranslation("metamask")}
           </FireBtn>
           <FireBtn
             sx={{ fontWeight: "bold", mx: 1, mb: 1 }}
             onClick={() => handleSelectWallet(1)}
           >
-            <LanguageTranslate translateKey="reinvest" />
+            {getTranslation("reinvest")}
           </FireBtn>
           {isShowVoucher && (
             <FireBtn
               sx={{ fontWeight: "bold", mx: 1, mb: 1 }}
               onClick={() => handleSelectWallet(2)}
             >
-              <LanguageTranslate translateKey="voucher" /> (
-              {Number(voucherBLST).toFixed(2)} $BLST Left)
+              {getTranslation("voucher")} ({Number(voucherBLST).toFixed(2)} $
+              {getTranslation("blst")} {getTranslation("left")})
             </FireBtn>
           )}
         </Box>

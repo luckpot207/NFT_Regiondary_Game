@@ -87,10 +87,7 @@ const getWalletAndUnclaimedBalance = async (
       feehandlerContract,
       BLSTBalance
     );
-    const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(
-      rewardpoolContract,
-      account
-    );
+    const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(rewardpoolContract, account);
     const claimedUSD = await getClaimedUSD(rewardpoolContract, account);
     const claimedBLST = await getBLSTAmount(
       web3,

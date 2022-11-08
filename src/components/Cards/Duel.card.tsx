@@ -57,7 +57,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setDuelFlag(false);
     divisions.forEach((division: IDivision) => {
       if (

@@ -85,7 +85,10 @@ const ClaimAndReinvestModal: React.FC = () => {
     setReinvestUSDAmount("0");
     setReinvestAll(false);
     try {
-      const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(rewardpoolContract, account);
+      const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(
+        rewardpoolContract,
+        account
+      );
       setUnclaimedUSD(unclaimedUSD);
       let amountsForClaiming = await getAmountsForClaimingAndReinvesting(
         web3,
@@ -166,7 +169,9 @@ const ClaimAndReinvestModal: React.FC = () => {
 
   const handleClaimAndReinvestReward = async (reinvested: boolean) => {
     if (Number(claimedUSD) != 0) {
-      toast.error(getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain"));
+      toast.error(
+        getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain")
+      );
       return;
     }
     setClaimAndReinvestLoading(true);

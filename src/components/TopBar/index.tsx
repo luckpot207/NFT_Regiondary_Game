@@ -75,6 +75,7 @@ const TopBar: React.FC = () => {
 
   useEffect(() => {
     accountRef.current = account;
+    getBalance();
   }, [account]);
 
   useEffect(() => {
@@ -104,7 +105,7 @@ const TopBar: React.FC = () => {
     InventoryService.getWalletAndUnclaimedBalance(
       dispatch,
       web3,
-      account,
+      getAccount(),
       bloodstoneContract,
       rewardpoolContract,
       feehandlerContract
@@ -112,13 +113,13 @@ const TopBar: React.FC = () => {
     InventoryService.getReinvestedAndVoucherBalance(
       dispatch,
       web3,
-      account,
+      getAccount(),
       rewardpoolContract,
       feehandlerContract
     );
     InventoryService.getClaimAndReinvestInfo(
       dispatch,
-      account,
+      getAccount(),
       rewardpoolContract
     );
     BeastService.checkMintBeastPending(dispatch, getAccount(), beastContract);

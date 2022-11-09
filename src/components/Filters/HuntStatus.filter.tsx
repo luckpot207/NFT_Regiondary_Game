@@ -1,33 +1,36 @@
-import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { getTranslation } from "../../utils/utils";
 
 const HuntStatusFilter: React.FC = () => {
   const dispatch = useDispatch();
-  const { legionFilterHuntStatus } = AppSelector(gameState);
+  const { legionFilterHuntStatus } = AppSelector(filterAndPageState);
 
   const handleFilter = (val: Number) => {
-    dispatch(updateState({ legionFilterHuntStatus: val, currentPage: 1 }));
+    dispatch(
+      updateFilterAndPageState({ legionFilterHuntStatus: val, currentPage: 1 })
+    );
   };
 
   useEffect(() => {
-    dispatch(updateState({ legionFilterHuntStatus: 0 }));
+    dispatch(updateFilterAndPageState({ legionFilterHuntStatus: 0 }));
   }, []);
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="huntstatus" />:
-      </Typography>
+      <Typography sx={{ mb: 1 }}>{getTranslation("huntstatus")}</Typography>
       <ButtonGroup>
         <Button
           variant={legionFilterHuntStatus === 0 ? "contained" : "outlined"}
           onClick={() => handleFilter(0)}
         >
-          <LanguageTranslate translateKey="all" />
+          {getTranslation("all")}
         </Button>
         <Button
           variant={legionFilterHuntStatus === 1 ? "contained" : "outlined"}

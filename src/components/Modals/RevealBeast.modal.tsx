@@ -1,34 +1,26 @@
+import React from "react";
 import { Box, Dialog, DialogContent } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React from "react";
 import { useDispatch } from "react-redux";
-import { revealBeast } from "../../helpers/beast";
-import { gameState } from "../../reducers/cryptolegions.reducer";
+import { beastState } from "../../reducers/beast.reducer";
+import BeastService from "../../services/beast.service";
 import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
 import { useBeast } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import LanguageTranslate from "../UI/LanguageTranslate";
 
 const RevealBeastModal: React.FC = () => {
-  // Hook Info
   const dispatch = useDispatch();
-  const {
-    language,
-    mintBeastPending,
-    revealBeastLoading,
-    mintBeastVRFPending,
-  } = AppSelector(gameState);
 
-  // Account & Web3
+  const { mintBeastPending, revealBeastLoading, mintBeastVRFPending } =
+    AppSelector(beastState);
+
   const { account } = useWeb3React();
 
-  // Contracts
   const beastContract = useBeast();
 
-  // Functions
   const handleRevealBeast = () => {
-    revealBeast(dispatch, account, beastContract);
+    BeastService.revealBeast(dispatch, account, beastContract);
   };
 
   return (
@@ -40,7 +32,7 @@ const RevealBeastModal: React.FC = () => {
             onClick={() => handleRevealBeast()}
             loading={mintBeastVRFPending.valueOf()}
           >
-            <LanguageTranslate translateKey="revealBeasts" />
+            {getTranslation("revealBeasts")}
           </FireBtn>
         </Box>
         <img style={{ width: "100%" }} src={"/assets/images/reveal.gif"} />

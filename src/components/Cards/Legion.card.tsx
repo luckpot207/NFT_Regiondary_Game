@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -12,21 +13,21 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import CachedIcon from "@mui/icons-material/Cached";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
-import { I_Legion } from "../../interfaces";
-import {
-  changeLegionExecuteStatus,
-  gameState,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+import classNames from "classnames";
+import Axios from "axios";
+
 import { AppSelector } from "../../store";
-import { formatNumber, getTranslation } from "../../utils/utils";
 import {
-  getBeastToken,
-  getLegionLastHuntTime,
-  getWarriorToken,
-} from "../../web3hooks/contractFunctions";
+  formatNumber,
+  getTranslation,
+  getWarriorStrength,
+} from "../../utils/utils";
 import {
   useBeast,
   useBloodstone,
@@ -34,18 +35,24 @@ import {
   useWarrior,
   useWeb3,
 } from "../../web3hooks/useContract";
-import Tutorial from "../Tutorial/Tutorial";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import CachedIcon from "@mui/icons-material/Cached";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { handleExecuteLegions } from "../../helpers/legion";
-import classNames from "classnames";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { ILegion } from "../../types";
+import { commonState } from "../../reducers/common.reduer";
+import { updateModalState } from "../../reducers/modal.reducer";
+import {
+  changeLegionExecuteStatus,
+  updateLegionState,
+} from "../../reducers/legion.reducer";
+import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
+import { getLegionLastHuntTime } from "../../web3hooks/contractFunctions/legion.contract";
+import constants from "../../constants";
+import { apiConfig } from "../../config/api.config";
+import { IStrength } from "../../types/warrior.type";
+import { ICapacity } from "../../types/beast.type";
+import LegionService from "../../services/legion.service";
+import gameConfig from "../../config/game.config";
 
 type Props = {
-  legion: I_Legion;
+  legion: ILegion;
   index: number;
 };
 
@@ -54,7 +61,7 @@ const oneDay = 24 * 2600 * 1000;
 const LegionCard: React.FC<Props> = ({ legion, index }) => {
   // Hook info
   const dispatch = useDispatch();
-  const { language, showAnimation } = AppSelector(gameState);
+  const { showAnimation } = AppSelector(commonState);
 
   // Account & Web3
   const { account } = useWeb3React();
@@ -79,11 +86,13 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
     warriorIds,
     executeStatus,
   } = legion;
+
   const huntStatusColor = huntStatus
     ? "green"
     : supplies > 0
     ? "orange"
     : "red";
+
   const [isShowDetail, setIsShowDetail] = useState<boolean>(false);
   const [loaded, setLoaded] = useState(false);
   const [totalCapacity, setTotalCapacity] = useState<number>(0);
@@ -101,57 +110,86 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
     }
   }
 
-  // Functions
-  const handleImageLoaded = () => {
-    setLoaded(true);
-  };
+  useEffect(() => {
+    getBalance();
+  }, []);
 
   const getBalance = async () => {
     try {
       setLastHuntTime(
         Number(await getLegionLastHuntTime(legionContract, id)) * 1000
       );
-      let beast,
-        warrior,
-        totalCapacity = 0,
-        tempBeasts = [],
-        tempWarriors = [],
-        itemList = [];
-
-      for (let i = 0; i < beastIds.length; i++) {
-        beast = await getBeastToken(beastContract, beastIds[i]);
-        tempBeasts.push({ ...beast, id: beastIds[i] });
-        totalCapacity += beast.capacity;
-      }
-      for (let i = 0; i < warriorIds.length; i++) {
-        warrior = await getWarriorToken(warriorContract, warriorIds[i]);
-        itemList = [];
-        for (let j = 0; j < warrior.strength; j++) {
-          itemList.push(
-            <img
-              key={`legion${id}-itemList${j}`}
-              src="/assets/images/bloodstoneGrey.png"
-              style={{ height: "15px" }}
-              alt="icon"
-            />
-          );
+      const query = `
+        {
+          warriors (
+            where: {
+              id_in: ${JSON.stringify(warriorIds)}
+            }
+          ) {
+            id
+            attackPower
+          }
+          beasts (
+            where: {
+              id_in: ${JSON.stringify(beastIds)}
+            }
+          ) {
+            id
+            capacity
+          }
         }
-        tempWarriors.push({
-          ...warrior,
-          id: warriorIds[i],
-          itemList: itemList,
-        });
-      }
+      `;
+      const queryRes = await Axios.post(apiConfig.subgraphServer, { query });
+      const beasts = queryRes.data.data.beasts;
+      const warriors = queryRes.data.data.warriors;
+      const totalCapacity = beasts.reduce(
+        (a: any, b: any) => a + Number(b.capacity),
+        0
+      );
       setTotalCapacity(totalCapacity);
-      setWarriorList(tempWarriors);
-      setBeastList(tempBeasts);
+      setWarriorList(warriors);
+      setBeastList(beasts);
+      console.log(beasts, warriors, beastIds, warriorIds);
     } catch (error) {}
+  };
+
+  const getType = (itemType: string, number: number) => {
+    let type = "";
+    if (itemType === "warrior") {
+      type = constants.itemNames.warriors[number as IStrength];
+    }
+    if (itemType === "beast") {
+      type = constants.itemNames.beasts[number as ICapacity];
+    }
+    return type || "";
+  };
+
+  const renderList = (strength: number) => {
+    let itemList = [];
+    for (let j = 0; j < strength; j++) {
+      itemList.push(
+        <img
+          key={`legion${id}-itemList${j}`}
+          src="/assets/images/bloodstoneGrey.png"
+          style={{ height: "15px" }}
+          alt="icon"
+        />
+      );
+    }
+    return itemList;
+  };
+
+  const handleImageLoaded = () => {
+    setLoaded(true);
   };
 
   const handleBuySupplies = () => {
     dispatch(
-      updateState({ isShowBuySuppliesModal: true, legionForSupplies: legion })
+      updateModalState({
+        buySuppliesModalOpen: true,
+      })
     );
+    dispatch(updateLegionState({ legionForSupplies: legion }));
   };
 
   const handleSelectExecuteStatus = () => {
@@ -159,24 +197,19 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
   };
 
   const handleExecuteLegion = () => {
-    handleExecuteLegions(dispatch, account, legionContract, [id]);
+    LegionService.handleExecuteLegions(dispatch, account, legionContract, [id]);
   };
 
   const handleToMarketplace = () => {
+    dispatch(updateModalState({ listOnMarketplaceModalOpen: true }));
     dispatch(
-      updateState({
-        listOnMarketplaceModal: true,
+      updateMarketplaceState({
         listingPrice: 0,
-        listingType: 3,
+        listingType: gameConfig.nftItemType.legion,
         listingId: id,
       })
     );
   };
-
-  // Use Effect
-  useEffect(() => {
-    getBalance();
-  }, []);
 
   return (
     <Card
@@ -224,7 +257,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
                     setShowType(1);
                   }}
                 >
-                  <LanguageTranslate translateKey="warriors" />
+                  {getTranslation("warriors")}
                 </Button>
                 <Button
                   variant={showType === 0 ? "contained" : "outlined"}
@@ -232,7 +265,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
                     setShowType(0);
                   }}
                 >
-                  <LanguageTranslate translateKey="beasts" />
+                  {getTranslation("beasts")}
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -254,7 +287,12 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Typography variant="subtitle2">{item.type}</Typography>
+                        <Typography variant="subtitle2">
+                          {getType(
+                            "warrior",
+                            getWarriorStrength(Number(item.attackPower))
+                          )}
+                        </Typography>
                         <Typography variant="subtitle2">#{item.id}</Typography>
                       </Box>
                       <Box
@@ -266,7 +304,11 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
                         <Typography variant="subtitle2">
                           {formatNumber(item.attackPower)} AP
                         </Typography>
-                        <Box>{item.itemList}</Box>
+                        <Box>
+                          {renderList(
+                            getWarriorStrength(Number(item.attackPower))
+                          )}
+                        </Box>
                       </Box>
                     </Box>
                   </Grid>
@@ -286,7 +328,9 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Typography variant="subtitle2">{item.type}</Typography>
+                        <Typography variant="subtitle2">
+                          {getType("beast", Number(item.capacity))}
+                        </Typography>
                         <Typography variant="subtitle2">#{item.id}</Typography>
                       </Box>
                       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -330,17 +374,9 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
         id={index === 0 ? "first-legion-add-supply" : `legion-card-${index}`}
         onClick={() => handleBuySupplies()}
       >
-        {index === 0 ? (
-          <Tutorial curStep={15} placement="top-end">
-            <div>
-              {supplies} <LanguageTranslate translateKey="hSymbol" />
-            </div>
-          </Tutorial>
-        ) : (
-          <div>
-            {supplies} <LanguageTranslate translateKey="hSymbol" />
-          </div>
-        )}
+        <div>
+          {supplies} {getTranslation("hSymbol")}
+        </div>
       </Box>
       <Box
         sx={{
@@ -427,9 +463,6 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
             right: "20px",
             cursor: "pointer",
           }}
-          // onClick={() =>
-          //   huntStatus !== "orange" && is24Hour() && openShopping(id)
-          // }
           onClick={() => canSell && handleToMarketplace()}
         >
           {canSell ? (

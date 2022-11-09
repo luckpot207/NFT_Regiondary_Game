@@ -1,9 +1,26 @@
-import { translations } from "../constants/texts";
+import { store } from "../store";
+import translations from "../constants/translations.json";
 
-export const getTranslation = (lang, key, _param1, _param2) => {
-  return _param1
-    ? translations[key](_param1, _param2)[lang]
-    : translations[key][lang];
+const replaceTokenName = (text) => {
+  String.prototype.replaceAll = function (strReplace, strWith) {
+    var esc = strReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    var reg = new RegExp(esc, "ig");
+    return this.replace(reg, strWith);
+  };
+  return text.replaceAll("blst", "BLV3");
+};
+
+export const getTranslation = (key, replace) => {
+  const language = store.getState().common.language;
+  let base = translations[key] ? translations[key][language] : "";
+  if (!replace) {
+    return replaceTokenName(base);
+  }
+  const keys = Object.keys(replace);
+  keys.forEach((key) => {
+    base = base.replace(key, replace[key]);
+  });
+  return replaceTokenName(base);
 };
 
 export const showWallet = (start, end, account) => {

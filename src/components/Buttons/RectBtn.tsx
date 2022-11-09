@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
+
 import ButtonUnstyled, {
   ButtonUnstyledProps,
   buttonUnstyledClasses,
@@ -15,9 +17,9 @@ import {
   FaWallet,
   FaHandshakeSlash,
 } from "react-icons/fa";
+
 import { AppSelector } from "../../store";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
-import { useDispatch } from "react-redux";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
 
 const ButtonRoot = React.forwardRef(function ButtonRoot(
   props: React.PropsWithChildren<{}>,
@@ -154,20 +156,20 @@ type Props = {
 const RectBtn: React.FC<Props> = ({ type, link }) => {
   // Hook
   const dispatch = useDispatch();
-  const { showAnimation, showVoucherWalletBtn } = AppSelector(gameState);
+  const { showAnimation, showVoucherWalletBtn } = AppSelector(commonState);
 
   // Function
   const setShowAnimation = () => {
     if (showAnimation) {
       dispatch(
-        updateState({
+        updateCommonState({
           showAnimation: false,
         })
       );
       localStorage.setItem("showAnimation", "0");
     } else {
       dispatch(
-        updateState({
+        updateCommonState({
           showAnimation: true,
         })
       );
@@ -178,14 +180,14 @@ const RectBtn: React.FC<Props> = ({ type, link }) => {
   const setShowVoucherWalletBtn = () => {
     if (showVoucherWalletBtn) {
       dispatch(
-        updateState({
+        updateCommonState({
           showVoucherWalletBtn: false,
         })
       );
       localStorage.setItem("showVoucherWalletBtn", "0");
     } else {
       dispatch(
-        updateState({
+        updateCommonState({
           showVoucherWalletBtn: true,
         })
       );

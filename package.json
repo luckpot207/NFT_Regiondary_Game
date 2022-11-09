@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/base": "^5.0.0-alpha.93",
@@ -23,6 +24,7 @@
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "dotenv": "^16.0.1",
+    "ethers": "^5.7.1",
     "moment": "^2.29.4",
     "moralis": "^2.4.0",
     "moralis-v1": "^1.11.0",

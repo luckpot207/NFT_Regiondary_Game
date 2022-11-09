@@ -5,14 +5,7 @@ export const themeConfig = createTheme({
     fontFamily: "Montserrat Alternates, sans-serif, cursive",
     fontSize: 13,
   },
-  components: {
-    // MuiCard: {
-    //   backgroundColor: "#1f2937",
-    // },
-    // MuiCardContent: {
-    //   backgroundColor: "#1f2937",
-    // },
-  },
+  components: {},
   palette: {
     primary: {
       main: "#2da6f7",

@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# P2E Game - Crypto Legions
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Links
 
-## Available Scripts
+- [Game Main server](https://play.cryptolegions.app/)
+- [Game Dev server](https://dev.cryptolegions.app/)
+- [Game Test1 server](https://test1.cryptolegions.app/)
+- [Game Test2 server](https://test2.cryptolegions.app/)
+- [Game Test3 server](https://test3.cryptolegions.app/)
 
-In the project directory, you can run:
+## Environment
 
-### `npm start`
+- node version - `v16.13.1`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Work Flow
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Git Clone from https://github.com/Crypto-Legions/crypto-frontend.git
+- Install `Prettier` Extension on VS Code
+- Create `.env` file and input right info. You can see the keys of env from `.env.example`.
+- Please check `.prettierrc` file in the file root structure.
 
-### `npm test`
+## File Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `config`
+- - `game.config` (game configuration)
+- - `nav.config` (navigation configuration)
+- - `theme.config` (theme configuration)
+- - `api.config` (api urls for dev, pro and subgraph)
+- `constants`
+- - `index` (constants using in game)
+- - `abis` (contract abis)
+- - `contractAddresses` (addresses of contracts)
+- - `quotes`
+- - `translations`
+- `pages` (components for big pages)
+- `components` (components that reused many times)
+- `redux`
+- - `store` (combine several reducers)
+- - `reducers` (seperate into several reducers for several states)
+- `types` (types for redux states and some variables)
+- `services` (retrieving data from contracts and store them in the redux, and API service)
+- `wallet`
+- - `connector`
+- - `ethereum`
+- `web3hooks`
+- - `contractFunctions` (getting and setting functions from and to the smart contracts)
+- - `getAbi` (getting Abis)
+- - `getAddress` (getting addresses of contracts)
+- - `useContract` (using Contract)
+- `utils` (some functions for resuable)
 
-### `npm run build`
+## Component Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Import Modules`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- import node modules at first
+- then import components and functions seperatly for functionalities
+- - components
+- - functions
+- - css
+- - ...
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `Order in components`
 
-### `npm run eject`
+- define constants
+- define hooks variables
+- define states
+- useEffect
+- getting functions
+- handling functions
+- render functions
+- return part (main rendering)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `Naming functions`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- start `get` to get any data
+- start `handle` to handle or set data
+- start `render` to make the small rendering part (reusable in one component)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## `Important`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+After working, please remove the unused variables.

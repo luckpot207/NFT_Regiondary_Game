@@ -1,5 +1,7 @@
-import gameVersion from "../constants/gameVersion";
+import gameConfig from "../config/game.config";
 import gameAddress from "../constants/contractAddresses";
+
+const gameVersion = gameConfig.version;
 
 export const getBloodstoneAddress = () => {
   return gameAddress[gameVersion.version].blst;
@@ -44,3 +46,11 @@ export const getVRFAddress = () => {
 export const getReferralSystemAddress = () => {
   return gameAddress[gameVersion.version].referralsystem;
 };
+
+export const getLiquidityPoolAddress = () => {
+  return gameAddress[gameVersion.version].liquiditypool;
+};
+
+export const getDuelSystemAddress = () => {
+  return gameAddress[gameVersion.version].duelsystem;
+}

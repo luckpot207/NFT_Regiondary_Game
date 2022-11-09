@@ -10,15 +10,7 @@ import { useWeb3React } from "@web3-react/core";
 import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import Constants from "../../constants";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import {
-  getUSDAmount,
-  sellToken,
-  isApprovedForAll,
-  setApprovalForAll,
-} from "../../web3hooks/contractFunctions";
 import {
   useBeast,
   useFeeHandler,
@@ -29,22 +21,30 @@ import {
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { getMarketplaceAddress } from "../../web3hooks/getAddress";
-import { getAllBeastsAct } from "../../helpers/beast";
-import { getAllWarriorsAct } from "../../helpers/warrior";
-import { getAllLegionsAct } from "../../helpers/legion";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { legionState } from "../../reducers/legion.reducer";
+import {
+  marketplaceState,
+  updateMarketplaceState,
+} from "../../reducers/marketplace.reducer";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { ILegion } from "../../types";
+import { getUSDAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
+import {
+  isApprovedForAll,
+  setApprovalForAll,
+} from "../../web3hooks/contractFunctions/common.contract";
+import { sellToken } from "../../web3hooks/contractFunctions/marketplace.contract";
+import { getTranslation } from "../../utils/utils";
+import gameConfig from "../../config/game.config";
 
 const ListOnMarketplaceModal: React.FC = () => {
-  // Hook Info
   const dispatch = useDispatch();
-  const {
-    language,
-    listOnMarketplaceModal,
-    listingPrice,
-    listingType,
-    listingId,
-    marketplaceTax,
-  } = AppSelector(gameState);
+  const { marketplaceTax } = AppSelector(commonState);
+  const { allLegions } = AppSelector(legionState);
+  const { listingPrice, listingType, listingId } =
+    AppSelector(marketplaceState);
+  const { listOnMarketplaceModalOpen } = AppSelector(modalState);
 
   // Account & Web3
   const { account } = useWeb3React();
@@ -60,6 +60,16 @@ const ListOnMarketplaceModal: React.FC = () => {
   // States
   const [equalBUSD, setEqualBUSD] = useState(0);
 
+  let legion;
+  if (listingType === 3) {
+    legion = allLegions.find((legion: ILegion) => legion.id === listingId);
+  }
+
+  // Use Effect
+  useEffect(() => {
+    getUSDAmountFunc();
+  }, [listingPrice]);
+
   // Functions
   const getUSDAmountFunc = async () => {
     console.log(listingPrice);
@@ -72,7 +82,7 @@ const ListOnMarketplaceModal: React.FC = () => {
   };
 
   const handleClose = () => {
-    dispatch(updateState({ listOnMarketplaceModal: false }));
+    dispatch(updateModalState({ listOnMarketplaceModalOpen: false }));
   };
 
   const handlePrice = async (e: any) => {
@@ -89,7 +99,7 @@ const ListOnMarketplaceModal: React.FC = () => {
       price = "0";
     }
     console.log(price);
-    dispatch(updateState({ listingPrice: price }));
+    dispatch(updateMarketplaceState({ listingPrice: price }));
   };
 
   const checkApprovalForAll = async () => {
@@ -112,9 +122,8 @@ const ListOnMarketplaceModal: React.FC = () => {
   };
 
   const handleSendToMarketplace = async () => {
-    dispatch(
-      updateState({ listOnMarketplaceModal: false, listingLoading: true })
-    );
+    dispatch(updateModalState({ listOnMarketplaceModalOpen: false }));
+    dispatch(updateMarketplaceState({ listingLoading: true }));
     try {
       await checkApprovalForAll();
       await sellToken(
@@ -125,34 +134,21 @@ const ListOnMarketplaceModal: React.FC = () => {
         listingId,
         listingPrice
       );
-      if (listingType === 1) {
-        getAllBeastsAct(dispatch, account, beastContract);
-      }
-      if (listingType === 2) {
-        getAllWarriorsAct(dispatch, account, warriorContract);
-      }
-      if (listingType === 3) {
-        getAllLegionsAct(dispatch, account, legionContract);
-      }
+      dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ listingLoading: false }));
+    dispatch(updateMarketplaceState({ listingLoading: false }));
   };
 
-  // Use Effect
-  useEffect(() => {
-    getUSDAmountFunc();
-  }, [listingPrice]);
-
   return (
-    <Dialog onClose={handleClose} open={listOnMarketplaceModal.valueOf()}>
+    <Dialog onClose={handleClose} open={listOnMarketplaceModalOpen}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />
         </Box>
         <DialogTitle sx={{ textAlign: "center" }}>
-          <LanguageTranslate translateKey="listOnMarketplace" />
+          {getTranslation("listOnMarketplace")}
         </DialogTitle>
         <Box sx={{ p: 1, cursor: "pointer" }} onClick={handleClose}>
           <FaTimes />
@@ -162,13 +158,9 @@ const ListOnMarketplaceModal: React.FC = () => {
         <TextField
           autoFocus
           variant="standard"
-          label={
-            <>
-              <LanguageTranslate translateKey="priceIn" />{" "}
-              <LanguageTranslate translateKey="$" />
-              <LanguageTranslate translateKey="blst" />
-            </>
-          }
+          label={`${getTranslation("priceIn")} ${getTranslation(
+            "$"
+          )}${getTranslation("blst")}`}
           margin="dense"
           id="listingprice"
           value={listingPrice}
@@ -181,12 +173,12 @@ const ListOnMarketplaceModal: React.FC = () => {
               evt.key === "-") &&
               evt.preventDefault();
           }}
-          color={listingPrice < Constants.maxSellPrice ? "primary" : "error"}
+          color={listingPrice < gameConfig.maxSellPrice ? "primary" : "error"}
           inputProps={{ step: "0.1" }}
           sx={{
             input: {
               color:
-                listingPrice < Constants.maxSellPrice ? "white" : "#f44336",
+                listingPrice < gameConfig.maxSellPrice ? "white" : "#f44336",
             },
           }}
           onChange={handlePrice}
@@ -195,13 +187,22 @@ const ListOnMarketplaceModal: React.FC = () => {
           (= {Number(equalBUSD).toFixed(2)} USD)
         </Typography>
         <Typography variant="subtitle1">
-          <LanguageTranslate translateKey="payMarketplaceTax" />{" "}
-          {marketplaceTax}%
+          {getTranslation("payMarketplaceTax", {
+            "#": marketplaceTax,
+          })}
         </Typography>
       </DialogContent>
-      {+listingPrice >= 0 && listingPrice < Constants.maxSellPrice ? (
-        <FireBtn sx={{ fontWeight: "bold" }} onClick={handleSendToMarketplace}>
-          <LanguageTranslate translateKey="sell" />
+      {+listingPrice >= 0 && listingPrice < gameConfig.maxSellPrice ? (
+        <FireBtn
+          sx={{ fontWeight: "bold" }}
+          onClick={handleSendToMarketplace}
+          disabled={
+            listingType === 3 && Number(legion?.attackPower) / 100 > equalBUSD
+          }
+        >
+          {listingType === 3 && Number(legion?.attackPower) / 100 > equalBUSD
+            ? getTranslation("sellWarning")
+            : getTranslation("sell")}
         </FireBtn>
       ) : (
         <Box
@@ -212,7 +213,7 @@ const ListOnMarketplaceModal: React.FC = () => {
             wordBreak: "break-word",
           }}
         >
-          <LanguageTranslate translateKey="maxSellPrice" />
+          {getTranslation("maxSellPrice")}
         </Box>
       )}
     </Dialog>

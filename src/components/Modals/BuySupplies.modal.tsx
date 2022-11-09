@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Dialog,
@@ -8,22 +9,10 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { getAllLegionsAct } from "../../helpers/legion";
-import {
-  gameState,
-  reloadContractStatus,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
-import {
-  addSupply,
-  getBloodstoneAllowance,
-  getSupplyCost,
-  setBloodstoneApprove,
-} from "../../web3hooks/contractFunctions";
 import { getLegionAddress } from "../../web3hooks/getAddress";
 import {
   useBloodstone,
@@ -32,20 +21,26 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import Tutorial from "../Tutorial/Tutorial";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { inventoryState } from "../../reducers/inventory.reducer";
+import { updateCommonState } from "../../reducers/common.reduer";
+import { legionState, updateLegionState } from "../../reducers/legion.reducer";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { getSupplyCost } from "../../web3hooks/contractFunctions/feehandler.contract";
+import LegionService from "../../services/legion.service";
+import { addSupply } from "../../web3hooks/contractFunctions/legion.contract";
+import {
+  getBloodstoneAllowance,
+  setBloodstoneApprove,
+} from "../../web3hooks/contractFunctions/common.contract";
+import { getTranslation } from "../../utils/utils";
 
 const BuySupppliesModal: React.FC = () => {
   // Hook info
   const dispatch = useDispatch();
-  const {
-    language,
-    isShowBuySuppliesModal,
-    legionForSupplies,
-    BLSTBalance,
-    unclaimedBLST,
-    reinvestedWalletBLST,
-  } = AppSelector(gameState);
+  const { BLSTBalance, unclaimedBLST } = AppSelector(inventoryState);
+  const { legionForSupplies } = AppSelector(legionState);
+  const { buySuppliesModalOpen } = AppSelector(modalState);
+  const unclaimedBLSTFromWei = Number(unclaimedBLST) / 10 ** 18;
 
   // Account & Web3
   const { account } = useWeb3React();
@@ -61,7 +56,10 @@ const BuySupppliesModal: React.FC = () => {
   const [supplyCostLoading, setSupplyCostLoading] = useState<boolean>(false);
   const [supplyOrder, setSupplyOrder] = useState<number>(0);
 
-  // Functions
+  useEffect(() => {
+    getBalance();
+  }, [legionForSupplies]);
+
   const getBalance = async () => {
     setSupplyCostLoading(true);
     try {
@@ -102,13 +100,12 @@ const BuySupppliesModal: React.FC = () => {
   };
 
   const handleSupplyClose = () => {
-    dispatch(updateState({ isShowBuySuppliesModal: false }));
+    dispatch(updateModalState({ buySuppliesModalOpen: false }));
   };
 
   const handleBuySupplies = async (fromWallet: string) => {
-    dispatch(
-      updateState({ buySuppliesLoading: true, isShowBuySuppliesModal: false })
-    );
+    dispatch(updateModalState({ buySuppliesModalOpen: false }));
+    dispatch(updateLegionState({ buySuppliesLoading: true }));
     try {
       let price = supplyValues[supplyOrder];
       const allowance = await getBloodstoneAllowance(
@@ -132,26 +129,21 @@ const BuySupppliesModal: React.FC = () => {
         supplyOrder == 0 ? 7 : supplyOrder == 1 ? 14 : 28,
         fromWallet
       );
-      dispatch(updateState({ buySuppliesLoading: false }));
-      dispatch(reloadContractStatus());
-      getAllLegionsAct(dispatch, account, legionContract);
+      dispatch(updateLegionState({ buySuppliesLoading: false }));
+      dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
+      LegionService.getAllLegionsAct(dispatch, account, legionContract);
     } catch (error) {}
-    dispatch(updateState({ buySuppliesLoading: false }));
+    dispatch(updateLegionState({ buySuppliesLoading: false }));
   };
 
-  // Use Effect
-  useEffect(() => {
-    getBalance();
-  }, [legionForSupplies]);
-
   return (
-    <Dialog onClose={handleSupplyClose} open={isShowBuySuppliesModal.valueOf()}>
+    <Dialog onClose={handleSupplyClose} open={buySuppliesModalOpen}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />
         </Box>
         <DialogTitle sx={{ textAlign: "center" }}>
-          <LanguageTranslate translateKey="buySupply" />
+          {getTranslation("buySupply")}
         </DialogTitle>
         <Box sx={{ p: 1, cursor: "pointer" }} onClick={handleSupplyClose}>
           <FaTimes />
@@ -168,38 +160,23 @@ const BuySupppliesModal: React.FC = () => {
           <FormControlLabel
             value={0}
             control={<Radio />}
-            label={
-              <>
-                7 <LanguageTranslate translateKey="hunts" />{" "}
-                {Number(supplyValues[0]).toFixed(2)}{" "}
-                <LanguageTranslate translateKey="$" />
-                <LanguageTranslate translateKey="blst" />
-              </>
-            }
+            label={`7 ${getTranslation("hunts")} ${Number(
+              supplyValues[0]
+            ).toFixed(2)} ${getTranslation("$")}${getTranslation("blst")}`}
           />
           <FormControlLabel
             value={1}
             control={<Radio />}
-            label={
-              <>
-                14 <LanguageTranslate translateKey="hunts" />{" "}
-                {Number(supplyValues[1]).toFixed(2)}{" "}
-                <LanguageTranslate translateKey="$" />
-                <LanguageTranslate translateKey="blst" />
-              </>
-            }
+            label={`14 ${getTranslation("hunts")} ${Number(
+              supplyValues[1]
+            ).toFixed(2)} ${getTranslation("$")}${getTranslation("blst")}`}
           />
           <FormControlLabel
             value={2}
             control={<Radio />}
-            label={
-              <>
-                28 <LanguageTranslate translateKey="hunts" />{" "}
-                {Number(supplyValues[2]).toFixed(2)}{" "}
-                <LanguageTranslate translateKey="$" />
-                <LanguageTranslate translateKey="blst" />
-              </>
-            }
+            label={`28 ${getTranslation("hunts")} ${Number(
+              supplyValues[2]
+            ).toFixed(2)} ${getTranslation("$")}${getTranslation("blst")}`}
           />
         </RadioGroup>
       </Box>
@@ -220,28 +197,18 @@ const BuySupppliesModal: React.FC = () => {
           }
           id="add-supplies-from-wallet"
         >
-          <LanguageTranslate translateKey="useMyWallet" />
+          {getTranslation("useMyWallet")}
         </FireBtn>
         <FireBtn
           onClick={() => handleBuySupplies("1")}
           sx={{ marginRight: 0, fontWeight: "bold" }}
           disabled={
-            Number(unclaimedBLST) < Number(supplyValues[supplyOrder]) ||
+            Number(unclaimedBLSTFromWei) < Number(supplyValues[supplyOrder]) ||
             supplyCostLoading
           }
         >
-          <LanguageTranslate translateKey="useUnclaimed" />
+          {getTranslation("useUnclaimed")}
         </FireBtn>
-        {/* <FireBtn
-          onClick={() => handleBuySupplies("2")}
-          sx={{ fontWeight: "bold" }}
-          disabled={
-            Number(reinvestedBLST) < Number(supplyValues[supplyOrder]) ||
-            supplyCostLoading
-          }
-        >
-          Reinvest
-        </FireBtn> */}
       </Box>
       {supplyCostLoading && (
         <Box
@@ -260,7 +227,7 @@ const BuySupppliesModal: React.FC = () => {
         >
           <Box sx={{ width: "100%" }}>
             <Box sx={{ textAlign: "center", marginBottom: 1 }}>
-              <LanguageTranslate translateKey="supplyCostLoading" />
+              {getTranslation("supplyCostLoading")}
             </Box>
             <LinearProgress sx={{ width: "100%" }} color="success" />
           </Box>

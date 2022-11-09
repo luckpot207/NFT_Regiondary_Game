@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -9,11 +11,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
+import { getTranslation } from "../../utils/utils";
 
 type Props = {
   showSmall: boolean;
@@ -21,31 +24,33 @@ type Props = {
 
 const WarriorLevelFilter: React.FC<Props> = ({ showSmall }) => {
   const dispatch = useDispatch();
-  const { warriorFilterLevel } = AppSelector(gameState);
+  const { warriorFilterLevel } = AppSelector(filterAndPageState);
 
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleLevelFilter = (level: Number) => {
-    dispatch(updateState({ warriorFilterLevel: level, currentPage: 1 }));
+    dispatch(
+      updateFilterAndPageState({ warriorFilterLevel: level, currentPage: 1 })
+    );
   };
 
   const handleChange = (event: SelectChangeEvent) => {
     dispatch(
-      updateState({ warriorFilterLevel: event.target.value, currentPage: 1 })
+      updateFilterAndPageState({
+        warriorFilterLevel: event.target.value,
+        currentPage: 1,
+      })
     );
   };
 
   useEffect(() => {
-    dispatch(updateState({ warriorFilterLevel: 0 }));
+    dispatch(updateFilterAndPageState({ warriorFilterLevel: 0 }));
   }, []);
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="filterbylevel" />:
-      </Typography>
-
+      <Typography sx={{ mb: 1 }}>{getTranslation("filterbylevel")}</Typography>
       {isSmallerThanSM && showSmall ? (
         <>
           <Select
@@ -68,7 +73,7 @@ const WarriorLevelFilter: React.FC<Props> = ({ showSmall }) => {
             variant={warriorFilterLevel === 0 ? "contained" : "outlined"}
             onClick={() => handleLevelFilter(0)}
           >
-            <LanguageTranslate translateKey="all" />
+            {getTranslation("all")}
           </Button>
           <Button
             variant={warriorFilterLevel === 1 ? "contained" : "outlined"}

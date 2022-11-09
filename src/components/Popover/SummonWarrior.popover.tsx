@@ -2,25 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
 import { Box, DialogTitle, Popover } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 
-import { getReferralInfo } from "../../helpers/referral";
-import {
-  checkMintWarriorPending,
-  checkWarriorRevealStatus,
-} from "../../helpers/warrior";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import {
-  getBloodstoneAllowance,
-  getWalletMintPending,
-  initializeFreeMint,
-  initialMintBeastAndWarrior,
-  setBloodstoneApprove,
-} from "../../web3hooks/contractFunctions";
 import { getWarriorAddress } from "../../web3hooks/getAddress";
 import {
   useBloodstone,
@@ -30,42 +16,59 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { inventoryState } from "../../reducers/inventory.reducer";
+import { referralState } from "../../reducers/referral.reducer";
+import {
+  warriorState,
+  updateWarriorState,
+} from "../../reducers/warrior.reducer";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { getTranslation } from "../../utils/utils";
+import {
+  getBloodstoneAllowance,
+  getWalletMintPending,
+  initialMintBeastAndWarrior,
+  setBloodstoneApprove,
+} from "../../web3hooks/contractFunctions/common.contract";
+import WarriorService from "../../services/warrior.service";
+import { initializeFreeMint } from "../../web3hooks/contractFunctions/referral.contract";
+import ReferralService from "../../services/referral.service";
 import WalletSelectModal from "../Modals/WalletSelect.modal";
-import LanguageTranslate from "../UI/LanguageTranslate";
 
 const SummonWarriorPopover: React.FC = () => {
-  // Hook info
   const dispatch = useDispatch();
-  const {
-    summonWarriorAnchorEl,
-    language,
-    summonPrice,
-    summonReductionPer,
-    reinvestedWalletBLST,
-    mintWarriorPending,
-    hasFreeMint,
-    reinvestedWalletUSD,
-    voucherWalletUSD,
-  } = AppSelector(gameState);
 
-  // Account & Web3
+  const { summonWarriorAnchorEl, summonPrice, summonReductionPer } =
+    AppSelector(commonState);
+  const { voucherWalletUSD, reinvestedWalletUSD } = AppSelector(inventoryState);
+  const { hasFreeMint } = AppSelector(referralState);
+  const { mintWarriorPending } = AppSelector(warriorState);
+
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const bloodstoneContract = useBloodstone();
   const warriorContract = useWarrior();
   const vrfContract = useVRF();
   const referralSystemContract = useReferralSystem();
 
-  // State
   const open = Boolean(summonWarriorAnchorEl);
   const [quantity, setQuantity] = useState<Number>(0);
 
-  // Function
+  useEffect(() => {
+    ReferralService.getReferralInfo(
+      dispatch,
+      web3,
+      account,
+      referralSystemContract,
+      warriorContract
+    );
+  }, [mintWarriorPending, account]);
+
   const handleClose = () => {
     dispatch(
-      updateState({
+      updateCommonState({
         summonWarriorAnchorEl: null,
       })
     );
@@ -73,7 +76,7 @@ const SummonWarriorPopover: React.FC = () => {
 
   const handleSelectWallet = async (walletNumber: number) => {
     handleClose();
-    dispatch(updateState({ walletSelectModalOpen: false }));
+    dispatch(updateModalState({ walletSelectModalOpen: false }));
     let key: any = "p1";
     switch (quantity) {
       case 1:
@@ -94,7 +97,7 @@ const SummonWarriorPopover: React.FC = () => {
       default:
         break;
     }
-    dispatch(updateState({ initialMintWarriorLoading: true }));
+    dispatch(updateWarriorState({ initialMintWarriorLoading: true }));
     try {
       const allowance = await getBloodstoneAllowance(
         web3,
@@ -119,9 +122,9 @@ const SummonWarriorPopover: React.FC = () => {
           Number(summonPrice[key as keyof typeof summonPrice].usd)
         ) {
           toast.error(
-            <LanguageTranslate translateKey="notEnoughUSDInReinvestWalletToMintWarriors" />
+            getTranslation("notEnoughUSDInReinvestWalletToMintWarriors")
           );
-          dispatch(updateState({ initialMintWarriorLoading: false }));
+          dispatch(updateWarriorState({ initialMintWarriorLoading: false }));
           return;
         }
       } else if (walletNumber === 2) {
@@ -129,11 +132,10 @@ const SummonWarriorPopover: React.FC = () => {
           Number(voucherWalletUSD) <
           Number(summonPrice[key as keyof typeof summonPrice].usd)
         ) {
-          console.log("notEnoughUSDInVoucherWalletToMintWarriors");
           toast.error(
-            <LanguageTranslate translateKey="notEnoughUSDInVoucherWalletToMintWarriors" />
+            getTranslation("notEnoughUSDInVoucherWalletToMintWarriors")
           );
-          dispatch(updateState({ initialMintWarriorLoading: false }));
+          dispatch(updateWarriorState({ initialMintWarriorLoading: false }));
           return;
         }
       }
@@ -141,7 +143,7 @@ const SummonWarriorPopover: React.FC = () => {
         warriorContract,
         account
       );
-      dispatch(updateState({ mintWarriorPending }));
+      dispatch(updateWarriorState({ mintWarriorPending }));
       if (!mintWarriorPending) {
         await initialMintBeastAndWarrior(
           warriorContract,
@@ -154,28 +156,35 @@ const SummonWarriorPopover: React.FC = () => {
           account
         );
         dispatch(
-          updateState({ mintWarriorPending, initialMintWarriorLoading: false })
+          updateWarriorState({
+            mintWarriorPending,
+            initialMintWarriorLoading: false,
+          })
         );
-        checkWarriorRevealStatus(
+        WarriorService.checkWarriorRevealStatus(
           dispatch,
           account,
           warriorContract,
           vrfContract
         );
-        toast.success(<LanguageTranslate translateKey="plzRevealWarrior" />);
+        toast.success(getTranslation("plzRevealWarrior"));
       }
       setTimeout(() => {
-        checkMintWarriorPending(dispatch, account, warriorContract);
+        WarriorService.checkMintWarriorPending(
+          dispatch,
+          account,
+          warriorContract
+        );
       }, 1000);
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ initialMintWarriorLoading: false }));
+    dispatch(updateWarriorState({ initialMintWarriorLoading: false }));
   };
 
   const handleMint = async (quantity: Number) => {
     setQuantity(quantity);
-    dispatch(updateState({ walletSelectModalOpen: true }));
+    dispatch(updateModalState({ walletSelectModalOpen: true }));
   };
 
   const handleFreeMint = async () => {
@@ -185,43 +194,33 @@ const SummonWarriorPopover: React.FC = () => {
         warriorContract,
         account
       );
-      dispatch(updateState({ mintWarriorPending }));
+      dispatch(updateWarriorState({ mintWarriorPending }));
       if (!mintWarriorPending) {
-        dispatch(updateState({ initialMintWarriorLoading: true }));
+        dispatch(updateWarriorState({ initialMintWarriorLoading: true }));
         await initializeFreeMint(warriorContract, account);
         const mintWarriorPending = await getWalletMintPending(
           warriorContract,
           account
         );
         dispatch(
-          updateState({
+          updateWarriorState({
             mintWarriorPending,
             initialMintWarriorLoading: false,
           })
         );
-        checkWarriorRevealStatus(
+        WarriorService.checkWarriorRevealStatus(
           dispatch,
           account,
           warriorContract,
           vrfContract
         );
-        toast.success(<LanguageTranslate translateKey="plzRevealWarrior" />);
+        toast.success(getTranslation("plzRevealWarrior"));
       }
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ initialMintWarriorLoading: false }));
+    dispatch(updateWarriorState({ initialMintWarriorLoading: false }));
   };
-
-  useEffect(() => {
-    getReferralInfo(
-      dispatch,
-      web3,
-      account,
-      referralSystemContract,
-      warriorContract
-    );
-  }, [mintWarriorPending]);
 
   return (
     <Popover
@@ -250,9 +249,7 @@ const SummonWarriorPopover: React.FC = () => {
           <FaTimes onClick={handleClose} />
         </Box>
       </Box>
-      <DialogTitle>
-        <LanguageTranslate translateKey="summonWarriorQuantity" />
-      </DialogTitle>
+      <DialogTitle>{getTranslation("summonWarriorQuantity")}</DialogTitle>
       <Box
         sx={{
           padding: 3,
@@ -269,23 +266,28 @@ const SummonWarriorPopover: React.FC = () => {
           </FireBtn>
         )}
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(1)}>
-          1 ({Number(summonPrice["p1"].blst).toFixed(2)} $BLST)
+          1 ({Number(summonPrice["p1"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(10)}>
           10 ({summonReductionPer["p10"]}% |{" "}
-          {Number(summonPrice["p10"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p10"].blst).toFixed(2)} ${getTranslation("blst")}
+          )
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(50)}>
           50 ({summonReductionPer["p50"]}% |{" "}
-          {Number(summonPrice["p50"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p50"].blst).toFixed(2)} ${getTranslation("blst")}
+          )
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(100)}>
           100 ({summonReductionPer["p100"]}% |{" "}
-          {Number(summonPrice["p100"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p100"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
         <FireBtn sx={{ fontSize: 14, mb: 1 }} onClick={() => handleMint(150)}>
           150 ({summonReductionPer["p150"]}% |{" "}
-          {Number(summonPrice["p150"].blst).toFixed(2)} $BLST)
+          {Number(summonPrice["p150"].blst).toFixed(2)} $
+          {getTranslation("blst")})
         </FireBtn>
       </Box>
       <WalletSelectModal handleSelectWallet={handleSelectWallet} />

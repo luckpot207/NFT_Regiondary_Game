@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { useWeb3React } from "@web3-react/core";
-import gameVersion from "../constants/gameVersion";
 
+import gameConfig from "../config/game.config";
 import {
   getBloodstoneAddress,
   getBeastAddress,
@@ -14,6 +14,7 @@ import {
   getBUSDAddress,
   getVRFAddress,
   getReferralSystemAddress,
+  getDuelSystemAddress
 } from "./getAddress";
 
 import {
@@ -28,8 +29,10 @@ import {
   getBUSDAbi,
   getVRFAbi,
   getReferralSystemAbi,
+  getDuelSystemAbi,
 } from "./getAbi";
 
+const gameVersion = gameConfig.version;
 const RPC_URL = gameVersion.rpcUrl;
 const RPC_WS_URL = gameVersion.rpcWsUrl;
 
@@ -112,3 +115,7 @@ export const useRewardPoolEvent = () => {
 export const useReferralSystem = () => {
   return useContract(getReferralSystemAbi(), getReferralSystemAddress());
 };
+
+export const useDuelSystem = () => {
+  return useContract(getDuelSystemAbi(), getDuelSystemAddress());
+}

@@ -1,8 +1,9 @@
 import Axios from "axios";
 import { apiConfig } from "../config/api.config";
 
-const serverLink = apiConfig.devServer;
-const localLink = apiConfig.localServer;
+const devLink = apiConfig.devServer;
+const proLink = apiConfig.proServer;
+const serverLink = devLink;
 
 const getAllLanguageTexts = async () => {
   return Axios.get(`${serverLink}/language/getAllLanguageTexts`);
@@ -77,6 +78,15 @@ const addReincarnationValue = async (address: string, value: number) => {
   });
 };
 
+const getReincarnationValueByAddress = async (address: string) => {
+  return Axios.post(
+    `${serverLink}/reincarnation/getReincarnationValueByAddress`,
+    {
+      address: address,
+    }
+  );
+};
+
 const getEconomyStatus = async () => {
   return Axios.get(`${serverLink}/economy/getEconomyStatus`);
 };
@@ -97,6 +107,22 @@ const removeFromLeaderboard = async (address: string) => {
   });
 };
 
+const getAllTips = async () => {
+  return Axios.get(`${serverLink}/tipsandtricks/getAll`);
+};
+
+const getClaimedBUSDAlertAmount = async (address: string) => {
+  return Axios.post(`${serverLink}/claimedBUSD/getClaimedBUSDAlertAmount`, {
+    address: address,
+  });
+};
+const setClaimedBUSDAlertAmount = async (address: string, amount: number) => {
+  return Axios.post(`${serverLink}/claimedBUSD/setClaimedBUSDAlertAmount`, {
+    address: address,
+    amount: amount,
+  });
+};
+
 const ApiService = {
   getAllLanguageTexts,
   getContactInfo,
@@ -111,10 +137,14 @@ const ApiService = {
   addSamaritanStarHolder,
   getReincarnation,
   addReincarnationValue,
+  getReincarnationValueByAddress,
   getEconomyStatus,
   getLeaderboardInfo,
   addToLeaderboard,
   removeFromLeaderboard,
+  getAllTips,
+  getClaimedBUSDAlertAmount,
+  setClaimedBUSDAlertAmount,
 };
 
 export default ApiService;

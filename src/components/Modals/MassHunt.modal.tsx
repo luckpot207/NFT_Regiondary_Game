@@ -1,37 +1,12 @@
-import {
-  Box,
-  CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getInventory, getUserInfo } from "../../helpers/basicInfo";
-import { checkHuntPending, checkMassHuntPending } from "../../helpers/hunt";
-import { getAllLegionsAct } from "../../helpers/legion";
-import {
-  gameState,
-  initMassHuntResult,
-  setMassHuntResult,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
-import { formatNumber, toCapitalize } from "../../utils/utils";
-import {
-  getBUSDBalance,
-  getLegionBUSDAllowance,
-  getWalletHuntPendingLegionId,
-  getWalletHuntPendingMonsterId,
-  revealHunt,
-  revealMassHunt,
-  setBUSDApprove,
-} from "../../web3hooks/contractFunctions";
+import { getTranslation, toCapitalize } from "../../utils/utils";
 import { getLegionAddress } from "../../web3hooks/getAddress";
 import {
   useBeast,
@@ -39,13 +14,29 @@ import {
   useBUSD,
   useFeeHandler,
   useLegion,
-  useLegionEvent,
   useRewardPool,
   useWarrior,
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import {
+  initMassHuntResult,
+  legionState,
+  setMassHuntResult,
+  updateLegionState,
+} from "../../reducers/legion.reducer";
+import { monsterState } from "../../reducers/monster.reducer";
+import {
+  getBUSDBalance,
+  getLegionBUSDAllowance,
+  setBUSDApprove,
+} from "../../web3hooks/contractFunctions/busd.contract";
+import { revealMassHunt } from "../../web3hooks/contractFunctions/legion.contract";
+import HuntService from "../../services/hunt.service";
+import LegionService from "../../services/legion.service";
+import constants from "../../constants";
+import { IMonsterId } from "../../types/monster.type";
 
 const useStyles = makeStyles(() => ({
   MassHuntItemLose: {
@@ -66,39 +57,27 @@ const useStyles = makeStyles(() => ({
 const MassHuntModal: React.FC = () => {
   // Hook Info
   const dispatch = useDispatch();
+
+  const { showAnimation, presentItem, huntTax } = AppSelector(commonState);
   const {
-    language,
-    showAnimation,
     initialMassHuntLoading,
     revealMassHuntLoading,
     massHuntPending,
     massHuntVRFPending,
     massHuntResult,
-    allMonsters,
     allLegions,
-    huntTax,
-    itemnames,
-    presentItem,
-  } = AppSelector(gameState);
+  } = AppSelector(legionState);
+  const { allMonsters } = AppSelector(monsterState);
 
-  // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
-  const beastContract = useBeast();
-  const warriorContract = useWarrior();
   const legionContract = useLegion();
   const busdContract = useBUSD();
-  const bloodstoneContract = useBloodstone();
-  const rewardpoolContract = useRewardPool();
-  const feehandlerContract = useFeeHandler();
 
-  // States
   const [massHuntFinished, setMassHuntFinished] = useState(false);
   const classes = useStyles();
 
-  // Functions
   const checkMassHuntBUSD = () => {
     let total = 0;
     if (
@@ -121,28 +100,24 @@ const MassHuntModal: React.FC = () => {
 
   const handleRevealMassHunt = async () => {
     try {
-      dispatch(updateState({ revealMassHuntLoading: true }));
+      dispatch(updateLegionState({ revealMassHuntLoading: true }));
       dispatch(initMassHuntResult());
       const BUSD = await getBUSDBalance(web3, busdContract, account);
-      console.log("my busd, ", BUSD);
       const payBUSD = checkMassHuntBUSD();
-      console.log("pay busd, ", payBUSD);
-      if (BUSD >= payBUSD) {
+      console.log("busd amount: ", BUSD);
+      console.log("pay busd amount: ", payBUSD);
+      if (Number(BUSD) >= Number(payBUSD)) {
         const allowance = await getLegionBUSDAllowance(
           web3,
           busdContract,
           getLegionAddress(),
           account
         );
-        if (allowance < payBUSD) {
+        if (Number(allowance) < Number(payBUSD)) {
           await setBUSDApprove(web3, busdContract, getLegionAddress(), account);
         }
         let huntResult = await revealMassHunt(legionContract, account);
-        console.log(huntResult);
         const events = huntResult.events["Hunted"];
-        console.log(events);
-        console.log(typeof events);
-        console.log(events.length);
         if (events.length) {
           events.forEach((event: any) => {
             if (
@@ -184,44 +159,22 @@ const MassHuntModal: React.FC = () => {
             dispatch(setMassHuntResult(huntResult));
           }
         }
-        checkMassHuntPending(dispatch, account, legionContract);
-        getAllLegionsAct(dispatch, account, legionContract);
-        getUserInfo(
-          dispatch,
-          web3,
-          account,
-          bloodstoneContract,
-          rewardpoolContract,
-          feehandlerContract
-        );
-        getInventory(
-          dispatch,
-          web3,
-          account,
-          bloodstoneContract,
-          beastContract,
-          warriorContract,
-          legionContract,
-          rewardpoolContract,
-          feehandlerContract
-        );
+        HuntService.checkMassHuntPending(dispatch, account, legionContract);
+        LegionService.getAllLegionsAct(dispatch, account, legionContract);
+        dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
         setMassHuntFinished(true);
       } else {
-        toast.error(<LanguageTranslate translateKey="addBUSD" />);
+        toast.error(getTranslation("addBUSD"));
       }
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ revealMassHuntLoading: false }));
+    dispatch(updateLegionState({ revealMassHuntLoading: false }));
   };
 
   const getMaxRoll = (legionId: string, monsterId: string) => {
-    console.log(legionId, monsterId);
-    console.log(allLegions, allMonsters);
-    let bonus = 0;
     const legion = allLegions.filter((legion) => legion.id === legionId)[0];
     const monster = allMonsters[parseInt(monsterId) - 1];
-    console.log(legion, monster);
     const { attackPower: legionAttackPower } = legion;
     const { attackPower: monsterAttackPower, percent } = monster;
     if (parseFloat(monsterId) < 21) {
@@ -241,27 +194,24 @@ const MassHuntModal: React.FC = () => {
   return (
     <Dialog
       open={
-        initialMassHuntLoading.valueOf() ||
-        revealMassHuntLoading.valueOf() ||
-        massHuntPending.valueOf() ||
+        initialMassHuntLoading ||
+        revealMassHuntLoading ||
+        massHuntPending ||
         massHuntFinished
       }
     >
       {massHuntPending ? (
         <>
           <DialogTitle sx={{ textAlign: "center" }}>
-            <LanguageTranslate translateKey="massHunt" />
+            {getTranslation("massHunt")}
           </DialogTitle>
           <DialogContent>
             <Box sx={{ display: "flex", justifyContent: "center", p: 1 }}>
               <FireBtn
-                loading={
-                  revealMassHuntLoading.valueOf() ||
-                  massHuntVRFPending.valueOf()
-                }
+                loading={revealMassHuntLoading || massHuntVRFPending}
                 onClick={() => handleRevealMassHunt()}
               >
-                <LanguageTranslate translateKey="revealResult" />
+                {getTranslation("revealResult")}
               </FireBtn>
             </Box>
             <div
@@ -279,7 +229,7 @@ const MassHuntModal: React.FC = () => {
       ) : massHuntFinished ? (
         <>
           <DialogTitle sx={{ textAlign: "center" }}>
-            <LanguageTranslate translateKey="massHuntResult" />
+            {getTranslation("massHuntResult")}
           </DialogTitle>
           <DialogContent>
             <Box
@@ -364,35 +314,30 @@ const MassHuntModal: React.FC = () => {
                     <span style={{ fontWeight: "bold" }}>
                       #{item.monsterId}{" "}
                       {toCapitalize(
-                        itemnames.find(
-                          (itemname) =>
-                            itemname.type === "monster" &&
-                            itemname.number === parseInt(item.monsterId)
-                        )?.name
+                        constants.itemNames.monsters[
+                          item.monsterId as IMonsterId
+                        ]
                       )}
                     </span>
                   </Box>
                   <Box sx={{ fontSize: 12 }}>
                     <span>
-                      <LanguageTranslate translateKey="maxRoll" />:{" "}
+                      {getTranslation("maxRoll")}:{" "}
                       {getMaxRoll(item.legionId, item.monsterId)}
                     </span>
                   </Box>
                   <Box sx={{ fontSize: 12 }}>
                     <span>
-                      <LanguageTranslate translateKey="yourRoll" />: {item.roll}
+                      {getTranslation("yourRoll")}: {item.roll}
                     </span>
                   </Box>
                   <Box sx={{ p: 1, fontSize: 12, fontWeight: "bold" }}>
                     {item.success ? (
                       <span>
-                        <LanguageTranslate translateKey="won" /> {item.reward}{" "}
-                        $BUSD
+                        {getTranslation("won")} {item.reward} $BUSD
                       </span>
                     ) : (
-                      <span>
-                        <LanguageTranslate translateKey="lost" />
-                      </span>
+                      <span>{getTranslation("lost")}</span>
                     )}
                   </Box>
                 </Box>
@@ -400,7 +345,7 @@ const MassHuntModal: React.FC = () => {
             </Box>
             <Box sx={{ p: 1, textAlign: "center" }}>
               <FireBtn onClick={() => setMassHuntFinished(false)}>
-                Continue
+                {getTranslation("continue")}
               </FireBtn>
             </Box>
           </DialogContent>
@@ -408,7 +353,7 @@ const MassHuntModal: React.FC = () => {
       ) : (
         <>
           <DialogTitle sx={{ textAlign: "center" }}>
-            <LanguageTranslate translateKey="massHunt" />
+            {getTranslation("massHunt")}
           </DialogTitle>
           <DialogContent>
             <div

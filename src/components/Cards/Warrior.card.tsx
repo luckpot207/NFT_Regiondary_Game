@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -10,55 +11,39 @@ import {
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
-import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import { handleExecuteWarriors } from "../../helpers/warrior";
-import { I_Warrior } from "../../interfaces";
-import {
-  changeWarriorExecuteStatus,
-  gameState,
-  updateState,
-} from "../../reducers/cryptolegions.reducer";
+
+import { commonState } from "../../reducers/common.reduer";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { changeWarriorExecuteStatus } from "../../reducers/warrior.reducer";
+import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
+import WarriorService from "../../services/warrior.service";
 import { AppSelector } from "../../store";
-import { formatNumber } from "../../utils/utils";
+import { IWarrior } from "../../types";
+import { formatNumber, getTranslation } from "../../utils/utils";
 import { useWarrior } from "../../web3hooks/useContract";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import gameConfig from "../../config/game.config";
 
 type Props = {
-  warrior: I_Warrior;
+  warrior: IWarrior;
   isActionBtns: boolean;
 };
 
 const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
-  // Hook Info
   const dispatch = useDispatch();
-  const { showAnimation, itemnames } = AppSelector(gameState);
+  const { showAnimation } = AppSelector(commonState);
   const theme = useTheme();
 
-  // Account
   const { account } = useWeb3React();
 
-  // Contracts
   const warriorContract = useWarrior();
 
-  // States
-  const warningText = LanguageTranslate({ translateKey: "warning" });
-  const executeText = LanguageTranslate({ translateKey: "execute" });
-  const executeWarningText = LanguageTranslate({
-    translateKey: "executeWarning",
-  });
-
-  const { id, mp4, jpg, strength, attackPower, executeStatus } = warrior;
-
-  const type = itemnames.find(
-    (item) => item.type === "warrior" && item.number === strength
-  )?.name;
+  const { id, mp4, jpg, strength, attackPower, executeStatus, type } = warrior;
 
   const [loaded, setLoaded] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Functions
   const handleImageLoaded = () => {
     setLoaded(true);
   };
@@ -70,38 +55,48 @@ const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
   const handleExecuteBeast = () => {
     if (strength > 2) {
       Swal.fire({
-        title: warningText,
-        text: executeWarningText,
+        title: getTranslation("warning"),
+        text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#f66810",
         cancelButtonColor: "#d33",
-        confirmButtonText: executeText,
+        confirmButtonText: getTranslation("execute"),
         background: "#111",
         color: "white",
       }).then((result) => {
         if (result.isConfirmed) {
-          handleExecuteWarriors(dispatch, account, warriorContract, [id]);
+          WarriorService.handleExecuteWarriors(
+            dispatch,
+            account,
+            warriorContract,
+            [id]
+          );
         }
       });
     } else {
-      handleExecuteWarriors(dispatch, account, warriorContract, [id]);
+      WarriorService.handleExecuteWarriors(dispatch, account, warriorContract, [
+        id,
+      ]);
     }
   };
 
   const handleToMarketplace = () => {
     dispatch(
-      updateState({
-        listOnMarketplaceModal: true,
+      updateMarketplaceState({
         listingPrice: 0,
-        listingType: 2,
+        listingType: gameConfig.nftItemType.warrior,
         listingId: id,
+      })
+    );
+    dispatch(
+      updateModalState({
+        listOnMarketplaceModalOpen: true,
       })
     );
   };
 
-  // Render
-  const showStrength = () => {
+  const renderStrength = () => {
     let itemList = [];
     for (let i = 0; i < strength; i++) {
       itemList.push(
@@ -180,7 +175,7 @@ const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
             fontWeight: "bold",
           }}
         >
-          {showStrength()}
+          {renderStrength()}
         </Box>
       </Box>
       <Box

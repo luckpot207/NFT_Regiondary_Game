@@ -1,4 +1,6 @@
-import gameVersion from "../constants/gameVersion";
+import gameConfig from "../config/game.config";
+
+const gameVersion = gameConfig.version;
 
 export const ethereumConnect = () =>
   window.ethereum.request({ method: "eth_requestAccounts" });

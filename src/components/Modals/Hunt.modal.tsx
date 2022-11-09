@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   CardMedia,
@@ -8,23 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserInfo } from "../../helpers/basicInfo";
-import { checkHuntPending } from "../../helpers/hunt";
-import { getAllLegionsAct } from "../../helpers/legion";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
-import { formatNumber } from "../../utils/utils";
-import {
-  getBUSDBalance,
-  getLegionBUSDAllowance,
-  getWalletHuntPendingLegionId,
-  getWalletHuntPendingMonsterId,
-  revealHunt,
-  setBUSDApprove,
-} from "../../web3hooks/contractFunctions";
+import { formatNumber, getTranslation } from "../../utils/utils";
 import { getLegionAddress } from "../../web3hooks/getAddress";
 import {
   useBeast,
@@ -36,45 +25,53 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { legionState, updateLegionState } from "../../reducers/legion.reducer";
+import { commonState, updateCommonState } from "../../reducers/common.reduer";
+import { monsterState } from "../../reducers/monster.reducer";
+import {
+  getWalletHuntPendingLegionId,
+  getWalletHuntPendingMonsterId,
+  revealHunt,
+} from "../../web3hooks/contractFunctions/legion.contract";
+import {
+  getBUSDBalance,
+  getLegionBUSDAllowance,
+  setBUSDApprove,
+} from "../../web3hooks/contractFunctions/busd.contract";
+import HuntService from "../../services/hunt.service";
+import LegionService from "../../services/legion.service";
+import gameConfig from "../../config/game.config";
+import constants from "../../constants";
+import { IMonsterId } from "../../types/monster.type";
 
 const HuntModal: React.FC = () => {
-  // Hook Info
   const dispatch = useDispatch();
   const {
-    language,
+    allLegions,
     initialHuntLoading,
     huntVRFPending,
     revealHuntLoading,
     huntPending,
-    huntTax,
-    allMonsters,
     huntingLegionId,
     huntingMonsterId,
-    showAnimation,
-    huntingSuccessPercent,
-    presentItem,
-    itemnames,
-    allLegions,
-  } = AppSelector(gameState);
+  } = AppSelector(legionState);
+  const { allMonsters } = AppSelector(monsterState);
+  const { huntTax, presentItem, showAnimation } = AppSelector(commonState);
 
-  // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const legionContract = useLegion();
   const busdContract = useBUSD();
-  const bloodstoneContract = useBloodstone();
-  const rewardpoolContract = useRewardPool();
-  const feehandlerContract = useFeeHandler();
 
-  // States
   const [huntFinished, setHuntFinished] = useState(false);
   const [huntResult, setHuntResult] = useState<any>({});
   const [maxRoll, setMaxRoll] = useState(0);
 
-  // Functions
+  useEffect(() => {
+    getBalance();
+  }, [huntPending]);
+
   const getBalance = async () => {
     try {
       const huntingMonsterId = await getWalletHuntPendingMonsterId(
@@ -85,7 +82,7 @@ const HuntModal: React.FC = () => {
         legionContract,
         account
       );
-      dispatch(updateState({ huntingLegionId, huntingMonsterId }));
+      dispatch(updateLegionState({ huntingLegionId, huntingMonsterId }));
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +94,7 @@ const HuntModal: React.FC = () => {
 
   const handleRevealHunt = async () => {
     try {
-      dispatch(updateState({ revealHuntLoading: true }));
+      dispatch(updateLegionState({ revealHuntLoading: true }));
       const BUSD = await getBUSDBalance(web3, busdContract, account);
       console.log(BUSD);
       console.log(huntTax);
@@ -107,7 +104,7 @@ const HuntModal: React.FC = () => {
           100
       );
       if (
-        BUSD >=
+        Number(BUSD) >=
         (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
           Number(huntTax)) /
           100
@@ -119,7 +116,7 @@ const HuntModal: React.FC = () => {
           account
         );
         if (
-          allowance <
+          Number(allowance) <
           (Number(allMonsters[Number(huntingMonsterId) - 1]?.BUSDReward) *
             Number(huntTax)) /
             100
@@ -129,31 +126,24 @@ const HuntModal: React.FC = () => {
         let huntResult = await revealHunt(legionContract, account);
         const result = huntResult.events["Hunted"].returnValues;
         console.log("hunting Result", result);
-        checkHuntPending(dispatch, account, legionContract);
-        getAllLegionsAct(dispatch, account, legionContract);
-        getUserInfo(
-          dispatch,
-          web3,
-          account,
-          bloodstoneContract,
-          rewardpoolContract,
-          feehandlerContract
-        );
+        HuntService.checkHuntPending(dispatch, account, legionContract);
+        LegionService.getAllLegionsAct(dispatch, account, legionContract);
+        dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
         setMaxRoll(0);
         await setHuntResult(result);
         getMaxRoll(huntingLegionId.toString(), huntingMonsterId.toString());
         setHuntFinished(true);
       } else {
-        toast.error(<LanguageTranslate translateKey="addBUSD" />);
+        toast.error(getTranslation("addBUSD"));
       }
     } catch (error) {
-      toast.error(<LanguageTranslate translateKey="huntTransactionFailed" />);
+      toast.error(getTranslation("huntTransactionFailed"));
     }
-    dispatch(updateState({ revealHuntLoading: false }));
+    dispatch(updateLegionState({ revealHuntLoading: false }));
   };
 
   const getShareLink = (social: string) => {
-    const serverLink = "https://play.cryptolegions.app";
+    const serverLink = gameConfig.gameSiteUrl;
     const shareImgUrl =
       huntResult["monsterId"] == 25
         ? presentItem.diedmp4
@@ -164,15 +154,11 @@ const HuntModal: React.FC = () => {
       allMonsters[parseInt(huntResult["monsterId"]) - 1] &&
       `I just won ${formatNumber(
         allMonsters[parseInt(huntResult["monsterId"]) - 1].BLSTReward.toFixed(2)
-      )} $BLST (= ${formatNumber(
+      )} ${getTranslation("blst")} (= ${formatNumber(
         allMonsters[parseInt(huntResult["monsterId"]) - 1].BUSDReward.toFixed(2)
-      )} USD) from Monster ${itemnames
-        .find(
-          (item) =>
-            item.type === "monster" &&
-            item.number === parseInt(huntResult["monsterId"])
-        )
-        ?.name.toUpperCase()} in Crypto Legions! Play #CryptoLegions here: https://cryptolegions.app`;
+      )} USD) from Monster ${constants.itemNames.monsters[
+        huntResult["monsterId"] as IMonsterId
+      ]?.toUpperCase()} in Crypto Legions! Play #CryptoLegions here: https://cryptolegions.app`;
     const mainLink = `url=${encodeURI(shareImgUrl)}&text=${encodeURI(text)}`;
     const telegramShareLink = `https://xn--r1a.link/share/url?${mainLink}`;
     const twitterShareLink = `https://twitter.com/intent/tweet?${mainLink}`;
@@ -185,7 +171,6 @@ const HuntModal: React.FC = () => {
     console.log(legionId, monsterId);
     console.log(allLegions, allMonsters);
     if (legionId !== "0" && monsterId !== "0") {
-      let bonus = 0;
       const legion = allLegions.filter((legion) => legion.id === legionId)[0];
       const monster = allMonsters[parseInt(monsterId) - 1];
       console.log(legion, monster);
@@ -207,11 +192,6 @@ const HuntModal: React.FC = () => {
     }
   };
 
-  // Use Effect
-  useEffect(() => {
-    getBalance();
-  }, [huntPending]);
-
   return (
     <Dialog
       open={
@@ -226,22 +206,18 @@ const HuntModal: React.FC = () => {
           <>
             <DialogTitle sx={{ textAlign: "center" }}>
               <>
+                <Box component="p">{getTranslation("congratulation")}</Box>
+                <Typography>{getTranslation("congSubtitle1")}</Typography>
                 <Box component="p">
-                  <LanguageTranslate translateKey="congratulation" />
-                </Box>
-                <Typography>
-                  <LanguageTranslate translateKey="congSubtitle1" />
-                </Typography>
-                <Box component="p">
-                  <LanguageTranslate translateKey="congSubtitle2" />{" "}
+                  {getTranslation("congSubtitle2")}{" "}
                   {allMonsters[
                     parseInt(huntResult["monsterId"]) - 1
                   ].BLSTReward.toFixed(2)}{" "}
-                  $BLST
+                  ${getTranslation("blst")}
                 </Box>
                 <Box>
                   <Box sx={{ fontWeight: "bold" }}>
-                    <LanguageTranslate translateKey="shareYourSuccess" />
+                    {getTranslation("shareYourSuccess")}
                   </Box>
                   <Box
                     sx={{ display: "flex", justifyContent: "center", mt: 1 }}
@@ -317,18 +293,17 @@ const HuntModal: React.FC = () => {
             >
               <Box component="div" sx={{ marginRight: 1 }}>
                 <Typography>
-                  <LanguageTranslate translateKey="yourRollTitle" />{" "}
-                  {huntResult["roll"]}
+                  {getTranslation("yourRollTitle")} {huntResult["roll"]}
                 </Typography>
                 <Typography>
-                  <LanguageTranslate translateKey="congSubtitle3" /> {maxRoll}
+                  {getTranslation("congSubtitle3")} {maxRoll}
                 </Typography>
               </Box>
               <FireBtn
                 sx={{ paddingX: 3, fontWeight: "bold" }}
                 onClick={() => handleContinue()}
               >
-                <LanguageTranslate translateKey="continue" />
+                {getTranslation("continue")}
               </FireBtn>
             </DialogActions>
           </>
@@ -336,10 +311,8 @@ const HuntModal: React.FC = () => {
           <>
             <DialogTitle sx={{ textAlign: "center" }}>
               <>
-                <Box component="p">
-                  <LanguageTranslate translateKey="defeatTitle" />
-                </Box>
-                <LanguageTranslate translateKey="defeatSubtitle1" />
+                <Box component="p">{getTranslation("defeatTitle")}</Box>
+                {getTranslation("defeatSubtitle1")}
               </>
             </DialogTitle>
             <DialogContent>
@@ -366,18 +339,17 @@ const HuntModal: React.FC = () => {
             >
               <Box component="div" sx={{ marginRight: 1 }}>
                 <Typography>
-                  <LanguageTranslate translateKey="yourRollTitle" />{" "}
-                  {huntResult["roll"]}
+                  {getTranslation("yourRollTitle")} {huntResult["roll"]}
                 </Typography>
                 <Typography>
-                  <LanguageTranslate translateKey="defeatSubtitle2" /> {maxRoll}
+                  {getTranslation("defeatSubtitle2")} {maxRoll}
                 </Typography>
               </Box>
               <FireBtn
                 sx={{ paddingX: 3, fontWeight: "bold" }}
                 onClick={() => handleContinue()}
               >
-                <LanguageTranslate translateKey="continue" />
+                {getTranslation("continue")}
               </FireBtn>
             </DialogActions>
           </>
@@ -385,19 +357,13 @@ const HuntModal: React.FC = () => {
       ) : (
         <>
           <DialogTitle sx={{ textAlign: "center" }}>
-            <Box component="p">
-              <LanguageTranslate translateKey="huntTime" />
-            </Box>
-            <LanguageTranslate translateKey="huntTimeSubtitle" />
+            <Box component="p">{getTranslation("huntTime")}</Box>
+            {getTranslation("huntTimeSubtitle")}
             <Box component="p">
               #{huntingMonsterId}{" "}
-              {
-                itemnames.find(
-                  (item) =>
-                    item.type === "monster" && item.number == huntingMonsterId
-                )?.name
-              }
-              {allMonsters[Number(huntingMonsterId) - 1]?.name.toUpperCase()}
+              {constants.itemNames.monsters[
+                huntingMonsterId as IMonsterId
+              ]?.toUpperCase()}
             </Box>
             {huntPending && (
               <FireBtn
@@ -406,7 +372,7 @@ const HuntModal: React.FC = () => {
                   revealHuntLoading.valueOf() || huntVRFPending.valueOf()
                 }
               >
-                <LanguageTranslate translateKey="revealResult" />
+                {getTranslation("revealResult")}
               </FireBtn>
             )}
           </DialogTitle>

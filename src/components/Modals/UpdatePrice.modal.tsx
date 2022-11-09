@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
 import {
   Box,
   Dialog,
@@ -6,20 +8,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import Constants from "../../constants";
-import {
-  getAllBeastMarketItemsAct,
-  getAllLegionsMarketItemsAct,
-  getAllWarriorMarketItemsAct,
-} from "../../helpers/marketplace";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+
 import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
-import { getUSDAmount, updatePrice } from "../../web3hooks/contractFunctions";
 import {
   useBeast,
   useFeeHandler,
@@ -29,29 +22,43 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import {
+  marketplaceState,
+  updateMarketplaceState,
+} from "../../reducers/marketplace.reducer";
+import { getUSDAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
+import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { updatePrice } from "../../web3hooks/contractFunctions/marketplace.contract";
+import MarketplaceService from "../../services/marketplace.service";
+import gameConfig from "../../config/game.config";
 
 const UpdatePriceModal: React.FC = () => {
-  // Hook Info
   const dispatch = useDispatch();
-  const { language, updatePriceModal, listingPrice, listingId, listingType } =
-    AppSelector(gameState);
+  const {
+    updatePriceLoading,
+    listingPrice,
+    listingId,
+    listingType,
+    listingAttackPower,
+  } = AppSelector(marketplaceState);
+  const { updatePriceModalOpen } = AppSelector(modalState);
 
-  // Account and Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const feehandlerContract = useFeeHandler();
   const marketplaceContract = useMarketplace();
   const beastContract = useBeast();
   const warriorContract = useWarrior();
   const legionContract = useLegion();
 
-  // State
   const [equalBUSD, setEqualBUSD] = useState(0);
 
-  // Functions
+  // Use Effect
+  useEffect(() => {
+    getUSDAmountFunc();
+  }, [listingPrice, account]);
+
   const getUSDAmountFunc = async () => {
     console.log(listingPrice);
     try {
@@ -63,7 +70,7 @@ const UpdatePriceModal: React.FC = () => {
   };
 
   const handleClose = () => {
-    dispatch(updateState({ updatePriceModal: false }));
+    dispatch(updateModalState({ updatePriceModalOpen: false }));
   };
 
   const handlePrice = async (e: any) => {
@@ -80,13 +87,17 @@ const UpdatePriceModal: React.FC = () => {
       price = "0";
     }
     console.log(price);
-    dispatch(updateState({ listingPrice: price }));
+    dispatch(updateMarketplaceState({ listingPrice: price }));
   };
 
   const handleUpdatePriceFunc = async () => {
     dispatch(
-      updateState({
-        updatePriceModal: false,
+      updateModalState({
+        updatePriceModalOpen: false,
+      })
+    );
+    dispatch(
+      updateMarketplaceState({
         updatePriceLoading: true,
       })
     );
@@ -99,25 +110,25 @@ const UpdatePriceModal: React.FC = () => {
         listingId,
         listingPrice
       );
-      dispatch(updateState({ updatePriceLoading: false }));
-      if (listingType === Constants.nftItemType.beast) {
-        getAllBeastMarketItemsAct(
+      dispatch(updateMarketplaceState({ updatePriceLoading: false }));
+      if (listingType === gameConfig.nftItemType.beast) {
+        MarketplaceService.getAllBeastMarketItemsAct(
           dispatch,
           web3,
           beastContract,
           marketplaceContract
         );
       }
-      if (listingType === Constants.nftItemType.warrior) {
-        getAllWarriorMarketItemsAct(
+      if (listingType === gameConfig.nftItemType.warrior) {
+        MarketplaceService.getAllWarriorMarketItemsAct(
           dispatch,
           web3,
           warriorContract,
           marketplaceContract
         );
       }
-      if (listingType === Constants.nftItemType.legion) {
-        getAllLegionsMarketItemsAct(
+      if (listingType === gameConfig.nftItemType.legion) {
+        MarketplaceService.getAllLegionsMarketItemsAct(
           dispatch,
           web3,
           legionContract,
@@ -127,22 +138,17 @@ const UpdatePriceModal: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ updatePriceLoading: false }));
+    dispatch(updateMarketplaceState({ updatePriceLoading: false }));
   };
 
-  // Use Effect
-  useEffect(() => {
-    getUSDAmountFunc();
-  }, [listingPrice]);
-
   return (
-    <Dialog onClose={handleClose} open={updatePriceModal.valueOf()}>
+    <Dialog onClose={handleClose} open={updatePriceModalOpen.valueOf()}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />
         </Box>
         <DialogTitle sx={{ textAlign: "center" }}>
-          <LanguageTranslate translateKey="updatePrice" />
+          {getTranslation("updatePrice")}
         </DialogTitle>
         <Box sx={{ p: 1, cursor: "pointer" }} onClick={handleClose}>
           <FaTimes />
@@ -152,13 +158,9 @@ const UpdatePriceModal: React.FC = () => {
         <TextField
           autoFocus
           variant="standard"
-          label={
-            <>
-              <LanguageTranslate translateKey="priceIn" />{" "}
-              <LanguageTranslate translateKey="$" />
-              <LanguageTranslate translateKey="blst" />
-            </>
-          }
+          label={`${getTranslation("priceIn")} ${getTranslation(
+            "$"
+          )}${getTranslation("blst")}`}
           margin="dense"
           id="listingprice"
           value={listingPrice}
@@ -171,12 +173,12 @@ const UpdatePriceModal: React.FC = () => {
               evt.key === "-") &&
               evt.preventDefault();
           }}
-          color={listingPrice < Constants.maxSellPrice ? "primary" : "error"}
+          color={listingPrice < gameConfig.maxSellPrice ? "primary" : "error"}
           inputProps={{ step: "0.1" }}
           sx={{
             input: {
               color:
-                listingPrice < Constants.maxSellPrice ? "white" : "#f44336",
+                listingPrice < gameConfig.maxSellPrice ? "white" : "#f44336",
             },
           }}
           onChange={handlePrice}
@@ -185,9 +187,17 @@ const UpdatePriceModal: React.FC = () => {
           (= {Number(equalBUSD).toFixed(2)} USD)
         </Typography>
       </DialogContent>
-      {+listingPrice >= 0 && listingPrice < Constants.maxSellPrice ? (
-        <FireBtn sx={{ fontWeight: "bold" }} onClick={handleUpdatePriceFunc}>
-          <LanguageTranslate translateKey="confirm" />
+      {+listingPrice >= 0 && listingPrice < gameConfig.maxSellPrice ? (
+        <FireBtn
+          sx={{ fontWeight: "bold" }}
+          onClick={handleUpdatePriceFunc}
+          disabled={
+            listingType === 3 && Number(listingAttackPower) / 100 > equalBUSD
+          }
+        >
+          {listingType === 3 && Number(listingAttackPower) / 100 > equalBUSD
+            ? getTranslation("sellWarning")
+            : getTranslation("confirm")}
         </FireBtn>
       ) : (
         <Box
@@ -198,7 +208,7 @@ const UpdatePriceModal: React.FC = () => {
             wordBreak: "break-word",
           }}
         >
-          <LanguageTranslate translateKey="maxSellPrice" />
+          {getTranslation("maxSellPrice")}
         </Box>
       )}
     </Dialog>

@@ -1,39 +1,40 @@
-import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import { Box, Button, ButtonGroup, Typography } from "@mui/material";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../reducers/filterAndPage.reducer";
 import { AppSelector } from "../../store";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { getTranslation } from "../../utils/utils";
 
 const MarketplacePriceSort: React.FC = () => {
   const dispatch = useDispatch();
-  const { sortPrice } = AppSelector(gameState);
+  const { sortPrice } = AppSelector(filterAndPageState);
 
   const handleSort = (val: Number) => {
-    dispatch(updateState({ sortPrice: val, currentPage: 1 }));
+    dispatch(updateFilterAndPageState({ sortPrice: val, currentPage: 1 }));
   };
 
   useEffect(() => {
-    dispatch(updateState({ sortPrice: 0 }));
+    dispatch(updateFilterAndPageState({ sortPrice: 0 }));
   }, []);
 
   return (
     <Box>
-      <Typography sx={{ mb: 1 }}>
-        <LanguageTranslate translateKey="sortby$" />:
-      </Typography>
+      <Typography sx={{ mb: 1 }}>{getTranslation("sortby$")}</Typography>
       <ButtonGroup>
         <Button
           variant={sortPrice === 0 ? "contained" : "outlined"}
           onClick={() => handleSort(0)}
         >
-          <LanguageTranslate translateKey="lowest" />
+          {getTranslation("lowest")}
         </Button>
         <Button
           variant={sortPrice === 1 ? "contained" : "outlined"}
           onClick={() => handleSort(1)}
         >
-          <LanguageTranslate translateKey="highest" />
+          {getTranslation("highest")}
         </Button>
       </ButtonGroup>
     </Box>

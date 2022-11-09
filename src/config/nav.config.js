@@ -1,18 +1,19 @@
-import Beasts from "../modules/App/Beasts";
-import BeastsMarketplace from "../modules/App/Marketplace/Beasts";
-import CreateLegion from "../modules/App/CreateLegion";
-import Home from "../modules/App/Home";
-import Hunt from "../modules/App/Hunt";
-import Legions from "../modules/App/Legions";
-import LegionsMarketplace from "../modules/App/Marketplace/Legions";
-import UpdateLegion from "../modules/App/UpdateLegion";
-import Warriors from "../modules/App/Warriors";
-import WarriorsMarketplace from "../modules/App/Marketplace/Warriors";
-import Help from "../modules/App/Help";
-import HuntHistory from "../modules/App/HuntHistory";
-import ReferralPage from "../modules/Referral";
-import ReferPage from "../modules/App/ReferralPage";
-import TipsAndTricks from "../modules/App/TipsAndTricks";
+import constants from "../constants";
+import Beasts from "../pages/App/Beasts";
+import CreateLegion from "../pages/App/CreateLegion";
+import Home from "../pages/App/Home";
+import Hunt from "../pages/App/Hunt";
+import Legions from "../pages/App/Legions";
+import BeastsMarketplace from "../pages/App/Marketplace/Beasts";
+import LegionsMarketplace from "../pages/App/Marketplace/Legions";
+import WarriorsMarketplace from "../pages/App/Marketplace/Warriors";
+import UpdateLegion from "../pages/App/UpdateLegion";
+import Warriors from "../pages/App/Warriors";
+import Duel from "../pages/App/Duel";
+import TipsAndTricks from "../pages/App/TipsAndTricks";
+import ReferPage from "../pages/App/ReferralPage";
+import Help from "../pages/App/Help";
+import HuntHistory from "../pages/App/HuntHistory";
 
 export const navConfig = {
   drawerWidth: 250,
@@ -34,6 +35,10 @@ export const navConfig = {
       element: <Legions />,
     },
     {
+      path: "/duels",
+      element: <Duel />,
+    },
+    {
       path: "/createlegions",
       element: <CreateLegion />,
     },
@@ -46,12 +51,12 @@ export const navConfig = {
       element: <Hunt />,
     },
     {
-      path: "/beastsMarketplace",
-      element: <BeastsMarketplace />,
-    },
-    {
       path: "/warriorsMarketplace",
       element: <WarriorsMarketplace />,
+    },
+    {
+      path: "/beastsMarketplace",
+      element: <BeastsMarketplace />,
     },
     {
       path: "/legionsMarketplace",
@@ -105,6 +110,12 @@ export const navConfig = {
         path: "/hunt",
       },
       {
+        type: "navlink",
+        title: "duels",
+        icon: "legion.png",
+        path: "/duels",
+      },
+      {
         type: "divider",
       },
       {
@@ -140,7 +151,7 @@ export const navConfig = {
         type: "link",
         title: "buyBlst",
         icon: "pancake.png",
-        path: "https://pancakeswap.finance/swap?outputCurrency=0x63441E5C9F55B5A9141f3D834a28426Ca1c5C5cC&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+        path: constants.navlink.pancake,
       },
       {
         type: "navlink",
@@ -164,8 +175,7 @@ export const navConfig = {
         type: "link",
         title: "whitepaper",
         icon: "whitepaper.png",
-        path: "https://docs.cryptolegions.app/",
-        esPath: "https://docs-es.cryptolegions.app/",
+        path: constants.navlink.whitepaper,
       },
       {
         type: "navlink",
@@ -186,31 +196,31 @@ export const navConfig = {
         type: "social",
         title: "discord",
         icon: "/assets/images/discord.png",
-        path: "https://www.cryptolegions.app/d",
+        path: constants.navlink.discord,
       },
       {
         type: "social",
         title: "telegram",
         icon: "/assets/images/telegram.png",
-        path: "https://www.cryptolegions.app/t",
+        path: constants.navlink.telegram,
       },
       {
         type: "social",
         title: "twitter",
         icon: "/assets/images/twitter.png",
-        path: "https://www.cryptolegions.app/tw",
+        path: constants.navlink.twitter,
       },
       {
         type: "social",
         title: "youtube",
         icon: "/assets/images/youtube.png",
-        path: "https://www.cryptolegions.app/y",
+        path: constants.navlink.youtube,
       },
       {
         type: "social",
         title: "medium",
         icon: "/assets/images/medium.png",
-        path: "https://www.cryptolegions.app/m",
+        path: constants.navlink.medium,
       },
       {
         type: "privacy",

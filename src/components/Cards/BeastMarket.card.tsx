@@ -1,30 +1,18 @@
+import React, { useState } from "react";
 import {
   Box,
   Button,
   Card,
   CardMedia,
-  Checkbox,
   Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import classNames from "classnames";
-import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Constants from "../../constants";
-import { getAllBeastMarketItemsAct } from "../../helpers/marketplace";
-import { I_Beast, I_Beast_Market } from "../../interfaces";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
 import { AppSelector } from "../../store";
-import { formatNumber } from "../../utils/utils";
-import {
-  buyToken,
-  cancelMarketplace,
-  getBloodstoneAllowance,
-  setBloodstoneApprove,
-} from "../../web3hooks/contractFunctions";
+import { formatNumber, getTranslation } from "../../utils/utils";
 import { getMarketplaceAddress } from "../../web3hooks/getAddress";
 import {
   useBeast,
@@ -33,42 +21,48 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
+import { commonState } from "../../reducers/common.reduer";
+import gameConfig from "../../config/game.config";
+import { updateModalState } from "../../reducers/modal.reducer";
+import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
+import {
+  getBloodstoneAllowance,
+  setBloodstoneApprove,
+} from "../../web3hooks/contractFunctions/common.contract";
+import {
+  buyToken,
+  cancelMarketplace,
+} from "../../web3hooks/contractFunctions/marketplace.contract";
+import MarketplaceService from "../../services/marketplace.service";
+import { IBeastMarket } from "../../types";
 
 type Props = {
-  beast: I_Beast_Market;
+  beast: IBeastMarket;
 };
 
 const BeastMarketCard: React.FC<Props> = ({ beast }) => {
-  // Hook Info
   const dispatch = useDispatch();
-  const { showAnimation, itemnames } = AppSelector(gameState);
+  const { showAnimation } = AppSelector(commonState);
   const theme = useTheme();
 
-  // Account
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
-  // Contracts
   const beastContract = useBeast();
   const bloodstoneContract = useBloodstone();
   const marketplaceContract = useMarketplace();
 
-  // States
-  const { id, mp4, jpg, capacity, price, seller, newItem } = beast;
+  const { id, type, mp4, jpg, capacity, price, seller, newItem } = beast;
 
-  const type = itemnames.find(
-    (item) => item.type === "beast" && item.number === capacity
-  )?.name;
   const [loaded, setLoaded] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Functions
   const handleImageLoaded = () => {
     setLoaded(true);
   };
 
   const handleBuyToken = async () => {
-    dispatch(updateState({ buyItemLoading: true }));
+    dispatch(updateMarketplaceState({ buyItemLoading: true }));
     try {
       const allowance = await getBloodstoneAllowance(
         web3,
@@ -88,12 +82,12 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
         web3,
         marketplaceContract,
         account,
-        Constants.nftItemType.beast,
+        gameConfig.nftItemType.beast,
         id,
         price
       );
-      dispatch(updateState({ buyItemLoading: false }));
-      getAllBeastMarketItemsAct(
+      dispatch(updateMarketplaceState({ buyItemLoading: false }));
+      MarketplaceService.getAllBeastMarketItemsAct(
         dispatch,
         web3,
         beastContract,
@@ -102,20 +96,20 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ buyItemLoading: false }));
+    dispatch(updateMarketplaceState({ buyItemLoading: false }));
   };
 
   const handleCancelToken = async () => {
-    dispatch(updateState({ cancelItemLoading: true }));
+    dispatch(updateMarketplaceState({ cancelItemLoading: true }));
     try {
       await cancelMarketplace(
         marketplaceContract,
         account,
-        Constants.nftItemType.beast,
+        gameConfig.nftItemType.beast,
         id
       );
-      dispatch(updateState({ cancelItemLoading: false }));
-      getAllBeastMarketItemsAct(
+      dispatch(updateMarketplaceState({ cancelItemLoading: false }));
+      MarketplaceService.getAllBeastMarketItemsAct(
         dispatch,
         web3,
         beastContract,
@@ -124,15 +118,19 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ cancelItemLoading: false }));
+    dispatch(updateMarketplaceState({ cancelItemLoading: false }));
   };
 
   const handleUpdatePrice = async () => {
     dispatch(
-      updateState({
-        updatePriceModal: true,
+      updateModalState({
+        updatePriceModalOpen: true,
+      })
+    );
+    dispatch(
+      updateMarketplaceState({
         listingPrice: price,
-        listingType: Constants.nftItemType.beast,
+        listingType: gameConfig.nftItemType.beast,
         listingId: id,
       })
     );
@@ -270,7 +268,7 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
             sx={{ fontWeight: "bold", fontSize: 16 }}
             onClick={() => handleUpdatePrice()}
           >
-            {formatNumber(price.toFixed(2))} $BLST
+            {formatNumber(price.toFixed(2))} ${getTranslation("blst")}
             <img
               src="/assets/images/updatePrice.png"
               style={{ height: "20px", marginLeft: "10px" }}
@@ -282,7 +280,7 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
             sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
             onClick={() => handleBuyToken()}
           >
-            {formatNumber(price.toFixed(2))} $BLST
+            {formatNumber(price.toFixed(2))} ${getTranslation("blst")}
           </FireBtn>
         )}
       </Box>

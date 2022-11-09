@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -8,23 +9,20 @@ import {
   Grid,
   IconButton,
   Skeleton,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
-import { I_Legion, I_Legion_Market } from "../../interfaces";
-import { gameState, updateState } from "../../reducers/cryptolegions.reducer";
+import Axios from "axios";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch } from "react-redux";
+
 import { AppSelector } from "../../store";
-import { formatNumber, getTranslation } from "../../utils/utils";
 import {
-  buyToken,
-  cancelMarketplace,
-  getBeastToken,
-  getBloodstoneAllowance,
-  getWarriorToken,
-  setBloodstoneApprove,
-} from "../../web3hooks/contractFunctions";
+  formatNumber,
+  getTranslation,
+  getWarriorStrength,
+} from "../../utils/utils";
 import {
   useBeast,
   useBloodstone,
@@ -33,27 +31,35 @@ import {
   useWarrior,
   useWeb3,
 } from "../../web3hooks/useContract";
-import Tutorial from "../Tutorial/Tutorial";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import CachedIcon from "@mui/icons-material/Cached";
-import { useDispatch } from "react-redux";
 import { getMarketplaceAddress } from "../../web3hooks/getAddress";
-import Constants from "../../constants";
 import FireBtn from "../Buttons/FireBtn";
-import { getAllLegionsMarketItemsAct } from "../../helpers/marketplace";
-import LanguageTranslate from "../UI/LanguageTranslate";
+import { ILegionMarket } from "../../types";
+import { commonState } from "../../reducers/common.reduer";
+import { apiConfig } from "../../config/api.config";
+import constants from "../../constants";
+import { ICapacity } from "../../types/beast.type";
+import { IStrength } from "../../types/warrior.type";
+import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
+import {
+  getBloodstoneAllowance,
+  setBloodstoneApprove,
+} from "../../web3hooks/contractFunctions/common.contract";
+import {
+  buyToken,
+  cancelMarketplace,
+} from "../../web3hooks/contractFunctions/marketplace.contract";
+import gameConfig from "../../config/game.config";
+import MarketplaceService from "../../services/marketplace.service";
+import { updateModalState } from "../../reducers/modal.reducer";
 
 type Props = {
-  legion: I_Legion_Market;
+  legion: ILegionMarket;
 };
 
 const LegionMarketCard: React.FC<Props> = ({ legion }) => {
-  // Hook info
   const dispatch = useDispatch();
-  const { language, showAnimation } = AppSelector(gameState);
+  const { showAnimation } = AppSelector(commonState);
 
-  // Account & Web3
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
@@ -92,52 +98,62 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
   const [beastList, setBeastList] = useState(Array);
   const [warriorList, setWarriorList] = useState(Array);
 
-  // Functions
+  useEffect(() => {
+    setIsShowDetail(false);
+    getBalance();
+  }, [legion]);
+
+  const getBalance = async () => {
+    try {
+      const query = `
+        {
+          warriors (
+            where: {
+              id_in: ${JSON.stringify(warriorIds)}
+            }
+          ) {
+            id
+            attackPower
+          }
+          beasts (
+            where: {
+              id_in: ${JSON.stringify(beastIds)}
+            }
+          ) {
+            id
+            capacity
+          }
+        }
+      `;
+      const queryRes = await Axios.post(apiConfig.subgraphServer, { query });
+      const beasts = queryRes.data.data.beasts;
+      const warriors = queryRes.data.data.warriors;
+      const totalCapacity = beasts.reduce(
+        (a: any, b: any) => a + Number(b.capacity),
+        0
+      );
+      setTotalCapacity(totalCapacity);
+      setWarriorList(warriors);
+      setBeastList(beasts);
+    } catch (error) {}
+  };
+
+  const getType = (itemType: string, number: number) => {
+    let type = "";
+    if (itemType === "warrior") {
+      type = constants.itemNames.warriors[number as IStrength];
+    } else if (itemType === "beast") {
+      type = constants.itemNames.beasts[number as ICapacity];
+    }
+    return type;
+  };
+
   const handleImageLoaded = () => {
     setLoaded(true);
   };
 
-  const getBalance = async () => {
-    try {
-      let beast,
-        warrior,
-        totalCapacity = 0,
-        tempBeasts = [],
-        tempWarriors = [],
-        itemList = [];
-
-      for (let i = 0; i < beastIds.length; i++) {
-        beast = await getBeastToken(beastContract, beastIds[i]);
-        tempBeasts.push({ ...beast, id: beastIds[i] });
-        totalCapacity += beast.capacity;
-      }
-      for (let i = 0; i < warriorIds.length; i++) {
-        warrior = await getWarriorToken(warriorContract, warriorIds[i]);
-        itemList = [];
-        for (let j = 0; j < warrior.strength; j++) {
-          itemList.push(
-            <img
-              key={`legion${id}-itemList${j}`}
-              src="/assets/images/bloodstoneGrey.png"
-              style={{ height: "15px" }}
-              alt="icon"
-            />
-          );
-        }
-        tempWarriors.push({
-          ...warrior,
-          id: warriorIds[i],
-          itemList: itemList,
-        });
-      }
-      setTotalCapacity(totalCapacity);
-      setWarriorList(tempWarriors);
-      setBeastList(tempBeasts);
-    } catch (error) {}
-  };
-
   const handleBuyToken = async () => {
-    dispatch(updateState({ buyItemLoading: true }));
+    dispatch(updateMarketplaceState({ buyItemLoading: true }));
     try {
       const allowance = await getBloodstoneAllowance(
         web3,
@@ -157,12 +173,12 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
         web3,
         marketplaceContract,
         account,
-        Constants.nftItemType.legion,
+        gameConfig.nftItemType.legion,
         id,
         price
       );
-      dispatch(updateState({ buyItemLoading: false }));
-      getAllLegionsMarketItemsAct(
+      dispatch(updateMarketplaceState({ buyItemLoading: false }));
+      MarketplaceService.getAllLegionsMarketItemsAct(
         dispatch,
         web3,
         legionContract,
@@ -171,20 +187,20 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ buyItemLoading: false }));
+    dispatch(updateMarketplaceState({ buyItemLoading: false }));
   };
 
   const handleCancelToken = async () => {
-    dispatch(updateState({ cancelItemLoading: true }));
+    dispatch(updateMarketplaceState({ cancelItemLoading: true }));
     try {
       await cancelMarketplace(
         marketplaceContract,
         account,
-        Constants.nftItemType.legion,
+        gameConfig.nftItemType.legion,
         id
       );
-      dispatch(updateState({ cancelItemLoading: false }));
-      getAllLegionsMarketItemsAct(
+      dispatch(updateMarketplaceState({ cancelItemLoading: false }));
+      MarketplaceService.getAllLegionsMarketItemsAct(
         dispatch,
         web3,
         legionContract,
@@ -193,24 +209,39 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
     } catch (error) {
       console.log(error);
     }
-    dispatch(updateState({ cancelItemLoading: false }));
+    dispatch(updateMarketplaceState({ cancelItemLoading: false }));
   };
 
   const handleUpdatePrice = async () => {
     dispatch(
-      updateState({
-        updatePriceModal: true,
+      updateModalState({
+        updatePriceModalOpen: true,
+      })
+    );
+    dispatch(
+      updateMarketplaceState({
         listingPrice: price,
-        listingType: Constants.nftItemType.legion,
+        listingType: gameConfig.nftItemType.legion,
         listingId: id,
+        listingAttackPower: attackPower,
       })
     );
   };
 
-  // Use Effect
-  useEffect(() => {
-    getBalance();
-  }, []);
+  const renderList = (strength: number) => {
+    let itemList = [];
+    for (let j = 0; j < strength; j++) {
+      itemList.push(
+        <img
+          key={`legion${id}-itemList${j}`}
+          src="/assets/images/bloodstoneGrey.png"
+          style={{ height: "15px" }}
+          alt="icon"
+        />
+      );
+    }
+    return itemList;
+  };
 
   return (
     <Box>
@@ -256,7 +287,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                       setShowType(1);
                     }}
                   >
-                    <LanguageTranslate translateKey="warriors" />
+                    {getTranslation("warriors")}
                   </Button>
                   <Button
                     variant={showType === 0 ? "contained" : "outlined"}
@@ -264,7 +295,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                       setShowType(0);
                     }}
                   >
-                    <LanguageTranslate translateKey="beasts" />
+                    {getTranslation("beasts")}
                   </Button>
                 </ButtonGroup>
               </Grid>
@@ -287,7 +318,10 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                           }}
                         >
                           <Typography variant="subtitle2">
-                            {item.type}
+                            {getType(
+                              "warrior",
+                              getWarriorStrength(Number(item.attackPower))
+                            )}
                           </Typography>
                           <Typography variant="subtitle2">
                             #{item.id}
@@ -302,7 +336,11 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                           <Typography variant="subtitle2">
                             {formatNumber(item.attackPower)} AP
                           </Typography>
-                          <Box>{item.itemList}</Box>
+                          <Box>
+                            {renderList(
+                              getWarriorStrength(Number(item.attackPower))
+                            )}
+                          </Box>
                         </Box>
                       </Box>
                     </Grid>
@@ -323,7 +361,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                           }}
                         >
                           <Typography variant="subtitle2">
-                            {item.type}
+                            {getType("beast", Number(item.capacity))}
                           </Typography>
                           <Typography variant="subtitle2">
                             #{item.id}
@@ -369,7 +407,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
           }}
         >
           <div>
-            {supplies} <LanguageTranslate translateKey="hSymbol" />
+            {supplies} {getTranslation("hSymbol")}
           </div>
         </Box>
         <Box
@@ -407,6 +445,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
                 component="span"
                 sx={{ padding: 0 }}
                 onClick={() => {
+                  getBalance();
                   setIsShowDetail(!isShowDetail);
                 }}
               >
@@ -498,7 +537,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
             sx={{ fontWeight: "bold", fontSize: 16 }}
             onClick={() => handleUpdatePrice()}
           >
-            {formatNumber(price.toFixed(2))} $BLST
+            {formatNumber(price.toFixed(2))} ${getTranslation("blst")}
             <img
               src="/assets/images/updatePrice.png"
               style={{ height: "20px", marginLeft: "10px" }}
@@ -510,7 +549,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
             sx={{ fontWeight: "bold", fontSize: 16, px: 2 }}
             onClick={() => handleBuyToken()}
           >
-            {formatNumber(price.toFixed(2))} $BLST
+            {formatNumber(price.toFixed(2))} ${getTranslation("blst")}
           </FireBtn>
         )}
       </Box>

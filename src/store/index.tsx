@@ -1,12 +1,10 @@
-import { AnyAction, configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import thunk, { ThunkDispatch } from "redux-thunk";
-import cryptolegionsReducer from "../reducers/cryptolegions.reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+import CryptolegionsReducer from "../reducers";
 
 export const store = configureStore({
-  reducer: {
-    cryptolegions: cryptolegionsReducer,
-  },
+  reducer: CryptolegionsReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

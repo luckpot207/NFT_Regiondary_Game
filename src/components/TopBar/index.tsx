@@ -435,6 +435,7 @@ const TopBar: React.FC = () => {
                       sx={{
                         fontWeight: "bold",
                         background: "#622f11",
+                        color: 'white'
                       }}
                     >
                       <IconButton

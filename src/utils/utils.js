@@ -7,7 +7,7 @@ const replaceTokenName = (text) => {
     var reg = new RegExp(esc, "ig");
     return this.replace(reg, strWith);
   };
-  return text.replaceAll("blst", "BLV3");
+  return text.replaceAll("blst", "CRYPTO");
 };
 
 export const getTranslation = (key, replace) => {

@@ -97,7 +97,7 @@ const SamaritanStars: React.FC = () => {
             <HomeTypo
               title={`${getTranslation("daysLeftToGoAbove3Stars", {
                 "#": daysLeftUntilAbove3Stars,
-              })}:`}
+              })}`}
               info={""}
             />
           </Box>

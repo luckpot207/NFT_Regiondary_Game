@@ -186,52 +186,54 @@ const ClaimToWalletModal: React.FC = () => {
           onClick={handleClose}
         />
       </DialogTitle>
-      {/* {claimedUSD > 0 &&
+      {claimedUSD > 0 &&
         new Date().getTime() >=
-          new Date(lastClaimTime).getTime() + 24 * 60 * 60 * 1000 && ( */}
-      <DialogContent>
-        <Typography mb={1}>
-          {getTranslation("youHaveInYourClaimWallet", {
-            CL1: formatNumber(Number(claimedUSD).toFixed(2)),
-            CL2: formatNumber(Number(claimedBLST).toFixed(2)),
-          })}
-        </Typography>
-        <Typography mb={1}>
-          {getTranslation("howMuchDoYouWantToTransferToYourMetaMaskWallet")}
-        </Typography>
-        <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
-          <ClaimToWalletTextField
-            id="outlined-number"
-            variant="standard"
-            type="number"
-            value={claimToWalletAmount}
-            onChange={handleChangeClaimToWalletAmount}
-            sx={{ padding: "0 !important" }}
-          />
-          <Typography sx={{ fontWeight: "bold" }}>
-            {" "}
-            &nbsp;BUSD&nbsp;&nbsp;&nbsp;
-          </Typography>
-          <MaxCheckBox checked={isMax} onChange={handleIsMax} />
-          <Typography>
-            {getTranslation("max")}{" "}
-            {formatNumber(Number(claimedUSD).toFixed(2))} BUSD{" "}
-          </Typography>
-          <Typography>
-            {" "}
-            &nbsp;&nbsp;&nbsp; (= {formatNumber(
-              Number(claimedBLST).toFixed(2)
-            )}{" "}
-            ${getTranslation("blst")})
-          </Typography>
-        </Stack>
-        <Box sx={{ textAlign: "center" }}>
-          <FireBtn onClick={handleTransferToWallet} loading={transferLoading}>
-            {getTranslation("transfer")}
-          </FireBtn>
-        </Box>
-      </DialogContent>
-      {/* )} */}
+          new Date(lastClaimTime).getTime() + 24 * 60 * 60 * 1000 && (
+          <DialogContent>
+            <Typography mb={1}>
+              {getTranslation("youHaveInYourClaimWallet", {
+                CL1: formatNumber(Number(claimedUSD).toFixed(2)),
+                CL2: formatNumber(Number(claimedBLST).toFixed(2)),
+              })}
+            </Typography>
+            <Typography mb={1}>
+              {getTranslation("howMuchDoYouWantToTransferToYourMetaMaskWallet")}
+            </Typography>
+            <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
+              <ClaimToWalletTextField
+                id="outlined-number"
+                variant="standard"
+                type="number"
+                value={claimToWalletAmount}
+                onChange={handleChangeClaimToWalletAmount}
+                sx={{ padding: "0 !important" }}
+              />
+              <Typography sx={{ fontWeight: "bold" }}>
+                {" "}
+                &nbsp;BUSD&nbsp;&nbsp;&nbsp;
+              </Typography>
+              <MaxCheckBox checked={isMax} onChange={handleIsMax} />
+              <Typography>
+                {getTranslation("max")}{" "}
+                {formatNumber(Number(claimedUSD).toFixed(2))} BUSD{" "}
+              </Typography>
+              <Typography>
+                {" "}
+                &nbsp;&nbsp;&nbsp; (={" "}
+                {formatNumber(Number(claimedBLST).toFixed(2))} $
+                {getTranslation("blst")})
+              </Typography>
+            </Stack>
+            <Box sx={{ textAlign: "center" }}>
+              <FireBtn
+                onClick={handleTransferToWallet}
+                loading={transferLoading}
+              >
+                {getTranslation("transfer")}
+              </FireBtn>
+            </Box>
+          </DialogContent>
+        )}
 
       {claimedUSD > 0 &&
         new Date().getTime() <

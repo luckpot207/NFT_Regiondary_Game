@@ -161,14 +161,16 @@ const LoadingBloodstone: React.FC<Props> = ({ loadingPage }) => {
       </Grid>
       <Grid container sx={{ justifyContent: "center" }}>
         <Grid item xs={1}>
-          <Card>
-            <CardMedia
-              component="img"
-              image="/assets/images/loading.gif"
-              alt="Loading"
-              loading="lazy"
-            />
-          </Card>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `
+                  <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
+                    <source src=${`/assets/images/loading.mp4`} type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                  </video>
+              `,
+            }}
+          />
         </Grid>
       </Grid>
     </>

@@ -24,7 +24,7 @@ const version = {
   },
 };
 
-const gameSiteUrl = "https://play.cryptolegions.app";
+const gameSiteUrl = "https://play.bigcrypto.game";
 const companySiteUrl = "https://cryptogames.agency";
 
 const approveBLSTForBeast = "50000";

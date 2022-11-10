@@ -23,15 +23,15 @@ export const navConfig = {
       element: <Home />,
     },
     {
-      path: "/beasts",
+      path: "/servers",
       element: <Beasts />,
     },
     {
-      path: "/warriors",
+      path: "/devs",
       element: <Warriors />,
     },
     {
-      path: "/legions",
+      path: "/cybers",
       element: <Legions />,
     },
     {
@@ -47,19 +47,19 @@ export const navConfig = {
       element: <UpdateLegion />,
     },
     {
-      path: "/hunt",
+      path: "/mine",
       element: <Hunt />,
     },
     {
-      path: "/warriorsMarketplace",
+      path: "/devsMarketplace",
       element: <WarriorsMarketplace />,
     },
     {
-      path: "/beastsMarketplace",
+      path: "/serversMarketplace",
       element: <BeastsMarketplace />,
     },
     {
-      path: "/legionsMarketplace",
+      path: "/cybersMarketplace",
       element: <LegionsMarketplace />,
     },
     {
@@ -89,25 +89,25 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "warrior.png",
-        path: "/warriors",
+        path: "/devs",
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "beast.png",
-        path: "/beasts",
+        path: "/servers",
       },
       {
         type: "navlink",
         title: "legions",
         icon: "legion.png",
-        path: "/legions",
+        path: "/cybers",
       },
       {
         type: "navlink",
         title: "hunt",
         icon: "hunt.png",
-        path: "/hunt",
+        path: "/mine",
       },
       {
         type: "navlink",
@@ -126,19 +126,19 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "marketWarrior.png",
-        path: "/warriorsMarketplace",
+        path: "/devsMarketplace",
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "marketBeast.png",
-        path: "/beastsMarketplace",
+        path: "/serversMarketplace",
       },
       {
         type: "navlink",
         title: "legions",
         icon: "marketLegion.png",
-        path: "/legionsMarketplace",
+        path: "/cybersMarketplace",
       },
       {
         type: "divider",

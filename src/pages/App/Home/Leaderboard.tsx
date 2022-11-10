@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useWeb3React } from "@web3-react/core";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { ColorHex, CountdownCircleTimer } from "react-countdown-circle-timer";
 import { toast } from "react-toastify";
 import { MdClose } from "react-icons/md";
 import Axios from "axios";
@@ -224,7 +224,12 @@ const Leaderboard: React.FC = () => {
                   <CountdownCircleTimer
                     isPlaying
                     duration={600}
-                    colors={["#f66810", "#e89f38", "#f66810", "#a44916"]}
+                    colors={[
+                      constants.color.color1 as ColorHex,
+                      constants.color.color2 as ColorHex,
+                      constants.color.color1 as ColorHex,
+                      constants.color.color3 as ColorHex,
+                    ]}
                     colorsTime={[7, 5, 2, 0]}
                     onComplete={() => onCompleteCounterDown()}
                     strokeWidth={3}

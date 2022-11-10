@@ -4,13 +4,15 @@ import { useDispatch } from "react-redux";
 import { Box, Checkbox, Dialog, Input, Typography } from "@mui/material";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
+import Axios from "axios";
 
-import { AppSelector } from "../../store";
+import { AppDispatch, AppSelector } from "../../store";
 import {
   claimAndReinvest,
   getAmountsForClaimingAndReinvesting,
   getClaimMaxTaxPercent,
   getClaimMinTaxPercent,
+  getCurrentReinvestPercent,
   getReinvestPercent,
   getReinvestTaxPercent,
   getReinvestTimesInTaxCycle,
@@ -31,9 +33,17 @@ import {
 } from "../../reducers/inventory.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { updateCommonState } from "../../reducers/common.reduer";
+import { legionState } from "../../reducers/legion.reducer";
+import {
+  getVoteByAddress,
+  getVoteStatus,
+  vote,
+  voteState,
+} from "../../reducers/vote.reducer";
+import { apiConfig } from "../../config/api.config";
 
 const ClaimAndReinvestModal: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const {
     currentSamaritanStars,
     unclaimedBLST,
@@ -50,6 +60,7 @@ const ClaimAndReinvestModal: React.FC = () => {
   const unclaimedBLSTFromWei = Number(unclaimedBLST) / 10 ** 18;
 
   const { claimAndReinvestModalOpen } = AppSelector(modalState);
+  const { allLegions } = AppSelector(legionState);
 
   const { account } = useWeb3React();
   const web3 = useWeb3();
@@ -85,7 +96,10 @@ const ClaimAndReinvestModal: React.FC = () => {
     setReinvestUSDAmount("0");
     setReinvestAll(false);
     try {
-      const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(rewardpoolContract, account);
+      const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(
+        rewardpoolContract,
+        account
+      );
       setUnclaimedUSD(unclaimedUSD);
       let amountsForClaiming = await getAmountsForClaimingAndReinvesting(
         web3,
@@ -164,9 +178,47 @@ const ClaimAndReinvestModal: React.FC = () => {
     dispatch(updateModalState({ claimAndReinvestModalOpen: false }));
   };
 
+  const canVote = async () => {
+    const totalAP = allLegions
+      .map((legion) => legion.attackPower)
+      .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+    if (totalAP < 10000) {
+      return false;
+    }
+
+    const timestamp = new Date().getTime() - 3 * 24 * 60 * 60 * 1000;
+    const query = `
+      {
+        user(id: ${`"` + account?.toLowerCase() + `"`}){
+          huntHistory(
+            timestamp_gt: ${timestamp}
+            orderBy: timestamp
+          ) {
+            name
+            legionId
+            timestamp
+          }
+        }
+      }
+      `;
+    let graphRes = await Axios.post(apiConfig.subgraphServer, {
+      query: query,
+    });
+    const data = graphRes.data.data.user.huntHistory;
+    if (data.length == 0) {
+      return false;
+    }
+  };
+
   const handleClaimAndReinvestReward = async (reinvested: boolean) => {
+    const pastReinvestPercent = getCurrentReinvestPercent(
+      rewardpoolContract,
+      account
+    );
     if (Number(claimedUSD) != 0) {
-      toast.error(getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain"));
+      toast.error(
+        getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain")
+      );
       return;
     }
     setClaimAndReinvestLoading(true);
@@ -180,10 +232,40 @@ const ClaimAndReinvestModal: React.FC = () => {
       );
       dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
       dispatch(updateModalState({ claimAndReinvestModalOpen: false }));
+      const currentReinvestPercent = getCurrentReinvestPercent(
+        rewardpoolContract,
+        account
+      );
+      const votePermission = await canVote();
+      if (votePermission) {
+        if (
+          Number(pastReinvestPercent) > 50 &&
+          Number(currentReinvestPercent) <= 50
+        ) {
+          autoVote(false);
+        } else if (
+          Number(pastReinvestPercent) < 65 &&
+          Number(currentReinvestPercent) >= 65
+        ) {
+          autoVote(true);
+        }
+      }
     } catch (error) {
       console.log("handleClaimAndReinvestReward error", error);
     }
     setClaimAndReinvestLoading(false);
+  };
+
+  const autoVote = async (voteRes: boolean) => {
+    dispatch(
+      vote({
+        address: account as string,
+        vote: voteRes as boolean,
+      })
+    ).then(() => {
+      dispatch(getVoteStatus());
+      dispatch(getVoteByAddress({ address: account as string }));
+    });
   };
 
   const handleToReinvestShow = async () => {

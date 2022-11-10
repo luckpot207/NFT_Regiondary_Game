@@ -12,8 +12,6 @@ import "./App.css";
 
 import { injected } from "./wallet";
 
-import text from './constants/cryptolegions-languages-new.json'
-
 const App: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const {
@@ -32,15 +30,6 @@ const App: React.FC = () => {
         }
       })
       .catch(() => setLoaded(true));
-
-    console.log(text)
-    let keys = text.map(item => item.key)
-    let temp: any = {}
-    keys.forEach(key => {
-      let one = text.find(item => item.key === key)
-      temp[key] = one
-    })
-    console.log(JSON.stringify(temp))
   }, []);
 
   const renderApp = () => {

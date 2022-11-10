@@ -50,12 +50,12 @@ const itemNames = {
     20: "Fortress",
   },
   warriors: {
-    1: "Hobbit",
-    2: "Gnome",
-    3: "Satyr",
-    4: "Dwarf",
-    5: "Minotaur",
-    6: "Dragon",
+    1: "Student",
+    2: "Junior",
+    3: "Medior",
+    4: "Senior",
+    5: "Lead",
+    6: "Undercover",
   },
   monsters: {
     1: "Grassland",

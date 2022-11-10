@@ -311,8 +311,8 @@ const TopBar: React.FC = () => {
                     variant="contained"
                     sx={{
                       fontWeight: "bold",
-                      background: "#622f11",
                       ml: 1,
+                      color: "white",
                     }}
                     size="small"
                   >
@@ -435,8 +435,7 @@ const TopBar: React.FC = () => {
                       variant="contained"
                       sx={{
                         fontWeight: "bold",
-                        background: "#622f11",
-                        color: 'white'
+                        color: "white",
                       }}
                     >
                       <IconButton

@@ -25,11 +25,12 @@ import {
   inventoryState,
 } from "../../../reducers/inventory.reducer";
 import { updateModalState } from "../../../reducers/modal.reducer";
+import { legionState } from "../../../reducers/legion.reducer";
 import { getBUSDBalance } from "../../../web3hooks/contractFunctions/busd.contract";
 import { getBloodstoneBalance } from "../../../web3hooks/contractFunctions/blst.contract";
-import { apiConfig } from "../../../config/api.config";
 import ClaimedBUSDAlertAmountModal from "../../../components/Modals/ClaimedBUSDAlertAmount.modal";
 import ClaimedBUSDAlertModal from "../../../components/Modals/ClaimedBUSDAlert.modal";
+import { apiConfig } from "../../../config/api.config";
 
 const Economy: React.FC = () => {
   const comparision24Time = Math.floor(new Date().getTime() / 1000) - 24 * 3600;
@@ -38,6 +39,7 @@ const Economy: React.FC = () => {
 
   const dispatch: AppDispatch = useDispatch();
   const { alreadyVoted, voteExpired } = AppSelector(voteState);
+  const { allLegions } = AppSelector(legionState);
   const { claimedBUSDAlertAmount } = AppSelector(inventoryState);
   const web3 = useWeb3();
   const busdContract = useBUSD();
@@ -82,6 +84,12 @@ const Economy: React.FC = () => {
       );
     }
   }, [claimedBUSDAlertAmount]);
+
+  useEffect(() => {
+    getBalance();
+    realTimeUpdate();
+    getAlertAmount();
+  }, []);
 
   const getLiquidityBUSD = async () => {
     try {
@@ -141,6 +149,40 @@ const Economy: React.FC = () => {
     }
   };
 
+  const canVote = async () => {
+    try {
+      const totalAP = allLegions
+        .map((legion) => legion.attackPower)
+        .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+      if (totalAP < 10000) {
+        return false;
+      }
+      const timestamp = new Date().getTime() - 3 * 24 * 60 * 60 * 1000;
+      const query = `
+      {
+        user(id: ${`"` + account?.toLowerCase() + `"`}){
+          huntHistory(
+            timestamp_gt: ${timestamp}
+            orderBy: timestamp
+          ) {
+            name
+            legionId
+            timestamp
+          }
+        }
+      }
+      `;
+      let graphRes = await Axios.post(apiConfig.subgraphServer, {
+        query: query,
+      });
+      const data = graphRes.data.data.user.huntHistory;
+      if (data.length == 0) {
+        return false;
+      }
+      return true;
+    } catch (error) {}
+  };
+
   const getBeastCtn = async () => {
     try {
       let count = 0;
@@ -167,6 +209,7 @@ const Economy: React.FC = () => {
         }
         count += data.length;
       }
+
       setBeastCtn(count);
     } catch (error) {
       console.log("get economy: ", error);
@@ -406,12 +449,6 @@ const Economy: React.FC = () => {
   const getAlertAmount = async () => {
     dispatch(getClaimedBUSDAlertAmount({ address: account as string }));
   };
-
-  useEffect(() => {
-    getBalance();
-    realTimeUpdate();
-    getAlertAmount();
-  }, []);
 
   const realTimeUpdate = () => {
     setTimeout(() => {

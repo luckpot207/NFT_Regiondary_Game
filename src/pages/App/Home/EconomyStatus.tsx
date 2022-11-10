@@ -17,6 +17,7 @@ import { ILegion } from "../../../types";
 import { apiConfig } from "../../../config/api.config";
 import { updateModalState } from "../../../reducers/modal.reducer";
 import { getTranslation } from "../../../utils/utils";
+import { vote } from "../../../reducers/vote.reducer";
 import VoteModal from "../../../components/Modals/Vote.modal";
 
 const PrettoSlider = styled(Slider)({
@@ -78,9 +79,12 @@ const EconomyStatus: React.FC = () => {
   const { daysLeftUntilAbove3Stars } = AppSelector(inventoryState);
 
   const { account } = useWeb3React();
-  const [playerBehaviourValue, setPlayerBehaviourValue] = useState(100);
+  const [playerBehaviourValue, setPlayerBehaviourValue] = useState<number>(100);
+  const [pastPlayerBehaviourValue, setPastPlayerBehaviourValue] =
+    useState<number>(100);
 
-  const [isHad4Stars, setIsHad4Stars] = useState<boolean>(false);
+  const [huntCondition, setHuntCondition] = useState<boolean>(false);
+  const [hasEnoughAP, setHasEnoughAp] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   const totalAP = allLegions
@@ -106,71 +110,42 @@ const EconomyStatus: React.FC = () => {
 
   const getBalance = async () => {
     try {
+      const totalAP = allLegions
+        .map((legion) => legion.attackPower)
+        .reduce((prev, curr) => Number(prev) + Number(curr), 0);
+      if (totalAP < 10000) {
+        setHasEnoughAp(false);
+      } else {
+        setHasEnoughAp(true);
+      }
+
+      const timestamp = new Date().getTime() - 3 * 24 * 60 * 60 * 1000;
       const query = `
-        {
-          samaritanStarAndTaxCycleChangeLogs (
-            where:{
-              address: ${`"` + account?.toLowerCase() + `"`}
-            }
+      {
+        user(id: ${`"` + account?.toLowerCase() + `"`}){
+          huntHistory(
+            timestamp_gt: ${timestamp}
             orderBy: timestamp
-            orderDirection: desc
           ) {
-            currentSamaritanStars
-            currentReinvestPercent
-            taxStartTime
+            name
+            legionId
             timestamp
           }
         }
+      }
       `;
-      const graphRes = await Axios.post(apiConfig.subgraphServer, { query });
-      console.log(graphRes);
-      const starLogs = graphRes.data.data.samaritanStarAndTaxCycleChangeLogs;
-      if (daysLeftUntilAbove3Stars > 0) {
-        if (starLogs[0].currentReinvestPercent >= 65) setIsHad4Stars(true);
+      let graphRes = await Axios.post(apiConfig.subgraphServer, {
+        query: query,
+      });
+      const data = graphRes.data.data.user.huntHistory;
+      if (data.length == 0) {
+        setHuntCondition(false);
       } else {
-        if (
-          starLogs.filter((log: any) => Number(log.currentSamaritanStars) >= 4)
-            .length > 0
-        ) {
-          setIsHad4Stars(true);
-        } else {
-          if (starLogs[0].currentReinvestPercent >= 65) setIsHad4Stars(true);
-        }
+        setHuntCondition(true);
       }
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleVote = () => {
-    if (!isHad4Stars) {
-      toast.error(
-        "You need to have (or had in the past) at least 4 Samaritan Stars to be able to vote."
-      );
-      return;
-    }
-
-    const totalAP = allLegions
-      .map((legion) => legion.attackPower)
-      .reduce((prev, curr) => Number(prev) + Number(curr), 0);
-    if (totalAP < 40000) {
-      toast.error("You don't have enough total Attack Power!");
-      return;
-    }
-
-    dispatch(
-      updateModalState({
-        voteModalOpen: true,
-      })
-    );
-  };
-
-  const handleReincarnation = (event: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(
-      updateVoteState({
-        allowReincarnation: true,
-      })
-    );
   };
 
   const sentimentMarks = [
@@ -282,6 +257,32 @@ const EconomyStatus: React.FC = () => {
         setPlayerBehaviourValue(99);
       }
     } catch (error) {}
+  };
+
+  const handleVote = () => {
+    if (!huntCondition) {
+      toast.error("You need to hunt 3 days to be able to vote.");
+      return;
+    }
+
+    if (!hasEnoughAP) {
+      toast.error("You don't have enough total Attack Power!");
+      return;
+    }
+
+    dispatch(
+      updateModalState({
+        voteModalOpen: true,
+      })
+    );
+  };
+
+  const handleReincarnation = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(
+      updateVoteState({
+        allowReincarnation: true,
+      })
+    );
   };
 
   return (
@@ -490,7 +491,7 @@ const EconomyStatus: React.FC = () => {
               mb: 1,
             }}
           >
-            {isHad4Stars && totalAP >= 40000 ? (
+            {huntCondition && hasEnoughAP ? (
               <FireBtn
                 sx={{
                   width: "30%",
@@ -533,7 +534,7 @@ const EconomyStatus: React.FC = () => {
                 marginBottom: 2,
               }}
             >
-              {isHad4Stars
+              {huntCondition && hasEnoughAP
                 ? !alreadyVoted
                   ? "You can vote now!"
                   : !voteExpired

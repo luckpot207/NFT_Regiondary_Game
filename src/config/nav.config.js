@@ -47,7 +47,7 @@ export const navConfig = {
       element: <UpdateLegion />,
     },
     {
-      path: "/hunt",
+      path: "/mine",
       element: <Hunt />,
     },
     {
@@ -107,7 +107,7 @@ export const navConfig = {
         type: "navlink",
         title: "hunt",
         icon: "hunt.png",
-        path: "/hunt",
+        path: "/mine",
       },
       {
         type: "navlink",

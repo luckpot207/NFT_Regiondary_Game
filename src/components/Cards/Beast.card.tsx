@@ -155,12 +155,12 @@ const BeastCard: React.FC<Props> = ({ beast, isActionBtns }) => {
           }}
         >
           <img
-            src="/assets/images/sword.png"
+            src="/assets/images/capacity.png"
             style={{
               height: `${isActionBtns ? "20px" : "15px"}`,
               marginRight: "10%",
             }}
-            alt="Sword"
+            alt="capacity"
           />
           <Typography
             sx={{

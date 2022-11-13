@@ -200,12 +200,12 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
             }}
           >
             <img
-              src="/assets/images/sword.png"
+              src="/assets/images/capacity.png"
               style={{
                 marginRight: "10%",
                 height: "20px",
               }}
-              alt="Sword"
+              alt="capacity"
             />
             <Typography
               sx={{

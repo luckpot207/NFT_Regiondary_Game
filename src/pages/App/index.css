@@ -1,13 +1,13 @@
 .fc1 {
-  color: var(--font-color-1);
+  color: var(--color-1);
 }
 
 .fc2 {
-  color: var(--font-color-2);
+  color: var(--color-2);
 }
 
 .fc3 {
-  color: var(--font-color-3);
+  color: var(--color-3);
 }
 
 .fc-gray {
@@ -15,7 +15,7 @@
 }
 
 .fc-gray:hover {
-  color: var(--font-color-1);
+  color: var(--color-1);
   transition: 0.4s all;
 }
 
@@ -137,11 +137,11 @@
 }
 
 .warriorCard:hover {
-  border: 3px solid #f66810;
+  border: 3px solid var(--color-2);;
 }
 
 .beastCard:hover {
-  border: 3px solid #f66810;
+  border: 3px solid var(--color-2);;
 }
 
 .legionCard:hover .executeCheckBox {
@@ -150,9 +150,13 @@
 }
 
 .legionCard:hover {
-  border: 3px solid #f66810;
+  border: 3px solid var(--color-2);;
 }
 
 .executeitem:hover {
   border: none;
+}
+
+.css-1qxadfk-MuiPaper-root-MuiDialog-paper {
+  background-color: '#20253a' !important;
 }

@@ -21,7 +21,7 @@ import FireBtn from "../Buttons/FireBtn";
 import { updatePrediction } from "../../web3hooks/contractFunctions/duel.contract";
 import { getAllDuelsAct } from "../../services/duel.service";
 import { getTranslation } from "../../utils/utils";
-import constant from "../../constants";
+import constants from "../../constants";
 
 const PriceTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -130,7 +130,15 @@ const UpdatePredictionModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={updatePredictionModalOpen.valueOf()} onClose={handleClose}>
+    <Dialog
+      open={updatePredictionModalOpen.valueOf()}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",
@@ -176,9 +184,9 @@ const UpdatePredictionModal: React.FC = () => {
           }}
         >
           <a
-            href={constant.tokenPriceUrl}
+            href={constants.tokenPriceUrl}
             target="_blank"
-            style={{ color: constant.color.color2, textDecoration: "none" }}
+            style={{ color: constants.color.color2, textDecoration: "none" }}
           >
             {getTranslation("checkblstpricenow")}
           </a>

@@ -19,10 +19,8 @@ import { AppSelector } from "../../../store";
 import { formatNumber, getTranslation } from "../../../utils/utils";
 import {
   useBeast,
-  useBloodstone,
   useLegion,
   useWarrior,
-  useWeb3,
 } from "../../../web3hooks/useContract";
 import {
   changeAllLegionExecuteStatus,
@@ -186,7 +184,7 @@ const Legions: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Card className="bg-c5 info-card">
-            <NavLink to="/createlegions" className="td-none">
+            <NavLink to="/createcybers" className="td-none">
               <FireBtn
                 sx={{
                   mb: 2,
@@ -242,7 +240,7 @@ const Legions: React.FC = () => {
             >
               {formatNumber(totalAP)}
             </Typography>
-            <NavLink to="/hunt" className="td-none">
+            <NavLink to="/mine" className="td-none">
               <FireBtn
                 sx={{
                   mb: 2,
@@ -279,7 +277,7 @@ const Legions: React.FC = () => {
                         ? "red"
                         : item.huntStatus
                         ? "green"
-                        : "#e89f38",
+                        : "orange",
                   }}
                 >
                   {formatNumber(item.attackPower)} AP

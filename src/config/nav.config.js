@@ -39,11 +39,11 @@ export const navConfig = {
       element: <Duel />,
     },
     {
-      path: "/createlegions",
+      path: "/createcybers",
       element: <CreateLegion />,
     },
     {
-      path: "/updateLegions/:id",
+      path: "/updatecybers/:id",
       element: <UpdateLegion />,
     },
     {

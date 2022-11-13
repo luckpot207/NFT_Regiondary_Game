@@ -268,7 +268,7 @@ const Hunt: React.FC = () => {
             >
               {getTranslation("noMintedLegion")}
             </Box>
-            <NavLink to="/createlegions" className="td-none">
+            <NavLink to="/createcybers" className="td-none">
               <FireBtn>{getTranslation("createLegion")}</FireBtn>
             </NavLink>
           </Box>

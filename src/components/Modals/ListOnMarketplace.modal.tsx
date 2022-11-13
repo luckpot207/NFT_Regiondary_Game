@@ -37,6 +37,7 @@ import {
 import { sellToken } from "../../web3hooks/contractFunctions/marketplace.contract";
 import { getTranslation } from "../../utils/utils";
 import gameConfig from "../../config/game.config";
+import constants from "../../constants";
 
 const ListOnMarketplaceModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -142,7 +143,15 @@ const ListOnMarketplaceModal: React.FC = () => {
   };
 
   return (
-    <Dialog onClose={handleClose} open={listOnMarketplaceModalOpen}>
+    <Dialog
+      onClose={handleClose}
+      open={listOnMarketplaceModalOpen}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />

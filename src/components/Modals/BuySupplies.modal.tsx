@@ -33,6 +33,7 @@ import {
   setBloodstoneApprove,
 } from "../../web3hooks/contractFunctions/common.contract";
 import { getTranslation } from "../../utils/utils";
+import constants from "../../constants";
 
 const BuySupppliesModal: React.FC = () => {
   // Hook info
@@ -137,7 +138,15 @@ const BuySupppliesModal: React.FC = () => {
   };
 
   return (
-    <Dialog onClose={handleSupplyClose} open={buySuppliesModalOpen}>
+    <Dialog
+      onClose={handleSupplyClose}
+      open={buySuppliesModalOpen}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />

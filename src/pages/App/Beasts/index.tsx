@@ -179,7 +179,7 @@ const Beasts: React.FC = () => {
             >
               {beastBalance}
             </Typography>
-            <NavLink to="/createlegions" className="td-none">
+            <NavLink to="/createcybers" className="td-none">
               <FireBtn
                 sx={{
                   mb: 1,

@@ -249,7 +249,7 @@ const Duel: React.FC = () => {
                 >
                   {getTranslation("youneedtocreatealegionfirsttostartaduel")}
                 </Box>
-                <NavLink to="/createlegions" className="td-none">
+                <NavLink to="/createcybers" className="td-none">
                   <FireBtn>{getTranslation("createLegion")}</FireBtn>
                 </NavLink>
               </Box>

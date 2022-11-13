@@ -199,6 +199,11 @@ const MassHuntModal: React.FC = () => {
         massHuntPending ||
         massHuntFinished
       }
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
     >
       {massHuntPending ? (
         <>

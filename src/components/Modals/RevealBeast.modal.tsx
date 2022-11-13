@@ -8,6 +8,7 @@ import { AppSelector } from "../../store";
 import { getTranslation } from "../../utils/utils";
 import { useBeast } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
+import constants from "../../constants";
 
 const RevealBeastModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,14 @@ const RevealBeastModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={mintBeastPending && !revealBeastLoading}>
+    <Dialog
+      open={mintBeastPending && !revealBeastLoading}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogContent>
         <Box sx={{ textAlign: "center", mb: 2 }}>
           <FireBtn

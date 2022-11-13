@@ -8,6 +8,7 @@ import { useWarrior } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { warriorState } from "../../reducers/warrior.reducer";
 import WarriorService from "../../services/warrior.service";
+import constants from "../../constants";
 
 const RevealWarriorModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,14 @@ const RevealWarriorModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={mintWarriorPending && !revealWarriorLoading}>
+    <Dialog
+      open={mintWarriorPending && !revealWarriorLoading}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogContent>
         <Box sx={{ textAlign: "center", mb: 2 }}>
           <FireBtn

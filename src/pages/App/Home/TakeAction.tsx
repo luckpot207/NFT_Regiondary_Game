@@ -213,7 +213,7 @@ const TakeAction: React.FC = () => {
                     ? getTranslation("revealBeasts")
                     : getTranslation("summonBeasts")}
                 </FireBtn>
-                <NavLink to="/createlegions" className="td-none">
+                <NavLink to="/createcybers" className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -290,7 +290,7 @@ const TakeAction: React.FC = () => {
               sx={{ display: "flex", alignItems: "center" }}
             >
               <Box>
-                <NavLink to="/warriorsMarketplace" className="td-none">
+                <NavLink to="/devsMarketplace" className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -311,7 +311,7 @@ const TakeAction: React.FC = () => {
                     {getTranslation("warriorsMarket")}
                   </FireBtn>
                 </NavLink>
-                <NavLink to="/beastsMarketplace" className="td-none">
+                <NavLink to="/serversMarketplace" className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -332,7 +332,7 @@ const TakeAction: React.FC = () => {
                     {getTranslation("beastsMarket")}
                   </FireBtn>
                 </NavLink>
-                <NavLink to="/legionsMarketplace" className="td-none">
+                <NavLink to="/cybersMarketplace" className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,

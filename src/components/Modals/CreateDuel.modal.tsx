@@ -48,7 +48,7 @@ import {
   confirmUnclaimedWallet,
   getAllDuelsAct,
 } from "../../services/duel.service";
-import constant from "../../constants";
+import constants from "../../constants";
 
 const PriceTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -180,7 +180,7 @@ const CreateDuelModal: React.FC = () => {
         text: getTranslation("allinDuelConfirmMsg"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: constant.color.color2,
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         cancelButtonText: getTranslation("cancel"),
         confirmButtonText: getTranslation("goAllin"),
@@ -251,7 +251,15 @@ const CreateDuelModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={createDuelModalOpen.valueOf()} onClose={handleClose}>
+    <Dialog
+      open={createDuelModalOpen.valueOf()}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",
@@ -295,9 +303,9 @@ const CreateDuelModal: React.FC = () => {
           }}
         >
           <a
-            href={constant.tokenPriceUrl}
+            href={constants.tokenPriceUrl}
             target="_blank"
-            style={{ color: constant.color.color2, textDecoration: "none" }}
+            style={{ color: constants.color.color2, textDecoration: "none" }}
           >
             {getTranslation("seepricechart")}
           </a>

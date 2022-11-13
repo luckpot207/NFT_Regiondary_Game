@@ -208,7 +208,7 @@ const Warriors: React.FC = () => {
             >
               {warriorBalance}
             </Typography>
-            <NavLink to="/createlegions" className="td-none">
+            <NavLink to="/createcybers" className="td-none">
               <FireBtn
                 sx={{
                   mb: 1,

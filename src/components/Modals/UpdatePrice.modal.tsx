@@ -31,6 +31,7 @@ import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { updatePrice } from "../../web3hooks/contractFunctions/marketplace.contract";
 import MarketplaceService from "../../services/marketplace.service";
 import gameConfig from "../../config/game.config";
+import constants from "../../constants";
 
 const UpdatePriceModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -142,7 +143,15 @@ const UpdatePriceModal: React.FC = () => {
   };
 
   return (
-    <Dialog onClose={handleClose} open={updatePriceModalOpen.valueOf()}>
+    <Dialog
+      onClose={handleClose}
+      open={updatePriceModalOpen.valueOf()}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />

@@ -5,10 +5,6 @@ const devLink = apiConfig.devServer;
 const proLink = apiConfig.proServer;
 const serverLink = devLink;
 
-const getAllLanguageTexts = async () => {
-  return Axios.get(`${serverLink}/language/getAllLanguageTexts`);
-};
-
 const getContactInfo = async (wallet: string | undefined) => {
   return Axios.get(`${serverLink}/contact/getContactInfo/${wallet}`);
 };
@@ -27,15 +23,10 @@ const editContactInfo = async (wallet: string, tgname: string) => {
   });
 };
 
-const getAllItemnames = async () => {
-  return Axios.get(`${serverLink}/itemname/getAllItemnames`);
-};
-
 const getPresentItem = async () => {
   return Axios.get(`${serverLink}/presentitem/getPresentItem`);
 };
 
-// Vote
 const vote = async (address: string, vote: boolean) => {
   return Axios.post(`${serverLink}/vote/addVote`, {
     address: address,
@@ -87,10 +78,6 @@ const getReincarnationValueByAddress = async (address: string) => {
   );
 };
 
-const getEconomyStatus = async () => {
-  return Axios.get(`${serverLink}/economy/getEconomyStatus`);
-};
-
 const getLeaderboardInfo = async (address: string) => {
   return Axios.get(`${serverLink}/leaderboard/getLeaderboardInfo/${address}`);
 };
@@ -124,11 +111,9 @@ const setClaimedBUSDAlertAmount = async (address: string, amount: number) => {
 };
 
 const ApiService = {
-  getAllLanguageTexts,
   getContactInfo,
   addContactInfo,
   editContactInfo,
-  getAllItemnames,
   getPresentItem,
   vote,
   getVoteStatus,
@@ -138,7 +123,6 @@ const ApiService = {
   getReincarnation,
   addReincarnationValue,
   getReincarnationValueByAddress,
-  getEconomyStatus,
   getLeaderboardInfo,
   addToLeaderboard,
   removeFromLeaderboard,

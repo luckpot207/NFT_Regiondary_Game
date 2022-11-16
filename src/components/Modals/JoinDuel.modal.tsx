@@ -43,7 +43,7 @@ import {
   joinDuel,
 } from "../../web3hooks/contractFunctions/duel.contract";
 import { getTranslation } from "../../utils/utils";
-import constant from "../../constants";
+import constants from "../../constants";
 
 const LegionSelectInput = styled(InputBase)(({ theme }) => ({
   ".MuiSelect-select": {
@@ -262,7 +262,15 @@ const JoinDuelModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={joinDuelModalOpen.valueOf()} onClose={handleClose}>
+    <Dialog
+      open={joinDuelModalOpen.valueOf()}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",
@@ -309,9 +317,9 @@ const JoinDuelModal: React.FC = () => {
           }}
         >
           <a
-            href={constant.tokenPriceUrl}
+            href={constants.tokenPriceUrl}
             target="_blank"
-            style={{ color: constant.color.color2, textDecoration: "none" }}
+            style={{ color: constants.color.color2, textDecoration: "none" }}
           >
             {getTranslation("seepricechart")}
           </a>

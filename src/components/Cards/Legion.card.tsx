@@ -28,13 +28,7 @@ import {
   getTranslation,
   getWarriorStrength,
 } from "../../utils/utils";
-import {
-  useBeast,
-  useBloodstone,
-  useLegion,
-  useWarrior,
-  useWeb3,
-} from "../../web3hooks/useContract";
+import { useLegion } from "../../web3hooks/useContract";
 import { ILegion } from "../../types";
 import { commonState } from "../../reducers/common.reduer";
 import { updateModalState } from "../../reducers/modal.reducer";
@@ -59,21 +53,13 @@ type Props = {
 const oneDay = 24 * 2600 * 1000;
 
 const LegionCard: React.FC<Props> = ({ legion, index }) => {
-  // Hook info
   const dispatch = useDispatch();
   const { showAnimation } = AppSelector(commonState);
 
-  // Account & Web3
   const { account } = useWeb3React();
-  const web3 = useWeb3();
 
-  // Contracts
-  const beastContract = useBeast();
-  const warriorContract = useWarrior();
   const legionContract = useLegion();
-  const bloodstoneContract = useBloodstone();
 
-  // States
   const {
     id,
     attackPower,
@@ -527,7 +513,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
           cursor: "pointer",
         }}
       >
-        <NavLink to={`/updateLegions/${legion.id}`} className="td-none">
+        <NavLink to={`/updatecybers/${legion.id}`} className="td-none">
           <IconButton aria-label="claim" component="span" sx={{ padding: 0 }}>
             <CachedIcon />
           </IconButton>

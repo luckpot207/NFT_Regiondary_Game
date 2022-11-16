@@ -34,7 +34,15 @@ const ClaimedBUSDAlertModal: React.FC = () => {
 
   //
   return (
-    <Dialog open={claimedBUSDAlertModalOpen} onClose={handleClose}>
+    <Dialog
+      open={claimedBUSDAlertModalOpen}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",

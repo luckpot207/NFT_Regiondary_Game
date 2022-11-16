@@ -102,7 +102,7 @@ const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
       itemList.push(
         <img
           key={i}
-          src="/assets/images/bloodstoneGrey.png"
+          src="/assets/images/strength.png"
           style={{ height: isActionBtns ? "30px" : "10px" }}
           alt="icon"
         />

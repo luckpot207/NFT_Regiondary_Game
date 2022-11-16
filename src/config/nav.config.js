@@ -39,11 +39,11 @@ export const navConfig = {
       element: <Duel />,
     },
     {
-      path: "/createlegions",
+      path: "/createcybers",
       element: <CreateLegion />,
     },
     {
-      path: "/updateLegions/:id",
+      path: "/updatecybers/:id",
       element: <UpdateLegion />,
     },
     {
@@ -112,7 +112,7 @@ export const navConfig = {
       {
         type: "navlink",
         title: "duels",
-        icon: "legion.png",
+        icon: "duels.png",
         path: "/duels",
       },
       {
@@ -186,7 +186,7 @@ export const navConfig = {
       {
         type: "navlink",
         title: "referrals",
-        icon: "support.png",
+        icon: "refer.png",
         path: "/referrals",
       },
       {

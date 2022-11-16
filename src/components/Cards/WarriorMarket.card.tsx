@@ -145,7 +145,7 @@ const WarriorMarketCard: React.FC<Props> = ({ warrior }) => {
       itemList.push(
         <img
           key={i}
-          src="/assets/images/bloodstoneGrey.png"
+          src="/assets/images/strength.png"
           style={{ height: "30px" }}
           alt="icon"
         />

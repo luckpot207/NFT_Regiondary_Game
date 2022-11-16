@@ -20,6 +20,7 @@ import {
   setClaimedBUSDAlertAmount,
 } from "../../reducers/inventory.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import constants from "../../constants";
 
 const PriceTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -79,7 +80,15 @@ const ClaimedBUSDAlertAmountModal: React.FC = () => {
 
   //
   return (
-    <Dialog open={claimedBUSDAlertAmountModalOpen} onClose={handleClose}>
+    <Dialog
+      open={claimedBUSDAlertAmountModalOpen}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",

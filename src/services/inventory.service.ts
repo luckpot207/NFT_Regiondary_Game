@@ -31,6 +31,7 @@ import {
   getVoucherWalletUSDBalance,
   getClaimedUSD,
 } from "../web3hooks/contractFunctions/rewardpool.contract";
+import gameConfig from "../config/game.config";
 
 const getInventory = async (
   dispatch: AppDispatch,
@@ -183,17 +184,20 @@ const getSamaritanInfo = async (
       account
     );
     const firstHuntTime = await getFirstHuntTime(rewardpoolContract, account);
+    const {version : gameVersion} = gameConfig
+    const {version} = gameVersion
+    const oneDay = version === 'main' ? 1000 *24 * 3600 : 1000 * 120
     const daysLeftUntilAbove3Stars =
       firstHuntTime == 0
         ? 30
         : 30 -
             Math.ceil(
-              (new Date().getTime() - firstHuntTime * 1000) / (1000 * 120)
+              (new Date().getTime() - firstHuntTime * 1000) / oneDay
             ) >
           0
         ? 30 -
           Math.ceil(
-            (new Date().getTime() - firstHuntTime * 1000) / (1000 * 120)
+            (new Date().getTime() - firstHuntTime * 1000) / oneDay
           )
         : 0;
     dispatch(

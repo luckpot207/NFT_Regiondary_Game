@@ -19,11 +19,18 @@ import FireBtn from "../Buttons/FireBtn";
 import { inventoryState } from "../../reducers/inventory.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { formatNumber, getTranslation } from "../../utils/utils";
-import { useRewardPool, useWeb3 } from "../../web3hooks/useContract";
+import {
+  useBloodstone,
+  useFeeHandler,
+  useRewardPool,
+  useWeb3,
+} from "../../web3hooks/useContract";
 import {
   claimToWallet,
   lastClaimedTime,
 } from "../../web3hooks/contractFunctions/rewardpool.contract";
+import constants from "../../constants";
+import InventoryService from "../../services/inventory.service";
 
 const ClaimToWalletTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -53,6 +60,9 @@ const ClaimToWalletModal: React.FC = () => {
   const { account } = useWeb3React();
   const web3 = useWeb3();
   const rewardpoolContract = useRewardPool();
+  const bloodstoneContract = useBloodstone();
+  const feehandlerContract = useFeeHandler();
+
   const [claimToWalletAmount, setClaimToWalletAmount] = useState<number>(0);
   const [maxAmount, setMaxAmount] = useState<number>(0);
   const [isMax, setIsMax] = useState<boolean>(false);
@@ -132,6 +142,14 @@ const ClaimToWalletModal: React.FC = () => {
       );
       setTransferLoading(false);
       toast.success(getTranslation("successfullyTransfered"));
+      InventoryService.getWalletAndUnclaimedBalance(
+        dispatch,
+        web3,
+        account,
+        bloodstoneContract,
+        rewardpoolContract,
+        feehandlerContract
+      );
       handleClose();
       getLastClaimedTime();
     } catch (e) {
@@ -168,7 +186,15 @@ const ClaimToWalletModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={claimToWalletModalOpen} onClose={handleClose}>
+    <Dialog
+      open={claimToWalletModalOpen}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle
         sx={{
           display: "flex",

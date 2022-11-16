@@ -19,6 +19,7 @@ import {
   getContactInfo,
 } from "../../reducers/common.reduer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import constants from "../../constants";
 
 const ReferralTGModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -75,7 +76,15 @@ const ReferralTGModal: React.FC = () => {
   }, [contactInfo]);
 
   return (
-    <Dialog onClose={handleClose} open={referralTGModalOpen}>
+    <Dialog
+      onClose={handleClose}
+      open={referralTGModalOpen}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ display: "flex", p: 2 }}>
         <FaTimes
           style={{ marginLeft: "auto", cursor: "pointer" }}

@@ -45,12 +45,6 @@ const CreateSelectBox: React.FC = () => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Account & Web3
-
-  // Contracts
-
-  // State
-
   const capacityFilterVal =
     beastFilterCapacity === 0
       ? allBeasts

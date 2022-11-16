@@ -115,7 +115,15 @@ const ReincarnationModal: React.FC = () => {
   };
 
   return (
-    <Dialog open={reincarnationModalOpen.valueOf()} onClose={handleClose}>
+    <Dialog
+      open={reincarnationModalOpen.valueOf()}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />

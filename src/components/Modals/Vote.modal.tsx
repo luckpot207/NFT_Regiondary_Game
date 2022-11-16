@@ -23,6 +23,7 @@ import {
   voteState,
 } from "../../reducers/vote.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import constants from "../../constants";
 
 const VoteModal: React.FC = () => {
   let clockTimer: any = 0;
@@ -100,7 +101,15 @@ const VoteModal: React.FC = () => {
 
   //
   return (
-    <Dialog open={voteModalOpen} onClose={handleClose}>
+    <Dialog
+      open={voteModalOpen}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <DialogTitle sx={{ position: "relative" }}>
         <Box>
           <Typography

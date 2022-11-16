@@ -147,6 +147,7 @@ const color = {
   bg4: "#16161699",
   bg5: "#161616cc",
   bg6: "linear-gradient(360deg, #174f95, #ffffff29),radial-gradient(#12273c, #75a3c5)",
+  popupBGColor: "#20253a",
 };
 
 const alarmAudio = "assets/audio/busdclaimedalarm.mp3";

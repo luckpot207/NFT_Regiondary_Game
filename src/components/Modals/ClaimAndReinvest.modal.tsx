@@ -41,6 +41,7 @@ import {
   voteState,
 } from "../../reducers/vote.reducer";
 import { apiConfig } from "../../config/api.config";
+import constants from "../../constants";
 
 const ClaimAndReinvestModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -391,7 +392,15 @@ const ClaimAndReinvestModal: React.FC = () => {
   }, [reinvestUSDAmount, reinvestAll, unclaimedUSD]);
 
   return (
-    <Dialog onClose={handleClose} open={claimAndReinvestModalOpen}>
+    <Dialog
+      onClose={handleClose}
+      open={claimAndReinvestModalOpen}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       {showOrder !== -2 && (
         <Box sx={{ p: 2, display: "flex" }}>
           <MdClose

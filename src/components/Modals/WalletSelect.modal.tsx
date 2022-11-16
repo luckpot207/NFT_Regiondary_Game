@@ -16,6 +16,7 @@ import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { updateCommonState } from "../../reducers/common.reduer";
 import { getVoucherWalletUSDBalance } from "../../web3hooks/contractFunctions/rewardpool.contract";
 import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
+import constants from "../../constants";
 
 type Props = {
   handleSelectWallet: Function;
@@ -70,7 +71,15 @@ const WalletSelectModal: React.FC<Props> = ({ handleSelectWallet }) => {
   }, []);
 
   return (
-    <Dialog open={walletSelectModalOpen.valueOf()} onClose={handleClose}>
+    <Dialog
+      open={walletSelectModalOpen.valueOf()}
+      onClose={handleClose}
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
+    >
       <Box sx={{ position: "relative", textAlign: "center", px: 2 }}>
         {/* <Box sx={{ p: 1, visibility: "hidden" }}>
           <FaTimes />

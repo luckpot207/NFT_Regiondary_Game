@@ -148,7 +148,7 @@ const CreateLegionBox: React.FC = () => {
         walletNumber
       );
       toast.success(getTranslation("summonLegionSuccessful"));
-      navigate("/legions");
+      navigate("/cybers");
     } catch (error) {}
     dispatch(updateLegionState({ createLegionLoading: false }));
   };

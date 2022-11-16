@@ -200,6 +200,11 @@ const HuntModal: React.FC = () => {
         huntPending.valueOf() ||
         huntFinished
       }
+      PaperProps={{
+        style: {
+          backgroundColor: constants.color.popupBGColor,
+        },
+      }}
     >
       {huntFinished ? (
         huntResult["success"] ? (

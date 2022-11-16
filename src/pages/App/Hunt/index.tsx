@@ -383,7 +383,7 @@ const Hunt: React.FC = () => {
               </FireBtn>
             </Grid>
             <Grid item xs={40} sm={40} md={10}>
-              <NavLink to="/hunthistory" className="td-none">
+              <NavLink to="/minehistory" className="td-none">
                 <Typography
                   variant="h5"
                   sx={{

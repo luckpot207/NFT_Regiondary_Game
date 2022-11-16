@@ -378,7 +378,7 @@ const ReferPage: React.FC = () => {
             marginBottom: 1,
           }}
         >
-          Your referral link:
+          {getTranslation("yourReferralLink")}:
         </Typography>
         {isShowReferralLink ? (
           <>
@@ -435,7 +435,7 @@ const ReferPage: React.FC = () => {
           {getTranslation("earn1PercentSecondTierCommission")}
         </Typography>
         <Typography className="fc1" fontWeight={"bold"}>
-          You have earned:{" "}
+          {getTranslation("youHaveEarned")}:{" "}
           <span className="fc2">
             {formatNumber(
               (Number(layer1Comission) + Number(layer2Comission)).toFixed(2)
@@ -444,20 +444,16 @@ const ReferPage: React.FC = () => {
           </span>
         </Typography>
         <Typography className="fc1" fontWeight={"bold"}>
-          You earned{" "}
-          <span className="fc2">
-            {formatNumber(Number(layer1Comission).toFixed(2))} BUSD
-          </span>{" "}
-          from <span className="fc2">{Number(layer1Count)} players</span> you
-          referred
+          {getTranslation("youEarnedBUSDFromFirstReferred", {
+            CL1: formatNumber(Number(layer1Comission).toFixed(2)),
+            CL2: Number(layer1Count),
+          })}
         </Typography>
         <Typography className="fc1" fontWeight={"bold"}>
-          You earned{" "}
-          <span className="fc2">
-            {formatNumber(Number(layer2Comission).toFixed(2))} BUSD
-          </span>{" "}
-          from <span className="fc2">{Number(layer2Count)} players</span> you
-          referred by players you referred
+          {getTranslation("youEarnedBUSDFromSecondReferred", {
+            CL1: formatNumber(Number(layer2Comission).toFixed(2)),
+            CL2: Number(layer2Count),
+          })}
         </Typography>
         <HomeTypo
           title={`${getTranslation("thanksMessage")}:`}

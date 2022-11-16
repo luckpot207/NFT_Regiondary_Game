@@ -67,7 +67,7 @@ export const navConfig = {
       element: <Help />,
     },
     {
-      path: "/hunthistory",
+      path: "/minehistory",
       element: <HuntHistory />,
     },
     {

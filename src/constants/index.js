@@ -2,34 +2,34 @@ const navlink = {
   toSocial: [
     {
       type: "Discord",
-      link: "https://www.cryptolegions.app/d",
+      link: "https://www.bigcrypto.game/d",
     },
     {
       type: "Telegram",
-      link: "https://www.cryptolegions.app/t",
+      link: "https://www.bigcrypto.game/t",
     },
     {
       type: "Twitter",
-      link: "https://www.cryptolegions.app/tw",
+      link: "https://www.bigcrypto.game/tw",
     },
     {
       type: "Youtube",
-      link: "https://www.cryptolegions.app/y",
+      link: "https://www.bigcrypto.game/y",
     },
     {
       type: "Medium",
-      link: "https://www.cryptolegions.app/m",
+      link: "https://www.bigcrypto.game/m",
     },
     {
       type: "ShowAnimation",
       link: "",
     },
   ],
-  discord: "https://www.cryptolegions.app/d",
-  telegram: "https://www.cryptolegions.app/t",
-  twitter: "https://www.cryptolegions.app/tw",
-  youtube: "https://www.cryptolegions.app/y",
-  medium: "https://www.cryptolegions.app/m",
+  discord: "https://www.bigcrypto.game/d",
+  telegram: "https://www.bigcrypto.game/t",
+  twitter: "https://www.bigcrypto.game/tw",
+  youtube: "https://www.bigcrypto.game/y",
+  medium: "https://www.bigcrypto.game/m",
   pancake:
     "https://pancakeswap.finance/swap?outputCurrency=0x63441E5C9F55B5A9141f3D834a28426Ca1c5C5cC&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
   dextool:
@@ -60,8 +60,8 @@ const itemNames = {
   monsters: {
     1: "Grassland",
     2: "River",
-    3: "rhinark",
-    4: "Wind",
+    3: "Wind",
+    4: "Wetlands",
     5: "Mountain",
     6: "Ice",
     7: "Eclipse",
@@ -75,8 +75,8 @@ const itemNames = {
     15: "Shiba Inu",
     16: "Polygon",
     17: "Polkadot",
-    18: "titan",
-    19: "Solana",
+    18: "Solana",
+    19: "Dogecoin",
     20: "Cardano",
     21: "XRP",
     22: "Binance",

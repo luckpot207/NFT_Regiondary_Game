@@ -58,6 +58,7 @@ const VoteModal: React.FC = () => {
       vote({
         address: account as string,
         vote: status as boolean,
+        is_auto: false,
       })
     ).then(() => {
       dispatch(getVoteStatus());

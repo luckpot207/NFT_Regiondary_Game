@@ -82,12 +82,17 @@ const getWalletAndUnclaimedBalance = async (
       bloodstoneContract,
       account
     );
+    console.log("blst balance:", BLSTBalance);
     const BUSDForTotalBLST = await getUSDAmount(
       web3,
       feehandlerContract,
       BLSTBalance
     );
-    const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(rewardpoolContract, account);
+    console.log("blst usd:", BUSDForTotalBLST);
+    const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(
+      rewardpoolContract,
+      account
+    );
     const claimedUSD = await getClaimedUSD(rewardpoolContract, account);
     const claimedBLST = await getBLSTAmount(
       web3,

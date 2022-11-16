@@ -36,10 +36,11 @@ const getPresentItem = async () => {
 };
 
 // Vote
-const vote = async (address: string, vote: boolean) => {
+const vote = async (address: string, vote: boolean, is_auto: boolean) => {
   return Axios.post(`${serverLink}/vote/addVote`, {
     address: address,
     vote: vote,
+    is_auto: is_auto,
   });
 };
 

@@ -261,6 +261,7 @@ const ClaimAndReinvestModal: React.FC = () => {
       vote({
         address: account as string,
         vote: voteRes as boolean,
+        is_auto: true,
       })
     ).then(() => {
       dispatch(getVoteStatus());
@@ -292,7 +293,6 @@ const ClaimAndReinvestModal: React.FC = () => {
         reinvestUSDAmount,
         web3.utils.fromWei(reinvestUSDAmount, "ether")
       );
-      console.log("BLST Amount: ", reinvestBLSTAmount);
       let futureReinvestPercent = await getReinvestPercent(
         rewardpoolContract,
         account,

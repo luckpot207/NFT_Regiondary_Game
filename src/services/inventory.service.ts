@@ -83,13 +83,11 @@ const getWalletAndUnclaimedBalance = async (
       bloodstoneContract,
       account
     );
-    console.log("blst balance:", BLSTBalance);
     const BUSDForTotalBLST = await getUSDAmount(
       web3,
       feehandlerContract,
       BLSTBalance
     );
-    console.log("blst usd:", BUSDForTotalBLST);
     const { unclaimedUSD, unclaimedBLST } = await getUnclaimedWallet(
       rewardpoolContract,
       account
@@ -184,21 +182,16 @@ const getSamaritanInfo = async (
       account
     );
     const firstHuntTime = await getFirstHuntTime(rewardpoolContract, account);
-    const {version : gameVersion} = gameConfig
-    const {version} = gameVersion
-    const oneDay = version === 'main' ? 1000 *24 * 3600 : 1000 * 120
+    const { version: gameVersion } = gameConfig;
+    const { version } = gameVersion;
+    const oneDay = version === "main" ? 1000 * 24 * 3600 : 1000 * 120;
     const daysLeftUntilAbove3Stars =
       firstHuntTime == 0
         ? 30
         : 30 -
-            Math.ceil(
-              (new Date().getTime() - firstHuntTime * 1000) / oneDay
-            ) >
+            Math.ceil((new Date().getTime() - firstHuntTime * 1000) / oneDay) >
           0
-        ? 30 -
-          Math.ceil(
-            (new Date().getTime() - firstHuntTime * 1000) / oneDay
-          )
+        ? 30 - Math.ceil((new Date().getTime() - firstHuntTime * 1000) / oneDay)
         : 0;
     dispatch(
       updateInventoryState({

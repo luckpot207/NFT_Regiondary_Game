@@ -70,6 +70,7 @@ export const getAllDuelsAct = async (
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + 6 * 3600 * 1000
         ).toISOString();
+        console.log(endDateTime);
       } else if (allDuelsRes[i].status == 2) {
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000

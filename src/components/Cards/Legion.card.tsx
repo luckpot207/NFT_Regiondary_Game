@@ -409,8 +409,9 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
               "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
           }}
         >
-          W {warriorIds.length} / {totalCapacity}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B {beastIds.length}
+          {gameConfig.symbols.warrior} {warriorIds.length} / {totalCapacity}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{gameConfig.symbols.beast}{" "}
+          {beastIds.length}
         </Typography>
         <Box
           sx={{
@@ -463,7 +464,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
               "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
           }}
         >
-          {formatNumber(attackPower)} AP
+          {formatNumber(attackPower)} {gameConfig.symbols.attackPower}
         </Typography>
       </Box>
       {attackPower >= 2000 && (

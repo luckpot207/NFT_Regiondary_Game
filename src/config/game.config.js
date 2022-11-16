@@ -37,6 +37,12 @@ const nftItemType = {
   legion: 3,
 };
 
+const symbols = {
+  warrior: "D",
+  beast: "S",
+  attackPower: "CP",
+};
+
 const languages = [
   {
     title: "en",
@@ -145,4 +151,5 @@ export default {
   gameStartDay,
   maxSellPrice,
   nftItemType,
+  symbols,
 };

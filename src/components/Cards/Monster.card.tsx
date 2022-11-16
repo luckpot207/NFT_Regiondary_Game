@@ -158,7 +158,7 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
       >
         <Grid item xs={12}>
           <Typography variant="h4" sx={{ fontWeight: "bold", color: "white" }}>
-            #{monsterID} {monsterID === 25 ? name : toCapitalize(name)}
+            #{monsterID} {name}
           </Typography>
         </Grid>
         <Grid container spacing={2} sx={{ justifyContent: "space-around" }}>

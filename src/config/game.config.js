@@ -37,6 +37,7 @@ const approveBLSTForBeast = "50000";
 const approveBUSDForLegion = "1400";
 const gameStartDay = "2022-09-27T00:00:00.000";
 const maxSellPrice = 5000000;
+const maxEstimatePrice = 10000;
 const nftItemType = {
   beast: 1,
   warrior: 2,
@@ -156,6 +157,7 @@ export default {
   approveBUSDForLegion,
   gameStartDay,
   maxSellPrice,
+  maxEstimatePrice,
   nftItemType,
   symbols,
 };

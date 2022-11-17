@@ -4,6 +4,7 @@ import { AppDispatch, store } from "../store";
 import { getAllDuels } from "../web3hooks/contractFunctions/duel.contract";
 import { getLegion } from "../web3hooks/contractFunctions/legion.contract";
 import { IDuel, ILegion } from "../types";
+import gameConfig from "../config/game.config";
 
 export const getAllDuelsAct = async (
   dispatch: AppDispatch,
@@ -68,16 +69,28 @@ export const getAllDuelsAct = async (
       var endDateTime: String = "";
       if (allDuelsRes[i].status == 1) {
         endDateTime = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 + 6 * 3600 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 +
+            gameConfig.version.version ===
+          "main"
+            ? 6 * 3600 * 1000
+            : 600 * 1000
         ).toISOString();
         console.log(endDateTime);
       } else if (allDuelsRes[i].status == 2) {
         endDateTime = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 +
+            gameConfig.version.version ===
+          "main"
+            ? 24 * 3600 * 1000
+            : 120 * 1000
         ).toISOString();
       } else {
         const endDateTimeTemp = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 + 24 * 3600 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 +
+            gameConfig.version.version ===
+          "main"
+            ? 24 * 3600 * 1000
+            : 1200 * 1000
         );
         endDateTime =
           endDateTimeTemp.toDateString() +

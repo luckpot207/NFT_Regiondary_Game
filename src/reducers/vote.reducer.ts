@@ -38,8 +38,16 @@ export const getVoteByAddress = createAsyncThunk(
 
 export const vote = createAsyncThunk(
   "vote/addVote",
-  async ({ address, vote }: { address: string; vote: boolean }) => {
-    const { data } = await ApiService.vote(address, vote);
+  async ({
+    address,
+    vote,
+    is_auto,
+  }: {
+    address: string;
+    vote: boolean;
+    is_auto: boolean;
+  }) => {
+    const { data } = await ApiService.vote(address, vote, is_auto);
     return data;
   }
 );

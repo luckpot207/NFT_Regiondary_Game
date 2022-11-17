@@ -86,13 +86,17 @@ const UpdateSelectBox: React.FC = () => {
               variant={showType === 1 ? "contained" : "outlined"}
               onClick={() => setShowType(1)}
             >
-              {isSmallerThanSM ? "W" : getTranslation("warriors")}
+              {isSmallerThanSM
+                ? gameConfig.symbols.warrior
+                : getTranslation("warriors")}
             </Button>
             <Button
               variant={showType === 0 ? "contained" : "outlined"}
               onClick={() => setShowType(0)}
             >
-              {isSmallerThanSM ? "B" : getTranslation("beasts")}
+              {isSmallerThanSM
+                ? gameConfig.symbols.beast
+                : getTranslation("beasts")}
             </Button>
           </ButtonGroup>
         </Box>

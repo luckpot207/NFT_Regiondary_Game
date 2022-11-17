@@ -24,6 +24,7 @@ import BeastService from "../../services/beast.service";
 import { updateModalState } from "../../reducers/modal.reducer";
 import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
 import gameConfig from "../../config/game.config";
+import constants from "../../constants";
 
 type Props = {
   beast: IBeast;
@@ -58,7 +59,7 @@ const BeastCard: React.FC<Props> = ({ beast, isActionBtns }) => {
         text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#f66810",
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         confirmButtonText: getTranslation("execute"),
         background: "#111",

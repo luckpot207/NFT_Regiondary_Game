@@ -343,8 +343,7 @@ const EconomyStatus: React.FC = () => {
             >
               <Typography>{getTranslation("claiming")}</Typography>
               <Typography>
-                {getTranslation("reinvesting")}
-                {getTranslation("holding")}
+                {getTranslation("reinvesting")}/{getTranslation("holding")}
               </Typography>
             </Stack>
           </Box>

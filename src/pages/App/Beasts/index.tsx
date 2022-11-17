@@ -30,6 +30,7 @@ import {
 } from "../../../reducers/common.reduer";
 import { formatNumber, getTranslation } from "../../../utils/utils";
 import { IBeast } from "../../../types";
+import constants from "../../../constants";
 
 const Beasts: React.FC = () => {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ const Beasts: React.FC = () => {
         text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#f66810",
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         confirmButtonText: getTranslation("massExecute"),
         background: "#111",

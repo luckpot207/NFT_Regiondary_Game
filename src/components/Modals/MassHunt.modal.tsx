@@ -37,6 +37,7 @@ import HuntService from "../../services/hunt.service";
 import LegionService from "../../services/legion.service";
 import constants from "../../constants";
 import { IMonsterId } from "../../types/monster.type";
+import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
 
 const useStyles = makeStyles(() => ({
   MassHuntItemLose: {
@@ -74,6 +75,7 @@ const MassHuntModal: React.FC = () => {
 
   const legionContract = useLegion();
   const busdContract = useBUSD();
+  const feehandlerContract = useFeeHandler();
 
   const [massHuntFinished, setMassHuntFinished] = useState(false);
   const classes = useStyles();
@@ -119,13 +121,18 @@ const MassHuntModal: React.FC = () => {
         let huntResult = await revealMassHunt(legionContract, account);
         const events = huntResult.events["Hunted"];
         if (events.length) {
-          events.forEach((event: any) => {
+          events.forEach(async (event: any) => {
             if (
               account == event.returnValues.addr &&
               massHuntResult.filter(
                 (item: any) => item.legionId == event.returnValues.legionId
               ).length == 0
             ) {
+              const blstReward = await getBLSTAmount(
+                web3,
+                feehandlerContract,
+                web3.utils.fromWei(event.returnValues.reward, "ether")
+              );
               let huntResult = {
                 legionId: event.returnValues.legionId,
                 monsterId: event.returnValues.monsterId,
@@ -135,6 +142,7 @@ const MassHuntModal: React.FC = () => {
                 reward: (event.returnValues.reward / Math.pow(10, 18)).toFixed(
                   2
                 ),
+                blstReward: Number(blstReward).toFixed(2),
               };
               dispatch(setMassHuntResult(huntResult));
             }
@@ -146,6 +154,11 @@ const MassHuntModal: React.FC = () => {
               (item: any) => item.legionId == events.returnValues.legionId
             ).length == 0
           ) {
+            const blstReward = await getBLSTAmount(
+              web3,
+              feehandlerContract,
+              web3.utils.fromWei(events.returnValues.reward, "ether")
+            );
             let huntResult = {
               legionId: events.returnValues.legionId,
               monsterId: events.returnValues.monsterId,
@@ -155,6 +168,7 @@ const MassHuntModal: React.FC = () => {
               reward: (events.returnValues.reward / Math.pow(10, 18)).toFixed(
                 2
               ),
+              blstReward: Number(blstReward).toFixed(2),
             };
             dispatch(setMassHuntResult(huntResult));
           }
@@ -339,10 +353,14 @@ const MassHuntModal: React.FC = () => {
                   <Box sx={{ p: 1, fontSize: 12, fontWeight: "bold" }}>
                     {item.success ? (
                       <span>
-                        {getTranslation("won")} {item.reward} $BUSD
+                        {getTranslation("won")} {item.blstReward} $
+                        {getTranslation("blst")}
                       </span>
                     ) : (
-                      <span>{getTranslation("lost")}</span>
+                      <span>
+                        {getTranslation("lost")} {item.blstReward} $
+                        {getTranslation("blst")}
+                      </span>
                     )}
                   </Box>
                 </Box>

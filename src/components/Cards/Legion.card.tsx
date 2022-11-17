@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import Swal from "sweetalert2";
 import Axios from "axios";
 
 import { AppSelector } from "../../store";
@@ -183,7 +184,32 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
   };
 
   const handleExecuteLegion = () => {
-    LegionService.handleExecuteLegions(dispatch, account, legionContract, [id]);
+    if (attackPower > 2000) {
+      Swal.fire({
+        title: getTranslation("warning"),
+        text: getTranslation("executeLegionWarning"),
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: constants.color.color2,
+        cancelButtonColor: "#d33",
+        confirmButtonText: getTranslation("execute"),
+        background: "#111",
+        color: "white",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          LegionService.handleExecuteLegions(
+            dispatch,
+            account,
+            legionContract,
+            [id]
+          );
+        }
+      });
+    } else {
+      LegionService.handleExecuteLegions(dispatch, account, legionContract, [
+        id,
+      ]);
+    }
   };
 
   const handleToMarketplace = () => {
@@ -383,8 +409,9 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
               "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
           }}
         >
-          W {warriorIds.length} / {totalCapacity}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B {beastIds.length}
+          {gameConfig.symbols.warrior} {warriorIds.length} / {totalCapacity}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{gameConfig.symbols.beast}{" "}
+          {beastIds.length}
         </Typography>
         <Box
           sx={{
@@ -437,7 +464,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
               "-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000",
           }}
         >
-          {formatNumber(attackPower)} AP
+          {formatNumber(attackPower)} {gameConfig.symbols.attackPower}
         </Typography>
       </Box>
       {attackPower >= 2000 && (
@@ -459,7 +486,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
             />
           ) : (
             <Tooltip
-              title="Wait 24 hours after hunting to sell your legion"
+              title={getTranslation("wait24hoursAfterHuntingToSell")}
               placement="left"
             >
               <img

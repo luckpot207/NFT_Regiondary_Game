@@ -34,6 +34,7 @@ import { ILegion } from "../../../types";
 import BeastService from "../../../services/beast.service";
 import WarriorService from "../../../services/warrior.service";
 import LegionService from "../../../services/legion.service";
+import constants from "../../../constants";
 
 const Legions: React.FC = () => {
   const dispatch = useDispatch();
@@ -147,7 +148,7 @@ const Legions: React.FC = () => {
         text: getTranslation("executeLegionWarning"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#f66810",
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         confirmButtonText: getTranslation("massExecute"),
         background: "#111",

@@ -3,7 +3,6 @@ import {
   Box,
   Card,
   Grid,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -58,9 +57,6 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
-
-const subgraphApiLink =
-  "https://api.thegraph.com/subgraphs/name/feloniousgru-super/clv3";
 
 const HuntHistory: React.FC = () => {
   const { account } = useWeb3React();
@@ -190,12 +186,13 @@ const HuntHistory: React.FC = () => {
       <Box>
         <Box>
           <Typography sx={{ fontWeight: "bold" }}>
-            Total Won: {web3.utils.fromWei(totalWon, "ether")} BUSD
+            {getTranslation("totalWon")}:{" "}
+            {web3.utils.fromWei(totalWon, "ether")} BUSD
           </Typography>
         </Box>
         <Box sx={{ my: 2 }}>
           <Typography variant="h4" fontWeight={"bold"}>
-            Accuracy
+            {getTranslation("accuracy")}
           </Typography>
           <Box>
             <TableContainer component={Paper}>
@@ -209,7 +206,7 @@ const HuntHistory: React.FC = () => {
                         padding: isSmallerThanSM ? 1 : 2,
                       }}
                     >
-                      Monster
+                      {getTranslation("Monster")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -218,7 +215,9 @@ const HuntHistory: React.FC = () => {
                         padding: isSmallerThanSM ? 1 : 2,
                       }}
                     >
-                      {isSmallerThanSM ? "Win %" : "Your win %"}
+                      {isSmallerThanSM
+                        ? getTranslation("win") + " %"
+                        : getTranslation("yourWinPercent")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -227,7 +226,9 @@ const HuntHistory: React.FC = () => {
                         padding: isSmallerThanSM ? 1 : 2,
                       }}
                     >
-                      {isSmallerThanSM ? "Hunts" : "# of Hunts"}
+                      {isSmallerThanSM
+                        ? getTranslation("hunts")
+                        : getTranslation("sharpOfHunts")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -311,7 +312,9 @@ const HuntHistory: React.FC = () => {
                       <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
                         <source src=${
                           item["monsterId"] == 25
-                            ? presentItem.diedmp4
+                            ? presentItem
+                              ? presentItem.diedmp4
+                              : ""
                             : item["monsterId"] == 24
                             ? `/monster_dying_end/m24end.mp4`
                             : `/assets/images/characters/mp4/monsters_dying/m${item["monsterId"]}.mp4`
@@ -325,7 +328,9 @@ const HuntHistory: React.FC = () => {
                     <img
                       src={
                         item["monsterId"] == 25
-                          ? presentItem.diedjpg
+                          ? presentItem
+                            ? presentItem.diedjpg
+                            : ""
                           : item["monsterId"] == 24
                           ? `/monster_dying_end/m24end.jpg`
                           : `/assets/images/characters/jpg/monsters_dying/m${item["monsterId"]}.jpg`

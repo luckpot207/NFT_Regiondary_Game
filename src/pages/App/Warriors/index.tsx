@@ -31,6 +31,7 @@ import { filterAndPageState } from "../../../reducers/filterAndPage.reducer";
 import { marketplaceState } from "../../../reducers/marketplace.reducer";
 import { IWarrior } from "../../../types";
 import WarriorService from "../../../services/warrior.service";
+import constants from "../../../constants";
 
 const Warriors: React.FC = () => {
   const dispatch = useDispatch();
@@ -115,7 +116,7 @@ const Warriors: React.FC = () => {
         text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#f66810",
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         confirmButtonText: getTranslation("massExecute"),
         background: "#111",

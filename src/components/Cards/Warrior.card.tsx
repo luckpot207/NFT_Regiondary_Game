@@ -24,6 +24,7 @@ import { IWarrior } from "../../types";
 import { formatNumber, getTranslation } from "../../utils/utils";
 import { useWarrior } from "../../web3hooks/useContract";
 import gameConfig from "../../config/game.config";
+import constants from "../../constants";
 
 type Props = {
   warrior: IWarrior;
@@ -59,7 +60,7 @@ const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
         text: getTranslation("executeWarning"),
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#f66810",
+        confirmButtonColor: constants.color.color2,
         cancelButtonColor: "#d33",
         confirmButtonText: getTranslation("execute"),
         background: "#111",

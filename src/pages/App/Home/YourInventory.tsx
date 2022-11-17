@@ -252,7 +252,7 @@ const YourInventory: React.FC = () => {
             title={getTranslation("yourTotalWon") + ":"}
             info={`${totalWon} BUSD`}
           />
-          -------------------------------------
+          {/* -------------------------------------
           <HomeTypo
             title={"Claim Tax Left Days: "}
             info={taxLeftDaysForClaim}
@@ -386,7 +386,7 @@ const YourInventory: React.FC = () => {
             )} + ${Number(reinvestingUSDWithoutTax).toFixed(2)}+${Number(
               totalClaimedUSD
             ).toFixed(2)})`}
-          />
+          /> */}
         </Box>
       </Box>
     </Card>

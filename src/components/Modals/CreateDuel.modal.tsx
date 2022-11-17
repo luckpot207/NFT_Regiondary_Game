@@ -49,6 +49,7 @@ import {
   getAllDuelsAct,
 } from "../../services/duel.service";
 import constants from "../../constants";
+import gameConfig from "../../config/game.config";
 
 const PriceTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -199,11 +200,12 @@ const CreateDuelModal: React.FC = () => {
   const handleChangeEstimatePrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const price = parseFloat(e.target.value);
-    if (price > 10000 || price * 10000 - Math.floor(price * 10000) > 0) {
-      setEstimatePrice(estimatePrice);
-      return;
-    }
+    const price =
+      Number(e.target.value) > gameConfig.maxEstimatePrice
+        ? gameConfig.maxEstimatePrice
+        : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
+        ? Number(e.target.value)
+        : estimatePrice;
     setEstimatePrice(price);
   };
 

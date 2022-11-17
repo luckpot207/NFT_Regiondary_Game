@@ -51,6 +51,7 @@ import {
 import gameConfig from "../../config/game.config";
 import MarketplaceService from "../../services/marketplace.service";
 import { updateModalState } from "../../reducers/modal.reducer";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   legion: ILegionMarket;
@@ -248,16 +249,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
       <Card sx={{ position: "relative" }}>
         {!isShowDetail &&
           (showAnimation ? (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `
-                <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                  <source src=${mp4.valueOf()} type="video/mp4" />
-                  Your browser does not support HTML5 video.
-                </video>
-            `,
-              }}
-            />
+            <VideoNFT src={mp4.valueOf()} />
           ) : (
             <>
               <CardMedia

@@ -25,6 +25,7 @@ import { formatNumber, getTranslation } from "../../utils/utils";
 import { useWarrior } from "../../web3hooks/useContract";
 import gameConfig from "../../config/game.config";
 import constants from "../../constants";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   warrior: IWarrior;
@@ -122,16 +123,7 @@ const WarriorCard: React.FC<Props> = ({ warrior, isActionBtns }) => {
       className={classNames({ executeitem: executeStatus }, "warriorCard")}
     >
       {showAnimation ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${mp4.valueOf()} type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-          }}
-        />
+        <VideoNFT src={mp4.valueOf()} />
       ) : (
         <>
           <CardMedia

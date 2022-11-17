@@ -37,6 +37,7 @@ import {
   useWeb3,
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   warrior: IWarriorMarket;
@@ -164,16 +165,7 @@ const WarriorMarketCard: React.FC<Props> = ({ warrior }) => {
         }}
       >
         {showAnimation ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${mp4.valueOf()} type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-            }}
-          />
+          <VideoNFT src={mp4.valueOf()} />
         ) : (
           <>
             <CardMedia

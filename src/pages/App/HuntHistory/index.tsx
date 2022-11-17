@@ -27,6 +27,7 @@ import { commonState } from "../../../reducers/common.reduer";
 import { apiConfig } from "../../../config/api.config";
 import constants from "../../../constants";
 import { IMonsterId } from "../../../types/monster.type";
+import VideoNFT from "../../../components/UI/VideoNFT";
 
 const useStyles = makeStyles(() => ({
   MassHuntItemLose: {
@@ -306,23 +307,16 @@ const HuntHistory: React.FC = () => {
               >
                 {item.success ? (
                   showAnimation ? (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: `
-                      <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                        <source src=${
-                          item["monsterId"] == 25
-                            ? presentItem
-                              ? presentItem.diedmp4
-                              : ""
-                            : item["monsterId"] == 24
-                            ? `/monster_dying_end/m24end.mp4`
-                            : `/assets/images/characters/mp4/monsters_dying/m${item["monsterId"]}.mp4`
-                        } type="video/mp4" />
-                        Your browser does not support HTML5 video.
-                      </video>
-                  `,
-                      }}
+                    <VideoNFT
+                      src={
+                        item["monsterId"] == 25
+                          ? presentItem
+                            ? presentItem.diedmp4
+                            : ""
+                          : item["monsterId"] == 24
+                          ? `/monster_dying_end/m24end.mp4`
+                          : `/assets/images/characters/mp4/monsters_dying/m${item["monsterId"]}.mp4`
+                      }
                     />
                   ) : (
                     <img
@@ -339,19 +333,12 @@ const HuntHistory: React.FC = () => {
                     />
                   )
                 ) : showAnimation ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: `
-                            <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                              <source src=${
-                                item["monsterId"] == 25
-                                  ? presentItem.mp4
-                                  : `/assets/images/characters/mp4/monsters/m${item["monsterId"]}.mp4`
-                              } type="video/mp4" />
-                              Your browser does not support HTML5 video.
-                            </video>
-                        `,
-                    }}
+                  <VideoNFT
+                    src={
+                      item["monsterId"] == 25
+                        ? presentItem.mp4
+                        : `/assets/images/characters/mp4/monsters/m${item["monsterId"]}.mp4`
+                    }
                   />
                 ) : (
                   <img

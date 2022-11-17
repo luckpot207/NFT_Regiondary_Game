@@ -25,6 +25,7 @@ import {
 import { getWalletHuntPending } from "../../web3hooks/contractFunctions/common.contract";
 import { updateLegionState } from "../../reducers/legion.reducer";
 import HuntService from "../../services/hunt.service";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   monster: IMonster;
@@ -195,21 +196,14 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
         </Grid>
       </Grid>
       {showAnimation ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${
-                  monsterID === 25
-                    ? presentItem
-                      ? presentItem.mp4
-                      : ""
-                    : `/assets/images/characters/mp4/monsters/m${monsterID}.mp4`
-                } type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-          }}
+        <VideoNFT
+          src={
+            monsterID === 25
+              ? presentItem
+                ? presentItem.mp4
+                : ""
+              : `/assets/images/characters/mp4/monsters/m${monsterID}.mp4`
+          }
         />
       ) : (
         <>

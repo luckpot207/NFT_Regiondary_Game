@@ -38,6 +38,7 @@ import LegionService from "../../services/legion.service";
 import constants from "../../constants";
 import { IMonsterId } from "../../types/monster.type";
 import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
+import VideoNFT from "../UI/VideoNFT";
 
 const useStyles = makeStyles(() => ({
   MassHuntItemLose: {
@@ -233,16 +234,7 @@ const MassHuntModal: React.FC = () => {
                 {getTranslation("revealResult")}
               </FireBtn>
             </Box>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `
-                  <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                    <source src="/assets/images/waiting.mp4" type="video/mp4" />
-                    Your browser does not support HTML5 video.
-                  </video>
-                `,
-              }}
-            />
+            <VideoNFT src="/assets/images/waiting.mp4" />
           </DialogContent>
         </>
       ) : massHuntFinished ? (
@@ -273,21 +265,14 @@ const MassHuntModal: React.FC = () => {
                 >
                   {item.success ? (
                     showAnimation ? (
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: `
-                      <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                        <source src=${
+                      <VideoNFT
+                        src={
                           item["monsterId"] === 25
                             ? presentItem.diedmp4
                             : item["monsterId"] === 24
                             ? `/monster_dying_end/m24end.mp4`
                             : `/assets/images/characters/mp4/monsters_dying/m${item["monsterId"]}.mp4`
-                        } type="video/mp4" />
-                        Your browser does not support HTML5 video.
-                      </video>
-                  `,
-                        }}
+                        }
                       />
                     ) : (
                       <img
@@ -302,19 +287,12 @@ const MassHuntModal: React.FC = () => {
                       />
                     )
                   ) : showAnimation ? (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: `
-                            <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                              <source src=${
-                                item["monsterId"] === 25
-                                  ? presentItem.mp4
-                                  : `/assets/images/characters/mp4/monsters/m${item["monsterId"]}.mp4`
-                              } type="video/mp4" />
-                              Your browser does not support HTML5 video.
-                            </video>
-                        `,
-                      }}
+                    <VideoNFT
+                      src={
+                        item["monsterId"] === 25
+                          ? presentItem.mp4
+                          : `/assets/images/characters/mp4/monsters/m${item["monsterId"]}.mp4`
+                      }
                     />
                   ) : (
                     <img
@@ -379,16 +357,7 @@ const MassHuntModal: React.FC = () => {
             {getTranslation("massHunt")}
           </DialogTitle>
           <DialogContent>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `
-                  <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                    <source src="/assets/images/waiting.mp4" type="video/mp4" />
-                    Your browser does not support HTML5 video.
-                  </video>
-                `,
-              }}
-            />
+            <VideoNFT src={"/assets/images/waiting.mp4"} />
           </DialogContent>
         </>
       )}

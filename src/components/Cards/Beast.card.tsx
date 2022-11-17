@@ -25,6 +25,7 @@ import { updateModalState } from "../../reducers/modal.reducer";
 import { updateMarketplaceState } from "../../reducers/marketplace.reducer";
 import gameConfig from "../../config/game.config";
 import constants from "../../constants";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   beast: IBeast;
@@ -101,16 +102,7 @@ const BeastCard: React.FC<Props> = ({ beast, isActionBtns }) => {
       className={classNames({ executeitem: executeStatus }, "beastCard")}
     >
       {showAnimation ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${mp4.valueOf()} type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-          }}
-        />
+        <VideoNFT src={mp4.valueOf()} />
       ) : (
         <>
           <CardMedia

@@ -46,6 +46,7 @@ import { ICapacity } from "../../types/beast.type";
 import LegionService from "../../services/legion.service";
 import gameConfig from "../../config/game.config";
 import { navLinks } from "../../config/nav.config";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   legion: ILegion;
@@ -231,16 +232,7 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
     >
       {!isShowDetail &&
         (showAnimation ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${mp4.valueOf()} type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-            }}
-          />
+          <VideoNFT src={mp4.valueOf()} />
         ) : (
           <>
             <CardMedia

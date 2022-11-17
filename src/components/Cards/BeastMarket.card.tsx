@@ -35,6 +35,7 @@ import {
 } from "../../web3hooks/contractFunctions/marketplace.contract";
 import MarketplaceService from "../../services/marketplace.service";
 import { IBeastMarket } from "../../types";
+import VideoNFT from "../UI/VideoNFT";
 
 type Props = {
   beast: IBeastMarket;
@@ -146,16 +147,7 @@ const BeastMarketCard: React.FC<Props> = ({ beast }) => {
         }}
       >
         {showAnimation ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-              <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                <source src=${mp4.valueOf()} type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
-          `,
-            }}
-          />
+          <VideoNFT src={mp4.valueOf()} />
         ) : (
           <>
             <CardMedia

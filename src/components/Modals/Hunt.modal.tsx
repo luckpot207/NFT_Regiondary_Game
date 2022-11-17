@@ -43,6 +43,7 @@ import LegionService from "../../services/legion.service";
 import gameConfig from "../../config/game.config";
 import constants from "../../constants";
 import { IMonsterId } from "../../types/monster.type";
+import VideoNFT from "../UI/VideoNFT";
 
 const HuntModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -256,21 +257,14 @@ const HuntModal: React.FC = () => {
             <DialogContent>
               <Box component="div" sx={{ position: "relative" }}>
                 {showAnimation ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: `
-                        <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                          <source src=${
-                            huntResult["monsterId"] === 25
-                              ? presentItem.diedmp4
-                              : huntResult["monsterId"] === 24
-                              ? `/monster_dying_end/m24end.mp4`
-                              : `/assets/images/characters/mp4/monsters_dying/m${huntResult["monsterId"]}.mp4`
-                          } type="video/mp4" />
-                          Your browser does not support HTML5 video.
-                        </video>
-                    `,
-                    }}
+                  <VideoNFT
+                    src={
+                      huntResult["monsterId"] === 25
+                        ? presentItem.diedmp4
+                        : huntResult["monsterId"] === 24
+                        ? `/monster_dying_end/m24end.mp4`
+                        : `/assets/images/characters/mp4/monsters_dying/m${huntResult["monsterId"]}.mp4`
+                    }
                   />
                 ) : (
                   <CardMedia
@@ -322,16 +316,7 @@ const HuntModal: React.FC = () => {
             </DialogTitle>
             <DialogContent>
               <Box component="div" sx={{ position: "relative" }}>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                      <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                        <source src="/assets/images/loosing.mp4" type="video/mp4" />
-                        Your browser does not support HTML5 video.
-                      </video>
-                    `,
-                  }}
-                />
+                <VideoNFT src="/assets/images/loosing.mp4" />
               </Box>
             </DialogContent>
             <DialogActions
@@ -382,16 +367,7 @@ const HuntModal: React.FC = () => {
             )}
           </DialogTitle>
           <DialogContent>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: `
-                  <video autoPlay playsinline muted loop id="main-trailer" style="width: 100%;">
-                    <source src="/assets/images/waiting.mp4" type="video/mp4" />
-                    Your browser does not support HTML5 video.
-                  </video>
-                `,
-              }}
-            />
+            <VideoNFT src="/assets/images/waiting.mp4" />
           </DialogContent>
         </>
       )}

@@ -30,6 +30,7 @@ import { updateModalState } from "../../../reducers/modal.reducer";
 import { getAllDuelsAct } from "../../../services/duel.service";
 import constant from "../../../constants";
 import "./duel.css";
+import { navLinks } from "../../../config/nav.config";
 
 const Duel: React.FC = () => {
   const dispatch = useDispatch();
@@ -249,7 +250,7 @@ const Duel: React.FC = () => {
                 >
                   {getTranslation("youneedtocreatealegionfirsttostartaduel")}
                 </Box>
-                <NavLink to="/createcybers" className="td-none">
+                <NavLink to={navLinks.createlegion} className="td-none">
                   <FireBtn>{getTranslation("createLegion")}</FireBtn>
                 </NavLink>
               </Box>

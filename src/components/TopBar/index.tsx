@@ -17,7 +17,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { navConfig } from "../../config/nav.config";
+import { navConfig, navLinks } from "../../config/nav.config";
 import FireBtn from "../Buttons/FireBtn";
 import { AppDispatch, AppSelector } from "../../store";
 import { formatNumber, getTranslation, showWallet } from "../../utils/utils";
@@ -224,7 +224,7 @@ const TopBar: React.FC = () => {
           )}
           <Box sx={{ marginLeft: { md: 0, xs: "auto" } }}></Box>
           <NavLink
-            to="/"
+            to={navLinks.home}
             className="non-style"
             style={{
               color: "inherit",
@@ -325,7 +325,7 @@ const TopBar: React.FC = () => {
                       <BadgeIcon />
                     </IconButton>
                     <NavLink
-                      to="/"
+                      to={navLinks.home}
                       className="non-style"
                       style={{
                         color: "inherit",
@@ -446,7 +446,7 @@ const TopBar: React.FC = () => {
                         <BadgeIcon />
                       </IconButton>
                       <NavLink
-                        to="/"
+                        to={navLinks.home}
                         className="non-style"
                         style={{
                           color: "inherit",

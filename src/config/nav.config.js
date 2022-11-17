@@ -15,67 +15,86 @@ import ReferPage from "../pages/App/ReferralPage";
 import Help from "../pages/App/Help";
 import HuntHistory from "../pages/App/HuntHistory";
 
+export const navLinks = {
+  home: "/",
+  beasts: "/servers",
+  warriors: "/devs",
+  legions: "/cybers",
+  duel: "/duels",
+  createlegion: "/createcyber",
+  updatelegion: "/updatecyber",
+  hunt: "/mine",
+  warriorsmarketplace: "/devsmarketplace",
+  beastsmarketplace: "/serversmarketplace",
+  legionsmarketplace: "/cybersmarketplace",
+  help: "/help",
+  hunthistory: "/minehistory",
+  referrals: "/referrals",
+  tips: "/tips",
+  policy: "/policy",
+};
+
 export const navConfig = {
   drawerWidth: 250,
   routes: () => [
     {
-      path: "/",
+      path: navLinks.home,
       element: <Home />,
     },
     {
-      path: "/servers",
+      path: navLinks.beasts,
       element: <Beasts />,
     },
     {
-      path: "/devs",
+      path: navLinks.warriors,
       element: <Warriors />,
     },
     {
-      path: "/cybers",
+      path: navLinks.legions,
       element: <Legions />,
     },
     {
-      path: "/duels",
+      path: navLinks.duel,
       element: <Duel />,
     },
     {
-      path: "/createcybers",
+      path: navLinks.createlegion,
       element: <CreateLegion />,
     },
     {
-      path: "/updatecybers/:id",
+      path: navLinks.updatelegion + "/:id",
       element: <UpdateLegion />,
     },
     {
-      path: "/mine",
+      path: navLinks.hunt,
       element: <Hunt />,
     },
     {
-      path: "/devsMarketplace",
+      path: navLinks.warriorsmarketplace,
       element: <WarriorsMarketplace />,
     },
     {
-      path: "/serversMarketplace",
+      path: navLinks.beastsmarketplace,
       element: <BeastsMarketplace />,
     },
     {
-      path: "/cybersMarketplace",
+      path: navLinks.legionsmarketplace,
       element: <LegionsMarketplace />,
     },
     {
-      path: "/help",
+      path: navLinks.help,
       element: <Help />,
     },
     {
-      path: "/minehistory",
+      path: navLinks.hunthistory,
       element: <HuntHistory />,
     },
     {
-      path: "/referrals",
+      path: navLinks.referrals,
       element: <ReferPage />,
     },
     {
-      path: "/tips",
+      path: navLinks.tips,
       element: <TipsAndTricks />,
     },
   ],
@@ -89,31 +108,31 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "warrior.png",
-        path: "/devs",
+        path: navLinks.warriors,
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "beast.png",
-        path: "/servers",
+        path: navLinks.beasts,
       },
       {
         type: "navlink",
         title: "legions",
         icon: "legion.png",
-        path: "/cybers",
+        path: navLinks.legions,
       },
       {
         type: "navlink",
         title: "hunt",
         icon: "hunt.png",
-        path: "/mine",
+        path: navLinks.hunt,
       },
       {
         type: "navlink",
         title: "duels",
         icon: "duels.png",
-        path: "/duels",
+        path: navLinks.duel,
       },
       {
         type: "divider",
@@ -126,19 +145,19 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "marketWarrior.png",
-        path: "/devsMarketplace",
+        path: navLinks.warriorsmarketplace,
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "marketBeast.png",
-        path: "/serversMarketplace",
+        path: navLinks.beastsmarketplace,
       },
       {
         type: "navlink",
         title: "legions",
         icon: "marketLegion.png",
-        path: "/cybersMarketplace",
+        path: navLinks.legionsmarketplace,
       },
       {
         type: "divider",
@@ -157,7 +176,7 @@ export const navConfig = {
         type: "navlink",
         title: "help",
         icon: "support.png",
-        path: "/help",
+        path: navLinks.help,
       },
       {
         type: "divider",
@@ -166,11 +185,11 @@ export const navConfig = {
         type: "head",
         title: "howToPlay",
       },
-      {
-        type: "tutorial",
-        title: "help",
-        icon: "tutorial.png",
-      },
+      // {
+      //   type: "tutorial",
+      //   title: "help",
+      //   icon: "tutorial.png",
+      // },
       {
         type: "link",
         title: "whitepaper",
@@ -181,13 +200,13 @@ export const navConfig = {
         type: "navlink",
         title: "tips",
         icon: "tips.png",
-        path: "/tips",
+        path: navLinks.tips,
       },
       {
         type: "navlink",
         title: "referrals",
         icon: "refer.png",
-        path: "/referrals",
+        path: navLinks.referrals,
       },
       {
         type: "divider",
@@ -226,7 +245,7 @@ export const navConfig = {
         type: "privacy",
         title: "policy",
         icon: "policy",
-        path: "/policy",
+        path: navLinks.policy,
       },
       {
         type: "footer",

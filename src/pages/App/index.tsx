@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { navConfig } from "../../config/nav.config";
+import { navConfig, navLinks } from "../../config/nav.config";
 import { getContactInfo, getPresentItem } from "../../reducers/common.reduer";
 import { AppDispatch } from "../../store";
 
@@ -28,7 +28,7 @@ const GameView: React.FC = () => {
   const { account } = useWeb3React();
 
   useEffect(() => {
-    navigate("/");
+    navigate(navLinks.home);
     getBalance();
   }, [account]);
 

@@ -45,6 +45,7 @@ import { IStrength } from "../../types/warrior.type";
 import { ICapacity } from "../../types/beast.type";
 import LegionService from "../../services/legion.service";
 import gameConfig from "../../config/game.config";
+import { navLinks } from "../../config/nav.config";
 
 type Props = {
   legion: ILegion;
@@ -540,7 +541,10 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
           cursor: "pointer",
         }}
       >
-        <NavLink to={`/updatecybers/${legion.id}`} className="td-none">
+        <NavLink
+          to={`${navLinks.updatelegion}/${legion.id}`}
+          className="td-none"
+        >
           <IconButton aria-label="claim" component="span" sx={{ padding: 0 }}>
             <CachedIcon />
           </IconButton>

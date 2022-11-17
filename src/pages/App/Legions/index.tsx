@@ -35,6 +35,7 @@ import BeastService from "../../../services/beast.service";
 import WarriorService from "../../../services/warrior.service";
 import LegionService from "../../../services/legion.service";
 import constants from "../../../constants";
+import { navLinks } from "../../../config/nav.config";
 
 const Legions: React.FC = () => {
   const dispatch = useDispatch();
@@ -185,7 +186,7 @@ const Legions: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Card className="bg-c5 info-card">
-            <NavLink to="/createcybers" className="td-none">
+            <NavLink to={navLinks.createlegion} className="td-none">
               <FireBtn
                 sx={{
                   mb: 2,
@@ -241,7 +242,7 @@ const Legions: React.FC = () => {
             >
               {formatNumber(totalAP)}
             </Typography>
-            <NavLink to="/mine" className="td-none">
+            <NavLink to={navLinks.hunt} className="td-none">
               <FireBtn
                 sx={{
                   mb: 2,

@@ -38,6 +38,7 @@ import LegionService from "../../../services/legion.service";
 import { getLegion } from "../../../web3hooks/contractFunctions/legion.contract";
 import BeastService from "../../../services/beast.service";
 import WarriorService from "../../../services/warrior.service";
+import { navLinks } from "../../../config/nav.config";
 
 const UpdateLegion: React.FC = () => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ const UpdateLegion: React.FC = () => {
           </Card>
         </Grid>
         <Grid item xs={12}>
-          <NavLink to="/legions" className="td-none">
+          <NavLink to={navLinks.legions} className="td-none">
             <FireBtn
               sx={{
                 mb: 1,

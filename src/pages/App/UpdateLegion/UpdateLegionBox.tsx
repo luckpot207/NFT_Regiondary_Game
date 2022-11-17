@@ -47,6 +47,7 @@ import {
   getBloodstoneAllowance,
   setBloodstoneApprove,
 } from "../../../web3hooks/contractFunctions/common.contract";
+import { navLinks } from "../../../config/nav.config";
 
 const UpdateLegionBox: React.FC = () => {
   // Hook Info
@@ -190,7 +191,7 @@ const UpdateLegionBox: React.FC = () => {
         walletNumber
       );
       toast.success(getTranslation("updateLegionSuccessful"));
-      navigate("/legions");
+      navigate(navLinks.legions);
     } catch (error) {}
     dispatch(updateLegionState({ updateLegionLoading: false }));
   };

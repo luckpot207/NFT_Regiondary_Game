@@ -31,6 +31,7 @@ import {
 import { formatNumber, getTranslation } from "../../../utils/utils";
 import { IBeast } from "../../../types";
 import constants from "../../../constants";
+import { navLinks } from "../../../config/nav.config";
 
 const Beasts: React.FC = () => {
   const dispatch = useDispatch();
@@ -180,7 +181,7 @@ const Beasts: React.FC = () => {
             >
               {beastBalance}
             </Typography>
-            <NavLink to="/createcybers" className="td-none">
+            <NavLink to={navLinks.createlegion} className="td-none">
               <FireBtn
                 sx={{
                   mb: 1,

@@ -29,6 +29,7 @@ import { updateCommonState } from "../../../reducers/common.reduer";
 import BeastService from "../../../services/beast.service";
 import { getWalletMassHuntPending } from "../../../web3hooks/contractFunctions/common.contract";
 import { initiateMassHunt } from "../../../web3hooks/contractFunctions/legion.contract";
+import { navLinks } from "../../../config/nav.config";
 
 const TakeAction: React.FC = () => {
   const dispatch = useDispatch();
@@ -213,7 +214,7 @@ const TakeAction: React.FC = () => {
                     ? getTranslation("revealBeasts")
                     : getTranslation("summonBeasts")}
                 </FireBtn>
-                <NavLink to="/createcybers" className="td-none">
+                <NavLink to={navLinks.createlegion} className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -234,7 +235,7 @@ const TakeAction: React.FC = () => {
                     {getTranslation("createLegion")}
                   </FireBtn>
                 </NavLink>
-                <NavLink to="/hunt" className="td-none">
+                <NavLink to={navLinks.hunt} className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -290,7 +291,7 @@ const TakeAction: React.FC = () => {
               sx={{ display: "flex", alignItems: "center" }}
             >
               <Box>
-                <NavLink to="/devsMarketplace" className="td-none">
+                <NavLink to={navLinks.warriorsmarketplace} className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -311,7 +312,7 @@ const TakeAction: React.FC = () => {
                     {getTranslation("warriorsMarket")}
                   </FireBtn>
                 </NavLink>
-                <NavLink to="/serversMarketplace" className="td-none">
+                <NavLink to={navLinks.beastsmarketplace} className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,
@@ -332,7 +333,7 @@ const TakeAction: React.FC = () => {
                     {getTranslation("beastsMarket")}
                   </FireBtn>
                 </NavLink>
-                <NavLink to="/cybersMarketplace" className="td-none">
+                <NavLink to={navLinks.legionsmarketplace} className="td-none">
                   <FireBtn
                     sx={{
                       mb: 1,

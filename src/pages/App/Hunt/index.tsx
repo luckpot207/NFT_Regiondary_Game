@@ -50,6 +50,7 @@ import { getTranslation } from "../../../utils/utils";
 import { ILegion, IMonster } from "../../../types";
 import { apiConfig } from "../../../config/api.config";
 import gameConfig from "../../../config/game.config";
+import { navLinks } from "../../../config/nav.config";
 
 const useStyles = makeStyles(() => ({
   Card: {
@@ -269,7 +270,7 @@ const Hunt: React.FC = () => {
             >
               {getTranslation("noMintedLegion")}
             </Box>
-            <NavLink to="/createcybers" className="td-none">
+            <NavLink to={navLinks.createlegion} className="td-none">
               <FireBtn>{getTranslation("createLegion")}</FireBtn>
             </NavLink>
           </Box>
@@ -387,7 +388,7 @@ const Hunt: React.FC = () => {
               </FireBtn>
             </Grid>
             <Grid item xs={40} sm={40} md={10}>
-              <NavLink to="/minehistory" className="td-none">
+              <NavLink to={navLinks.hunthistory} className="td-none">
                 <Typography
                   variant="h5"
                   sx={{

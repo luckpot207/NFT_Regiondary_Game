@@ -32,6 +32,7 @@ import { marketplaceState } from "../../../reducers/marketplace.reducer";
 import { IWarrior } from "../../../types";
 import WarriorService from "../../../services/warrior.service";
 import constants from "../../../constants";
+import { navLinks } from "../../../config/nav.config";
 
 const Warriors: React.FC = () => {
   const dispatch = useDispatch();
@@ -209,7 +210,7 @@ const Warriors: React.FC = () => {
             >
               {warriorBalance}
             </Typography>
-            <NavLink to="/createcybers" className="td-none">
+            <NavLink to={navLinks.createlegion} className="td-none">
               <FireBtn
                 sx={{
                   mb: 1,

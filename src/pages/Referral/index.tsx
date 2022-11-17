@@ -9,6 +9,7 @@ import HandshakeIcon from "@mui/icons-material/Handshake";
 import FireBtn from "../../components/Buttons/FireBtn";
 import { useReferralSystem, useWeb3 } from "../../web3hooks/useContract";
 import { refer } from "../../web3hooks/contractFunctions/referral.contract";
+import { navLinks } from "../../config/nav.config";
 
 const ReferralPage: React.FC = () => {
   const { address } = useParams();
@@ -24,7 +25,7 @@ const ReferralPage: React.FC = () => {
     try {
       console.log(referralSystemContract, account);
       await refer(referralSystemContract, account, address);
-      navigate("/", { replace: true });
+      navigate(navLinks.home, { replace: true });
     } catch (error) {
       console.error(error);
       toast.error("Affiliate Failed");
@@ -34,7 +35,7 @@ const ReferralPage: React.FC = () => {
 
   useEffect(() => {
     if (!isValid) {
-      navigate("/", { replace: true });
+      navigate(navLinks.home, { replace: true });
     }
   });
 

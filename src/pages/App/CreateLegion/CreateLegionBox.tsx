@@ -41,6 +41,7 @@ import {
 } from "../../../web3hooks/contractFunctions/common.contract";
 import { mintLegion } from "../../../web3hooks/contractFunctions/legion.contract";
 import gameConfig from "../../../config/game.config";
+import { navLinks } from "../../../config/nav.config";
 
 const CreateLegionBox: React.FC = () => {
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ const CreateLegionBox: React.FC = () => {
         walletNumber
       );
       toast.success(getTranslation("summonLegionSuccessful"));
-      navigate("/cybers");
+      navigate(navLinks.legions);
     } catch (error) {}
     dispatch(updateLegionState({ createLegionLoading: false }));
   };

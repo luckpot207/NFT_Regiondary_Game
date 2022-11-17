@@ -17,6 +17,8 @@ export const getAllDuelsAct = async (
   try {
     const allDuelsRes = await getAllDuels(duelContract);
     let allDuelsTemp: IDuel[] = [];
+    const { version: gameVersion } = gameConfig;
+    const { duelInvitePeriod, duelPeriod } = gameVersion;
     for (let i = 0; i < allDuelsRes.length; i++) {
       if (allDuelsRes[i].status == 0) continue;
       var isMine: boolean = false;
@@ -69,28 +71,15 @@ export const getAllDuelsAct = async (
       var endDateTime: String = "";
       if (allDuelsRes[i].status == 1) {
         endDateTime = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 +
-            gameConfig.version.version ===
-          "main"
-            ? 6 * 3600 * 1000
-            : 600 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 + duelInvitePeriod
         ).toISOString();
-        console.log(endDateTime);
       } else if (allDuelsRes[i].status == 2) {
         endDateTime = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 +
-            gameConfig.version.version ===
-          "main"
-            ? 24 * 3600 * 1000
-            : 120 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 + duelPeriod
         ).toISOString();
       } else {
         const endDateTimeTemp = new Date(
-          Number(allDuelsRes[i].startTime) * 1000 +
-            gameConfig.version.version ===
-          "main"
-            ? 24 * 3600 * 1000
-            : 1200 * 1000
+          Number(allDuelsRes[i].startTime) * 1000 + duelPeriod
         );
         endDateTime =
           endDateTimeTemp.toDateString() +

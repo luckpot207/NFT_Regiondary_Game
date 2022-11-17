@@ -183,8 +183,7 @@ const getSamaritanInfo = async (
     );
     const firstHuntTime = await getFirstHuntTime(rewardpoolContract, account);
     const { version: gameVersion } = gameConfig;
-    const { version } = gameVersion;
-    const oneDay = version === "main" ? 1000 * 24 * 3600 : 1000 * 120;
+    const { oneDay } = gameVersion;
     const daysLeftUntilAbove3Stars =
       firstHuntTime == 0
         ? 30

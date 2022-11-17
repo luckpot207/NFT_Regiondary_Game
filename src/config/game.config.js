@@ -9,6 +9,9 @@ const version = {
       "wss://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/testnet/ws",
     walletAddRpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
     blockExplorerUrls: ["https://testnet.bscscan.com/"],
+    duelPeriod: 1200 * 1000,
+    duelInvitePeriod: 600 * 1000,
+    oneDay: 24 * 3600 * 1000,
   },
   main: {
     version: "main",
@@ -21,6 +24,9 @@ const version = {
       "wss://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/mainnet/ws",
     walletAddRpcUrls: ["https://bsc-dataseed.binance.org/"],
     blockExplorerUrls: ["https://bscscan.com"],
+    duelPeriod: 24 * 3600 * 1000,
+    duelInvitePeriod: 6 * 3600 * 1000,
+    oneDay: 120 * 1000,
   },
 };
 

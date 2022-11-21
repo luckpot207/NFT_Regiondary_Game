@@ -146,6 +146,13 @@ const MassHuntModal: React.FC = () => {
                 blstReward: Number(blstReward).toFixed(2),
               };
               dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
+              dispatch(setMassHuntResult(huntResult));
             }
           });
         } else {
@@ -217,6 +224,7 @@ const MassHuntModal: React.FC = () => {
       PaperProps={{
         style: {
           backgroundColor: constants.color.popupBGColor,
+          maxWidth: "80%",
         },
       }}
     >
@@ -261,7 +269,12 @@ const MassHuntModal: React.FC = () => {
                       ? classes.MassHuntItemWin
                       : classes.MassHuntItemLose
                   }
-                  sx={{ textAlign: "center", margin: 1, width: 170, p: 1 }}
+                  sx={{
+                    textAlign: "center",
+                    margin: 1,
+                    width: 170,
+                    p: 1,
+                  }}
                 >
                   {item.success ? (
                     showAnimation ? (

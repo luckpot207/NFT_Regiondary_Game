@@ -32,6 +32,7 @@ import { formatNumber, getTranslation } from "../../../utils/utils";
 import { IBeast } from "../../../types";
 import constants from "../../../constants";
 import { navLinks } from "../../../config/nav.config";
+import RedBtn from "../../../components/Buttons/RedBtn";
 
 const Beasts: React.FC = () => {
   const dispatch = useDispatch();
@@ -227,7 +228,7 @@ const Beasts: React.FC = () => {
                 ? getTranslation("deSelectAll")
                 : getTranslation("selectAll")}
             </FireBtn>
-            <FireBtn
+            <RedBtn
               sx={{
                 mb: 1,
                 wordBreak: "break-word",
@@ -242,7 +243,7 @@ const Beasts: React.FC = () => {
               onClick={() => handleMassExecute()}
             >
               {getTranslation("massExecute")}
-            </FireBtn>
+            </RedBtn>
           </Card>
         </Grid>
       </Grid>

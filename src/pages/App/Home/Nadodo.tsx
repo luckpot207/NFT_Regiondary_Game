@@ -4,9 +4,9 @@ import CircleIcon from "@mui/icons-material/Circle";
 import { getTranslation } from "../../../utils/utils";
 import { useBloodstone, useFeeHandler } from "../../../web3hooks/useContract";
 import HomeTypo from "../../../components/UI/HomeTypo";
-import CommonService from "../../../services/common.service";
-import { AppDispatch, AppSelector } from "../../../store";
+import { AppSelector } from "../../../store";
 import { commonState } from "../../../reducers/common.reduer";
+import ApiService from "../../../services/api.service";
 
 const NadodoWatch: React.FC = () => {
   const {
@@ -20,15 +20,44 @@ const NadodoWatch: React.FC = () => {
     buyTax,
   } = AppSelector(commonState);
 
-  const feehandlerContract = useFeeHandler();
-  const bloodstoneContract = useBloodstone();
-
   const [rewardStatus, setRewardStatus] = useState("lime");
   const [rewardDesc, setRewardDesc] = useState("Healthy");
   const [reserveStatus, setReserveStatus] = useState("lime");
   const [reserveDesc, setReserveDesc] = useState("Healthy");
   const [liquidityStatus, setLiquidityStatus] = useState("lime");
   const [liquidityDesc, setLiquidityDesc] = useState("Healthy");
+
+  useEffect(() => {
+    getPoolStatus();
+  }, []);
+
+  const getPoolStatus = async () => {
+    try {
+      const res = await ApiService.getAllPoolStatus();
+      const allData = res.data.data;
+      const rewardPool = allData.find(
+        (item: any) => item.pool === "rewardpool"
+      );
+      const reservePool = allData.find(
+        (item: any) => item.pool === "reservepool"
+      );
+      const liquidityPool = allData.find(
+        (item: any) => item.pool === "liquiditypool"
+      );
+      if (rewardPool) {
+        setRewardDesc(rewardPool.status);
+        setRewardStatus(rewardPool.color);
+      }
+      if (reservePool) {
+        setReserveDesc(reservePool.status);
+        setReserveStatus(reservePool.color);
+      }
+      if (liquidityPool) {
+        setLiquidityDesc(liquidityPool.status);
+        setLiquidityStatus(liquidityPool.color);
+      }
+    } catch (error) {}
+  };
 
   return (
     <Card

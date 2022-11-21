@@ -33,6 +33,7 @@ import { IWarrior } from "../../../types";
 import WarriorService from "../../../services/warrior.service";
 import constants from "../../../constants";
 import { navLinks } from "../../../config/nav.config";
+import RedBtn from "../../../components/Buttons/RedBtn";
 
 const Warriors: React.FC = () => {
   const dispatch = useDispatch();
@@ -256,7 +257,7 @@ const Warriors: React.FC = () => {
                 ? getTranslation("deSelectAll")
                 : getTranslation("selectAll")}
             </FireBtn>
-            <FireBtn
+            <RedBtn
               sx={{
                 mb: 1,
                 wordBreak: "break-word",
@@ -270,7 +271,7 @@ const Warriors: React.FC = () => {
               onClick={() => handleMassExecute()}
             >
               {getTranslation("massExecute")}
-            </FireBtn>
+            </RedBtn>
           </Card>
         </Grid>
       </Grid>

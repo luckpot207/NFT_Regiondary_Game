@@ -111,6 +111,10 @@ const setClaimedBUSDAlertAmount = async (address: string, amount: number) => {
   });
 };
 
+const getAllPoolStatus = async () => {
+  return Axios.get(`${serverLink}/poolstatus/getAll`);
+};
+
 const ApiService = {
   getContactInfo,
   addContactInfo,
@@ -130,6 +134,7 @@ const ApiService = {
   getAllTips,
   getClaimedBUSDAlertAmount,
   setClaimedBUSDAlertAmount,
+  getAllPoolStatus,
 };
 
 export default ApiService;

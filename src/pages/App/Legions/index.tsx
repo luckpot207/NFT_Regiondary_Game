@@ -36,6 +36,7 @@ import WarriorService from "../../../services/warrior.service";
 import LegionService from "../../../services/legion.service";
 import constants from "../../../constants";
 import { navLinks } from "../../../config/nav.config";
+import RedBtn from "../../../components/Buttons/RedBtn";
 
 const Legions: React.FC = () => {
   const dispatch = useDispatch();
@@ -298,7 +299,7 @@ const Legions: React.FC = () => {
                 ? getTranslation("deSelectAll")
                 : getTranslation("selectAll")}
             </FireBtn>
-            <FireBtn
+            <RedBtn
               sx={{
                 mb: 1,
                 wordBreak: "break-word",
@@ -312,7 +313,7 @@ const Legions: React.FC = () => {
               onClick={() => handleMassExecute()}
             >
               {getTranslation("massExecute")}
-            </FireBtn>
+            </RedBtn>
           </Card>
         </Grid>
       </Grid>

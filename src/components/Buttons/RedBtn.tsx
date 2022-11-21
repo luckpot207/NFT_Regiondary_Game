@@ -8,11 +8,11 @@ const RedBtn = styled(LoadingButton)<LoadingButtonProps>(({}) => ({
   textShadow:
     "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
   background:
-    "linear-gradient(360deg, #d90a0ab3, #ff0900), radial-gradient(#db5300, #ecff0e)",
+    "linear-gradient(360deg, #b31919, #ffffff29),radial-gradient(#812727, #ff9797)",
   transition: ".4s all",
   "&:hover": {
     background:
-      "linear-gradient(360deg, #d90a0ab3, #ff0900), radial-gradient(#702c02, #98a500)",
+      "linear-gradient(360deg, #951717, #ffffff29),radial-gradient(#3c1212, #c57575)",
     transition: ".4s all",
   },
   "&[disabled]": {

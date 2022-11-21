@@ -142,6 +142,7 @@ const JoinDuelModal: React.FC = () => {
 
   useEffect(() => {
     getBalance();
+    console.log(allDuels);
     allDuels.forEach((duel, index) => {
       if (duel.duelId == currentDuelId) {
         const duelTypeFlag = duel.type.valueOf() == 1 ? true : false;
@@ -157,8 +158,8 @@ const JoinDuelModal: React.FC = () => {
             setCurrentLegionIndex(0);
           }
           if (
-            allLegions[0].attackPower >= division.minAP &&
-            allLegions[0].attackPower < division.maxAP
+            allLegions[0]?.attackPower >= division.minAP &&
+            allLegions[0]?.attackPower < division.maxAP
           ) {
             setDivisionIndex(index);
           }

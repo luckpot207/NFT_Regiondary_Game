@@ -146,13 +146,6 @@ const MassHuntModal: React.FC = () => {
                 blstReward: Number(blstReward).toFixed(2),
               };
               dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
-              dispatch(setMassHuntResult(huntResult));
             }
           });
         } else {

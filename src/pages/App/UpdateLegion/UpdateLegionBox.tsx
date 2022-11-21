@@ -164,7 +164,7 @@ const UpdateLegionBox: React.FC = () => {
       } else if (walletNumber === 1) {
         if (Number(reinvestedWalletUSD) < Number(updateUSDFee)) {
           toast.error(
-            "You do not have enough $USD in your Reinvest Wallet to update a Legion."
+            getTranslation("notEnoughUSDInReinvestWalletToUpdateLegion")
           );
           dispatch(updateLegionState({ updateLegionLoading: false }));
           return;
@@ -172,7 +172,7 @@ const UpdateLegionBox: React.FC = () => {
       } else if (walletNumber === 2) {
         if (Number(voucherWalletUSD) < Number(updateUSDFee)) {
           toast.error(
-            "You do not have enough $USD in your Voucher Wallet to udpate a Legion."
+            getTranslation("notEnoughUSDInVoucherWalletToUpdateLegion")
           );
           dispatch(updateLegionState({ updateLegionLoading: false }));
           return;

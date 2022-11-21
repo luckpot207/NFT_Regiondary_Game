@@ -155,7 +155,7 @@ const Login: React.FC = () => {
               onClick={handleCloseClick}
             >
               <Grid item xs={12} sm={12}>
-                <Box sx={{ paddingTop: "50%", position: "relative" }}>
+                <Box sx={{ paddingTop: "64%", position: "relative" }}>
                   {
                     <Box
                       sx={{ position: "absolute", top: 0, left: 0, right: 0 }}

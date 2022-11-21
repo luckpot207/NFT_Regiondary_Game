@@ -245,7 +245,7 @@ const CreateDuelModal: React.FC = () => {
       );
       setCreateDuelLoading(false);
       dispatch(updateModalState({ createDuelModalOpen: false }));
-      toast.success("yourduelhasbeencreated");
+      toast.success(getTranslation("yourduelhasbeencreated"));
       getAllDuelsAct(dispatch, duelContract, legionContract);
     } catch (error) {
       setCreateDuelLoading(false);

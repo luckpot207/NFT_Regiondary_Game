@@ -32,6 +32,9 @@ const version = {
 
 const gameSiteUrl = "https://play.bigcrypto.game";
 const companySiteUrl = "https://cryptogames.agency";
+const gameLongName = "Big Crypto Game";
+const gameShortName = "BigCryptoGame";
+const gameMonsterName = "Coin";
 
 const approveBLSTForBeast = "50000";
 const approveBUSDForLegion = "1400";
@@ -160,4 +163,7 @@ export default {
   maxEstimatePrice,
   nftItemType,
   symbols,
+  gameLongName,
+  gameShortName,
+  gameMonsterName,
 };

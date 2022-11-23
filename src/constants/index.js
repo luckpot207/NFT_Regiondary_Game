@@ -33,7 +33,7 @@ const navlink = {
   pancake:
     "https://pancakeswap.finance/swap?outputCurrency=0xF0997486D784C0EC4aD2ee5B413bD318813dd518&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
   dextool:
-    "https://www.dextools.io/app/bnb/pair-explorer/0x13fade99f5d7038cd53261770d80902c8756adae",
+    "https://www.dextools.io/app/en/bnb/pair-explorer/0x58bb23b8f9f24133b22a24abc1883ea959c25225",
   whitepaper: "https://docs.bigcrypto.game/",
   tutorialVideoLink: "https://youtu.be/Ujn7WhSymXE",
   reincarnationDocLink:

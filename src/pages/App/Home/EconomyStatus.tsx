@@ -261,12 +261,12 @@ const EconomyStatus: React.FC = () => {
 
   const handleVote = () => {
     if (!huntCondition) {
-      toast.error("You need to hunt 3 days to be able to vote.");
+      toast.error("You need to mine 3 days to be able to vote.");
       return;
     }
 
     if (!hasEnoughAP) {
-      toast.error("You don't have enough total Attack Power!");
+      toast.error("You don't have enough total Cyber Power!");
       return;
     }
 

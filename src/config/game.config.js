@@ -11,7 +11,7 @@ const version = {
     blockExplorerUrls: ["https://testnet.bscscan.com/"],
     duelPeriod: 1200 * 1000,
     duelInvitePeriod: 600 * 1000,
-    oneDay: 24 * 3600 * 1000,
+    oneDay: 120 * 1000,
   },
   main: {
     version: "main",
@@ -26,7 +26,7 @@ const version = {
     blockExplorerUrls: ["https://bscscan.com"],
     duelPeriod: 24 * 3600 * 1000,
     duelInvitePeriod: 6 * 3600 * 1000,
-    oneDay: 120 * 1000,
+    oneDay: 24 * 3600 * 1000,
   },
 };
 
@@ -149,7 +149,7 @@ const languages = [
 ];
 
 export default {
-  version: version.test,
+  version: version.main,
   gameSiteUrl,
   companySiteUrl,
   languages,

@@ -104,7 +104,16 @@ const NavList: React.FC = () => {
                       }}
                       alt="icon"
                     />
-                    <ListItemText primary={getTranslation(navItem.title)} />
+                    <ListItemText
+                      primary={
+                        getTranslation(navItem.title) +
+                        (navItem.path
+                          ? navItem.path.indexOf("marketplace") > -1
+                            ? " (Coming Soon)"
+                            : ""
+                          : "")
+                      }
+                    />
                   </ListItemButton>
                 </Tooltip>
               </NavLink>

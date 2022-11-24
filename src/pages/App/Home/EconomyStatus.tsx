@@ -318,7 +318,7 @@ const EconomyStatus: React.FC = () => {
                 marginBottom: 1,
               }}
             >
-              {getTranslation("playerBehaviour")}
+              {getTranslation("playerBehaviour")} (Beta)
             </Typography>
             <Stack justifyContent="space-between" flexDirection="row">
               <Typography>100%</Typography>
@@ -359,7 +359,7 @@ const EconomyStatus: React.FC = () => {
                 marginBottom: 1,
               }}
             >
-              {getTranslation("playerSentiment")}
+              {getTranslation("playerSentiment")} (Beta)
             </Typography>
             <Box
               sx={{

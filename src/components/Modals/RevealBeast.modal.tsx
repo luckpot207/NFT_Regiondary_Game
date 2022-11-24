@@ -9,6 +9,7 @@ import { getTranslation } from "../../utils/utils";
 import { useBeast } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import constants from "../../constants";
+import VideoNFT from "../UI/VideoNFT";
 
 const RevealBeastModal: React.FC = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const RevealBeastModal: React.FC = () => {
             {getTranslation("revealBeasts")}
           </FireBtn>
         </Box>
-        <img style={{ width: "100%" }} src={"/assets/images/reveal.gif"} />
+        <VideoNFT src="/assets/images/reveal.mp4" />
       </DialogContent>
     </Dialog>
   );

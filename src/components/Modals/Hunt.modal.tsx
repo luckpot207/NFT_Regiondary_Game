@@ -157,9 +157,13 @@ const HuntModal: React.FC = () => {
         allMonsters[parseInt(huntResult["monsterId"]) - 1].BLSTReward.toFixed(2)
       )} ${getTranslation("blst")} (= ${formatNumber(
         allMonsters[parseInt(huntResult["monsterId"]) - 1].BUSDReward.toFixed(2)
-      )} USD) from Monster ${constants.itemNames.monsters[
+      )} USD) from the ${
+        gameConfig.gameMonsterName
+      } ${constants.itemNames.monsters[
         huntResult["monsterId"] as IMonsterId
-      ]?.toUpperCase()} in Crypto Legions! Play #CryptoLegions here: https://cryptolegions.app`;
+      ]?.toUpperCase()} in the ${gameConfig.gameLongName}! Play #${
+        gameConfig.gameShortName
+      } here: ${gameConfig.gameSiteUrl}`;
     const mainLink = `url=${encodeURI(shareImgUrl)}&text=${encodeURI(text)}`;
     const telegramShareLink = `https://xn--r1a.link/share/url?${mainLink}`;
     const twitterShareLink = `https://twitter.com/intent/tweet?${mainLink}`;

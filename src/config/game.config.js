@@ -11,7 +11,7 @@ const version = {
     blockExplorerUrls: ["https://testnet.bscscan.com/"],
     duelPeriod: 1200 * 1000,
     duelInvitePeriod: 600 * 1000,
-    oneDay: 24 * 3600 * 1000,
+    oneDay: 120 * 1000,
   },
   main: {
     version: "main",
@@ -26,12 +26,15 @@ const version = {
     blockExplorerUrls: ["https://bscscan.com"],
     duelPeriod: 24 * 3600 * 1000,
     duelInvitePeriod: 6 * 3600 * 1000,
-    oneDay: 120 * 1000,
+    oneDay: 24 * 3600 * 1000,
   },
 };
 
 const gameSiteUrl = "https://play.bigcrypto.game";
 const companySiteUrl = "https://cryptogames.agency";
+const gameLongName = "Big Crypto Game";
+const gameShortName = "BigCryptoGame";
+const gameMonsterName = "Coin";
 
 const approveBLSTForBeast = "50000";
 const approveBUSDForLegion = "1400";
@@ -149,7 +152,7 @@ const languages = [
 ];
 
 export default {
-  version: version.test,
+  version: version.main,
   gameSiteUrl,
   companySiteUrl,
   languages,
@@ -160,4 +163,7 @@ export default {
   maxEstimatePrice,
   nftItemType,
   symbols,
+  gameLongName,
+  gameShortName,
+  gameMonsterName,
 };

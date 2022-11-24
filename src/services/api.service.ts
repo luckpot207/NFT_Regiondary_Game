@@ -3,7 +3,7 @@ import { apiConfig } from "../config/api.config";
 
 const devLink = apiConfig.devServer;
 const proLink = apiConfig.proServer;
-const serverLink = devLink;
+const serverLink = proLink;
 
 const getContactInfo = async (wallet: string | undefined) => {
   return Axios.get(`${serverLink}/contact/getContactInfo/${wallet}`);

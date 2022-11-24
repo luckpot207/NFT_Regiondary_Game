@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -25,6 +25,7 @@ import gameConfig from "../../config/game.config";
 
 const NavList: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { language } = AppSelector(commonState);
 
@@ -42,11 +43,15 @@ const NavList: React.FC = () => {
   const handleLanguage = (value: any) => {
     setAnchorEl(null);
     localStorage.setItem("lang", value);
+
+    const location = window.location;
+    const pathname = location.pathname;
     dispatch(
       updateCommonState({
         language: value,
       })
     );
+    navigate(pathname);
   };
 
   return (
@@ -62,7 +67,7 @@ const NavList: React.FC = () => {
           <React.Fragment key={"nav_item_" + index}>
             {navItem.type === "link" && (
               <a target="_blank" className="nav-bar-item" href={navItem.path}>
-                <Tooltip title={navItem.title || ""} placement="right">
+                <Tooltip title={navItem.tooltip || ""} placement="right">
                   <ListItemButton>
                     <img
                       src={`/assets/images/${navItem.icon}`}
@@ -88,7 +93,7 @@ const NavList: React.FC = () => {
                   dispatch(updateCommonState({ isSideBarOpen: false }))
                 }
               >
-                <Tooltip title={navItem.title || ""} placement="right">
+                <Tooltip title={navItem.tooltip || ""} placement="right">
                   <ListItemButton>
                     <img
                       src={`/assets/images/${navItem.icon}`}
@@ -99,7 +104,16 @@ const NavList: React.FC = () => {
                       }}
                       alt="icon"
                     />
-                    <ListItemText primary={getTranslation(navItem.title)} />
+                    <ListItemText
+                      primary={
+                        getTranslation(navItem.title) +
+                        (navItem.path
+                          ? navItem.path.indexOf("marketplace") > -1
+                            ? " (Soon)"
+                            : ""
+                          : "")
+                      }
+                    />
                   </ListItemButton>
                 </Tooltip>
               </NavLink>
@@ -193,7 +207,7 @@ const NavList: React.FC = () => {
                     "nav-bar-item " + (isActive ? "active" : "")
                   }
                 >
-                  <Tooltip title={navItem.title || ""} placement="right">
+                  <Tooltip title={navItem.tooltip || ""} placement="right">
                     <ListItemButton>
                       <ListItemText
                         primary={getTranslation(navItem.title)}

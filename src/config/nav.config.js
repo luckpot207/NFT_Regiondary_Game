@@ -34,6 +34,20 @@ export const navLinks = {
   policy: "/policy",
 };
 
+export const navTooltips = {
+  warriors: "Devs",
+  beasts: "Servers",
+  legions: "Cybers",
+  hunt: "Mine",
+  duels: "Duels",
+  buyBLST: "Buy $Crypto",
+  help: "Help",
+  whitepaper: "Whitepaper",
+  tips: "Tips",
+  referrals: "Referrals",
+  policy: "Policy",
+};
+
 export const navConfig = {
   drawerWidth: 250,
   routes: () => [
@@ -108,30 +122,35 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "warrior.png",
+        tooltip: navTooltips.warriors,
         path: navLinks.warriors,
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "beast.png",
+        tooltip: navTooltips.beasts,
         path: navLinks.beasts,
       },
       {
         type: "navlink",
         title: "legions",
         icon: "legion.png",
+        tooltip: navTooltips.legions,
         path: navLinks.legions,
       },
       {
         type: "navlink",
         title: "hunt",
         icon: "hunt.png",
+        tooltip: navTooltips.hunt,
         path: navLinks.hunt,
       },
       {
         type: "navlink",
         title: "duels",
         icon: "duels.png",
+        tooltip: navTooltips.duels,
         path: navLinks.duel,
       },
       {
@@ -145,18 +164,21 @@ export const navConfig = {
         type: "navlink",
         title: "warriors",
         icon: "marketWarrior.png",
+        tooltip: navTooltips.warriors,
         path: navLinks.warriorsmarketplace,
       },
       {
         type: "navlink",
         title: "beasts",
         icon: "marketBeast.png",
+        tooltip: navTooltips.beasts,
         path: navLinks.beastsmarketplace,
       },
       {
         type: "navlink",
         title: "legions",
         icon: "marketLegion.png",
+        tooltip: navTooltips.legions,
         path: navLinks.legionsmarketplace,
       },
       {
@@ -170,12 +192,14 @@ export const navConfig = {
         type: "link",
         title: "buyBlst",
         icon: "pancake.png",
+        tooltip: navTooltips.buyBLST,
         path: constants.navlink.pancake,
       },
       {
         type: "navlink",
         title: "help",
         icon: "support.png",
+        tooltip: navTooltips.help,
         path: navLinks.help,
       },
       {
@@ -194,18 +218,21 @@ export const navConfig = {
         type: "link",
         title: "whitepaper",
         icon: "whitepaper.png",
+        tooltip: navTooltips.whitepaper,
         path: constants.navlink.whitepaper,
       },
       {
         type: "navlink",
         title: "tips",
         icon: "tips.png",
+        tooltip: navTooltips.tips,
         path: navLinks.tips,
       },
       {
         type: "navlink",
         title: "referrals",
         icon: "refer.png",
+        tooltip: navTooltips.referrals,
         path: navLinks.referrals,
       },
       {
@@ -245,6 +272,7 @@ export const navConfig = {
         type: "privacy",
         title: "policy",
         icon: "policy",
+        tooltip: navTooltips.policy,
         path: navLinks.policy,
       },
       {

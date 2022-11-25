@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { formatNumber, getTranslation, showWallet } from "../../../utils/utils";
+import constants from "../../../constants";
 
 const useStyles = makeStyles({
   leaderboard: {
-    border: "3px solid #f66810",
+    border: `3px solid ${constants.color.color2}`,
     borderRadius: 5,
     padding: 16,
     display: "flex",

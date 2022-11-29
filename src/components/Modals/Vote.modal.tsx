@@ -200,7 +200,8 @@ const VoteModal: React.FC = () => {
               marginBottom: 2,
             }}
           >
-            V3 will stay live as long as at least 30% players vote Good.
+            This game version will stay live as long as at least 30% players
+            vote Good.
           </Typography>
           <FireBtn
             sx={{

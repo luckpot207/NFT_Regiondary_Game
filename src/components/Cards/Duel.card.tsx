@@ -14,8 +14,8 @@ import FireBtn from "../Buttons/FireBtn";
 import GreyBtn from "../Buttons/GreyBtn";
 import { getTranslation, formatNumber } from "../../utils/utils";
 import { cancelDuel } from "../../web3hooks/contractFunctions/duel.contract";
-import { useLegion, useDuelSystem } from "../../web3hooks/useContract";
-import { getAllDuelsAct } from "../../services/duel.service";
+import { useLegion, useDuelSystem, useWeb3 } from "../../web3hooks/useContract";
+import DuelService from "../../services/duel.service";
 import constants from "../../constants";
 
 type Props = {
@@ -26,6 +26,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   // Hook info
   const dispatch = useDispatch();
 
+  const web3 = useWeb3();
   const { duelStatus } = AppSelector(filterAndPageState);
   const { allDuels, divisions } = AppSelector(duelState);
   const { allLegions } = AppSelector(legionState);
@@ -57,7 +58,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setDuelFlag(false);
     divisions.forEach((division: IDivision) => {
       if (
@@ -135,7 +136,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
         })
       );
       toast.success("Success");
-      getAllDuelsAct(dispatch, duelContract, legionContract);
+      DuelService.getAllDuelsAct(
+        dispatch,
+        web3,
+        account,
+        duelContract,
+        legionContract
+      );
     } catch (e) {
       dispatch(
         updateDuelState({

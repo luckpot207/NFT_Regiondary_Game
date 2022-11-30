@@ -132,6 +132,7 @@ const UpdatePriceModal: React.FC = () => {
         MarketplaceService.getAllLegionsMarketItemsAct(
           dispatch,
           web3,
+          account,
           legionContract,
           marketplaceContract
         );

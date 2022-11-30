@@ -4,7 +4,7 @@ const version = {
     chain: "testnet",
     chainID: process.env.REACT_APP_TEST_CHAIN_ID || 97,
     chainIDHex: process.env.REACT_APP_TEST_CHAIN_ID_HEX || 0x61,
-    rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    rpcUrl: "https://data-seed-prebsc-2-s2.binance.org:8545/",
     rpcWsUrl:
       "wss://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/testnet/ws",
     walletAddRpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
@@ -46,6 +46,12 @@ const nftItemType = {
   warrior: 2,
   legion: 3,
 };
+
+const buyingLegionBlockPeriod = 3600 * 24 * 7;
+const maxBuyingLegionItemNum = 2;
+
+const displayDuelsBlockPeriod = 3600 * 48;
+const maxDuelNumWithSamePlayer = 4;
 
 const symbols = {
   warrior: "D",
@@ -166,4 +172,8 @@ export default {
   gameLongName,
   gameShortName,
   gameMonsterName,
+  buyingLegionBlockPeriod,
+  maxBuyingLegionItemNum,
+  displayDuelsBlockPeriod,
+  maxDuelNumWithSamePlayer,
 };

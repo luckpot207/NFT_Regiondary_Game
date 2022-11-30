@@ -206,9 +206,11 @@ const UpdateLegionBox: React.FC = () => {
         {isSmallerThanSM
           ? `${getTranslation("existingAPIs")} ${formatNumber(
               Number(legionForUpdate.attackPower)
-            )} AP - ${getTranslation("ShortFeeToolTip")} ${Number(
-              updateBLSTFee
-            ).toFixed(2)} ${getTranslation("$")}${getTranslation("blst")}`
+            )} ${gameConfig.symbols.attackPower} - ${getTranslation(
+              "ShortFeeToolTip"
+            )} ${Number(updateBLSTFee).toFixed(2)} ${getTranslation(
+              "$"
+            )}${getTranslation("blst")}`
           : `
           ${getTranslation("yourOldLegionAP")} ${formatNumber(
               Number(legionForUpdate.attackPower)
@@ -245,13 +247,13 @@ const UpdateLegionBox: React.FC = () => {
               ? `${getTranslation("updateLegion")} ${formatNumber(
                   Number(legionForUpdate.attackPower) +
                     Number(totalWarriorAttackPower)
-                )} AP`
+                )} ${gameConfig.symbols.attackPower}`
               : `${getTranslation("updateLegion")} ${getTranslation(
                   "to"
                 )} ${formatNumber(
                   Number(legionForUpdate.attackPower) +
                     Number(totalWarriorAttackPower)
-                )} AP`}
+                )} ${gameConfig.symbols.attackPower}`}
           </FireBtn>
         </Grid>
       </Grid>
@@ -264,8 +266,10 @@ const UpdateLegionBox: React.FC = () => {
                 : { color: "white" }
             }
           >
-            {isSmallerThanSM ? "W" : getTranslation("warriors")}: {warriorCount}{" "}
-            / {totalBeastCapacity}
+            {isSmallerThanSM
+              ? gameConfig.symbols.warrior
+              : getTranslation("warriors")}
+            : {warriorCount} / {totalBeastCapacity}
           </Typography>
         </Grid>
         <Grid item xs={6} sx={{ textAlign: "center" }}>
@@ -276,8 +280,10 @@ const UpdateLegionBox: React.FC = () => {
                 : { color: "white" }
             }
           >
-            {isSmallerThanSM ? "B" : getTranslation("beasts")}: {beastCount} /
-            10
+            {isSmallerThanSM
+              ? gameConfig.symbols.beast
+              : getTranslation("beasts")}
+            : {beastCount} / 10
           </Typography>
         </Grid>
       </Grid>

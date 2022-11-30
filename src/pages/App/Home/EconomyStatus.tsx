@@ -261,12 +261,12 @@ const EconomyStatus: React.FC = () => {
 
   const handleVote = () => {
     if (!huntCondition) {
-      toast.error("You need to hunt 3 days to be able to vote.");
+      toast.error(getTranslation("needToHunt3DaysToVote"));
       return;
     }
 
     if (!hasEnoughAP) {
-      toast.error("You don't have enough total Attack Power!");
+      toast.error(getTranslation("notHaveEnoughTotalAttackPower"));
       return;
     }
 
@@ -318,7 +318,7 @@ const EconomyStatus: React.FC = () => {
                 marginBottom: 1,
               }}
             >
-              {getTranslation("playerBehaviour")}
+              {getTranslation("playerBehaviour")} (Beta)
             </Typography>
             <Stack justifyContent="space-between" flexDirection="row">
               <Typography>100%</Typography>
@@ -359,7 +359,7 @@ const EconomyStatus: React.FC = () => {
                 marginBottom: 1,
               }}
             >
-              {getTranslation("playerSentiment")}
+              {getTranslation("playerSentiment")} (Beta)
             </Typography>
             <Box
               sx={{

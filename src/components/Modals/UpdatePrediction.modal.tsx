@@ -16,10 +16,10 @@ import { FaTimes } from "react-icons/fa";
 import { duelState } from "../../reducers/duel.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { AppSelector } from "../../store";
-import { useDuelSystem, useLegion } from "../../web3hooks/useContract";
+import { useDuelSystem, useLegion, useWeb3 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { updatePrediction } from "../../web3hooks/contractFunctions/duel.contract";
-import { getAllDuelsAct } from "../../services/duel.service";
+import DuelService from "../../services/duel.service";
 import { getTranslation } from "../../utils/utils";
 import constants from "../../constants";
 
@@ -43,6 +43,7 @@ const UpdatePredictionModal: React.FC = () => {
 
   // Account & Web3
   const { account } = useWeb3React();
+  const web3 = useWeb3();
 
   // Contract
   const duelContract = useDuelSystem();
@@ -122,7 +123,13 @@ const UpdatePredictionModal: React.FC = () => {
       setUpdatePredictionLoading(false);
       dispatch(updateModalState({ updatePredictionModalOpen: false }));
       toast.success(getTranslation("yourpredictionhasbeenupdated"));
-      getAllDuelsAct(dispatch, duelContract, legionContract);
+      DuelService.getAllDuelsAct(
+        dispatch,
+        web3,
+        account,
+        duelContract,
+        legionContract
+      );
     } catch (error) {
       setUpdatePredictionLoading(false);
       console.log(error);

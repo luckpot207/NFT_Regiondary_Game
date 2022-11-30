@@ -29,10 +29,7 @@ import {
 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
-import {
-  getAllDuelsAct,
-  confirmUnclaimedWallet,
-} from "../../services/duel.service";
+import DuelService from "../../services/duel.service";
 import { FaTimes } from "react-icons/fa";
 import OrgMenuItem from "../../components/UI/OrgMenuItem";
 import GreenMenuItem from "../../components/UI/GreenMenuItem";
@@ -213,7 +210,9 @@ const JoinDuelModal: React.FC = () => {
   };
 
   const handleJoinDuel = async () => {
-    if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+    if (
+      !DuelService.confirmUnclaimedWallet(divisions[divisionIndex].betPrice)
+    ) {
       const blstAmount = await getBLSTAmount(
         web3,
         feeHandlerContract,
@@ -241,7 +240,13 @@ const JoinDuelModal: React.FC = () => {
       setJoinDuelLoading(false);
       dispatch(updateModalState({ joinDuelModalOpen: false }));
       toast.success(getTranslation("successfullyjoined"));
-      getAllDuelsAct(dispatch, duelContract, legionContract);
+      DuelService.getAllDuelsAct(
+        dispatch,
+        web3,
+        account,
+        duelContract,
+        legionContract
+      );
     } catch (e) {
       setJoinDuelLoading(false);
       console.log(e);

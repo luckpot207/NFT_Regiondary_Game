@@ -182,6 +182,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
       MarketplaceService.getAllLegionsMarketItemsAct(
         dispatch,
         web3,
+        account,
         legionContract,
         marketplaceContract
       );
@@ -204,6 +205,7 @@ const LegionMarketCard: React.FC<Props> = ({ legion }) => {
       MarketplaceService.getAllLegionsMarketItemsAct(
         dispatch,
         web3,
+        account,
         legionContract,
         marketplaceContract
       );

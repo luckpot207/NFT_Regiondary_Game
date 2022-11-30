@@ -132,7 +132,7 @@ export const getWalletHuntPendingMonsterId = async (contract, account) => {
   return res;
 };
 
-export const ownerOf = async (contract, tokenId) => {
+export const ownerOfLegion = async (contract, tokenId) => {
   const res = await contract.methods.ownerOf(tokenId).call();
   return res;
 };

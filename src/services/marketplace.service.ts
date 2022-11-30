@@ -1,4 +1,5 @@
 import { Contract } from "web3-eth-contract";
+import Axios from "axios";
 import constants from "../constants";
 import { updateMarketplaceState } from "../reducers/marketplace.reducer";
 import { AppDispatch } from "../store";
@@ -22,10 +23,13 @@ import {
 } from "../web3hooks/contractFunctions/marketplace.contract";
 import { getWarriorBalance } from "../web3hooks/contractFunctions/warrior.contract";
 import { getMarketplaceAddress } from "../web3hooks/getAddress";
+import { apiConfig } from "../config/api.config";
+import gameConfig from "../config/game.config";
 
 const getAllLegionsMarketItemsAct = async (
   dispatch: AppDispatch,
   web3: any,
+  account: any,
   legionContract: Contract,
   marketplaceContract: Contract
 ) => {
@@ -41,30 +45,45 @@ const getAllLegionsMarketItemsAct = async (
       0,
       balanceOfLegion
     );
-    console.log(allLegionsRes);
     const legionInfos = allLegionsRes[0];
     const ids = allLegionsRes[1];
     const huntStatus = allLegionsRes[2];
     const marketItems = allLegionsRes[3];
     let allLegionsMarketItems: ILegionMarket[] = [];
+    let blockPeriodSellerList = await getLegionBlockPeriodSellerList(
+      account,
+      currentTimeStamp
+    );
     ids.forEach((id: String, index: number) => {
-      var temp: ILegionMarket = {
-        id: id,
-        name: legionInfos[index].name,
-        beastIds: legionInfos[index].beast_ids,
-        warriorIds: legionInfos[index].warrior_ids,
-        attackPower: parseFloat(legionInfos[index].attack_power),
-        jpg: getLegionJpgImageUrl(parseFloat(legionInfos[index].attack_power)),
-        mp4: getLegionMp4ImageUrl(parseFloat(legionInfos[index].attack_power)),
-        supplies: parseFloat(legionInfos[index].supplies),
-        huntStatus: huntStatus[index],
-        price: Number(web3.utils.fromWei(marketItems[index].price, "ether")),
-        seller: marketItems[index].seller,
-        listingTime: marketItems[index].listingTime,
-        newItem:
-          currentTimeStamp - Number(marketItems[index].listingTime) < 24 * 3600,
-      };
-      allLegionsMarketItems.push(temp);
+      if (
+        blockPeriodSellerList.filter(
+          (seller: string) =>
+            seller === (marketItems[index].seller as String).toLowerCase()
+        ).length < gameConfig.maxBuyingLegionItemNum
+      ) {
+        var temp: ILegionMarket = {
+          id: id,
+          name: legionInfos[index].name,
+          beastIds: legionInfos[index].beast_ids,
+          warriorIds: legionInfos[index].warrior_ids,
+          attackPower: parseFloat(legionInfos[index].attack_power),
+          jpg: getLegionJpgImageUrl(
+            parseFloat(legionInfos[index].attack_power)
+          ),
+          mp4: getLegionMp4ImageUrl(
+            parseFloat(legionInfos[index].attack_power)
+          ),
+          supplies: parseFloat(legionInfos[index].supplies),
+          huntStatus: huntStatus[index],
+          price: Number(web3.utils.fromWei(marketItems[index].price, "ether")),
+          seller: marketItems[index].seller,
+          listingTime: marketItems[index].listingTime,
+          newItem:
+            currentTimeStamp - Number(marketItems[index].listingTime) <
+            24 * 3600,
+        };
+        allLegionsMarketItems.push(temp);
+      }
     });
     dispatch(updateMarketplaceState({ allLegionsMarketItems }));
   } catch (error) {
@@ -91,7 +110,6 @@ const getAllWarriorMarketItemsAct = async (
       0,
       balanceOfWarrior
     );
-    console.log(allWarriorsRes);
     const ids = allWarriorsRes[0];
     const attackPowers = allWarriorsRes[1];
     const marketItems = allWarriorsRes[2];
@@ -120,7 +138,6 @@ const getAllWarriorMarketItemsAct = async (
       };
       allWarriorsMarketItems.push(temp);
     });
-    console.log(allWarriorsMarketItems);
     dispatch(updateMarketplaceState({ allWarriorsMarketItems }));
   } catch (error) {
     console.log(error);
@@ -166,11 +183,44 @@ const getAllBeastMarketItemsAct = async (
       allBeastsMarketItems.push(temp);
     });
     dispatch(updateMarketplaceState({ allBeastsMarketItems }));
-    console.log(allBeastsMarketItems);
   } catch (error) {
     console.log(error);
   }
   dispatch(updateMarketplaceState({ getAllBeastsMarketItemsLoading: false }));
+};
+
+const getLegionBlockPeriodSellerList = async (
+  account: any,
+  currentTimeStamp: any
+) => {
+  try {
+    const aWeekAgoTime = currentTimeStamp - gameConfig.buyingLegionBlockPeriod;
+    const query = `
+      {
+        marketTransactions (
+          where: {
+            itemType: 3,
+            timestamp_gt: ${aWeekAgoTime}
+            buyer: ${`"` + account?.toLowerCase() + `"`}
+          }
+          orderBy: timestamp
+          orderDirection: desc
+          first: 1000
+        ) {
+          seller
+        }
+      }
+    `;
+    const graphRes = await Axios.post(apiConfig.subgraphServer, {
+      query,
+    });
+    const data = graphRes.data.data.marketTransactions;
+    const sellers: string[] = data.map((item: any) => item.seller);
+    return sellers;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const MarketplaceService = {

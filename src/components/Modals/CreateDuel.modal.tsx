@@ -44,10 +44,7 @@ import {
   doingDuels,
 } from "../../web3hooks/contractFunctions/duel.contract";
 import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
-import {
-  confirmUnclaimedWallet,
-  getAllDuelsAct,
-} from "../../services/duel.service";
+import DuelService from "../../services/duel.service";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
 
@@ -218,7 +215,9 @@ const CreateDuelModal: React.FC = () => {
       toast.error(getTranslation("pleaseprovidevalidvalue"));
       return;
     }
-    if (!confirmUnclaimedWallet(divisions[divisionIndex].betPrice)) {
+    if (
+      !DuelService.confirmUnclaimedWallet(divisions[divisionIndex].betPrice)
+    ) {
       const blstAmount = await getBLSTAmount(
         web3,
         feeHandlerContract,
@@ -246,7 +245,13 @@ const CreateDuelModal: React.FC = () => {
       setCreateDuelLoading(false);
       dispatch(updateModalState({ createDuelModalOpen: false }));
       toast.success(getTranslation("yourduelhasbeencreated"));
-      getAllDuelsAct(dispatch, duelContract, legionContract);
+      DuelService.getAllDuelsAct(
+        dispatch,
+        web3,
+        account,
+        duelContract,
+        legionContract
+      );
     } catch (error) {
       setCreateDuelLoading(false);
     }

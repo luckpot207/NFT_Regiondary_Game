@@ -215,7 +215,9 @@ const CreateLegionBox: React.FC = () => {
               <>{getTranslation("notEnoughBeasts")}</>
             ) : totalWarriorAttackPower < 2000 ? (
               <>
-                {`${getTranslation("min")} 2000 AP ${getTranslation("needed")}`}
+                {`${getTranslation("min")} 2000 ${
+                  gameConfig.symbols.attackPower
+                } ${getTranslation("needed")}`}
               </>
             ) : (
               ""
@@ -248,8 +250,10 @@ const CreateLegionBox: React.FC = () => {
                 : { color: "white" }
             }
           >
-            {isSmallerThanSM ? "W" : getTranslation("warriors")}: {warriorCount}{" "}
-            / {totalBeastCapacity}
+            {isSmallerThanSM
+              ? gameConfig.symbols.warrior
+              : getTranslation("warriors")}
+            : {warriorCount} / {totalBeastCapacity}
           </Typography>
         </Grid>
         <Grid item xs={6} sx={{ textAlign: "center" }}>
@@ -260,8 +264,10 @@ const CreateLegionBox: React.FC = () => {
                 : { color: "white" }
             }
           >
-            {isSmallerThanSM ? "B" : getTranslation("beasts")}: {beastCount} /
-            10
+            {isSmallerThanSM
+              ? gameConfig.symbols.beast
+              : getTranslation("beasts")}
+            : {beastCount} / 10
           </Typography>
         </Grid>
       </Grid>

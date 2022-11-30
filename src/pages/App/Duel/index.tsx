@@ -314,6 +314,7 @@ const Duel: React.FC = () => {
               <FireBtn
                 sx={{ width: "150px" }}
                 onClick={() => showCreateDuelModal()}
+                disabled
               >
                 {getTranslation("createduel")} (Coming Soon)
               </FireBtn>

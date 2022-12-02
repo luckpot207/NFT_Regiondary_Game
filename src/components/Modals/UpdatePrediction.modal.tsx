@@ -191,7 +191,7 @@ const UpdatePredictionModal: React.FC = () => {
           }}
         >
           <a
-            href={constants.tokenPriceUrl}
+            href={constants.navlink.tokenPriceUrl}
             target="_blank"
             style={{ color: constants.color.color2, textDecoration: "none" }}
           >

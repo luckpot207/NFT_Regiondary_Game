@@ -38,6 +38,7 @@ const navlink = {
   tutorialVideoLink: "https://youtu.be/Ujn7WhSymXE",
   reincarnationDocLink:
     "https://docs.bigcrypto.game/awesome-features/reincarnation",
+  tokenPriceUrl: "https://coinmarketcap.com/currencies/big-crypto-game/",
 };
 
 const itemNames = {
@@ -152,9 +153,6 @@ const color = {
 
 const alarmAudio = "assets/audio/busdclaimedalarm.mp3";
 
-const tokenPriceUrl =
-  "https://coinmarketcap.com/dexscan/bsc/0x13fade99f5d7038cd53261770d80902c8756adae";
-
 const all = {
   itemNames,
   navlink,
@@ -162,7 +160,6 @@ const all = {
   vote,
   color,
   alarmAudio,
-  tokenPriceUrl,
 };
 
 export default all;

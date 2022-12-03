@@ -4,7 +4,7 @@ const version = {
     chain: "testnet",
     chainID: process.env.REACT_APP_TEST_CHAIN_ID || 97,
     chainIDHex: process.env.REACT_APP_TEST_CHAIN_ID_HEX || 0x61,
-    rpcUrl: "https://data-seed-prebsc-2-s2.binance.org:8545/",
+    rpcUrl: "https://data-seed-prebsc-2-s1.binance.org:8545/",
     rpcWsUrl:
       "wss://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/testnet/ws",
     walletAddRpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],

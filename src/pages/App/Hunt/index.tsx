@@ -161,14 +161,15 @@ const Hunt: React.FC = () => {
   };
 
   const calcHuntTime = () => {
+    const { oneDay } = gameConfig.version;
     const date = new Date(lastHuntTime * 1000);
     const diff = currentTime.getTime() - date.getTime();
-    const diffSecs = (24 * 3600 * 1000 - diff) / 1000;
+    const diffSecs = (oneDay - diff) / 1000;
     const diff_in_hours = Math.floor(diffSecs / 3600).toFixed(0);
     const diff_in_mins = Math.floor((diffSecs % 3600) / 60).toFixed(0);
     const diff_in_secs = Math.floor(diffSecs % 3600) % 60;
     if (lastHuntTime !== 0) {
-      if (diff / (1000 * 3600 * 24) >= 1) {
+      if (diff / oneDay >= 1) {
         return "00h 00m 00s";
       }
     } else if (lastHuntTime === 0) {
@@ -178,10 +179,11 @@ const Hunt: React.FC = () => {
   };
 
   const checkHuntTime = () => {
+    const { oneDay } = gameConfig.version;
     var diff = currentTime.getTime() - lastHuntTime * 1000;
-    if (diff / 1000 / 3600 >= 24) {
+    if (diff / oneDay >= 1) {
     } else {
-      var totalSecs = parseInt(((24 * 1000 * 3600 - diff) / 1000).toFixed(2));
+      var totalSecs = parseInt(((oneDay - diff) / 1000).toFixed(2));
       var hours = Math.floor(totalSecs / 3600).toFixed(0);
       var mins = Math.floor((totalSecs % 3600) / 60).toFixed(0);
       var secs = (Math.floor(totalSecs % 3600) % 60).toFixed(0);

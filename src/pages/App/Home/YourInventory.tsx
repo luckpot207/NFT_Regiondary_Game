@@ -21,9 +21,9 @@ import InventoryService from "../../../services/inventory.service";
 import LegionService from "../../../services/legion.service";
 import { apiConfig } from "../../../config/api.config";
 import { getLegionLastHuntTime } from "../../../web3hooks/contractFunctions/legion.contract";
+import gameConfig from "../../../config/game.config";
 
 const YourInventory: React.FC = () => {
-  let clockTimer: any = 0;
   // Hook Info
   const dispatch = useDispatch();
   const { reloadStatusTime } = AppSelector(commonState);
@@ -82,13 +82,11 @@ const YourInventory: React.FC = () => {
 
   // UseEffect
   useEffect(() => {
-    clockTimer = setInterval(() => {
+    setTimeout(() => {
       setCurrentTime(new Date());
     }, 1000);
-    return () => {
-      clearInterval(clockTimer);
-    };
-  }, []);
+    checkHuntTime();
+  }, [currentTime]);
 
   useEffect(() => {
     getBalance();
@@ -152,14 +150,15 @@ const YourInventory: React.FC = () => {
   };
 
   const calcHuntTime = (firstHuntTime: number) => {
+    const { oneDay } = gameConfig.version;
     const date = new Date(firstHuntTime * 1000);
     const diff = currentTime.getTime() - date.getTime();
-    const diffSecs = (24 * 3600 * 1000 - diff) / 1000;
+    const diffSecs = (oneDay - diff) / 1000;
     const diff_in_hours = Math.floor(diffSecs / 3600).toFixed(0);
     const diff_in_mins = Math.floor((diffSecs % 3600) / 60).toFixed(0);
     const diff_in_secs = (Math.floor(diffSecs % 3600) % 60).toFixed(0);
     if (firstHuntTime !== 0) {
-      if (diff / (1000 * 3600 * 24) >= 1) {
+      if (diff / oneDay >= 1) {
         return "00h 00m 00s";
       }
     } else if (firstHuntTime === 0) {
@@ -170,9 +169,27 @@ const YourInventory: React.FC = () => {
       parseInt(diff_in_mins) == 0 &&
       parseInt(diff_in_secs) == 0
     ) {
-      getBalance();
+      return "00h 00m 00s";
     }
     return `${diff_in_hours}h ${diff_in_mins}m ${diff_in_secs}s`;
+  };
+
+  const checkHuntTime = () => {
+    const { oneDay } = gameConfig.version;
+    const date = new Date(firstHuntTime * 1000);
+    const diff = currentTime.getTime() - date.getTime();
+    const diffSecs = (oneDay - diff) / 1000;
+    const diff_in_hours = Math.floor(diffSecs / 3600).toFixed(0);
+    const diff_in_mins = Math.floor((diffSecs % 3600) / 60).toFixed(0);
+    const diff_in_secs = (Math.floor(diffSecs % 3600) % 60).toFixed(0);
+    if (
+      parseInt(diff_in_hours) == 0 &&
+      parseInt(diff_in_mins) == 0 &&
+      parseInt(diff_in_secs) == 0
+    ) {
+      console.log("refresh");
+      getBalance();
+    }
   };
 
   return (

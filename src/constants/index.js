@@ -38,7 +38,8 @@ const navlink = {
   tutorialVideoLink: "https://youtu.be/Ujn7WhSymXE",
   reincarnationDocLink:
     "https://docs.bigcrypto.game/awesome-features/reincarnation",
-  tokenPriceUrl: "https://coinmarketcap.com/currencies/big-crypto-game/",
+  tokenPriceUrl:
+    "https://pancakeswap.finance/swap?outputCurrency=0xF0997486D784C0EC4aD2ee5B413bD318813dd518&inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
 };
 
 const itemNames = {

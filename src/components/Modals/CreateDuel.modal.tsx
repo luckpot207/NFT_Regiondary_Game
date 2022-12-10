@@ -299,7 +299,7 @@ const CreateDuelModal: React.FC = () => {
         </Typography>
         <Typography>
           {getTranslation("currenty1blstis", {
-            CL1: Math.round(BLSTToUSD.valueOf() * 10000) / 100,
+            CL1: BLSTToUSD.toFixed(4),
           })}
         </Typography>
         <Box
@@ -333,16 +333,16 @@ const CreateDuelModal: React.FC = () => {
                   allLegions.map((legion: ILegion, index: number) =>
                     legionsDuelStatus[index] ? (
                       <OrgMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </OrgMenuItem>
                     ) : legion.attackPower.valueOf() >= 10000 &&
                       legion.attackPower < 70000 ? (
                       <GreenMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </GreenMenuItem>
                     ) : (
                       <RedMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </RedMenuItem>
                     )
                   )

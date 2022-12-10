@@ -24,6 +24,7 @@ type Props = {
 };
 
 const DuelCard: React.FC<Props> = ({ duel }) => {
+  let clockTimer: any = 0;
   // Hook info
   const dispatch = useDispatch();
 
@@ -36,8 +37,20 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   const legionContract = useLegion();
 
   const [loaded, setLoaded] = useState(false);
-  const [leftTime, setLeftTime] = useState("");
+  // const [leftTime, setLeftTime] = useState("");
   const [duelFlag, setDuelFlag] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  const left_time =
+    new Date(duel.endDateTime.valueOf()).getTime() - currentTime.getTime();
+  const leftTime =
+    "" +
+    Math.floor(left_time / (60 * 60 * 1000)) +
+    "h " +
+    Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
+    "m " +
+    Math.floor((left_time % (60 * 1000)) / 1000) +
+    "s";
 
   console.log("Duel Status: ", duelStatus);
   console.log("Duel Card: ", duel);
@@ -82,20 +95,23 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   }, [allDuels]);
 
   useEffect(() => {
-    const leftTimer = setInterval(() => {
-      const left_time =
-        new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime();
-      setLeftTime(
-        "" +
-          Math.floor(left_time / (60 * 60 * 1000)) +
-          "h " +
-          Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
-          "m " +
-          Math.floor((left_time % (60 * 1000)) / 1000) +
-          "s"
-      );
+    clockTimer = setInterval(() => {
+      setCurrentTime(new Date());
     }, 1000);
-    return () => clearInterval(leftTimer);
+    // const leftTimer = setInterval(() => {
+    //   const left_time =
+    //     new Date(duel.endDateTime.valueOf()).getTime() - new Date().getTime();
+    //   setLeftTime(
+    //     "" +
+    //       Math.floor(left_time / (60 * 60 * 1000)) +
+    //       "h " +
+    //       Math.floor((left_time % (60 * 60 * 1000)) / (60 * 1000)) +
+    //       "m " +
+    //       Math.floor((left_time % (60 * 1000)) / 1000) +
+    //       "s"
+    //   );
+    // }, 1000);
+    return () => clearInterval(clockTimer);
   }, []);
 
   const handleDuelBtnClick = () => {

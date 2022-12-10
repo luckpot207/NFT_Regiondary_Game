@@ -18,8 +18,7 @@ const version = {
     chain: "mainnet",
     chainID: process.env.REACT_APP_MAIN_CHAIN_ID || 56,
     chainIDHex: process.env.REACT_APP_MAIN_CHAIN_ID_HEX || 0x38,
-    rpcUrl:
-      "https://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/mainnet",
+    rpcUrl: "https://bsc-dataseed1.binance.org",
     rpcWsUrl:
       "wss://speedy-nodes-nyc.moralis.io/e205f98725c0bea218c8fdee/bsc/mainnet/ws",
     walletAddRpcUrls: ["https://bsc-dataseed.binance.org/"],

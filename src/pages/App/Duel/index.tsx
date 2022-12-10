@@ -239,6 +239,13 @@ const Duel: React.FC = () => {
       <Grid container spacing={2} sx={{ my: 4 }}>
         <Grid item xs={12}>
           <Card sx={{ p: 4 }} className="bg-c5">
+            <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
+              {getTranslation("duel")} (Beta)
+            </Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Card sx={{ p: 4 }} className="bg-c5">
             {allLegions.length == 0 ? (
               <Box
                 sx={{
@@ -314,9 +321,9 @@ const Duel: React.FC = () => {
               <FireBtn
                 sx={{ width: "150px" }}
                 onClick={() => showCreateDuelModal()}
-                disabled
+                // disabled
               >
-                {getTranslation("createduel")} (Coming Soon)
+                {getTranslation("createduel")}
               </FireBtn>
             </Box>
             <Box mb={1}>

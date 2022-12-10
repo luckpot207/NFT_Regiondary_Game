@@ -299,7 +299,7 @@ const CreateDuelModal: React.FC = () => {
         </Typography>
         <Typography>
           {getTranslation("currenty1blstis", {
-            CL1: BLSTToUSD.toFixed(4),
+            CL1: Number(BLSTToUSD).toFixed(4),
           })}
         </Typography>
         <Box

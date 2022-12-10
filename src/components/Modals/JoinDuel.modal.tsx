@@ -312,7 +312,7 @@ const JoinDuelModal: React.FC = () => {
         </Typography>
         <Typography>
           {getTranslation("currenty1cryptois", {
-            CL1: Math.round(BLSTToUSD.valueOf() * 10000) / 100,
+            CL1: Math.round(BLSTToUSD.valueOf() * 10000) / 10000,
           })}
         </Typography>
         <Box

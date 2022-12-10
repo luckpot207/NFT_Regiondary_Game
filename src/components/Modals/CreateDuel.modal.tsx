@@ -292,7 +292,7 @@ const CreateDuelModal: React.FC = () => {
         />
       </DialogTitle>
       <DialogContent dividers>
-        <Typography>
+        <Typography sx={{ fontWeight: "bold" }}>
           {getTranslation(
             "whatDoYouThinkTheBlstPriceInBUSDWillBeInExactly24HoursFromNow"
           )}
@@ -365,7 +365,8 @@ const CreateDuelModal: React.FC = () => {
             <Typography mt={1} mb={1}>
               {getTranslation("yourlegiondivision")} :{" "}
               {divisions[divisionIndex].minAP.valueOf() / 1000}K -{" "}
-              {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP{" "}
+              {divisions[divisionIndex].maxAP.valueOf() / 1000}K{" "}
+              {gameConfig.symbols.attackPower}{" "}
             </Typography>
           )}
         {allLegions.length != 0 &&
@@ -410,7 +411,7 @@ const CreateDuelModal: React.FC = () => {
               <Typography mb={1}>
                 {getTranslation("youmightwin")}:{" "}
                 {2 * divisions[divisionIndex].betPrice.valueOf() * 0.8} BUSD ( ={" "}
-                {Math.round(blstAmountWin * 100) / 100} $BLV4)
+                {Math.round(blstAmountWin * 100) / 100} $CRYPTO)
               </Typography>
               <Typography mb={1}>
                 {getTranslation(

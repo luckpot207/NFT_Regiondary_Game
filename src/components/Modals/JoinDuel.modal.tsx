@@ -41,6 +41,7 @@ import {
 } from "../../web3hooks/contractFunctions/duel.contract";
 import { getTranslation } from "../../utils/utils";
 import constants from "../../constants";
+import gameConfig from "../../config/game.config";
 
 const LegionSelectInput = styled(InputBase)(({ theme }) => ({
   ".MuiSelect-select": {
@@ -346,18 +347,18 @@ const JoinDuelModal: React.FC = () => {
                   allLegions.map((legion: ILegion, index: number) =>
                     legionsDuelStatus[index] ? (
                       <OrgMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </OrgMenuItem>
                     ) : legion.attackPower >=
                         divisions[currentDuelDivisionIndex].minAP &&
                       legion.attackPower <
                         divisions[currentDuelDivisionIndex].maxAP ? (
                       <GreenMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </GreenMenuItem>
                     ) : (
                       <RedMenuItem value={index} key={index}>
-                        {`#${legion.id} ${legion.name} (${legion.attackPower} AP)`}
+                        {`#${legion.id} ${legion.name} (${legion.attackPower} ${gameConfig.symbols.attackPower})`}
                       </RedMenuItem>
                     )
                   )
@@ -375,7 +376,8 @@ const JoinDuelModal: React.FC = () => {
             <Typography mt={1} mb={1}>
               {getTranslation("yourlegiondivision")}:{" "}
               {divisions[currentDuelDivisionIndex].minAP.valueOf() / 1000}K -{" "}
-              {divisions[divisionIndex].maxAP.valueOf() / 1000}K AP{" "}
+              {divisions[divisionIndex].maxAP.valueOf() / 1000}K{" "}
+              {gameConfig.symbols.attackPower}{" "}
             </Typography>
           )}
         {!legionsDuelStatus[currentLegionIndex] &&

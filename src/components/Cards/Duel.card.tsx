@@ -39,6 +39,9 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   const [leftTime, setLeftTime] = useState("");
   const [duelFlag, setDuelFlag] = useState(false);
 
+  console.log("Duel Status: ", duelStatus);
+  console.log("Duel Card: ", duel);
+
   const duelResult = () => {
     const priceDifference1 =
       Math.round(

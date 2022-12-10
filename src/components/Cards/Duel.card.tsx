@@ -17,6 +17,7 @@ import { cancelDuel } from "../../web3hooks/contractFunctions/duel.contract";
 import { useLegion, useDuelSystem, useWeb3 } from "../../web3hooks/useContract";
 import DuelService from "../../services/duel.service";
 import constants from "../../constants";
+import gameConfig from "../../config/game.config";
 
 type Props = {
   duel: IDuel;
@@ -208,7 +209,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               }}
             >
               <Typography variant="h6" className="legion-ap-text">
-                {formatNumber(duel.creatorLegion.attackPower)} AP
+                {formatNumber(duel.creatorLegion.attackPower)}{" "}
+                {gameConfig.symbols.attackPower}
               </Typography>
             </Box>
             <Typography variant="subtitle2" className="legion-id-text">
@@ -301,7 +303,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 }}
               >
                 <Typography variant="h6" className="legion-ap-text">
-                  {formatNumber(duel.creatorLegion.attackPower)} AP
+                  {formatNumber(duel.creatorLegion.attackPower)}{" "}
+                  {gameConfig.symbols.attackPower}
                 </Typography>
               </Box>
               <Typography variant="subtitle2" className="legion-id-text">
@@ -333,7 +336,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 }}
               >
                 <Typography variant="h6" className="legion-ap-text">
-                  {formatNumber(duel.joinerLegion.attackPower)} AP
+                  {formatNumber(duel.joinerLegion.attackPower)}{" "}
+                  {gameConfig.symbols.attackPower}
                 </Typography>
               </Box>
               <Typography variant="subtitle2" className="legion-id-text">
@@ -434,7 +438,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 }}
               >
                 <Typography variant="h6" className="legion-ap-text">
-                  {formatNumber(duel.creatorLegion.attackPower)} AP
+                  {formatNumber(duel.creatorLegion.attackPower)}{" "}
+                  {gameConfig.symbols.attackPower}
                 </Typography>
               </Box>
               <Typography variant="subtitle2" className="legion-id-text">
@@ -475,7 +480,8 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 }}
               >
                 <Typography variant="h6" className="legion-ap-text">
-                  {formatNumber(duel.joinerLegion.attackPower)} AP
+                  {formatNumber(duel.joinerLegion.attackPower)}{" "}
+                  {gameConfig.symbols.attackPower}
                 </Typography>
               </Box>
               <Typography variant="subtitle2" className="legion-id-text">

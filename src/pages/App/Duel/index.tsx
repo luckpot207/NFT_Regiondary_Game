@@ -125,7 +125,7 @@ const Duel: React.FC = () => {
     }
   });
 
-  const OnlyMineFilterVal = TimeFilterVal.filter((duel: IDuel) =>
+  const OnlyMineFilterVal = StatusFilterVal.filter((duel: IDuel) =>
     duelShowOnlyMine ? duel.isMine : true
   );
 

@@ -275,7 +275,7 @@ const Duel: React.FC = () => {
                 <Grid item xs={12} sm={12} md={12}>
                   <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
                     {duelStatus == 1
-                      ? getTranslation("availableduels") + "( Beta )"
+                      ? getTranslation("availableduels") + " (Beta)"
                       : duelStatus == 2
                       ? getTranslation("ongoingduels")
                       : getTranslation("duelresult")}

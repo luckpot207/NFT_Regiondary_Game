@@ -237,13 +237,13 @@ const Duel: React.FC = () => {
   return (
     <Box>
       <Grid container spacing={2} sx={{ my: 4 }}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Card sx={{ p: 4 }} className="bg-c5">
             <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
-              {getTranslation("duel")} ( Beta )
+              {getTranslation("duel")}
             </Typography>
           </Card>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Card sx={{ p: 4 }} className="bg-c5">
             {allLegions.length == 0 ? (
@@ -331,7 +331,7 @@ const Duel: React.FC = () => {
                 sx={{ width: "150px" }}
                 onClick={() => handleDuelSort(1)}
               >
-                {getTranslation("availableduels")} ( Beta )
+                {getTranslation("availableduels")}
               </FireBtn>
             </Box>
           </Card>

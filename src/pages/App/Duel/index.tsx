@@ -89,7 +89,7 @@ const Duel: React.FC = () => {
     (duel: IDuel) => duel.status == duelStatus
   );
   const TimeFilterVal = StatusFilterVal.filter((duel: IDuel) => {
-    if (duelStatus == 0) {
+    if (duelStatus == 1) {
       const timeLeft: Number =
         (new Date(duel.endDateTime.valueOf()).getTime() -
           new Date().getTime()) /
@@ -100,7 +100,7 @@ const Duel: React.FC = () => {
           ? true
           : timeLeft <= duelJoinLeftMaxTime.valueOf())
       );
-    } else if (duelStatus == 1) {
+    } else if (duelStatus == 2) {
       const timeLeft: Number =
         (new Date(duel.endDateTime.valueOf()).getTime() -
           new Date().getTime()) /
@@ -125,7 +125,7 @@ const Duel: React.FC = () => {
     }
   });
 
-  const OnlyMineFilterVal = StatusFilterVal.filter((duel: IDuel) =>
+  const OnlyMineFilterVal = TimeFilterVal.filter((duel: IDuel) =>
     duelShowOnlyMine ? duel.isMine : true
   );
 

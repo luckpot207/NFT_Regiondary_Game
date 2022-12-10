@@ -240,7 +240,7 @@ const Duel: React.FC = () => {
         <Grid item xs={12}>
           <Card sx={{ p: 4 }} className="bg-c5">
             <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
-              {getTranslation("duel")} (Beta)
+              {getTranslation("duel")} ( Beta )
             </Typography>
           </Card>
         </Grid>
@@ -275,7 +275,7 @@ const Duel: React.FC = () => {
                 <Grid item xs={12} sm={12} md={12}>
                   <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
                     {duelStatus == 1
-                      ? getTranslation("availableduels")
+                      ? getTranslation("availableduels") + "( Beta )"
                       : duelStatus == 2
                       ? getTranslation("ongoingduels")
                       : getTranslation("duelresult")}
@@ -331,7 +331,7 @@ const Duel: React.FC = () => {
                 sx={{ width: "150px" }}
                 onClick={() => handleDuelSort(1)}
               >
-                {getTranslation("availableduels")}
+                {getTranslation("availableduels")} ( Beta )
               </FireBtn>
             </Box>
           </Card>

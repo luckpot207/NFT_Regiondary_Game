@@ -39,7 +39,7 @@ import {
   doingDuels,
   joinDuel,
 } from "../../web3hooks/contractFunctions/duel.contract";
-import { getTranslation } from "../../utils/utils";
+import { convertInputNumberToStr, getTranslation } from "../../utils/utils";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
 
@@ -204,7 +204,7 @@ const JoinDuelModal: React.FC = () => {
         : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
         ? Number(e.target.value)
         : estimatePrice;
-    setEstimatePrice(price);
+    setEstimatePrice(price < 0 ? 0 : price);
   };
 
   const handleClose = () => {
@@ -448,7 +448,28 @@ const JoinDuelModal: React.FC = () => {
                   CL1: joinLeftTime,
                 })}
               </Typography>
-              <Grid container mb={1} spacing={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 1,
+                }}
+              >
+                <Box sx={{ fontWeight: "bold" }}>
+                  {getTranslation("ithink1blstwillbe")}
+                </Box>
+                <PriceTextField
+                  id="outlined-number"
+                  variant="standard"
+                  type="number"
+                  value={convertInputNumberToStr(estimatePrice)}
+                  onChange={handleChangeEstimatePrice}
+                  sx={{ padding: "0 !important" }}
+                />
+                <Box sx={{ fontWeight: "bold" }}>BUSD</Box>
+              </Box>
+              {/* <Grid container mb={1} spacing={1}>
                 <Grid
                   item
                   xs={12}
@@ -464,7 +485,7 @@ const JoinDuelModal: React.FC = () => {
                     id="outlined-number"
                     variant="standard"
                     type="number"
-                    value={estimatePrice}
+                    value={convertInputNumberToStr(estimatePrice)}
                     onChange={handleChangeEstimatePrice}
                     sx={{ padding: "0 !important" }}
                   />
@@ -479,7 +500,7 @@ const JoinDuelModal: React.FC = () => {
                 >
                   BUSD
                 </Grid>
-              </Grid>
+              </Grid> */}
               <Box
                 sx={{
                   display: "flex",

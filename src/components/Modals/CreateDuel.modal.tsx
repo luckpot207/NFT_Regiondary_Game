@@ -34,7 +34,7 @@ import {
   useLegion,
 } from "../../web3hooks/useContract";
 import { ILegion, IDivision } from "../../types";
-import { getTranslation } from "../../utils/utils";
+import { convertInputNumberToStr, getTranslation } from "../../utils/utils";
 import OrgMenuItem from "../../components/UI/OrgMenuItem";
 import GreenMenuItem from "../../components/UI/GreenMenuItem";
 import RedMenuItem from "../../components/UI/RedMenuItem";
@@ -110,9 +110,14 @@ const CreateDuelModal: React.FC = () => {
   useEffect(() => {
     setAllIn(false);
   }, []);
+
   useEffect(() => {
     setBlstAmountForDuel();
   }, [divisionIndex]);
+
+  useEffect(() => {
+    console.log("Estimate Price: ----- : ", estimatePrice);
+  }, [estimatePrice]);
 
   useEffect(() => {
     setEstimatePrice(0);
@@ -203,7 +208,7 @@ const CreateDuelModal: React.FC = () => {
         : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
         ? Number(e.target.value)
         : estimatePrice;
-    setEstimatePrice(price);
+    setEstimatePrice(price < 0 ? 0 : price);
   };
 
   const handleClose = () => {
@@ -429,7 +434,28 @@ const CreateDuelModal: React.FC = () => {
           allLegions[currentLegionIndex].attackPower.valueOf() >= 10000 &&
           allLegions[currentLegionIndex].attackPower.valueOf() <= 70000 && (
             <>
-              <Grid container mb={1} spacing={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 1,
+                }}
+              >
+                <Box sx={{ fontWeight: "bold" }}>
+                  {getTranslation("ithink1blstwillbe")}
+                </Box>
+                <PriceTextField
+                  id="outlined-number"
+                  variant="standard"
+                  type="number"
+                  value={convertInputNumberToStr(estimatePrice)}
+                  onChange={handleChangeEstimatePrice}
+                  sx={{ padding: "0 !important" }}
+                />
+                <Box sx={{ fontWeight: "bold" }}>BUSD</Box>
+              </Box>
+              {/* <Grid container mb={1} spacing={1}>
                 <Grid
                   item
                   xs={12}
@@ -445,7 +471,7 @@ const CreateDuelModal: React.FC = () => {
                     id="outlined-number"
                     variant="standard"
                     type="number"
-                    value={estimatePrice}
+                    value={convertInputNumberToStr(estimatePrice)}
                     onChange={handleChangeEstimatePrice}
                     sx={{ padding: "0 !important" }}
                   />
@@ -460,7 +486,7 @@ const CreateDuelModal: React.FC = () => {
                 >
                   BUSD
                 </Grid>
-              </Grid>
+              </Grid> */}
               <Box
                 sx={{
                   display: "flex",

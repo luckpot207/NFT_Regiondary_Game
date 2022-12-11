@@ -273,3 +273,19 @@ export const getSamaritanStarsWithPercentAndFirstHuntTime = (
   }
   return stars;
 };
+
+export const convertInputNumberToStr = (inputVal) => {
+  let input = inputVal;
+  if (Number(input) >= 1) {
+    if (input[0] == "0") {
+      input = input.slice(1);
+    }
+  } else if (Number(input) >= 0) {
+    if (input == "") {
+      input = "0";
+    }
+  } else {
+    input = "0";
+  }
+  return input.toString();
+};

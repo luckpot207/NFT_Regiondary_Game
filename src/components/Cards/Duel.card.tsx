@@ -265,6 +265,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     width: "15px",
                   }}
                   alt="allin"
+                  className="all-in-duel"
                 />
               )}
               &nbsp;
@@ -415,6 +416,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     width: "15px",
                   }}
                   alt="allin"
+                  className="all-in-duel"
                 />
               )}
               &nbsp;
@@ -593,6 +595,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                     width: "15px",
                   }}
                   alt="allin"
+                  className="all-in-duel"
                 />
               )}
               &nbsp;

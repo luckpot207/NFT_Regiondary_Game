@@ -20,8 +20,9 @@ import { useDuelSystem, useLegion, useWeb3 } from "../../web3hooks/useContract";
 import FireBtn from "../Buttons/FireBtn";
 import { updatePrediction } from "../../web3hooks/contractFunctions/duel.contract";
 import DuelService from "../../services/duel.service";
-import { getTranslation } from "../../utils/utils";
+import { convertInputNumberToStr, getTranslation } from "../../utils/utils";
 import constants from "../../constants";
+import gameConfig from "../../config/game.config";
 
 const PriceTextField = styled(TextField)({
   "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
@@ -95,12 +96,13 @@ const UpdatePredictionModal: React.FC = () => {
   const handleChangeEstimatePrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const price = parseFloat(e.target.value);
-    if (price > 10000 || price * 10000 - Math.floor(price * 10000) > 0) {
-      setEstimatePrice(estimatePrice);
-      return;
-    }
-    setEstimatePrice(price);
+    const price =
+      Number(e.target.value) > gameConfig.maxEstimatePrice
+        ? gameConfig.maxEstimatePrice
+        : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
+        ? Number(e.target.value)
+        : estimatePrice;
+    setEstimatePrice(price < 0 ? 0 : price);
   };
 
   const handleClose = () => {
@@ -198,7 +200,28 @@ const UpdatePredictionModal: React.FC = () => {
             {getTranslation("checkblstpricenow")}
           </a>
         </Box>
-        <Grid container mb={1} spacing={1}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mb: 1,
+          }}
+        >
+          <Box sx={{ fontWeight: "bold" }}>
+            {getTranslation("ithink1blstwillbe")}
+          </Box>
+          <PriceTextField
+            id="outlined-number"
+            variant="standard"
+            type="number"
+            value={convertInputNumberToStr(estimatePrice)}
+            onChange={handleChangeEstimatePrice}
+            sx={{ padding: "0 !important" }}
+          />
+          <Box sx={{ fontWeight: "bold" }}>BUSD</Box>
+        </Box>
+        {/* <Grid container mb={1} spacing={1}>
           <Grid item xs={12} sm={6} md={6} lg={6}>
             {getTranslation("ithink1blstwillbe")}{" "}
           </Grid>
@@ -207,7 +230,7 @@ const UpdatePredictionModal: React.FC = () => {
               id="outlined-number"
               variant="standard"
               type="number"
-              value={estimatePrice}
+              value={convertInputNumberToStr(estimatePrice)}
               onChange={handleChangeEstimatePrice}
               sx={{ padding: "0 !important" }}
             />
@@ -215,7 +238,7 @@ const UpdatePredictionModal: React.FC = () => {
           <Grid item xs={6} sm={2} md={2} lg={1}>
             BUSD
           </Grid>
-        </Grid>
+        </Grid> */}
         <Box
           sx={{
             display: "flex",

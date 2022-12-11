@@ -31,6 +31,7 @@ import DuelService from "../../../services/duel.service";
 import constant from "../../../constants";
 import "./duel.css";
 import { navLinks } from "../../../config/nav.config";
+import gameConfig from "../../../config/game.config";
 
 const Duel: React.FC = () => {
   const dispatch = useDispatch();
@@ -85,11 +86,16 @@ const Duel: React.FC = () => {
       : true;
   });
 
+  console.log("AP Filter Val: ", APFilterVal);
+
   const StatusFilterVal = APFilterVal.filter(
     (duel: IDuel) => duel.status == duelStatus
   );
+
+  console.log("Status Filter Val: ", StatusFilterVal);
   const TimeFilterVal = StatusFilterVal.filter((duel: IDuel) => {
     if (duelStatus == 1) {
+      console.log("Created Duel endDateTime: ", duel.endDateTime);
       const timeLeft: Number =
         (new Date(duel.endDateTime.valueOf()).getTime() -
           new Date().getTime()) /
@@ -101,6 +107,7 @@ const Duel: React.FC = () => {
           : timeLeft <= duelJoinLeftMaxTime.valueOf())
       );
     } else if (duelStatus == 2) {
+      console.log("Joined Duel endDateTime: ", duel.endDateTime);
       const timeLeft: Number =
         (new Date(duel.endDateTime.valueOf()).getTime() -
           new Date().getTime()) /
@@ -112,10 +119,12 @@ const Duel: React.FC = () => {
           : timeLeft <= duelLeftMaxTime.valueOf())
       );
     } else {
+      console.log("Ended Duel endDateTime: ", duel.endDateTime);
       const daysAgo: Number =
         (new Date().getTime() -
           new Date(duel.endDateTime.valueOf()).getTime()) /
-        (24 * 60 * 60 * 1000);
+        gameConfig.version.oneDay;
+      console.log("Days Ago: ", daysAgo);
       return (
         daysAgo >= duelResultFilterStart.valueOf() &&
         (duelResultFilterEnd === duelResultFilterEndConst
@@ -125,13 +134,19 @@ const Duel: React.FC = () => {
     }
   });
 
+  console.log("Time filter val: ", TimeFilterVal);
+
   const OnlyMineFilterVal = TimeFilterVal.filter((duel: IDuel) =>
     duelShowOnlyMine ? duel.isMine : true
   );
 
+  console.log("Only Mine Filter Val: ", OnlyMineFilterVal);
+
   const DuelTypeFilterVal = OnlyMineFilterVal.filter((duel: IDuel) =>
     duelType == 0 ? true : duelType == 1 ? duel.type : !duel.type
   );
+
+  console.log("Duel Type Filter Val: ", DuelTypeFilterVal);
 
   useEffect(() => {
     const leftTimer = setInterval(() => {

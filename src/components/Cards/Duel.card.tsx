@@ -196,6 +196,18 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     setLoaded(true);
   };
 
+  const getFinishedEndTime = (time: any) => {
+    let endDateTimeTemp = new Date(time);
+    let endDateTime =
+      endDateTimeTemp.toDateString() +
+      " at " +
+      endDateTimeTemp.getUTCHours() +
+      ":" +
+      endDateTimeTemp.getUTCMinutes() +
+      " UTC";
+    return endDateTime;
+  };
+
   return (
     <Box>
       {duelStatus.valueOf() == 1 ? (
@@ -570,7 +582,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                 className="duel-left-time-text"
                 sx={{ fontWeight: "bold" }}
               >
-                {duel.endDateTime}
+                {getFinishedEndTime(duel.endDateTime)}
               </Typography>
             </Box>
             <Box className="duel-price-div">

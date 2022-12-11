@@ -89,16 +89,9 @@ const getAllDuelsAct = async (
         ).toISOString();
         console.log("Status 2 endtime: ", endDateTime);
       } else {
-        const endDateTimeTemp = new Date(
+        endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + duelPeriod
-        );
-        endDateTime =
-          endDateTimeTemp.toDateString() +
-          " at " +
-          endDateTimeTemp.getUTCHours() +
-          ":" +
-          endDateTimeTemp.getUTCMinutes() +
-          " UTC";
+        ).toISOString();
         console.log("Status 3 endtime: ", endDateTime);
       }
       const ownerAddressOfLegion = (

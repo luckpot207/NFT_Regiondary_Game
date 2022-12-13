@@ -324,6 +324,7 @@ const Duel: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               width: "100%",
+              height: "250px",
             }}
           >
             <Typography sx={{ fontWeight: "bold" }} mb={2}>
@@ -373,6 +374,7 @@ const Duel: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               width: "100%",
+              height: "250px",
             }}
           >
             <Typography mb={1} sx={{ fontWeight: "bold" }}>
@@ -432,6 +434,7 @@ const Duel: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               width: "100%",
+              height: "250px",
             }}
           >
             <Typography mb={1} sx={{ fontWeight: "bold" }}>

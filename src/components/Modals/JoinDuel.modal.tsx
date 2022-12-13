@@ -42,6 +42,7 @@ import {
 import { convertInputNumberToStr, getTranslation } from "../../utils/utils";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
+import Swal from "sweetalert2";
 
 const LegionSelectInput = styled(InputBase)(({ theme }) => ({
   ".MuiSelect-select": {
@@ -231,24 +232,46 @@ const JoinDuelModal: React.FC = () => {
       return;
     }
     try {
-      setJoinDuelLoading(true);
-      const res = await joinDuel(
-        duelContract,
-        account,
-        currentDuelId,
-        allLegions[currentLegionIndex.valueOf()].id,
-        estimatePrice.valueOf() * 10 ** 18
-      );
-      setJoinDuelLoading(false);
-      dispatch(updateModalState({ joinDuelModalOpen: false }));
-      toast.success(getTranslation("successfullyjoined"));
-      DuelService.getAllDuelsAct(
-        dispatch,
-        web3,
-        account,
-        duelContract,
-        legionContract
-      );
+      const joinAction = async () => {
+        setJoinDuelLoading(true);
+        const res = await joinDuel(
+          duelContract,
+          account,
+          currentDuelId,
+          allLegions[currentLegionIndex.valueOf()].id,
+          estimatePrice.valueOf() * 10 ** 18
+        );
+        setJoinDuelLoading(false);
+        dispatch(updateModalState({ joinDuelModalOpen: false }));
+        toast.success(getTranslation("successfullyjoined"));
+        DuelService.getAllDuelsAct(
+          dispatch,
+          web3,
+          account,
+          duelContract,
+          legionContract
+        );
+      };
+      if (!duelType) {
+        Swal.fire({
+          title: getTranslation("warning"),
+          text: getTranslation("allinDuelConfirmMsg"),
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: constants.color.color2,
+          cancelButtonColor: "#d33",
+          cancelButtonText: getTranslation("cancel"),
+          confirmButtonText: getTranslation("goAllin"),
+          background: "#111",
+          color: "white",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            joinAction();
+          }
+        });
+      } else {
+        joinAction();
+      }
     } catch (e) {
       setJoinDuelLoading(false);
       console.log(e);

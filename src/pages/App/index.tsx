@@ -54,6 +54,7 @@ const GameView: React.FC = () => {
               boxSizing: "border-box",
               background: "#161616",
             },
+            overflowY: "scroll"
           }}
         >
           <NavList />

@@ -19,6 +19,7 @@ import DuelService from "../../services/duel.service";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
 
+
 type Props = {
   duel: IDuel;
 };
@@ -37,7 +38,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   const legionContract = useLegion();
 
   const [loaded, setLoaded] = useState(false);
-  // const [leftTime, setLeftTime] = useState("");
   const [duelFlag, setDuelFlag] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -74,6 +74,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
       return 2;
     }
   };
+
+  useEffect(() => {
+    if (left_time <= 0) {
+      getBalance();
+    }
+  }, [left_time]);
 
   useEffect(() => {
     setDuelFlag(false);
@@ -113,6 +119,20 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     // }, 1000);
     return () => clearInterval(clockTimer);
   }, []);
+
+  const getBalance = async () => {
+    try {
+      await DuelService.getAllDuelsAct(
+        dispatch,
+        web3,
+        account,
+        duelContract,
+        legionContract
+      );
+    } catch (e) {
+      console.log("loading duels error :", e);
+    }
+  };
 
   const handleDuelBtnClick = () => {
     dispatch(

@@ -317,7 +317,7 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 1
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(1)}
             sx={{
@@ -366,7 +366,7 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 2
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(2)}
             sx={{
@@ -425,7 +425,7 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 3
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(3)}
             sx={{

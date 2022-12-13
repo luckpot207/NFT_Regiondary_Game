@@ -254,6 +254,10 @@
   z-index: 9999 !important;
 }
 
+.border-6 {
+  border: 6px transparent solid !important;
+}
+
 .border-blue {
   border: 6px #24feff solid !important;
 }

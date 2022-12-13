@@ -317,14 +317,13 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 1
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(1)}
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
-              height: "250px",
             }}
           >
             <Typography sx={{ fontWeight: "bold" }} mb={2}>
@@ -367,14 +366,13 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 2
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(2)}
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
-              height: "250px",
             }}
           >
             <Typography mb={1} sx={{ fontWeight: "bold" }}>
@@ -427,14 +425,13 @@ const Duel: React.FC = () => {
             className={
               duelStatus == 3
                 ? "bg-c5 info-card border-blue"
-                : "bg-c5 info-card"
+                : "bg-c5 info-card border-6"
             }
             onClick={() => handleDuelSort(3)}
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
-              height: "250px",
             }}
           >
             <Typography mb={1} sx={{ fontWeight: "bold" }}>

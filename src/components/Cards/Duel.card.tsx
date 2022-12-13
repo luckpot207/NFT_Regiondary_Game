@@ -76,7 +76,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
   };
 
   useEffect(() => {
-    if (left_time <= 0) {
+    if (duelStatus != 3 && left_time <= 0) {
       getBalance();
     }
   }, [left_time]);

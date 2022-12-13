@@ -53,8 +53,7 @@ const GameView: React.FC = () => {
               width: navConfig.drawerWidth,
               boxSizing: "border-box",
               background: "#161616",
-            },
-            overflowY: "scroll"
+            }
           }}
         >
           <NavList />
@@ -68,6 +67,7 @@ const GameView: React.FC = () => {
           p: 3,
           width: { sm: `calc(100% - ${navConfig.drawerWidth}px)` },
           paddingTop: { xs: 8, md: 4, lg: 4 },
+          overflowY: "scroll"
         }}
       >
         <Toolbar />

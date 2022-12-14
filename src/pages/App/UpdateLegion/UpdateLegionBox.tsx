@@ -109,7 +109,6 @@ const UpdateLegionBox: React.FC = () => {
         legionContract,
         legionForUpdate.id
       );
-      console.log(currentLegionCapacity, typeof currentLegionCapacity);
       setCurrentLegionCapacity(parseInt(currentLegionCapacity));
     } catch (error) {
       console.log(error);

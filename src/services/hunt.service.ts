@@ -21,7 +21,6 @@ const getAllMonstersAct = async (
   dispatch(updateMonsterState({ getAllMonsterLoading: true }));
   try {
     const allMonstersRes = await getAllMonsters(monsterContract);
-    console.log("all monsters res: ", allMonstersRes);
     const monsterInfos = allMonstersRes[0];
     const blstRewards = allMonstersRes[1];
     let allMonsters: IMonster[] = [];
@@ -36,7 +35,6 @@ const getAllMonstersAct = async (
       };
       allMonsters.push(temp);
     });
-    console.log("all monsters --- ", allMonsters);
     dispatch(updateMonsterState({ allMonsters }));
   } catch (error) {
     console.log("get all monster error: ", error);

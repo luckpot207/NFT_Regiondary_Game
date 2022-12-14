@@ -126,7 +126,6 @@ const HuntModal: React.FC = () => {
         }
         let huntResult = await revealHunt(legionContract, account);
         const result = huntResult.events["Hunted"].returnValues;
-        console.log("hunting Result", result);
         HuntService.checkHuntPending(dispatch, account, legionContract);
         LegionService.getAllLegionsAct(dispatch, account, legionContract);
         dispatch(updateCommonState({ reloadStatusTime: new Date().getTime() }));
@@ -173,12 +172,9 @@ const HuntModal: React.FC = () => {
   };
 
   const getMaxRoll = (legionId: string, monsterId: string) => {
-    console.log(legionId, monsterId);
-    console.log(allLegions, allMonsters);
     if (legionId !== "0" && monsterId !== "0") {
       const legion = allLegions.filter((legion) => legion.id === legionId)[0];
       const monster = allMonsters[parseInt(monsterId) - 1];
-      console.log(legion, monster);
       const { attackPower: legionAttackPower } = legion;
       const { attackPower: monsterAttackPower, percent } = monster;
 

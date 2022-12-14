@@ -73,7 +73,6 @@ const ListOnMarketplaceModal: React.FC = () => {
 
   // Functions
   const getUSDAmountFunc = async () => {
-    console.log(listingPrice);
     try {
       const usd = await getUSDAmount(web3, feehandlerContract, listingPrice);
       setEqualBUSD(usd);

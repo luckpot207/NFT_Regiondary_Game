@@ -289,11 +289,6 @@ const ClaimAndReinvestModal: React.FC = () => {
 
   const getReinvestSamaritanStars = async (reinvestUSDAmount: any) => {
     try {
-      console.log(
-        "BUSD Amount: ",
-        reinvestUSDAmount,
-        web3.utils.fromWei(reinvestUSDAmount, "ether")
-      );
       let futureReinvestPercent = await getReinvestPercent(
         rewardpoolContract,
         account,
@@ -324,7 +319,6 @@ const ClaimAndReinvestModal: React.FC = () => {
         true,
         reinvestUSDAmount
       );
-      console.log("Amount for Reinvesting: ", amountsForReinvesting);
       setFutureClaimMaxTaxPercent(futureClaimMaxTaxPercent);
       setFutureClaimMinTaxPercent(futureClaimMinTaxPercent);
       setFutureReinvestTaxPercent(futureReinvestTaxPercent);
@@ -376,7 +370,6 @@ const ClaimAndReinvestModal: React.FC = () => {
     setIsCalculated(false);
     setReinvestAll(e.target.checked);
     if (e.target.checked) {
-      console.log("hehe");
       setReinvestBLSTAmount(Number(unclaimedBLSTFromWei).toString());
       setReinvestUSDAmount(unclaimedUSD.toString());
       getReinvestSamaritanStars(unclaimedUSD.toString());

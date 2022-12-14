@@ -109,7 +109,7 @@ const getWalletAndUnclaimedBalance = async (
       })
     );
   } catch (error) {
-    console.log(error);
+    console.log("getWalletAndUnclaimedBalance: ", error);
   }
 };
 const getClaimAndReinvestInfo = async (

@@ -116,10 +116,6 @@ const CreateDuelModal: React.FC = () => {
   }, [divisionIndex]);
 
   useEffect(() => {
-    console.log("Estimate Price: ----- : ", estimatePrice);
-  }, [estimatePrice]);
-
-  useEffect(() => {
     setEstimatePrice(0);
     if (allLegions.length != 0) {
       getBalance();

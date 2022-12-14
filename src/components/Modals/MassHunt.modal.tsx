@@ -94,7 +94,6 @@ const MassHuntModal: React.FC = () => {
             (monster) => monster.attackPower <= legion.attackPower
           );
           let lastMonster = availableMonsters[availableMonsters.length - 1];
-          console.log(lastMonster);
           total += (Number(lastMonster.BUSDReward) * Number(huntTax)) / 100;
         });
     }

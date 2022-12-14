@@ -138,7 +138,6 @@ const LegionCard: React.FC<Props> = ({ legion, index }) => {
       setTotalCapacity(totalCapacity);
       setWarriorList(warriors);
       setBeastList(beasts);
-      console.log(beasts, warriors, beastIds, warriorIds);
     } catch (error) {}
   };
 

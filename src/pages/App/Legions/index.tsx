@@ -97,7 +97,6 @@ const Legions: React.FC = () => {
         ? true
         : legion.attackPower <= legionFilterMaxAP)
   );
-  console.log("APFilterVal: ", APFilterVal);
 
   const weakLegionFilterVal = hideWeakLegion
     ? APFilterVal.filter(

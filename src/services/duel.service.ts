@@ -24,7 +24,6 @@ const getAllDuelsAct = async (
   const blockUserList: String[] = await getBlockUserList(web3, account);
   try {
     const allDuelsRes = await getAllDuels(duelContract);
-    console.log("All duels: ", allDuelsRes);
     let allDuelsTemp: IDuel[] = [];
     const { version: gameVersion } = gameConfig;
     const { duelInvitePeriod, duelPeriod } = gameVersion;
@@ -82,22 +81,18 @@ const getAllDuelsAct = async (
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + duelInvitePeriod
         ).toISOString();
-        console.log("Status 1 endtime: ", endDateTime);
       } else if (allDuelsRes[i].status == 2) {
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + duelPeriod
         ).toISOString();
-        console.log("Status 2 endtime: ", endDateTime);
       } else {
         endDateTime = new Date(
           Number(allDuelsRes[i].startTime) * 1000 + duelPeriod
         ).toISOString();
-        console.log("Status 3 endtime: ", endDateTime);
       }
       const ownerAddressOfLegion = (
         (await ownerOfLegion(legionContract, creatorLegion.id)) as String
       ).toLowerCase();
-      console.log(ownerAddressOfLegion);
       if (
         allDuelsRes[i].status != 1 ||
         blockUserList.filter((user: String) => user == ownerAddressOfLegion)
@@ -118,11 +113,9 @@ const getAllDuelsAct = async (
           type: allDuelsRes[i].standard,
           result: Math.round(allDuelsRes[i].resultPrice / 10 ** 14) / 10 ** 4,
         };
-        console.log("Duel Temp: ", duelTemp);
         allDuelsTemp.push(duelTemp);
       }
     }
-    console.log("All Duels Temp: ", allDuelsTemp);
     dispatch(updateDuelState({ allDuels: allDuelsTemp }));
   } catch (error) {}
   dispatch(updateDuelState({ getAllDulesLoading: false }));

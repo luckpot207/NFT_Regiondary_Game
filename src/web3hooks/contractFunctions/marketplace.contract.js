@@ -28,13 +28,6 @@ export const cancelMarketplace = async (contract, account, type, id) => {
 };
 
 export const buyToken = async (web3, contract, account, type, id, price) => {
-  console.log(
-    account,
-    type,
-    id,
-    price,
-    web3.utils.toWei(price.toString(), "ether")
-  );
   const res = await contract.methods
     .buyToken(type, id, web3.utils.toWei(price.toString(), "ether"))
     .send({ from: account });
@@ -42,7 +35,6 @@ export const buyToken = async (web3, contract, account, type, id, price) => {
 };
 
 export const updatePrice = async (web3, contract, account, type, id, price) => {
-  console.log(account, type, id, price);
   const res = await contract.methods
     .updatePrice(type, id, web3.utils.toWei(price, "ether"))
     .send({ from: account });

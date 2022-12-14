@@ -19,7 +19,6 @@ import DuelService from "../../services/duel.service";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
 
-
 type Props = {
   duel: IDuel;
 };
@@ -51,9 +50,6 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     "m " +
     Math.floor((left_time % (60 * 1000)) / 1000) +
     "s";
-
-  console.log("Duel Status: ", duelStatus);
-  console.log("Duel Card: ", duel);
 
   const duelResult = () => {
     const priceDifference1 =

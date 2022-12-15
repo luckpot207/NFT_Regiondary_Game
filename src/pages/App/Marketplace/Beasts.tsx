@@ -42,15 +42,11 @@ const BeastsMarketplace: React.FC = () => {
     showOnlyNew,
   } = AppSelector(filterAndPageState);
 
-  console.log("beast filter capacity: ", beastFilterCapacity);
-
   const { account } = useWeb3React();
   const web3 = useWeb3();
 
   const beastContract = useBeast();
   const marketplaceContract = useMarketplace();
-
-  console.log("all beasts marketplace items: ", allBeastsMarketItems);
 
   const capacityFilterVal =
     beastFilterCapacity === 0

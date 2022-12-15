@@ -27,7 +27,10 @@ import {
   changeAllWarriorExecuteStatus,
   warriorState,
 } from "../../../reducers/warrior.reducer";
-import { filterAndPageState } from "../../../reducers/filterAndPage.reducer";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../../reducers/filterAndPage.reducer";
 import { marketplaceState } from "../../../reducers/marketplace.reducer";
 import { IWarrior } from "../../../types";
 import WarriorService from "../../../services/warrior.service";
@@ -96,6 +99,9 @@ const Warriors: React.FC = () => {
   // Functions
   const getBalance = async () => {
     WarriorService.getAllWarriorsAct(dispatch, account, warriorContract);
+    dispatch(
+      updateFilterAndPageState({ warriorFilterMinAP: warriorFilterMinConstAP })
+    );
   };
 
   const handleSelectExecuteStatus = (status: boolean) => {

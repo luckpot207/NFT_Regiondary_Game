@@ -19,7 +19,10 @@ import {
   useWeb3,
 } from "../../../web3hooks/useContract";
 import { marketplaceState } from "../../../reducers/marketplace.reducer";
-import { filterAndPageState } from "../../../reducers/filterAndPage.reducer";
+import {
+  filterAndPageState,
+  updateFilterAndPageState,
+} from "../../../reducers/filterAndPage.reducer";
 import { IWarriorMarket } from "../../../types";
 import MarketplaceService from "../../../services/marketplace.service";
 import LoadingBloodstone from "../../../components/UI/LoadingBloodstone";
@@ -39,6 +42,7 @@ const WarriorsMarketplace: React.FC = () => {
     warriorFilterLevel,
     warriorFilterMaxAP,
     warriorFilterMaxConstAP,
+    warriorFilterMinConstAP,
     warriorFilterMinAP,
     showOnlyMine,
     showOnlyNew,
@@ -104,6 +108,9 @@ const WarriorsMarketplace: React.FC = () => {
       web3,
       warriorContract,
       marketplaceContract
+    );
+    dispatch(
+      updateFilterAndPageState({ warriorFilterMinAP: warriorFilterMinConstAP })
     );
   };
 

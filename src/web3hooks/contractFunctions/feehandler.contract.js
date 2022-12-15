@@ -1,12 +1,16 @@
 export const getBLSTAmount = async (web3, contract, amount) => {
   /* eslint-disable */
-  const res = await contract.methods.getBLSTAmount(amount * 10 ** 18).call();
+  const res = await contract.methods
+    .getBLSTAmount(Number(amount) * 10 ** 18)
+    .call();
   return web3.utils.fromWei(res, "ether");
 };
 
 export const getUSDAmount = async (web3, contract, amount) => {
   /* eslint-disable */
-  const res = await contract.methods.getUSDAmount(amount * 10 ** 18).call();
+  const res = await contract.methods
+    .getUSDAmount(Number(amount) * 10 ** 18)
+    .call();
   return web3.utils.fromWei(res, "ether");
 };
 

@@ -109,7 +109,7 @@ const NavList: React.FC = () => {
                         getTranslation(navItem.title) +
                         (navItem.path
                           ? navItem.path.indexOf("marketplace") > -1
-                            ? " (Soon)"
+                            ? ""
                             : ""
                           : "")
                       }

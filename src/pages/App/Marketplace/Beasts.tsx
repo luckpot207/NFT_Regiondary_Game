@@ -92,8 +92,7 @@ const BeastsMarketplace: React.FC = () => {
         <Grid item xs={12}>
           <Card sx={{ p: 4 }}>
             <Typography variant="h3" sx={{ fontWeight: "bold", mx: 4 }}>
-              {getTranslation("beasts")} {getTranslation("marketplace")} (Coming
-              Soon)
+              {getTranslation("beasts")} {getTranslation("marketplace")}
             </Typography>
           </Card>
         </Grid>

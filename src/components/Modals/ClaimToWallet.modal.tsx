@@ -18,7 +18,11 @@ import { toast } from "react-toastify";
 import FireBtn from "../Buttons/FireBtn";
 import { inventoryState } from "../../reducers/inventory.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
-import { formatNumber, getTranslation } from "../../utils/utils";
+import {
+  convertInputNumberToStr,
+  formatNumber,
+  getTranslation,
+} from "../../utils/utils";
 import {
   useBloodstone,
   useFeeHandler,
@@ -164,7 +168,7 @@ const ClaimToWalletModal: React.FC = () => {
     const amount = parseFloat(e.target.value);
     if (
       amount > maxAmount ||
-      amount * 100 - Math.floor(amount * 100) > 0 ||
+      // amount * 100 - Math.floor(amount * 100) > 0 ||
       amount < 0
     ) {
       setClaimToWalletAmount(claimToWalletAmount);
@@ -230,7 +234,7 @@ const ClaimToWalletModal: React.FC = () => {
                 id="outlined-number"
                 variant="standard"
                 type="number"
-                value={claimToWalletAmount}
+                value={convertInputNumberToStr(claimToWalletAmount)}
                 onChange={handleChangeClaimToWalletAmount}
                 sx={{ padding: "0 !important" }}
               />

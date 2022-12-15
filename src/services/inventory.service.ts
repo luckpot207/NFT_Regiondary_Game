@@ -199,6 +199,7 @@ const getSamaritanInfo = async (
         totalClaimedUSD,
         additionalInvestment,
         daysLeftUntilAbove3Stars,
+        firstHuntTime,
       })
     );
   } catch (error) {}

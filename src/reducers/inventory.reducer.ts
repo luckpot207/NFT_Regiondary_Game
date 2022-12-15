@@ -42,6 +42,7 @@ let initialState: IInventory = {
   reinvestingUSDWithoutTax: 0,
   daysLeftUntilAbove3Stars: 0,
   voucherWalletUSD: 0,
+  firstHuntTime: 0,
 };
 
 export const getClaimedBUSDAlertAmount = createAsyncThunk(

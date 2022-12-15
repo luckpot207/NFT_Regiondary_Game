@@ -39,4 +39,6 @@ export interface IInventory {
   daysLeftUntilAbove3Stars: Number;
 
   voucherWalletUSD: Number;
+
+  firstHuntTime: Number;
 }

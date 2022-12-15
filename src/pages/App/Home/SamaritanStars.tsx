@@ -22,6 +22,7 @@ const SamaritanStars: React.FC = () => {
     taxLeftDaysForClaim,
     taxLeftDaysForReinvest,
     currentReinvestPercent,
+    firstHuntTime,
   } = AppSelector(inventoryState);
 
   const web3 = useWeb3();
@@ -103,13 +104,21 @@ const SamaritanStars: React.FC = () => {
           </Box>
           <HomeTypo
             title={`${getTranslation("claimTax")}:`}
-            info={`${
-              Number(taxLeftDaysForClaim) * 2 + Number(claimMinTaxPercent)
-            }%`}
+            info={
+              firstHuntTime == 0
+                ? "-"
+                : `${
+                    Number(taxLeftDaysForClaim) * 2 + Number(claimMinTaxPercent)
+                  }%`
+            }
           />
           <HomeTypo
             title={`${getTranslation("reinvestTax")}:`}
-            info={`${Number(taxLeftDaysForReinvest) * 2}%`}
+            info={
+              firstHuntTime == 0
+                ? "-"
+                : `${Number(taxLeftDaysForReinvest) * 2}%`
+            }
           />
           <HomeTypo
             title={`${getTranslation("investedTotal")}:`}

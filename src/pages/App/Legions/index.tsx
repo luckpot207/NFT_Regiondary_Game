@@ -37,6 +37,7 @@ import LegionService from "../../../services/legion.service";
 import constants from "../../../constants";
 import { navLinks } from "../../../config/nav.config";
 import RedBtn from "../../../components/Buttons/RedBtn";
+import gameConfig from "../../../config/game.config";
 
 const Legions: React.FC = () => {
   const dispatch = useDispatch();
@@ -282,7 +283,8 @@ const Legions: React.FC = () => {
                         : "orange",
                   }}
                 >
-                  {formatNumber(item.attackPower)} AP
+                  {formatNumber(item.attackPower)}{" "}
+                  {gameConfig.symbols.attackPower}
                 </span>
               </Typography>
             ))}

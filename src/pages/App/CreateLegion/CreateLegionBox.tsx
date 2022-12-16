@@ -204,13 +204,6 @@ const CreateLegionBox: React.FC = () => {
             loading={createLegionLoading.valueOf()}
             onClick={() => handleMint()}
           >
-            {isSmallerThanSM
-              ? getTranslation("create")
-              : getTranslation("createLegion")}{" "}
-            {totalWarriorAttackPower > 0
-              ? formatNumber(totalWarriorAttackPower)
-              : 0}
-            {" AP "}
             {isNotEnoughBeast ? (
               <>{getTranslation("notEnoughBeasts")}</>
             ) : totalWarriorAttackPower < 2000 ? (
@@ -220,7 +213,15 @@ const CreateLegionBox: React.FC = () => {
                 } ${getTranslation("needed")}`}
               </>
             ) : (
-              ""
+              `${
+                isSmallerThanSM
+                  ? getTranslation("create")
+                  : getTranslation("createLegion")
+              } ${
+                totalWarriorAttackPower > 0
+                  ? formatNumber(totalWarriorAttackPower)
+                  : 0
+              } ${gameConfig.symbols.attackPower}`
             )}
           </FireBtn>
         </Grid>

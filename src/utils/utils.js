@@ -213,27 +213,27 @@ export const getBeastMp4 = (x) => {
 };
 
 export const getLegionJpgImageUrl = (ap) => {
-  if (ap <= 150000) return "/assets/images/characters/jpg/legions/0.jpg";
-  else if (ap > 150000 && ap <= 300000)
+  if (ap <= 15000) return "/assets/images/characters/jpg/legions/0.jpg";
+  else if (ap > 15000 && ap <= 30000)
     return "/assets/images/characters/jpg/legions/15.jpg";
-  else if (ap > 300000 && ap <= 450000)
+  else if (ap > 30000 && ap <= 45000)
     return "/assets/images/characters/jpg/legions/30.jpg";
-  else if (ap > 450000 && ap <= 600000)
+  else if (ap > 45000 && ap <= 60000)
     return "/assets/images/characters/jpg/legions/45.jpg";
-  else if (ap > 600000 && ap <= 2500000)
+  else if (ap > 60000 && ap <= 250000)
     return "/assets/images/characters/jpg/legions/60.jpg";
   else return "/assets/images/characters/jpg/legions/250.jpg";
 };
 
 export const getLegionMp4ImageUrl = (ap) => {
-  if (ap <= 150000) return "/assets/images/characters/mp4/legions/0.mp4";
-  else if (ap > 150000 && ap <= 300000)
+  if (ap <= 15000) return "/assets/images/characters/mp4/legions/0.mp4";
+  else if (ap > 15000 && ap <= 30000)
     return "/assets/images/characters/mp4/legions/15.mp4";
-  else if (ap > 300000 && ap <= 450000)
+  else if (ap > 30000 && ap <= 45000)
     return "/assets/images/characters/mp4/legions/30.mp4";
-  else if (ap > 450000 && ap <= 600000)
+  else if (ap > 45000 && ap <= 60000)
     return "/assets/images/characters/mp4/legions/45.mp4";
-  else if (ap > 600000 && ap <= 2500000)
+  else if (ap > 60000 && ap <= 250000)
     return "/assets/images/characters/mp4/legions/60.mp4";
   else return "/assets/images/characters/mp4/legions/250.mp4";
 };

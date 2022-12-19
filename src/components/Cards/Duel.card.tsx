@@ -18,6 +18,7 @@ import { useLegion, useDuelSystem, useWeb3 } from "../../web3hooks/useContract";
 import DuelService from "../../services/duel.service";
 import constants from "../../constants";
 import gameConfig from "../../config/game.config";
+import AnimationArt from "../UI/AnimationArt";
 
 type Props = {
   duel: IDuel;
@@ -229,20 +230,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
       {duelStatus.valueOf() == 1 ? (
         <>
           <Card sx={{ position: "relative" }}>
-            <CardMedia
-              component={"img"}
-              image={duel.creatorLegion.jpg.valueOf()}
-              alt="Legion Image"
-              loading="lazy"
-              onLoad={handleImageLoaded}
+            <AnimationArt
+              jpg={duel.creatorLegion.jpg.valueOf()}
+              mp4={duel.creatorLegion.mp4.valueOf()}
             />
-            {loaded === false && (
-              <React.Fragment>
-                <Skeleton variant="rectangular" width="100%" height="200px" />
-                <Skeleton />
-                <Skeleton width="60%" />
-              </React.Fragment>
-            )}
             <Typography variant="h6" className="legion-name-text">
               {duel.creatorLegion.name}
             </Typography>
@@ -327,20 +318,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             }}
           >
             <Card sx={{ position: "relative" }}>
-              <CardMedia
-                component={"img"}
-                image={duel.creatorLegion.jpg.valueOf()}
-                alt="Legion Image"
-                loading="lazy"
-                onLoad={handleImageLoaded}
+              <AnimationArt
+                jpg={duel.creatorLegion.jpg.valueOf()}
+                mp4={duel.creatorLegion.mp4.valueOf()}
               />
-              {loaded === false && (
-                <React.Fragment>
-                  <Skeleton variant="rectangular" width="100%" height="200px" />
-                  <Skeleton />
-                  <Skeleton width="60%" />
-                </React.Fragment>
-              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.creatorLegion.name}
               </Typography>
@@ -360,20 +341,10 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             </Card>
             <Card sx={{ position: "relative", marginLeft: "10px" }}>
-              <CardMedia
-                component={"img"}
-                image={duel.joinerLegion.jpg.valueOf()}
-                alt="Legion Image"
-                loading="lazy"
-                onLoad={handleImageLoaded}
+              <AnimationArt
+                jpg={duel.joinerLegion.jpg.valueOf()}
+                mp4={duel.joinerLegion.mp4.valueOf()}
               />
-              {loaded === false && (
-                <React.Fragment>
-                  <Skeleton variant="rectangular" width="100%" height="200px" />
-                  <Skeleton />
-                  <Skeleton width="60%" />
-                </React.Fragment>
-              )}
               <Typography variant="h6" className="legion-name-text">
                 {duel.joinerLegion.name}
               </Typography>
@@ -454,12 +425,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
             }}
           >
             <Card sx={{ position: "relative" }}>
-              <CardMedia
-                component={"img"}
-                image={duel.creatorLegion.jpg.valueOf()}
-                alt="Legion Image"
-                loading="lazy"
-                onLoad={handleImageLoaded}
+              <Box
                 sx={{
                   border: "4px solid",
                   borderColor:
@@ -469,14 +435,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                       ? "red"
                       : "green",
                 }}
-              />
-              {loaded === false && (
-                <React.Fragment>
-                  <Skeleton variant="rectangular" width="100%" height="200px" />
-                  <Skeleton />
-                  <Skeleton width="60%" />
-                </React.Fragment>
-              )}
+              >
+                <AnimationArt
+                  jpg={duel.creatorLegion.jpg.valueOf()}
+                  mp4={duel.creatorLegion.mp4.valueOf()}
+                />
+              </Box>
               <Typography variant="h6" className="legion-name-text">
                 {duel.creatorLegion.name}
               </Typography>
@@ -496,12 +460,7 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
               </Typography>
             </Card>
             <Card sx={{ position: "relative", marginLeft: "10px" }}>
-              <CardMedia
-                component={"img"}
-                image={duel.joinerLegion.jpg.valueOf()}
-                alt="Legion Image"
-                loading="lazy"
-                onLoad={handleImageLoaded}
+              <Box
                 sx={{
                   border: "4px solid",
                   borderColor:
@@ -511,14 +470,12 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
                       ? "green"
                       : "red",
                 }}
-              />
-              {loaded === false && (
-                <React.Fragment>
-                  <Skeleton variant="rectangular" width="100%" height="200px" />
-                  <Skeleton />
-                  <Skeleton width="60%" />
-                </React.Fragment>
-              )}
+              >
+                <AnimationArt
+                  jpg={duel.creatorLegion.jpg.valueOf()}
+                  mp4={duel.creatorLegion.mp4.valueOf()}
+                />
+              </Box>
               <Typography variant="h6" className="legion-name-text">
                 {duel.joinerLegion.name}
               </Typography>

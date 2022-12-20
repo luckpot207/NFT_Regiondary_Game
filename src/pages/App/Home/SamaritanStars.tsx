@@ -8,6 +8,7 @@ import { AppDispatch, AppSelector } from "../../../store";
 import { getTranslation } from "../../../utils/utils";
 import InventoryService from "../../../services/inventory.service";
 import { useRewardPool, useWeb3 } from "../../../web3hooks/useContract";
+import InfoBox from "../../../components/UI/InfoBox";
 
 const SamaritanStars: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -112,14 +113,17 @@ const SamaritanStars: React.FC = () => {
                   }%`
             }
           />
-          <HomeTypo
-            title={`${getTranslation("reinvestTax")}:`}
-            info={
-              firstHuntTime == 0
-                ? "-"
-                : `${Number(taxLeftDaysForReinvest) * 2}%`
-            }
-          />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <HomeTypo
+              title={`${getTranslation("reinvestTax")}:`}
+              info={
+                firstHuntTime == 0
+                  ? "-"
+                  : `${Number(taxLeftDaysForReinvest) * 2}%`
+              }
+            />
+            <InfoBox />
+          </Box>
           <HomeTypo
             title={`${getTranslation("investedTotal")}:`}
             info={

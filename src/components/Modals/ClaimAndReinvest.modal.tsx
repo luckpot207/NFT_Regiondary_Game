@@ -42,6 +42,7 @@ import {
 } from "../../reducers/vote.reducer";
 import { apiConfig } from "../../config/api.config";
 import constants from "../../constants";
+import InfoText from "../UI/InfoText";
 
 const ClaimAndReinvestModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -510,6 +511,7 @@ const ClaimAndReinvestModal: React.FC = () => {
             })}
           </Typography>
           <br />
+          <InfoText />
           <Box
             sx={{
               display: "flex",

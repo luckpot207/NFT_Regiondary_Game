@@ -91,10 +91,13 @@ const SamaritanStars: React.FC = () => {
             title={`${getTranslation("yourSamaritanStars")}:`}
             info={renderStars()}
           />
-          <HomeTypo
-            title={`${getTranslation("reinvestPercentage")}:`}
-            info={currentReinvestPercent + "%"}
-          />
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <HomeTypo
+              title={`${getTranslation("reinvestPercentage")}:`}
+              info={currentReinvestPercent + "%"}
+            />
+            <InfoBox />
+          </Box>
           <Box hidden={!(daysLeftUntilAbove3Stars > 0)}>
             <HomeTypo
               title={`${getTranslation("daysLeftToGoAbove3Stars", {
@@ -113,17 +116,14 @@ const SamaritanStars: React.FC = () => {
                   }%`
             }
           />
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <HomeTypo
-              title={`${getTranslation("reinvestTax")}:`}
-              info={
-                firstHuntTime == 0
-                  ? "-"
-                  : `${Number(taxLeftDaysForReinvest) * 2}%`
-              }
-            />
-            <InfoBox />
-          </Box>
+          <HomeTypo
+            title={`${getTranslation("reinvestTax")}:`}
+            info={
+              firstHuntTime == 0
+                ? "-"
+                : `${Number(taxLeftDaysForReinvest) * 2}%`
+            }
+          />
           <HomeTypo
             title={`${getTranslation("investedTotal")}:`}
             info={

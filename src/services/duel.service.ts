@@ -186,9 +186,21 @@ const getBlockUserList = async (web3: any, account: any) => {
   }
 };
 
+const checkAvailableOthersDuel = async (duelContract: Contract) => {
+  let checkStatus = false;
+  try {
+    const allDuelsRes = await getAllDuels(duelContract);
+    if (allDuelsRes.filter((duel: any) => duel.status === "1").length > 0) {
+      checkStatus = true;
+    }
+  } catch (error) {}
+  return checkStatus;
+};
+
 const DuelService = {
   getAllDuelsAct,
   confirmUnclaimedWallet,
+  checkAvailableOthersDuel,
 };
 
 export default DuelService;

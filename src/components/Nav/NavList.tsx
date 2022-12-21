@@ -22,6 +22,7 @@ import { navConfig } from "../../config/nav.config";
 import { commonState, updateCommonState } from "../../reducers/common.reduer";
 import { getTranslation } from "../../utils/utils";
 import gameConfig from "../../config/game.config";
+import NewDuelBadge from "../UI/NewDuelBadge";
 
 const NavList: React.FC = () => {
   const dispatch = useDispatch();
@@ -114,6 +115,11 @@ const NavList: React.FC = () => {
                           : "")
                       }
                     />
+                    {navItem.title === "duels" && (
+                      <Box>
+                        <NewDuelBadge />
+                      </Box>
+                    )}
                   </ListItemButton>
                 </Tooltip>
               </NavLink>

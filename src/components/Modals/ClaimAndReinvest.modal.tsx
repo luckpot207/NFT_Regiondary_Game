@@ -217,11 +217,15 @@ const ClaimAndReinvestModal: React.FC = () => {
       rewardpoolContract,
       account
     );
-    if (Number(claimedUSD) != 0) {
-      toast.error(
-        getTranslation("youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain")
-      );
-      return;
+    if (!reinvested) {
+      if (Number(claimedUSD) != 0) {
+        toast.error(
+          getTranslation(
+            "youNeedToEmptyYourClaimWalletFirstBeforeClaimingAgain"
+          )
+        );
+        return;
+      }
     }
     setClaimAndReinvestLoading(true);
     try {

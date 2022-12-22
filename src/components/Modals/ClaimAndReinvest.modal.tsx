@@ -262,6 +262,14 @@ const ClaimAndReinvestModal: React.FC = () => {
     setClaimAndReinvestLoading(false);
   };
 
+  const handleReinvestPercentCalculator = () => {
+    dispatch(
+      updateModalState({
+        reinvestPercentCalculatorModalOpen: true,
+      })
+    );
+  };
+
   const autoVote = async (voteRes: boolean) => {
     dispatch(
       vote({
@@ -528,6 +536,12 @@ const ClaimAndReinvestModal: React.FC = () => {
               loading={claimAndReinvestLoading}
             >
               {getTranslation("claim")}
+            </FireBtn>
+            <FireBtn
+              onClick={() => handleReinvestPercentCalculator()}
+              loading={claimAndReinvestLoading}
+            >
+              {getTranslation("calculator")}
             </FireBtn>
             <FireBtn
               onClick={() => handleToReinvestShow()}

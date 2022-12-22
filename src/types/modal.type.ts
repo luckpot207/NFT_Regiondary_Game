@@ -13,4 +13,5 @@ export interface IModalState {
   createDuelModalOpen: Boolean;
   joinDuelModalOpen: Boolean;
   updatePredictionModalOpen: Boolean;
+  reinvestPercentCalculatorModalOpen: boolean;
 }

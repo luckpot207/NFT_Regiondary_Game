@@ -11,11 +11,14 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FaTimes } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 import { AppSelector, AppDispatch } from "../../store";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { inventoryState } from "../../reducers/inventory.reducer";
 import { getTranslation } from "../../utils/utils";
 import constants from "../../constants";
-import { MdClose } from "react-icons/md";
+import { useFeeHandler, useWeb3 } from "../../web3hooks/useContract";
+import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
 
 const PrettoSlider = styled(Slider)({
   background: "linear-gradient(to right, red, yellow , green)",
@@ -35,6 +38,7 @@ const PrettoSlider = styled(Slider)({
     backgroundColor: "#f66810",
     border: "0px solid",
     borderRadius: "0",
+
     "&:before": {
       top: -16,
       height: 0,
@@ -56,6 +60,7 @@ const PrettoSlider = styled(Slider)({
   },
 });
 const CalculatorModal: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
   const reinvestPercentMark = [
     {
       value: 0,
@@ -70,14 +75,79 @@ const CalculatorModal: React.FC = () => {
       label: "100%",
     },
   ];
-  const [reinvestPercent, setReinvestPercent] = useState<number>(70);
-  const handleClose = () => {};
+  const {
+    reinvestedTotalUSD,
+    additionalInvestment,
+    totalClaimedUSD,
+    unclaimedUSD,
+    unclaimedBLST,
+    futureReinvestPercentWhenClaim,
+    futureReinvestPercentWhenReinvest,
+    futureSamaritanStarsWhenReinvest,
+    USDToBLST,
+  } = AppSelector(inventoryState);
+  const { reinvestPercentCalculatorModalOpen } = AppSelector(modalState);
+
+  const web3 = useWeb3();
+
+  const feehandler = useFeeHandler();
+
+  const [reinvestPercent, setReinvestPercent] = useState<number>(
+    Number(futureReinvestPercentWhenReinvest)
+  );
+  const [shouldClaimBLSTAmount, setShouldClaimBLSTAmount] = useState<number>(0);
+  const [shouldReinvestBLSTAmount, setShouldReinvestBLSTAmount] =
+    useState<number>(0);
+
+  const investedTotalUSD =
+    Number(reinvestedTotalUSD) + Number(additionalInvestment);
+  const shouldClaimAmount =
+    ((Number(investedTotalUSD) + Number(unclaimedUSD)) * 100 -
+      Number(reinvestPercent) *
+        (Number(reinvestedTotalUSD) +
+          Number(totalClaimedUSD) +
+          Number(unclaimedUSD))) /
+    100;
+
+  useEffect(() => {
+    getBalance();
+  }, [shouldClaimAmount]);
+
+  const getBalance = async () => {
+    try {
+      const claimAmount = await getBLSTAmount(
+        web3,
+        feehandler,
+        shouldClaimAmount / 10 ** 18
+      );
+      setShouldClaimBLSTAmount(claimAmount);
+      setShouldReinvestBLSTAmount(
+        Number(unclaimedBLST) / 10 ** 18 - Number(claimAmount)
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClose = () => {
+    dispatch(
+      updateModalState({
+        reinvestPercentCalculatorModalOpen: false,
+      })
+    );
+  };
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setReinvestPercent(newValue as number);
+    if (Number(newValue) < Number(futureReinvestPercentWhenClaim)) {
+      setReinvestPercent(Number(futureReinvestPercentWhenClaim));
+    } else if (Number(newValue) > Number(futureReinvestPercentWhenReinvest)) {
+      setReinvestPercent(Number(futureReinvestPercentWhenReinvest));
+    } else {
+      setReinvestPercent(newValue as number);
+    }
   };
   return (
     <Dialog
-      open={true}
+      open={reinvestPercentCalculatorModalOpen}
       onClose={handleClose}
       PaperProps={{
         style: {
@@ -115,6 +185,38 @@ const CalculatorModal: React.FC = () => {
           onChange={handleChange}
           marks={reinvestPercentMark}
         />
+      </Box>
+      <Box sx={{ p: 4, pt: 0 }}>
+        <Typography>
+          <span style={{ fontSize: 12 }}>
+            {getTranslation(
+              "whatYouNeedToDoToReachaReinvestPercentageOfAndSamaritanstarIs",
+              {
+                CL1: reinvestPercent,
+                CL2:
+                  reinvestPercent == futureReinvestPercentWhenClaim
+                    ? 0
+                    : futureSamaritanStarsWhenReinvest,
+              }
+            )}
+          </span>
+        </Typography>
+        <Typography>
+          <span style={{ fontSize: 12 }}>
+            {getTranslation("firstYouShouldReinvest", {
+              CL1: Number(shouldClaimBLSTAmount).toFixed(2),
+            })}{" "}
+            ${getTranslation("blst")}
+          </span>
+        </Typography>
+        <Typography>
+          <span style={{ fontSize: 12 }}>
+            {getTranslation("thenYouShouldClaim", {
+              CL1: Number(shouldReinvestBLSTAmount).toFixed(),
+            })}{" "}
+            ${getTranslation("blst")}
+          </span>
+        </Typography>
       </Box>
     </Dialog>
   );

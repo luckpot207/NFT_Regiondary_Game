@@ -19,6 +19,7 @@ let initialState: IModalState = {
   createDuelModalOpen: false,
   joinDuelModalOpen: false,
   updatePredictionModalOpen: false,
+  reinvestPercentCalculatorModalOpen: true,
 };
 
 export const modalSlice = createSlice({

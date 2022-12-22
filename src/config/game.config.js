@@ -157,7 +157,8 @@ const languages = [
 ];
 
 export default {
-  version: version.main,
+  // version: version.main,
+  version: version.test,
   gameSiteUrl,
   companySiteUrl,
   languages,

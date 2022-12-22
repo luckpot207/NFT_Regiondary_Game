@@ -530,6 +530,12 @@ const ClaimAndReinvestModal: React.FC = () => {
               {getTranslation("claim")}
             </FireBtn>
             <FireBtn
+            // onClick={() => handleClaimAndReinvestReward(false)}
+            // loading={claimAndReinvestLoading}
+            >
+              {getTranslation("calculator")}
+            </FireBtn>
+            <FireBtn
               onClick={() => handleToReinvestShow()}
               disabled={claimAndReinvestLoading}
             >

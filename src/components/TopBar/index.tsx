@@ -42,6 +42,7 @@ import InventoryService from "../../services/inventory.service";
 import ClaimAndReinvestModal from "../Modals/ClaimAndReinvest.modal";
 import ClaimToWalletModal from "../Modals/ClaimToWallet.modal";
 import constants from "../../constants";
+import CalculatorModal from "../Modals/Calculator.modal";
 
 const TopBar: React.FC = () => {
   let getBalanceTimer: any = 0;
@@ -475,6 +476,7 @@ const TopBar: React.FC = () => {
       </Container>
       <ClaimAndReinvestModal />
       <ClaimToWalletModal />
+      <CalculatorModal />
     </AppBar>
   );
 };

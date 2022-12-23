@@ -92,9 +92,7 @@ const CalculatorModal: React.FC = () => {
 
   const feehandler = useFeeHandler();
 
-  const [reinvestPercent, setReinvestPercent] = useState<number>(
-    Number(futureReinvestPercentWhenReinvest)
-  );
+  const [reinvestPercent, setReinvestPercent] = useState<number>(0);
   const [shouldClaimBLSTAmount, setShouldClaimBLSTAmount] = useState<number>(0);
   const [shouldReinvestBLSTAmount, setShouldReinvestBLSTAmount] =
     useState<number>(0);
@@ -108,6 +106,10 @@ const CalculatorModal: React.FC = () => {
           Number(totalClaimedUSD) +
           Number(unclaimedUSD))) /
     100;
+
+  useEffect(() => {
+    setReinvestPercent(Number(futureReinvestPercentWhenReinvest));
+  }, [reinvestPercentCalculatorModalOpen]);
 
   useEffect(() => {
     getBalance();

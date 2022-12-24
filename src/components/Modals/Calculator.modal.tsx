@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-  Dialog,
-  Box,
-  DialogContent,
-  DialogTitle,
-  Typography,
-  Slider,
-} from "@mui/material";
+import { Dialog, Box, Typography, Slider } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FaTimes } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import { useWeb3React } from "@web3-react/core";
 import { AppSelector, AppDispatch } from "../../store";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
 import { inventoryState } from "../../reducers/inventory.reducer";
 import { getTranslation } from "../../utils/utils";
 import constants from "../../constants";
-import { useFeeHandler, useWeb3 } from "../../web3hooks/useContract";
+import {
+  useFeeHandler,
+  useWeb3,
+  useRewardPool,
+} from "../../web3hooks/useContract";
 import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
+import { getSamaritanStars } from "../../web3hooks/contractFunctions/rewardpool.contract";
 
 const PrettoSlider = styled(Slider)({
   background: "linear-gradient(to right, red, yellow , green)",
@@ -83,28 +82,31 @@ const CalculatorModal: React.FC = () => {
     unclaimedBLST,
     futureReinvestPercentWhenClaim,
     futureReinvestPercentWhenReinvest,
-    futureSamaritanStarsWhenReinvest,
-    USDToBLST,
   } = AppSelector(inventoryState);
+
   const { reinvestPercentCalculatorModalOpen } = AppSelector(modalState);
+
+  const { account } = useWeb3React();
 
   const web3 = useWeb3();
 
   const feehandler = useFeeHandler();
+  const rewardpool = useRewardPool();
 
   const [reinvestPercent, setReinvestPercent] = useState<number>(0);
   const [shouldClaimBLSTAmount, setShouldClaimBLSTAmount] = useState<number>(0);
   const [shouldReinvestBLSTAmount, setShouldReinvestBLSTAmount] =
     useState<number>(0);
+  const [futureSamararitanStars, setFutureSamaritanStars] = useState<number>(0);
 
   const investedTotalUSD =
     Number(reinvestedTotalUSD) + Number(additionalInvestment);
   const shouldClaimAmount =
-    ((Number(investedTotalUSD) + Number(unclaimedUSD)) * 100 -
+    ((Number(investedTotalUSD) + Number(unclaimedUSD) / 10 ** 18) * 100 -
       Number(reinvestPercent) *
         (Number(reinvestedTotalUSD) +
           Number(totalClaimedUSD) +
-          Number(unclaimedUSD))) /
+          Number(unclaimedUSD) / 10 ** 18)) /
     100;
 
   useEffect(() => {
@@ -115,13 +117,27 @@ const CalculatorModal: React.FC = () => {
     getBalance();
   }, [shouldClaimAmount]);
 
+  useEffect(() => {
+    getFutureSamaritanStarsFunc();
+  }, [reinvestPercent]);
+
+  const getFutureSamaritanStarsFunc = async () => {
+    const samaritanStars = await getSamaritanStars(
+      rewardpool,
+      account,
+      reinvestPercent
+    );
+    setFutureSamaritanStars(samaritanStars);
+  };
+
   const getBalance = async () => {
     try {
       const claimAmount = await getBLSTAmount(
         web3,
         feehandler,
-        shouldClaimAmount / 10 ** 18
+        Math.floor(Number(shouldClaimAmount))
       );
+      console.log("claim amount: ", claimAmount);
       setShouldClaimBLSTAmount(claimAmount);
       setShouldReinvestBLSTAmount(
         Number(unclaimedBLST) / 10 ** 18 - Number(claimAmount)
@@ -195,10 +211,7 @@ const CalculatorModal: React.FC = () => {
               "whatYouNeedToDoToReachaReinvestPercentageOfAndSamaritanstarIs",
               {
                 CL1: reinvestPercent,
-                CL2:
-                  reinvestPercent == futureReinvestPercentWhenClaim
-                    ? 0
-                    : futureSamaritanStarsWhenReinvest,
+                CL2: futureSamararitanStars,
               }
             )}
           </span>

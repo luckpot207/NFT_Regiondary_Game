@@ -84,7 +84,7 @@ const itemNames = {
     22: "Binance",
     23: "Ethereum",
     24: "Bitcoin",
-    25: "100 Dollars",
+    25: "Reindeer",
   },
 };
 

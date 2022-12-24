@@ -43,6 +43,7 @@ import {
 import { apiConfig } from "../../config/api.config";
 import constants from "../../constants";
 import InfoText from "../UI/InfoText";
+import GreyFireBtn from "../Buttons/GreyFireBtn";
 
 const ClaimAndReinvestModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -537,12 +538,12 @@ const ClaimAndReinvestModal: React.FC = () => {
             >
               {getTranslation("claim")}
             </FireBtn>
-            <FireBtn
+            <GreyFireBtn
               onClick={() => handleReinvestPercentCalculator()}
               loading={claimAndReinvestLoading}
             >
               {getTranslation("calculator")}
-            </FireBtn>
+            </GreyFireBtn>
             <FireBtn
               onClick={() => handleToReinvestShow()}
               disabled={claimAndReinvestLoading}

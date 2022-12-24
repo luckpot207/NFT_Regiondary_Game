@@ -219,7 +219,7 @@ const CalculatorModal: React.FC = () => {
         <Typography>
           <span style={{ fontSize: 12 }}>
             {getTranslation("firstYouShouldReinvest", {
-              CL1: Number(shouldClaimBLSTAmount).toFixed(2),
+              CL1: Number(shouldReinvestBLSTAmount).toFixed(2),
             })}{" "}
             ${getTranslation("blst")}
           </span>
@@ -227,7 +227,7 @@ const CalculatorModal: React.FC = () => {
         <Typography>
           <span style={{ fontSize: 12 }}>
             {getTranslation("thenYouShouldClaim", {
-              CL1: Number(shouldReinvestBLSTAmount).toFixed(),
+              CL1: Number(shouldClaimBLSTAmount).toFixed(),
             })}{" "}
             ${getTranslation("blst")}
           </span>

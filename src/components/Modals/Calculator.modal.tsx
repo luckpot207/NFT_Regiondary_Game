@@ -234,9 +234,6 @@ const CalculatorModal: React.FC = () => {
             ${getTranslation("blst")}
           </span>
         </Typography>
-        <Typography>
-          <span style={{ fontSize: 12 }}>{shouldClaimAmount}</span>
-        </Typography>
       </Box>
     </Dialog>
   );

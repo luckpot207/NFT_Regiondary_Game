@@ -9,6 +9,7 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import Axios from "axios";
 
 import { AppSelector } from "../../store";
 import { formatNumber, getTranslation, toCapitalize } from "../../utils/utils";
@@ -26,6 +27,7 @@ import { getWalletHuntPending } from "../../web3hooks/contractFunctions/common.c
 import { updateLegionState } from "../../reducers/legion.reducer";
 import HuntService from "../../services/hunt.service";
 import VideoNFT from "../UI/VideoNFT";
+import { apiConfig } from "../../config/api.config";
 
 type Props = {
   monster: IMonster;
@@ -62,6 +64,7 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
   const [warriorCnt, setWarriorCnt] = useState(0);
   const [warriorBaseCnt, setWarriorBaseCnt] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [alreadyHuntedMonster25, setAlreadyHuntedMonster25] = useState(false);
 
   let bonus = 0;
   if (monsterID < 21) {
@@ -88,6 +91,31 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
           (await getCanAttackMonster25(legionContract, account)).count
         );
         setWarriorBaseCnt(await getWarriorCountForMonster25(legionContract));
+        const timestamp_gt = Math.floor(new Date().getTime() / 1000 - 86400);
+        const query = `
+        {
+          user(id: ${`"` + account?.toLowerCase() + `"`}) {
+            huntHistory(
+              where: {
+                monsterId: "25"
+                timestamp_gt: ${timestamp_gt}
+              }
+            ) {
+              name
+              legionId
+              timestamp
+            }
+          }
+        }`;
+        let graphRes = await Axios.post(apiConfig.subgraphServer, {
+          query: query,
+        });
+        const data = graphRes.data.data.user.huntHistory;
+        if (data.length == 0) {
+          setAlreadyHuntedMonster25(false);
+        } else {
+          setAlreadyHuntedMonster25(true);
+        }
       }
     } catch (error) {}
   };
@@ -95,6 +123,7 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
   const handleImageLoaded = () => {
     setLoaded(true);
   };
+
   const handleInitialHunt = async () => {
     try {
       let huntPending = await getWalletHuntPending(legionContract, account);
@@ -274,7 +303,9 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
           <Button
             variant="outlined"
             disabled={
-              monsterID === 25 ? !isHuntable || !canHuntMonster25 : !isHuntable
+              monsterID === 25
+                ? !isHuntable || !canHuntMonster25 || alreadyHuntedMonster25
+                : !isHuntable
             }
             onClick={() => handleInitialHunt()}
           >

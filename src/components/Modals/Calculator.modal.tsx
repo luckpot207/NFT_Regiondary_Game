@@ -135,9 +135,8 @@ const CalculatorModal: React.FC = () => {
       const claimAmount = await getBLSTAmount(
         web3,
         feehandler,
-        Math.floor(Number(shouldClaimAmount))
+        Number(shouldClaimAmount)
       );
-      console.log("claim amount: ", claimAmount);
       setShouldClaimBLSTAmount(claimAmount);
       setShouldReinvestBLSTAmount(
         Number(unclaimedBLST) / 10 ** 18 - Number(claimAmount)
@@ -154,6 +153,7 @@ const CalculatorModal: React.FC = () => {
       })
     );
   };
+
   const handleChange = (event: Event, newValue: number | number[]) => {
     if (Number(newValue) < Number(futureReinvestPercentWhenClaim)) {
       setReinvestPercent(Number(futureReinvestPercentWhenClaim));
@@ -163,6 +163,7 @@ const CalculatorModal: React.FC = () => {
       setReinvestPercent(newValue as number);
     }
   };
+
   return (
     <Dialog
       open={reinvestPercentCalculatorModalOpen}
@@ -170,6 +171,7 @@ const CalculatorModal: React.FC = () => {
       PaperProps={{
         style: {
           backgroundColor: constants.color.popupBGColor,
+          width: "560px",
         },
       }}
     >

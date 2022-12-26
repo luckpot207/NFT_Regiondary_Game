@@ -170,6 +170,7 @@ const CalculatorModal: React.FC = () => {
       PaperProps={{
         style: {
           backgroundColor: constants.color.popupBGColor,
+          width: "580px",
         },
       }}
     >

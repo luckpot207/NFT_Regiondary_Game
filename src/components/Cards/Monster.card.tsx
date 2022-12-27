@@ -107,11 +107,11 @@ const MonsterCard: React.FC<Props> = ({ monster, isHuntable, legion }) => {
             }
           }
         }`;
-        let graphRes = await Axios.post(apiConfig.subgraphServer, {
+        let { data } = await Axios.post(apiConfig.subgraphServer, {
           query: query,
         });
-        const data = graphRes.data.data.user.huntHistory;
-        if (data.length == 0) {
+        const huntHistory = data.data.user.huntHistory;
+        if (huntHistory.length == 0) {
           setAlreadyHuntedMonster25(false);
         } else {
           setAlreadyHuntedMonster25(true);

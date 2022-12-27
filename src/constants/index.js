@@ -35,7 +35,7 @@ const navlink = {
   dextool:
     "https://www.dextools.io/app/en/bnb/pair-explorer/0x58bb23b8f9f24133b22a24abc1883ea959c25225",
   whitepaper: "https://docs.bigcrypto.game/",
-  tutorialVideoLink: "https://youtu.be/Ujn7WhSymXE",
+  tutorialVideoLink: "https://youtu.be/YUgeXxih1E8",
   reincarnationDocLink:
     "https://docs.bigcrypto.game/awesome-features/reincarnation",
   tokenPriceUrl:

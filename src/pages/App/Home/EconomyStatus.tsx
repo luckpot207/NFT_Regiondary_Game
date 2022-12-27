@@ -77,6 +77,7 @@ const EconomyStatus: React.FC = () => {
   } = AppSelector(voteState);
   const { allLegions } = AppSelector(legionState);
   const { daysLeftUntilAbove3Stars } = AppSelector(inventoryState);
+  const { getAllLegionsLoading } = AppSelector(legionState);
 
   const { account } = useWeb3React();
   const [playerBehaviourValue, setPlayerBehaviourValue] = useState<number>(100);
@@ -106,7 +107,7 @@ const EconomyStatus: React.FC = () => {
 
   useEffect(() => {
     getBalance();
-  }, [daysLeftUntilAbove3Stars, account]);
+  }, [daysLeftUntilAbove3Stars, account, getAllLegionsLoading]);
 
   const getBalance = async () => {
     try {

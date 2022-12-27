@@ -98,19 +98,23 @@ const CalculatorModal: React.FC = () => {
   const [shouldReinvestBLSTAmount, setShouldReinvestBLSTAmount] =
     useState<number>(0);
   const [futureSamararitanStars, setFutureSamaritanStars] = useState<number>(0);
+  const [investedTotalBLST, setInvestedTotalBLST] = useState<number>(0);
+  const [reinvestedTotalBLST, setReinvestedTotalBLST] = useState<number>(0);
+  const [totalClaimedBLST, setTotalClaimedBLST] = useState<number>(0);
 
   const investedTotalUSD =
     Number(reinvestedTotalUSD) + Number(additionalInvestment);
   const shouldClaimAmount =
-    ((Number(investedTotalUSD) + Number(unclaimedUSD) / 10 ** 18) * 100 -
+    ((Number(investedTotalBLST) + Number(unclaimedBLST) / 10 ** 18) * 100 -
       Number(reinvestPercent) *
-        (Number(reinvestedTotalUSD) +
-          Number(totalClaimedUSD) +
-          Number(unclaimedUSD) / 10 ** 18)) /
+        (Number(reinvestedTotalBLST) +
+          Number(totalClaimedBLST) +
+          Number(unclaimedBLST) / 10 ** 18)) /
     100;
 
   useEffect(() => {
     setReinvestPercent(Number(futureReinvestPercentWhenReinvest));
+    getBLSTAmountForCalculation();
   }, [reinvestPercentCalculatorModalOpen]);
 
   useEffect(() => {
@@ -120,6 +124,22 @@ const CalculatorModal: React.FC = () => {
   useEffect(() => {
     getFutureSamaritanStarsFunc();
   }, [reinvestPercent]);
+
+  const getBLSTAmountForCalculation = async () => {
+    try {
+      setInvestedTotalBLST(
+        await getBLSTAmount(web3, feehandler, investedTotalUSD)
+      );
+      setReinvestedTotalBLST(
+        await getBLSTAmount(web3, feehandler, reinvestedTotalUSD)
+      );
+      setTotalClaimedBLST(
+        await getBLSTAmount(web3, feehandler, totalClaimedUSD)
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const getFutureSamaritanStarsFunc = async () => {
     const samaritanStars = await getSamaritanStars(
@@ -132,11 +152,16 @@ const CalculatorModal: React.FC = () => {
 
   const getBalance = async () => {
     try {
-      const claimAmount = await getBLSTAmount(
-        web3,
-        feehandler,
-        Number(shouldClaimAmount)
-      );
+      let claimAmount = 0;
+      if (Number(reinvestPercent) == Number(futureReinvestPercentWhenClaim)) {
+        claimAmount = Number(unclaimedBLST) / 10 ** 18;
+      } else if (
+        Number(reinvestPercent) == Number(futureReinvestPercentWhenReinvest)
+      ) {
+        claimAmount = 0;
+      } else {
+        claimAmount = Number(shouldClaimAmount);
+      }
       setShouldClaimBLSTAmount(claimAmount);
       setShouldReinvestBLSTAmount(
         Number(unclaimedBLST) / 10 ** 18 - Number(claimAmount)

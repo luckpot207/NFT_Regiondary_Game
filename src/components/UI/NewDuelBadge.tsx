@@ -39,7 +39,6 @@ const NewDuelBadge: React.FC = () => {
 
   const checkNewStatus = async () => {
     const isShow = await DuelService.checkAvailableOthersDuel(duelContract);
-    console.log("new badge", isShow);
     setIsShow(isShow);
   };
 

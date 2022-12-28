@@ -25,6 +25,7 @@
     "classnames": "^2.3.1",
     "dotenv": "^16.0.1",
     "ethers": "^5.7.1",
+    "html-react-parser": "^3.0.6",
     "moment": "^2.29.4",
     "moralis": "^2.4.0",
     "moralis-v1": "^1.11.0",

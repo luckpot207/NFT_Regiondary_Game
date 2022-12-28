@@ -5,6 +5,7 @@ import { Dialog, Box, Typography, Slider } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { FaTimes } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import parse from "html-react-parser";
 import { useWeb3React } from "@web3-react/core";
 import { AppSelector, AppDispatch } from "../../store";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
@@ -234,28 +235,27 @@ const CalculatorModal: React.FC = () => {
       <Box sx={{ p: 4, pt: 0 }}>
         <Typography>
           <span style={{ fontSize: 12 }}>
-            {getTranslation(
-              "whatYouNeedToDoToReachaReinvestPercentageOfAndSamaritanstarIs",
-              {
-                CL1: reinvestPercent,
-                CL2: futureSamararitanStars,
-              }
+            {parse(
+              getTranslation(
+                "toGetAReinvestPercentageOfAndSamaritanStarsYouNeedTo",
+                {
+                  CL1: reinvestPercent,
+                  CL2: futureSamararitanStars,
+                }
+              )
             )}
           </span>
         </Typography>
         <Typography>
           <span style={{ fontSize: 12 }}>
-            {getTranslation("firstYouShouldReinvest", {
-              CL1: Number(shouldReinvestBLSTAmount).toFixed(2),
-            })}{" "}
-            ${getTranslation("blst")}
+            {getTranslation("reinvest")}{" "}
+            {Number(shouldReinvestBLSTAmount).toFixed(2)} $
+            {getTranslation("blst")}
           </span>
         </Typography>
         <Typography>
           <span style={{ fontSize: 12 }}>
-            {getTranslation("thenYouShouldClaim", {
-              CL1: Number(shouldClaimBLSTAmount).toFixed(2),
-            })}{" "}
+            {getTranslation("claim")} {Number(shouldClaimBLSTAmount).toFixed(2)}{" "}
             ${getTranslation("blst")}
           </span>
         </Typography>

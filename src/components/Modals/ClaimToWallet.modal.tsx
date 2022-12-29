@@ -67,7 +67,7 @@ const ClaimToWalletModal: React.FC = () => {
   const bloodstoneContract = useBloodstone();
   const feehandlerContract = useFeeHandler();
 
-  const [claimToWalletAmount, setClaimToWalletAmount] = useState<number>(0);
+  const [claimToWalletAmount, setClaimToWalletAmount] = useState<string>("0");
   const [maxAmount, setMaxAmount] = useState<number>(0);
   const [isMax, setIsMax] = useState<boolean>(false);
   const [lastClaimTime, setLastClaimTime] = useState<string>("");
@@ -86,9 +86,9 @@ const ClaimToWalletModal: React.FC = () => {
 
   useEffect(() => {
     if (isMax) {
-      setClaimToWalletAmount(maxAmount);
+      setClaimToWalletAmount(maxAmount.toString());
     } else {
-      setClaimToWalletAmount(0);
+      setClaimToWalletAmount("0");
     }
   }, [isMax]);
 
@@ -140,7 +140,7 @@ const ClaimToWalletModal: React.FC = () => {
   };
 
   const handleTransferToWallet = async () => {
-    if (claimToWalletAmount == 0) {
+    if (Number(claimToWalletAmount) == 0) {
       toast.error(getTranslation("pleaseEnterAValidAMount"));
       return;
     }
@@ -176,16 +176,16 @@ const ClaimToWalletModal: React.FC = () => {
   const handleChangeClaimToWalletAmount = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const amount = parseFloat(e.target.value);
+    const amount = e.target.value;
     if (
-      amount > maxAmount ||
+      Number(amount) > maxAmount ||
       // amount * 100 - Math.floor(amount * 100) > 0 ||
-      amount < 0
+      Number(amount) < 0
     ) {
       setClaimToWalletAmount(claimToWalletAmount);
       return;
     }
-    setClaimToWalletAmount(amount);
+    setClaimToWalletAmount(amount.toString());
   };
 
   const handleIsMax = () => {
@@ -233,7 +233,7 @@ const ClaimToWalletModal: React.FC = () => {
           <DialogContent>
             <Typography mb={1}>
               {getTranslation("youHaveInYourClaimWallet", {
-                CL1: formatNumber(Number(claimedUSD).toFixed(2)),
+                CL1: formatNumber((Number(claimedUSD) / 10 ** 18).toFixed(2)),
                 CL2: formatNumber(Number(claimedBLST).toFixed(2)),
               })}
             </Typography>
@@ -244,7 +244,7 @@ const ClaimToWalletModal: React.FC = () => {
               <ClaimToWalletTextField
                 variant="standard"
                 type="text"
-                value={convertInputNumberToStr(claimToWalletAmount)}
+                value={claimToWalletAmount}
                 onChange={handleChangeClaimToWalletAmount}
                 disabled={isMax}
                 sx={{ padding: "0 !important" }}

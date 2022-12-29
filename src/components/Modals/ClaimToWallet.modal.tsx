@@ -87,6 +87,8 @@ const ClaimToWalletModal: React.FC = () => {
   useEffect(() => {
     if (isMax) {
       setClaimToWalletAmount(maxAmount);
+    } else {
+      setClaimToWalletAmount(0);
     }
   }, [isMax]);
 
@@ -119,12 +121,18 @@ const ClaimToWalletModal: React.FC = () => {
 
   const setMaxUSDAmount = async () => {
     let busdAmount = 0;
-    if (claimedUSD < 250) {
-      busdAmount = Number(claimedUSD);
-    } else if (claimedUSD >= 250 && claimedUSD < 1000) {
+    if (Number(claimedUSD) / 10 ** 18 < 250) {
+      busdAmount = Number(claimedUSD) / 10 ** 18;
+    } else if (
+      Number(claimedUSD) / 10 ** 18 >= 250 &&
+      Number(claimedUSD) / 10 ** 18 < 1000
+    ) {
       busdAmount = 250;
-    } else if (claimedUSD >= 1000 && claimedUSD < 20000) {
-      busdAmount = Math.floor((Number(claimedUSD) / 4) * 100) / 100;
+    } else if (
+      Number(claimedUSD) / 10 ** 18 >= 1000 &&
+      Number(claimedUSD) / 10 ** 18 < 20000
+    ) {
+      busdAmount = Math.floor((Number(claimedUSD) / 10 ** 18 / 4) * 100) / 100;
     } else {
       busdAmount = 5000;
     }
@@ -138,11 +146,14 @@ const ClaimToWalletModal: React.FC = () => {
     }
     try {
       setTransferLoading(true);
+      let transferAmount = isMax
+        ? String(claimedUSD)
+        : String(claimToWalletAmount);
       const res = await claimToWallet(
         web3,
         rewardpoolContract,
         account,
-        String(claimToWalletAmount)
+        transferAmount
       );
       setTransferLoading(false);
       toast.success(getTranslation("successfullyTransfered"));
@@ -231,11 +242,11 @@ const ClaimToWalletModal: React.FC = () => {
             </Typography>
             <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
               <ClaimToWalletTextField
-                id="outlined-number"
                 variant="standard"
-                type="number"
+                type="text"
                 value={convertInputNumberToStr(claimToWalletAmount)}
                 onChange={handleChangeClaimToWalletAmount}
+                disabled={isMax}
                 sx={{ padding: "0 !important" }}
               />
               <Typography sx={{ fontWeight: "bold" }}>
@@ -245,7 +256,7 @@ const ClaimToWalletModal: React.FC = () => {
               <MaxCheckBox checked={isMax} onChange={handleIsMax} />
               <Typography>
                 {getTranslation("max")}{" "}
-                {formatNumber(Number(claimedUSD).toFixed(2))} BUSD{" "}
+                {formatNumber((Number(claimedUSD) / 10 ** 18).toFixed(2))} BUSD{" "}
               </Typography>
               <Typography>
                 {" "}

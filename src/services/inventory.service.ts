@@ -96,7 +96,7 @@ const getWalletAndUnclaimedBalance = async (
     const claimedBLST = await getBLSTAmount(
       web3,
       feehandlerContract,
-      claimedUSD
+      claimedUSD / 10 ** 18
     );
     dispatch(
       updateInventoryState({

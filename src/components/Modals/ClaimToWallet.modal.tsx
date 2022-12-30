@@ -243,7 +243,7 @@ const ClaimToWalletModal: React.FC = () => {
             <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
               <ClaimToWalletTextField
                 variant="standard"
-                type="text"
+                type="number"
                 value={claimToWalletAmount}
                 onChange={handleChangeClaimToWalletAmount}
                 disabled={isMax}

@@ -49,7 +49,7 @@ const UpdatePredictionModal: React.FC = () => {
   // Contract
   const duelContract = useDuelSystem();
   const legionContract = useLegion();
-  const [estimatePrice, setEstimatePrice] = useState<number>(0);
+  const [estimatePrice, setEstimatePrice] = useState<string>("0");
   const [endDateTime, setEndDateTime] = useState<string>("");
   const [leftTime, setLeftTime] = useState<string>("");
   const [duelLeftTime, setDuelLeftTime] = useState<string>("");
@@ -84,7 +84,7 @@ const UpdatePredictionModal: React.FC = () => {
   }, [leftTime, endDateTime]);
 
   useEffect(() => {
-    setEstimatePrice(0);
+    setEstimatePrice("0");
     allDuels.forEach((duel, index) => {
       if (duel.duelId == currentDuelId) {
         setEndDateTime(duel.endDateTime.valueOf());
@@ -96,13 +96,19 @@ const UpdatePredictionModal: React.FC = () => {
   const handleChangeEstimatePrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const price =
+    let price =
       Number(e.target.value) > gameConfig.maxEstimatePrice
-        ? gameConfig.maxEstimatePrice
+        ? gameConfig.maxEstimatePrice.toString()
         : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
-        ? Number(e.target.value)
-        : estimatePrice;
-    setEstimatePrice(price < 0 ? 0 : price);
+        ? e.target.value.toString()
+        : estimatePrice.toString();
+    if (
+      price.indexOf(".") != -1 &&
+      price.substr(price.indexOf(".") + 1).length > 4
+    ) {
+      price = estimatePrice.toString();
+    }
+    setEstimatePrice(Number(price) < 0 ? "0" : price);
   };
 
   const handleClose = () => {
@@ -110,7 +116,7 @@ const UpdatePredictionModal: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (estimatePrice.valueOf() < 0) {
+    if (Number(estimatePrice) < 0) {
       toast.error(getTranslation("pleaseprovidevalidvalue"));
       return;
     }
@@ -120,7 +126,7 @@ const UpdatePredictionModal: React.FC = () => {
         duelContract,
         account,
         currentDuelId,
-        estimatePrice.valueOf() * 10 ** 18
+        Number(estimatePrice) * 10 ** 18
       );
       setUpdatePredictionLoading(false);
       dispatch(updateModalState({ updatePredictionModalOpen: false }));

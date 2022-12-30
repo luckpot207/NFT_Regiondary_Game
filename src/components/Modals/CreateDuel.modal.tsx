@@ -99,7 +99,7 @@ const CreateDuelModal: React.FC = () => {
   const legionContract = useLegion();
 
   const [allIn, setAllIn] = useState(false);
-  const [estimatePrice, setEstimatePrice] = useState(0);
+  const [estimatePrice, setEstimatePrice] = useState("0");
   const [currentLegionIndex, setCurrentLegionIndex] = useState<number>(0);
   const [divisionIndex, setDivisionIndex] = useState(0);
   const [createDuelLoading, setCreateDuelLoading] = useState<boolean>(false);
@@ -116,7 +116,7 @@ const CreateDuelModal: React.FC = () => {
   }, [divisionIndex]);
 
   useEffect(() => {
-    setEstimatePrice(0);
+    setEstimatePrice("0");
     if (allLegions.length != 0) {
       getBalance();
       divisions.map((division: IDivision, index: Number) => {
@@ -198,13 +198,19 @@ const CreateDuelModal: React.FC = () => {
   const handleChangeEstimatePrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const price =
+    let price =
       Number(e.target.value) > gameConfig.maxEstimatePrice
-        ? gameConfig.maxEstimatePrice
+        ? gameConfig.maxEstimatePrice.toString()
         : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
-        ? Number(e.target.value)
-        : estimatePrice;
-    setEstimatePrice(price < 0 ? 0 : price);
+        ? e.target.value.toString()
+        : estimatePrice.toString();
+    if (
+      price.indexOf(".") != -1 &&
+      price.substr(price.indexOf(".") + 1).length > 4
+    ) {
+      price = estimatePrice.toString();
+    }
+    setEstimatePrice(Number(price) < 0 ? "0" : price);
   };
 
   const handleClose = () => {
@@ -212,7 +218,7 @@ const CreateDuelModal: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (estimatePrice.valueOf() < 0) {
+    if (Number(estimatePrice) < 0) {
       toast.error(getTranslation("pleaseprovidevalidvalue"));
       return;
     }
@@ -240,7 +246,7 @@ const CreateDuelModal: React.FC = () => {
         duelContract,
         account,
         allLegions[currentLegionIndex].id.valueOf(),
-        estimatePrice.valueOf() * 10 ** 18,
+        Number(estimatePrice) * 10 ** 18,
         !allIn.valueOf()
       );
       setCreateDuelLoading(false);
@@ -445,7 +451,7 @@ const CreateDuelModal: React.FC = () => {
                   id="outlined-number"
                   variant="standard"
                   type="number"
-                  value={convertInputNumberToStr(estimatePrice)}
+                  value={estimatePrice}
                   onChange={handleChangeEstimatePrice}
                   sx={{ padding: "0 !important" }}
                 />

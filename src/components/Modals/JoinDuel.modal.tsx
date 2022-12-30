@@ -94,7 +94,7 @@ const JoinDuelModal: React.FC = () => {
   const duelContract = useDuelSystem();
   const legionContract = useLegion();
 
-  const [estimatePrice, setEstimatePrice] = useState<number>(0);
+  const [estimatePrice, setEstimatePrice] = useState<string>("0");
   const [divisionIndex, setDivisionIndex] = useState<number>(0);
   const [currentDuelDivisionIndex, setCurrentDuelDivisionIndex] =
     useState<number>(0);
@@ -152,7 +152,7 @@ const JoinDuelModal: React.FC = () => {
             duel.creatorLegion.attackPower < division.maxAP
           ) {
             setCurrentDuelDivisionIndex(index);
-            setEstimatePrice(0);
+            setEstimatePrice("0");
             setCurrentLegionIndex(0);
           }
           if (
@@ -198,13 +198,20 @@ const JoinDuelModal: React.FC = () => {
   const handleChangeEstimatePrice = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const price =
+    let price =
       Number(e.target.value) > gameConfig.maxEstimatePrice
-        ? gameConfig.maxEstimatePrice
+        ? gameConfig.maxEstimatePrice.toString()
         : Number(Number(e.target.value).toFixed(4)) === Number(e.target.value)
-        ? Number(e.target.value)
-        : estimatePrice;
-    setEstimatePrice(price < 0 ? 0 : price);
+        ? e.target.value.toString()
+        : estimatePrice.toString();
+    if (
+      price.indexOf(".") != -1 &&
+      price.substr(price.indexOf(".") + 1).length > 4
+    ) {
+      price = estimatePrice.toString();
+    }
+
+    setEstimatePrice(Number(price) < 0 ? "0" : price);
   };
 
   const handleClose = () => {
@@ -238,7 +245,7 @@ const JoinDuelModal: React.FC = () => {
           account,
           currentDuelId,
           allLegions[currentLegionIndex.valueOf()].id,
-          estimatePrice.valueOf() * 10 ** 18
+          Number(estimatePrice) * 10 ** 18
         );
         setJoinDuelLoading(false);
         dispatch(updateModalState({ joinDuelModalOpen: false }));

@@ -148,7 +148,7 @@ const ClaimToWalletModal: React.FC = () => {
       setTransferLoading(true);
       let transferAmount = isMax
         ? String(claimedUSD)
-        : String(claimToWalletAmount);
+        : String(Number(claimToWalletAmount) * 10 ** 18);
       const res = await claimToWallet(
         web3,
         rewardpoolContract,

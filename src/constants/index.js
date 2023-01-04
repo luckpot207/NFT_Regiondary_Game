@@ -143,6 +143,7 @@ const color = {
   color1: "#24feff",
   color2: "#2da6f7",
   color3: "#195db3",
+  color4: "#7c7f8c",
   bg1: "#121212",
   bg2: "#161616",
   bg3: "linear-gradient(0deg,hsl(0deg 0% 12%) 0%,hsl(0deg 0% 7%) 100%)",

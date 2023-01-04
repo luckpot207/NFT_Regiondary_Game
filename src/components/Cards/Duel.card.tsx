@@ -56,13 +56,13 @@ const DuelCard: React.FC<Props> = ({ duel }) => {
     const priceDifference1 =
       Math.round(
         Math.abs(duel.result.valueOf() - duel.creatorEstmatePrice.valueOf()) *
-          100
-      ) / 100;
+          10000
+      ) / 10000;
     const priceDifference2 =
       Math.round(
         Math.abs(duel.result.valueOf() - duel.joinerEstmatePrice.valueOf()) *
-          100
-      ) / 100;
+          10000
+      ) / 10000;
     if (priceDifference1 == priceDifference2) {
       return 0;
     } else if (priceDifference1 > priceDifference2) {

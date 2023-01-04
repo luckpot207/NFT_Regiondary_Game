@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import FireBtn from "../Buttons/FireBtn";
 import { inventoryState } from "../../reducers/inventory.reducer";
 import { modalState, updateModalState } from "../../reducers/modal.reducer";
+import { getBLSTAmount } from "../../web3hooks/contractFunctions/feehandler.contract";
 import {
   convertInputNumberToStr,
   formatNumber,
@@ -53,6 +54,7 @@ const ClaimToWalletTextField = styled(TextField)({
 const MaxCheckBox = styled(Checkbox)({
   paddingTop: "0px",
   paddingBottom: "0px",
+  paddingLeft: "0px",
 });
 
 const ClaimToWalletModal: React.FC = () => {
@@ -70,9 +72,16 @@ const ClaimToWalletModal: React.FC = () => {
   const [claimToWalletAmount, setClaimToWalletAmount] = useState<string>("0");
   const [maxAmount, setMaxAmount] = useState<number>(0);
   const [isMax, setIsMax] = useState<boolean>(false);
+  const [is250, setIs250] = useState<boolean>(false);
+  const [is25Percent, setIs25Percent] = useState<boolean>(false);
+  const [is5000, setIs5000] = useState<boolean>(false);
   const [lastClaimTime, setLastClaimTime] = useState<string>("");
   const [transferLoading, setTransferLoading] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
+
+  const [blst250, setBlst250] = useState<number>(0);
+  const [blst5000, setBlst5000] = useState<number>(0);
+  const [blst25Percent, setBlst25Percent] = useState<number>(0);
 
   useEffect(() => {
     getLastClaimedTime();
@@ -91,6 +100,34 @@ const ClaimToWalletModal: React.FC = () => {
       setClaimToWalletAmount("0");
     }
   }, [isMax]);
+
+  useEffect(() => {
+    if (is250) {
+      setClaimToWalletAmount("250");
+    } else {
+      setClaimToWalletAmount("0");
+    }
+  }, [is250]);
+
+  useEffect(() => {
+    if (is5000) {
+      setClaimToWalletAmount("5000");
+    } else {
+      setClaimToWalletAmount("0");
+    }
+  }, [is5000]);
+
+  useEffect(() => {
+    if (is25Percent) {
+      setClaimToWalletAmount(
+        Number(Number(claimedUSD) / 10 ** 18 / 4)
+          .toFixed(4)
+          .toString()
+      );
+    } else {
+      setClaimToWalletAmount("0");
+    }
+  }, [is25Percent]);
 
   useEffect(() => {
     if (claimToWalletModalOpen == true) {
@@ -137,6 +174,20 @@ const ClaimToWalletModal: React.FC = () => {
       busdAmount = 5000;
     }
     setMaxAmount(Number(busdAmount));
+
+    try {
+      setBlst250(await getBLSTAmount(web3, feehandlerContract, 250));
+      setBlst5000(await getBLSTAmount(web3, feehandlerContract, 5000));
+      setBlst25Percent(
+        await getBLSTAmount(
+          web3,
+          feehandlerContract,
+          Number(claimedUSD) / 10 ** 18 / 4
+        )
+      );
+    } catch (e) {
+      console.log("Get BLST amount issue : ", e);
+    }
   };
 
   const handleTransferToWallet = async () => {
@@ -146,10 +197,9 @@ const ClaimToWalletModal: React.FC = () => {
     }
     try {
       setTransferLoading(true);
-      let transferAmount =
-        isMax && Number(claimedUSD) / 10 ** 18 < 250
-          ? String(claimedUSD)
-          : String(Number(claimToWalletAmount) * 10 ** 18);
+      let transferAmount = isMax
+        ? String(claimedUSD)
+        : String(Number(claimToWalletAmount) * 10 ** 18);
       const res = await claimToWallet(
         web3,
         rewardpoolContract,
@@ -191,6 +241,15 @@ const ClaimToWalletModal: React.FC = () => {
 
   const handleIsMax = () => {
     setIsMax(!isMax);
+  };
+  const handleIs250 = () => {
+    setIs250(!is250);
+  };
+  const handleIs5000 = () => {
+    setIs5000(!is5000);
+  };
+  const handleIs25Percent = () => {
+    setIs25Percent(!is25Percent);
   };
 
   const handleClose = () => {
@@ -247,22 +306,77 @@ const ClaimToWalletModal: React.FC = () => {
                 type="number"
                 value={claimToWalletAmount}
                 onChange={handleChangeClaimToWalletAmount}
-                disabled={isMax}
+                disabled={isMax || is250 || is5000 || is25Percent}
                 sx={{ padding: "0 !important" }}
               />
               <Typography sx={{ fontWeight: "bold" }}>
                 {" "}
                 &nbsp;BUSD&nbsp;&nbsp;&nbsp;
               </Typography>
-              <MaxCheckBox checked={isMax} onChange={handleIsMax} />
+            </Stack>
+            <Typography></Typography>
+            <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
+              <MaxCheckBox
+                checked={is250}
+                onChange={handleIs250}
+                disabled={
+                  Number(claimedUSD) / 10 ** 18 > 250 &&
+                  Number(claimedUSD) / 10 ** 18 < 1000
+                    ? false
+                    : true
+                }
+              />
+              <Typography>250 BUSD </Typography>
               <Typography>
-                {getTranslation("max")}{" "}
+                &nbsp;(= {formatNumber(Number(blst250).toFixed(2))} $
+                {getTranslation("blst")})
+              </Typography>
+            </Stack>
+            <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
+              <MaxCheckBox
+                checked={is25Percent}
+                onChange={handleIs25Percent}
+                disabled={
+                  Number(claimedUSD) / 10 ** 18 > 1000 &&
+                  Number(claimedUSD) / 10 ** 18 < 20000
+                    ? false
+                    : true
+                }
+              />
+              <Typography>
+                25% ={" "}
+                {formatNumber((Number(claimedUSD) / 10 ** 18 / 4).toFixed(2))}{" "}
+                BUSD{" "}
+              </Typography>
+              <Typography>
+                &nbsp;(= {formatNumber(Number(blst25Percent).toFixed(2))} $
+                {getTranslation("blst")})
+              </Typography>
+            </Stack>
+            <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
+              <MaxCheckBox
+                checked={is5000}
+                onChange={handleIs5000}
+                disabled={Number(claimedUSD) / 10 ** 18 > 20000 ? false : true}
+              />
+              <Typography>5000 BUSD</Typography>
+              <Typography>
+                &nbsp;(= {formatNumber(Number(blst5000).toFixed(2))} $
+                {getTranslation("blst")})
+              </Typography>
+            </Stack>
+            <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
+              <MaxCheckBox
+                checked={isMax}
+                onChange={handleIsMax}
+                disabled={Number(claimedUSD) / 10 ** 18 < 250 ? false : true}
+              />
+              <Typography>
+                {getTranslation("maxAvailable")} ={" "}
                 {formatNumber((Number(claimedUSD) / 10 ** 18).toFixed(2))} BUSD{" "}
               </Typography>
               <Typography>
-                {" "}
-                &nbsp;&nbsp;&nbsp; (={" "}
-                {formatNumber(Number(claimedBLST).toFixed(2))} $
+                &nbsp;(= {formatNumber(Number(claimedBLST).toFixed(2))} $
                 {getTranslation("blst")})
               </Typography>
             </Stack>

@@ -57,7 +57,7 @@ const TipsAndTricks: React.FC = () => {
         }}
       >
         <Typography>
-          Every week, here at Legions University, you can attend our live Tips &
+          Every week, here at Games University, you can attend our live Tips &
           Tricks sessions on{" "}
           <a
             className="fc2 td-none"
@@ -70,12 +70,12 @@ const TipsAndTricks: React.FC = () => {
           you smart strategies to play the game and maximise your ROI. If you
           attend live, you will be able to ask your questions. The replays are
           available on this page. Using all smart strategies together may
-          increase your monthly ROI up to 50%! Make sure to follow all Legions
+          increase your monthly ROI up to 50%! Make sure to follow all Games
           University sessions and apply all tips & tricks together to hunt
           smartly.
         </Typography>
         <Typography variant="h4" fontWeight={"bold"} sx={{ my: 2 }}>
-          Legions University Curriculum
+          Ga University Curriculum
         </Typography>
         <Box sx={{ mb: 2 }}>
           {tips.map((tip, index) => (
@@ -102,7 +102,7 @@ const TipsAndTricks: React.FC = () => {
           The Basics - Full Game Instructions:
         </Typography>
         <Typography>
-          Before you attend the Legions University sessions, please watch the
+          Before you attend the Games University sessions, please watch the
           video below with the full game instructions and read the entire{" "}
           <a
             href="https://docs.cryptolegions.app/"

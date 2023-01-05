@@ -297,7 +297,7 @@ const ClaimToWalletModal: React.FC = () => {
                 CL2: formatNumber(Number(claimedBLST).toFixed(2)),
               })}
             </Typography>
-            <Typography mb={1}>
+            <Typography mb={1} sx={{ fontWeight: "bold" }}>
               {getTranslation("howMuchDoYouWantToTransferToYourMetaMaskWallet")}
             </Typography>
             <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
@@ -314,7 +314,10 @@ const ClaimToWalletModal: React.FC = () => {
                 &nbsp;BUSD&nbsp;&nbsp;&nbsp;
               </Typography>
             </Stack>
-            <Typography></Typography>
+            <br></br>
+            <Typography mb={1} style={{ fontWeight: "bold" }}>
+              {getTranslation("quickOptions")} :
+            </Typography>
             <Stack flexDirection="row" mb={1} sx={{ flexWrap: "wrap" }}>
               <MaxCheckBox
                 checked={is250}
@@ -336,12 +339,7 @@ const ClaimToWalletModal: React.FC = () => {
               <MaxCheckBox
                 checked={is25Percent}
                 onChange={handleIs25Percent}
-                disabled={
-                  Number(claimedUSD) / 10 ** 18 > 1000 &&
-                  Number(claimedUSD) / 10 ** 18 < 20000
-                    ? false
-                    : true
-                }
+                disabled={Number(claimedUSD) / 10 ** 18 > 20000 ? true : false}
               />
               <Typography>
                 25% ={" "}

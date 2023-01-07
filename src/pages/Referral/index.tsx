@@ -57,7 +57,7 @@ const ReferralPage: React.FC = () => {
             fontWeight: "800",
           }}
         >
-          WELCOME TO CRYPTO LEGIONS
+          WELCOME TO BIG CRYPTO GAME
         </Typography>
         <Box
           sx={{

@@ -101,9 +101,7 @@ const ReferralPage: React.FC = () => {
             sx={{ fontSize: { xl: "25px", sm: "20px" } }}
             marginBottom={2}
           >
-            If you accept this invitation, and if you summon 20 (or more)
-            warriors today, then you will receive a gift voucher for 1 free
-            summon.
+            If you accept this invitation, and if you mint 20 (or more) devs today, then you will receive a gift voucher for 1 free mint.
           </Typography>
           <FireBtn
             sx={{

@@ -250,6 +250,9 @@ const ClaimToWalletModal: React.FC = () => {
   };
   const handleIs25Percent = () => {
     setIs25Percent(!is25Percent);
+    if(is25Percent) {
+      setIs250(false);
+    }
   };
 
   const handleClose = () => {

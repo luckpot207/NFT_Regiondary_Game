@@ -182,7 +182,7 @@ const ClaimToWalletModal: React.FC = () => {
         await getBLSTAmount(
           web3,
           feehandlerContract,
-          Number(claimedUSD) / 10 ** 18 / 4
+          Number(claimedUSD) / 10 ** 18 / 10
         )
       );
     } catch (e) {
@@ -345,8 +345,8 @@ const ClaimToWalletModal: React.FC = () => {
                 disabled={Number(claimedUSD) / 10 ** 18 > 20000 ? true : false}
               />
               <Typography>
-                25% ={" "}
-                {formatNumber((Number(claimedUSD) / 10 ** 18 / 4).toFixed(2))}{" "}
+                10% ={" "}
+                {formatNumber((Number(claimedUSD) / 10 ** 18 / 10).toFixed(2))}{" "}
                 BUSD{" "}
               </Typography>
               <Typography>

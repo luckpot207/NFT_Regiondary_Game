@@ -176,8 +176,8 @@ const ClaimToWalletModal: React.FC = () => {
     setMaxAmount(Number(busdAmount));
 
     try {
-      setBlst250(await getBLSTAmount(web3, feehandlerContract, 250));
-      setBlst5000(await getBLSTAmount(web3, feehandlerContract, 5000));
+      setBlst250(await getBLSTAmount(web3, feehandlerContract, 100));
+      setBlst5000(await getBLSTAmount(web3, feehandlerContract, 2000));
       setBlst25Percent(
         await getBLSTAmount(
           web3,
@@ -332,7 +332,7 @@ const ClaimToWalletModal: React.FC = () => {
                     : true
                 }
               />
-              <Typography>250 BUSD </Typography>
+              <Typography>100 BUSD </Typography>
               <Typography>
                 &nbsp;(= {formatNumber(Number(blst250).toFixed(2))} $
                 {getTranslation("blst")})
@@ -360,7 +360,7 @@ const ClaimToWalletModal: React.FC = () => {
                 onChange={handleIs5000}
                 disabled={Number(claimedUSD) / 10 ** 18 > 20000 ? false : true}
               />
-              <Typography>5000 BUSD</Typography>
+              <Typography>2000 BUSD</Typography>
               <Typography>
                 &nbsp;(= {formatNumber(Number(blst5000).toFixed(2))} $
                 {getTranslation("blst")})

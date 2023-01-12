@@ -120,7 +120,7 @@ const ClaimToWalletModal: React.FC = () => {
   useEffect(() => {
     if (is25Percent) {
       setClaimToWalletAmount(
-        Number(Number(claimedUSD) / 10 ** 18 / 4)
+        Number(Number(claimedUSD) / 10 ** 18 / 10)
           .toFixed(4)
           .toString()
       );
